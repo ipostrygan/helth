@@ -1,0 +1,118 @@
+"use client"
+
+import { useRef, useState, useEffect } from "react"
+import Image from "next/image"
+import { Camera, Loader2 } from "lucide-react"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
+import { UserProfile } from "@/app/(app)/users/types/profile.types"
+import { useUploadFile } from "@/app/(app)/users/hooks/use-file-upload"
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+
+const UserAvatar = ({
+  profile,
+  className,
+  editable = false,
+}: {
+  profile: UserProfile
+  className?: string
+  editable?: boolean
+}) => {
+  const { mutateAsync, isPending } = useUploadFile(String(profile.id))
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [imageLoaded, setImageLoaded] = useState(false)
+
+  const initials = `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
+
+  useEffect(() => {
+    setImageLoaded(false)
+  }, [profile.imageKey])
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setError(null)
+
+    if (!file.type.startsWith("image/")) {
+      setError("Please select an image file.")
+      return
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      setError("Image must be smaller than 5MB.")
+      return
+    }
+
+    try {
+      await mutateAsync(e)
+    } catch {
+      setError("Upload failed. Please try again.")
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = ""
+    }
+  }
+
+  const avatarEl = (
+    <Avatar className={cn("@container font-semibold", className ?? "size-62.5")}>
+      <AvatarFallback className="text-[33cqw]">{initials}</AvatarFallback>
+      {profile.imageUrl && (
+        <Image
+          src={profile.imageUrl}
+          alt={`${profile.firstName} ${profile.lastName}'s avatar`}
+          width={250}
+          height={250}
+          className={cn(
+            "absolute inset-0 aspect-square size-full object-cover transition-opacity duration-300",
+            imageLoaded ? "opacity-100" : "opacity-0"
+          )}
+          loading="eager"
+          priority
+          onLoad={() => setImageLoaded(true)}
+        />
+      )}
+    </Avatar>
+  )
+
+  if (!editable) return avatarEl
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div
+        className={cn(
+          "relative rounded-full group cursor-pointer",
+          isPending && "pointer-events-none"
+        )}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        {avatarEl}
+        <div
+          className={cn(
+            "absolute inset-0 rounded-full bg-black/50 flex items-center justify-center transition-opacity",
+            isPending ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+          )}
+        >
+          {isPending
+            ? <Loader2 className="text-white size-8 animate-spin" />
+            : <Camera className="text-white size-8" />
+          }
+        </div>
+        <Input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+      </div>
+
+      {error && (
+        <p className="text-destructive text-sm text-center">{error}</p>
+      )}
+    </div>
+  )
+}
+
+export default UserAvatar
