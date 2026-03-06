@@ -1,24 +1,12 @@
 import { PrismaClient } from "@/lib/generated/prisma/client";
+import data from "./medical-expenses.json";
 
 export async function seedMedicalExpenses(prisma: PrismaClient) {
-  await prisma.medicalExpense.deleteMany();
+  await prisma.$executeRaw`TRUNCATE TABLE "MedicalExpense" RESTART IDENTITY CASCADE`;
 
   await prisma.medicalExpense.createMany({
-    data: [
-      {
-        title: "General checkup",
-        amount: 150,
-        date: new Date("2025-01-10"),
-        description: "Annual physical examination",
-      },
-      {
-        title: "Blood test",
-        amount: 80,
-        date: new Date("2025-02-03"),
-        description: null,
-      },
-    ],
+    data: data.map((row) => ({ ...row, date: new Date(row.date) })),
   });
 
-  console.log("Seeded 2 medical expenses.");
+  console.log(`Seeded ${data.length} medical expenses.`);
 }

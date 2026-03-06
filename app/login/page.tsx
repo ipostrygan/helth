@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button"
 import { FieldGroup, Field } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { redirect } from "next/navigation"
 import { Controller, useForm } from "react-hook-form"
-import { useLogin } from "./hooks/use-login"
+import { useRouter } from "next/navigation"
+import { login } from "@/app/actions/auth"
 
 type LoginFormType = {
   username: string
@@ -14,12 +14,12 @@ type LoginFormType = {
 }
 
 const LoginPage = () => {
-  const { mutate } = useLogin()
+  const router = useRouter()
 
   const {
     control,
     handleSubmit,
-    formState: { isValid }
+    formState: { isDirty, isValid, isSubmitting }
   } = useForm({
     defaultValues: {
       username: '',
@@ -27,8 +27,13 @@ const LoginPage = () => {
     }
   })
 
-  const onSubmit = (data: LoginFormType) => {
-    mutate(data)
+  const onSubmit = async (data: LoginFormType) => {
+    const result = await login(data)
+    if (result.error) {
+      console.error("Login failed:", result.error)
+      return
+    }
+    router.push("/")
   }
 
   return (
@@ -56,7 +61,7 @@ const LoginPage = () => {
             }
            />
            <Field orientation="horizontal" className="justify-end">
-             <Button type="submit" disabled={!isValid}>Login</Button>
+             <Button type="submit" disabled={!isDirty || !isValid || isSubmitting}>Login</Button>
            </Field>
         </FieldGroup>
       </form>

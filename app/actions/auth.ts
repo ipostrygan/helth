@@ -4,6 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { cookies } from "next/headers"
 import prisma from "@/lib/prisma"
+import { redirect } from "next/navigation"
 
 type LoginInput = {
   username: string
@@ -38,4 +39,5 @@ export const login = async ({ username, password }: LoginInput) => {
 export const logout = async () => {
   const cookieStore = await cookies()
   cookieStore.delete("token")
+  redirect("/login")
 }

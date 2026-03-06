@@ -15,7 +15,8 @@ import { useProfile } from "../hooks/use-profile"
 import SelectedProfile from "./selected-profile"
 import Link from "next/link"
 import { useActiveProfile } from "@/context/profile-context"
-import { useLogout } from "@/app/login/hooks/use-logout"
+import { logout } from "@/app/actions/auth"
+import { useTransition } from "react"
 
 type ProfileSwitcherProps = {
   profiles: UserProfile[]
@@ -24,7 +25,13 @@ type ProfileSwitcherProps = {
 const ProfileSwitcher = ({ profiles }: ProfileSwitcherProps) => {
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
-  const { mutate: logout } = useLogout()
+  const [isPending, startTransition] = useTransition()
+
+  const onLogout = () => {
+    startTransition(async () => {
+      await logout()
+    })
+  }
 
   if (!profile) {
     return null
@@ -56,7 +63,13 @@ const ProfileSwitcher = ({ profiles }: ProfileSwitcherProps) => {
         ))}
         <DropdownMenuSeparator />
         <div className="px-2 pb-2">
-          <Button variant="ghost" size="sm" className="w-full justify-start gap-2 text-destructive hover:text-destructive" onClick={() => logout()}>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="w-full justify-start gap-2 text-destructive hover:text-destructive" 
+            onClick={onLogout}
+            disabled={isPending}
+          >
             <LogOutIcon className="size-4" />
             Logout
           </Button>
