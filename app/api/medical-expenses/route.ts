@@ -1,11 +1,32 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server";
 import { getMedicalExpenses } from "../../actions/medical-expenses";
+import { MedicalExpense } from "@/lib/generated/prisma/client";
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const page = Number(searchParams.get("page") ?? 1);
-  const pageSize = Number(searchParams.get("pageSize") ?? 10);
+const searchParamsCache = createSearchParamsCache({
+  page:          parseAsInteger.withDefault(DEFAULT_PAGE),
+  pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
+  sortField:     parseAsString.withDefault("date"),
+  sortDirection: parseAsString.withDefault("desc"),
+  search:        parseAsString.withDefault(""),
+  dateFrom:      parseAsString,
+  dateTo:        parseAsString,
+  types:         parseAsArrayOf(parseAsString),
+})
 
-  const result = await getMedicalExpenses(page, pageSize);
-  return NextResponse.json(result);
+export async function GET(req: NextRequest) {
+  const { page, pageSize, sortField, sortDirection, search, dateFrom, dateTo, types } = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
+
+  const result = await getMedicalExpenses({
+    page,
+    pageSize,
+    sortField: sortField as keyof MedicalExpense,
+    sortDirection: sortDirection as "asc" | "desc",
+    search,
+    dateFrom: dateFrom ?? undefined,
+    dateTo: dateTo ?? undefined,
+    types: types ?? undefined,
+  })
+  return NextResponse.json(result)
 }

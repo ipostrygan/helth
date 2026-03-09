@@ -59,6 +59,7 @@ export function DataTable<TData, TValue>({
     data: data.data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
+    manualSorting: true,
   })
 
   const current = data.page - 1 // 0-indexed for display
