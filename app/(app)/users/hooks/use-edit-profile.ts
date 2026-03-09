@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { EditProfileFormType } from "../../profile/edit-profile-form"
 import { profileQueryKey } from "./use-profile"
 
-export const useEditProfile = (id: string) => {
+export const useEditProfile = (id: number) => {
   const queryClient = useQueryClient()
 
   return useMutation({

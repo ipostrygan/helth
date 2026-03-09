@@ -20,7 +20,7 @@ const UserAvatar = ({
   className?: string
   editable?: boolean
 }) => {
-  const { mutateAsync, isPending } = useUploadFile(String(profile.id))
+  const { mutateAsync, isPending } = useUploadFile(profile.id)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [error, setError] = useState<string | null>(null)
   const [imageLoaded, setImageLoaded] = useState(false)

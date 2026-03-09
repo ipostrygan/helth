@@ -22,7 +22,7 @@ export type EditProfileFormType = {
 }
 
 const EditProfileForm = ({ onClose, data }: EditProfileFormProps) => {
-  const { mutateAsync, isPending } = useEditProfile(data.id.toString())
+  const { mutateAsync, isPending } = useEditProfile(data.id)
 
   const {
     control,

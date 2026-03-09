@@ -9,7 +9,7 @@ const ProfileListItem = ({ profile }: { profile: UserProfile }) => {
   const { setActiveProfileId } = useActiveProfile()
 
   return (
-    <DropdownMenuItem onClick={() => setActiveProfileId(profile.id.toString())} className="flex gap-3">
+    <DropdownMenuItem onClick={() => setActiveProfileId(profile.id)} className="flex gap-3">
       <UserAvatar profile={profile} className="size-8" />
       <div>
         <div>{profile.firstName} {profile.lastName}</div>

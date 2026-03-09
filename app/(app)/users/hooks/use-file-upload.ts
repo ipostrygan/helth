@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent } from "react";
 
-export function useUploadFile(id: string) {
+export function useUploadFile(id: number) {
   const queryClient = useQueryClient()
 
   return useMutation({

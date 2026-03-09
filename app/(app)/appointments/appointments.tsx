@@ -3,7 +3,7 @@
 import { useProfile } from "../users/hooks/use-profile"
 import { UserProfile } from "../users/types/profile.types"
 
-const Appointments = ({ id, initialProfile }: { id: string, initialProfile?: UserProfile | null }) => {
+const Appointments = ({ id, initialProfile }: { id: number, initialProfile?: UserProfile | null }) => {
   const { data: profile } = useProfile(id, initialProfile)
 
   if (!profile) {

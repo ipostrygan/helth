@@ -3,11 +3,11 @@
 import { createContext, useContext, useState } from "react"
 
 const LAST_PROFILE_KEY = "lastProfileId"
-const DEFAULT_ID = "1"
+const DEFAULT_ID = 1
 
 type ProfileContextType = {
-  activeProfileId: string
-  setActiveProfileId: (id: string) => void
+  activeProfileId: number
+  setActiveProfileId: (id: number) => void
 }
 
 const ProfileContext = createContext<ProfileContextType>({
@@ -16,12 +16,12 @@ const ProfileContext = createContext<ProfileContextType>({
 })
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [activeProfileId, setActiveProfileIdState] = useState(
-    () => (typeof window !== "undefined" ? localStorage.getItem(LAST_PROFILE_KEY) : null) ?? DEFAULT_ID
+  const [activeProfileId, setActiveProfileIdState] = useState<number>(
+    () => Number((typeof window !== "undefined" ? localStorage.getItem(LAST_PROFILE_KEY) : null) ?? DEFAULT_ID)
   )
 
-  const setActiveProfileId = (id: string) => {
-    localStorage.setItem(LAST_PROFILE_KEY, id)
+  const setActiveProfileId = (id: number) => {
+    localStorage.setItem(LAST_PROFILE_KEY, String(id))
     setActiveProfileIdState(id)
   }
 
