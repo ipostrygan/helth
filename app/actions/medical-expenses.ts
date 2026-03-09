@@ -68,3 +68,7 @@ export const getMedicalExpenses = async ({
     totalPages: Math.ceil(total / pageSize),
   };
 };
+
+export const deleteExpense = async (id: number): Promise<void> => {
+  await prisma.medicalExpense.delete({ where: { id } });
+};
