@@ -13,6 +13,7 @@ export type PaginatedResult<T> = {
 };
 
 export type MedicalExpensesQuery = {
+  profileId?: string;
   page?: number;
   pageSize?: number;
   sortField?: keyof MedicalExpense;
@@ -24,6 +25,7 @@ export type MedicalExpensesQuery = {
 };
 
 export const getMedicalExpenses = async ({
+  profileId,
   page = 1,
   pageSize = 10,
   sortField = "date",
@@ -35,6 +37,7 @@ export const getMedicalExpenses = async ({
 }: MedicalExpensesQuery = {}): Promise<PaginatedResult<MedicalExpense>> => {
   const skip = (page - 1) * pageSize;
   const where = {
+    ...(profileId ? { userId: profileId } : {}),
     ...(search ? {
       OR: [
         { title: { contains: search, mode: "insensitive" as const } },
@@ -69,6 +72,24 @@ export const getMedicalExpenses = async ({
   };
 };
 
-export const deleteExpense = async (id: number): Promise<void> => {
+export const deleteExpense = async (id: string): Promise<void> => {
   await prisma.medicalExpense.delete({ where: { id } });
+};
+
+export type CreateExpenseInput = {
+  userId: string;
+  title: string;
+  amount: number;
+  date: Date;
+  type: ExpenseType;
+  description?: string;
+};
+
+export const createExpense = async (input: CreateExpenseInput) => {
+  try {
+    await prisma.medicalExpense.create({ data: input });
+  } catch (e) {
+    console.error(e);
+    throw new Error(e instanceof Error ? e.message : "Failed to create expense");
+  }
 };

@@ -1,10 +1,11 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { PaginatedResult } from "@/app/actions/medical-expenses";
-import { MedicalExpense } from "@/lib/generated/prisma/client";
+import type { PaginatedResult } from "@/app/actions/medical-expenses";
+import type { MedicalExpense } from "@/lib/generated/prisma/client";
 
 export type MedicalExpensesParams = {
+  profileId?: string;
   page?: number;
   pageSize?: number;
   sortField?: string;
@@ -19,12 +20,13 @@ export const medicalExpensesQueryKey = (params: MedicalExpensesParams) =>
   ["medical-expenses", params] as const;
 
 export const useMedicalExpenses = (params: MedicalExpensesParams = {}) => {
-  const { page = 1, pageSize = 10, sortField = "date", sortDirection = "desc", search = "", dateFrom, dateTo, types } = params;
+  const { profileId, page = 1, pageSize = 10, sortField = "date", sortDirection = "desc", search = "", dateFrom, dateTo, types } = params;
 
   return useQuery<PaginatedResult<MedicalExpense>>({
     queryKey: medicalExpensesQueryKey(params),
     queryFn: async () => {
       const searchParams = new URLSearchParams({
+        ...(profileId ? { profileId } : {}),
         page: String(page),
         pageSize: String(pageSize),
         sortField,

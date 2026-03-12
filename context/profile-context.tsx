@@ -1,27 +1,39 @@
 "use client"
 
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
+import { getAllProfiles } from "@/app/actions/profile"
 
 const LAST_PROFILE_KEY = "lastProfileId"
-const DEFAULT_ID = 1
 
 type ProfileContextType = {
-  activeProfileId: number
-  setActiveProfileId: (id: number) => void
+  activeProfileId: string | null
+  setActiveProfileId: (id: string) => void
 }
 
 const ProfileContext = createContext<ProfileContextType>({
-  activeProfileId: DEFAULT_ID,
+  activeProfileId: null,
   setActiveProfileId: () => {},
 })
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [activeProfileId, setActiveProfileIdState] = useState<number>(
-    () => Number((typeof window !== "undefined" ? localStorage.getItem(LAST_PROFILE_KEY) : null) ?? DEFAULT_ID)
+  const [activeProfileId, setActiveProfileIdState] = useState<string | null>(
+    () => typeof window !== "undefined" ? localStorage.getItem(LAST_PROFILE_KEY) : null
   )
 
-  const setActiveProfileId = (id: number) => {
-    localStorage.setItem(LAST_PROFILE_KEY, String(id))
+  useEffect(() => {
+    if (activeProfileId) return
+
+    getAllProfiles().then(profiles => {
+      const primary = profiles.find(p => p.isPrimaryUser) ?? profiles[0]
+      if (primary) {
+        localStorage.setItem(LAST_PROFILE_KEY, primary.id)
+        setActiveProfileIdState(primary.id)
+      }
+    })
+  }, [activeProfileId])
+
+  const setActiveProfileId = (id: string) => {
+    localStorage.setItem(LAST_PROFILE_KEY, id)
     setActiveProfileIdState(id)
   }
 

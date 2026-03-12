@@ -6,7 +6,7 @@ export const useDeleteMedicalExpense = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id: number) => {
+    mutationFn: async (id: string) => {
       const res = await fetch(`/api/medical-expenses/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete expense");
     },

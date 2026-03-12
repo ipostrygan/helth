@@ -1,10 +1,12 @@
+"use server"
+
 import { User } from "@/lib/generated/prisma/client";
 import { getSignedImageUrl } from "@/lib/s3";
 import { EditProfileFormType } from "../(app)/profile/edit-profile-form";
 import prisma from "@/lib/prisma";
 import { UserProfile } from "../(app)/users/types/profile.types";
 
-export const editProfile = async (id: number, data: EditProfileFormType) => {
+export const editProfile = async (id: string, data: EditProfileFormType) => {
   await prisma.user.update({
     where: { id },
     data
@@ -16,7 +18,7 @@ export const toUserProfile = async (user: User): Promise<UserProfile> => ({
   imageUrl: user.imageKey ? await getSignedImageUrl(user.imageKey) : null
 })
 
-export const getProfile = async (id: number): Promise<UserProfile> => {
+export const getProfile = async (id: string): Promise<UserProfile> => {
   const user = await prisma.user.findUnique({ where: { id } })
   if (!user) throw new Error("User not found")
   return toUserProfile(user)

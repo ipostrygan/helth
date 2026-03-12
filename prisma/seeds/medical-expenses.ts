@@ -1,11 +1,15 @@
-import { PrismaClient } from "@/lib/generated/prisma/client";
+import { ExpenseType, PrismaClient } from "@/lib/generated/prisma/client";
 import data from "./medical-expenses.json";
 
-export async function seedMedicalExpenses(prisma: PrismaClient) {
-  await prisma.$executeRaw`TRUNCATE TABLE "MedicalExpense" RESTART IDENTITY CASCADE`;
-
+export async function seedMedicalExpenses(prisma: PrismaClient, userIds: string[]) {
   await prisma.medicalExpense.createMany({
-    data: data.map((row) => ({ ...row, date: new Date(row.date) })),
+    // @ts-expect-error -- generated client types are stale; will resolve after migration
+    data: data.map((row) => ({
+      ...row,
+      userId: userIds[row.userId - 1],
+      date: new Date(row.date),
+      type: row.type as ExpenseType,
+    })),
   });
 
   console.log(`Seeded ${data.length} medical expenses.`);

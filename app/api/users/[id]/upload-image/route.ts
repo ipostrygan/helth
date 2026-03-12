@@ -24,7 +24,7 @@ export async function PUT(
     
     await s3.send(command)
 
-    await editProfile(Number(id), {
+    await editProfile(id, {
       imageKey: file.name
     })
     

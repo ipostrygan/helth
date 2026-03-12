@@ -5,6 +5,7 @@ import { MedicalExpense } from "@/lib/generated/prisma/client";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
 
 const searchParamsCache = createSearchParamsCache({
+  profileId:     parseAsString,
   page:          parseAsInteger.withDefault(DEFAULT_PAGE),
   pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
   sortField:     parseAsString.withDefault("date"),
@@ -16,9 +17,10 @@ const searchParamsCache = createSearchParamsCache({
 })
 
 export async function GET(req: NextRequest) {
-  const { page, pageSize, sortField, sortDirection, search, dateFrom, dateTo, types } = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
+  const { profileId, page, pageSize, sortField, sortDirection, search, dateFrom, dateTo, types } = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
 
   const result = await getMedicalExpenses({
+    profileId: profileId ?? undefined,
     page,
     pageSize,
     sortField: sortField as keyof MedicalExpense,
