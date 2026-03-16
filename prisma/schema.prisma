@@ -32,6 +32,7 @@ model User {
   imageKey        String?
   isPrimaryUser   Boolean          @default(false)
   medicalExpenses MedicalExpense[]
+  therapies       Therapy[]
 }
 
 enum ExpenseType {
@@ -51,4 +52,21 @@ model MedicalExpense {
   type        ExpenseType
   userId      String
   user        User        @relation(fields: [userId], references: [id])
+  therapyId   String?
+  therapy     Therapy?    @relation(fields: [therapyId], references: [id])
+}
+
+model Therapy {
+  id                String           @id @default(uuid())
+  title             String
+  description       String?
+  startDate         DateTime
+  endDate           DateTime?
+  therapistName     String?
+  therapistInfoLink String?
+  location          String?
+  isActive          Boolean          @default(true)
+  userId            String
+  user              User             @relation(fields: [userId], references: [id])
+  medicalExpenses   MedicalExpense[]
 }

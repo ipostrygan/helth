@@ -1,5 +1,4 @@
 import { PrismaClient } from "@/lib/generated/prisma/client";
-import "dotenv/config";
 import { seedAuth } from "./seeds/auth";
 import { seedMedicalExpenses } from "./seeds/medical-expenses";
 import { seedUsers } from "./seeds/users";
