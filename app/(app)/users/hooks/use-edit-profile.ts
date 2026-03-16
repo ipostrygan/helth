@@ -3,15 +3,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { EditProfileFormType } from "../../profile/edit-profile-form"
 import { profileQueryKey } from "./use-profile"
+import { editProfile } from "@/lib/api/users"
 
 export const useEditProfile = (id: string) => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: EditProfileFormType) => fetch(`/api/users/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(data)
-    }),
+    mutationFn: (data: EditProfileFormType) => editProfile(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: profileQueryKey(id) })
     }

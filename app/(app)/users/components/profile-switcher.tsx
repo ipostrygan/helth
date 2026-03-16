@@ -58,7 +58,7 @@ const ProfileSwitcher = ({ profiles }: ProfileSwitcherProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Other profiles</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {profiles.map((profile) => (
+        {profiles.filter((p) => p.id !== activeProfileId).map((profile) => (
           <ProfileListItem profile={profile} key={profile.id} />
         ))}
         <DropdownMenuSeparator />

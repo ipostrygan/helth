@@ -75,7 +75,7 @@ const EditProfileForm = ({ onClose, data }: EditProfileFormProps) => {
           )}
         />
         <Field orientation="horizontal" className="justify-end">
-          <Button type="submit" disabled={!isDirty || isPending}>Submit</Button>
+          <Button type="submit" disabled={!isDirty} isPending={isPending}>Submit</Button>
         </Field>
       </FieldGroup>
     </form>

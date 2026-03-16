@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { CalendarDays, Stethoscope, Receipt, Sparkles, BriefcaseMedical } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 import { ThemeToggle } from "./theme-toggle";
@@ -29,6 +30,8 @@ export const MENU_ITEMS = [
 ]
 
 function AppSidebar() {
+  const pathname = usePathname()
+
   return (
     <Sidebar>
       <SidebarHeader className="mb-6 font-semibold text-xl p-4">
@@ -38,7 +41,7 @@ function AppSidebar() {
         <SidebarMenu>
           {MENU_ITEMS.map(({ href, name, icon: Icon }) => (
             <SidebarMenuItem key={href}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild isActive={pathname === href}>
                 <Link href={href}>
                   <Icon />
                   {name}
