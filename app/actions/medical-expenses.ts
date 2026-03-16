@@ -93,3 +93,21 @@ export const createExpense = async (input: CreateExpenseInput) => {
     throw new Error(e instanceof Error ? e.message : "Failed to create expense");
   }
 };
+
+export type UpdateExpenseInput = {
+  id: string;
+  title: string;
+  amount: number;
+  date: Date;
+  type: ExpenseType;
+  description?: string;
+};
+
+export const updateExpense = async ({ id, ...data }: UpdateExpenseInput) => {
+  try {
+    await prisma.medicalExpense.update({ where: { id }, data });
+  } catch (e) {
+    console.error(e);
+    throw new Error(e instanceof Error ? e.message : "Failed to update expense");
+  }
+};

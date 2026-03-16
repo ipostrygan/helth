@@ -1,15 +1,13 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteMedicalExpense } from "@/lib/api/medical-expenses";
 
 export const useDeleteMedicalExpense = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id: string) => {
-      const res = await fetch(`/api/medical-expenses/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete expense");
-    },
+    mutationFn: (id: string) => deleteMedicalExpense(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["medical-expenses"] });
     },

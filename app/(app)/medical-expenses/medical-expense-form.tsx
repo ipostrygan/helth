@@ -5,8 +5,9 @@ import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { format } from "date-fns"
-import { CalendarIcon, Loader2 } from "lucide-react"
+import { CalendarIcon } from "lucide-react"
 import { ExpenseType } from "@/lib/generated/prisma/enums"
+import type { MedicalExpense } from "@/lib/generated/prisma/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -19,6 +20,7 @@ import { DialogFooter } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
 import { EXPENSE_TYPE_LABELS } from "./constants"
 import { useCreateMedicalExpense } from "./hooks/use-create-medical-expense"
+import { useEditMedicalExpense } from "./hooks/use-edit-medical-expense"
 
 const schema = z.object({
   title: z.string().min(1, "Name is required"),
@@ -30,29 +32,43 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>
 
-type AddMedicalExpenseFormProps = {
+type MedicalExpenseFormProps = {
   profileId: string
   onClose: () => void
+  expense?: MedicalExpense
 }
 
-const AddMedicalExpenseForm = ({ profileId, onClose }: AddMedicalExpenseFormProps) => {
+const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormProps) => {
   const [calendarOpen, setCalendarOpen] = useState(false)
-  const { mutate: createExpense, isPending } = useCreateMedicalExpense()
+  const { mutateAsync: createExpense } = useCreateMedicalExpense()
+  const { mutateAsync: editExpense } = useEditMedicalExpense()
+  const isEditMode = !!expense
 
   const {
     control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
+    defaultValues: expense
+      ? {
+          title: expense.title,
+          amount: expense.amount,
+          date: new Date(expense.date),
+          type: expense.type,
+          description: expense.description ?? undefined,
+        }
+      : undefined,
   })
 
-  const onSubmit = (values: FormValues) => {
-    createExpense(
-      { ...values, userId: profileId },
-      { onSuccess: onClose },
-    )
+  const onSubmit = async (values: FormValues) => {
+    if (isEditMode) {
+      await editExpense({ id: expense.id, ...values })
+    } else {
+      await createExpense({ ...values, userId: profileId })
+    }
+    onClose()
   }
 
   return (
@@ -136,16 +152,15 @@ const AddMedicalExpenseForm = ({ profileId, onClose }: AddMedicalExpenseFormProp
       </FieldGroup>
 
       <DialogFooter className="mt-6">
-        <Button type="button" variant="outline" onClick={onClose} disabled={isPending}>
+        <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
-        <Button type="submit" disabled={isPending}>
-          {isPending && <Loader2 className="animate-spin" />}
-          Submit
+        <Button type="submit" isPending={isSubmitting}>
+          {isEditMode ? "Save" : "Submit"}
         </Button>
       </DialogFooter>
     </form>
   )
 }
 
-export default AddMedicalExpenseForm
+export default MedicalExpenseForm

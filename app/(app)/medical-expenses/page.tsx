@@ -3,32 +3,27 @@
 import { useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import type { MedicalExpense } from "@/lib/generated/prisma/client"
-import { DataTable } from "@/components/ui/data-table"
-import { TableSkeleton } from "@/components/ui/table-skeleton"
 import { useActiveProfile } from "@/context/profile-context"
 import { useProfile } from "../users/hooks/use-profile"
 import { useMedicalExpenses } from "./hooks/use-medical-expenses"
 import { useDeleteMedicalExpense } from "./hooks/use-delete-medical-expense"
-import AddMedicalExpenseForm from "./add-medical-expense-form"
+import MedicalExpenseForm from "./medical-expense-form"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
-import { Button } from "@/components/ui/button"
 import { SortButton } from "@/components/ui/sort-button"
-import { SearchInput } from "@/components/ui/search-input"
-import { DateRangePicker } from "@/components/ui/date-range-picker"
-import { MultiSelectFilter } from "@/components/ui/multi-select-filter"
 import { type DateRange } from "react-day-picker"
 import { format } from "date-fns"
 import { EXPENSE_TYPE_LABELS } from "./constants"
-import { MoreHorizontal, Loader2, Plus } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { DialogFooter } from "@/components/ui/dialog"
 import { Modal } from "@/components/ui/modal"
+import { TableTemplate } from "@/components/table-template"
 
 const EXPENSE_TYPE_OPTIONS = Object.entries(EXPENSE_TYPE_LABELS).map(([value, label]) => ({ value, label }))
 
@@ -57,25 +52,15 @@ const MedicalExpenses = () => {
   const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(null)
   const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
   const [addingExpense, setAddingExpense] = useState(false)
+  const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(null)
 
   if (!profile) {
     return null
   }
 
-  const onPageChange = (page: number) => setFilters((prev) => ({ ...prev, page }))
-
-  const onPageSizeChange = (pageSize: number) => setFilters((prev) => ({ ...prev, page: 1, pageSize }))
-
   const onSortChange = (field: string) => {
     const direction = filters.sortField === field && filters.sortDirection === "asc" ? "desc" : "asc"
     setFilters((prev) => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
-  }
-
-  const onConfirmDelete = () => {
-    if (deletingExpenseId === null) return
-    deleteExpense(deletingExpenseId, {
-      onSuccess: () => setDeletingExpenseId(null),
-    })
   }
 
   const columns: ColumnDef<MedicalExpense>[] = [
@@ -115,6 +100,9 @@ const MedicalExpenses = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem onSelect={() => setEditingExpense(row.original)}>
+              Edit
+            </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
               onSelect={() => setDeletingExpenseId(row.original.id)}
@@ -127,88 +115,81 @@ const MedicalExpenses = () => {
     },
   ]
 
-  const onSearchChange = (search: string) => setFilters((prev) => ({ ...prev, page: 1, search }))
-
-  const onDateRangeChange = (range: DateRange | undefined) =>
-    setFilters((prev) => ({
-      ...prev,
-      page: 1,
-      dateFrom: range?.from ? format(range.from, "yyyy-MM-dd") : null,
-      dateTo: range?.to ? format(range.to, "yyyy-MM-dd") : null,
-    }))
-
-  const hasActiveFilters = filters.search || filters.dateFrom || filters.dateTo || filters.types.length > 0
-
-  const onClearFilters = () =>
-    setFilters({ page: 1, search: "", dateFrom: null, dateTo: null, types: [] })
-
   const dateRange =
     filters.dateFrom || filters.dateTo
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
   return (
-    <div className="space-y-4 p-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{`${profile.firstName}'s medical expenses`}</h1>
-        <Button size="sm" onClick={() => setAddingExpense(true)}>
-          <Plus />
-          Add new
-        </Button>
-      </div>
-      <div className="flex items-center gap-2">
-        <SearchInput value={filters.search} onChange={onSearchChange} placeholder="Search expenses..." />
-        <DateRangePicker value={dateRange} onChange={onDateRangeChange} />
-        <MultiSelectFilter
-          label="Type"
-          options={EXPENSE_TYPE_OPTIONS}
-          selected={filters.types}
-          onChange={(types) => setFilters((prev) => ({ ...prev, page: 1, types }))}
-        />
-        {hasActiveFilters && (
-          <Button variant="ghost" size="sm" className="h-9" onClick={onClearFilters}>
-            Clear filters
-          </Button>
-        )}
-      </div>
-      {isLoading || !data ? (
-        <TableSkeleton rows={filters.pageSize} columns={columns.length} />
-      ) : (
-        <DataTable
-          columns={columns}
-          data={data}
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange}
-          pageSize={filters.pageSize}
-        />
-      )}
+    <TableTemplate
+      title={`${profile.firstName}'s medical expenses`}
+      columns={columns}
+      data={data}
+      isLoading={isLoading}
+      pageSize={filters.pageSize}
+      onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
+      onPageSizeChange={(pageSize) => setFilters((prev) => ({ ...prev, page: 1, pageSize }))}
+      onAddNew={() => setAddingExpense(true)}
+      filters={{
+        searchValue: filters.search,
+        onSearchChange: (search) => setFilters((prev) => ({ ...prev, page: 1, search })),
+        searchPlaceholder: "Search expenses...",
+        dateRange,
+        onDateRangeChange: (range: DateRange | undefined) =>
+          setFilters((prev) => ({
+            ...prev,
+            page: 1,
+            dateFrom: range?.from ? format(range.from, "yyyy-MM-dd") : null,
+            dateTo: range?.to ? format(range.to, "yyyy-MM-dd") : null,
+          })),
+        filterGroups: [
+          {
+            label: "Type",
+            options: EXPENSE_TYPE_OPTIONS,
+            selected: filters.types,
+            onChange: (types) => setFilters((prev) => ({ ...prev, page: 1, types })),
+          },
+        ],
+        hasActiveFilters: !!(filters.search || filters.dateFrom || filters.dateTo || filters.types.length > 0),
+        onClearFilters: () => setFilters({ page: 1, search: "", dateFrom: null, dateTo: null, types: [] }),
+      }}
+      deleteConfig={{
+        deletingId: deletingExpenseId,
+        onCancel: () => setDeletingExpenseId(null),
+        onConfirm: () => {
+          if (deletingExpenseId === null) return
+          deleteExpense(deletingExpenseId, { onSuccess: () => setDeletingExpenseId(null) })
+        },
+        isPending: isDeleting,
+      }}
+      modals={
+        <>
+          <Modal
+            open={addingExpense}
+            onOpenChange={(open) => { if (!open) setAddingExpense(false) }}
+            title="Add medical expense"
+            description="Fill in the details below to record a new medical expense."
+          >
+            <MedicalExpenseForm profileId={activeProfileId!} onClose={() => setAddingExpense(false)} />
+          </Modal>
 
-      <Modal
-        open={addingExpense}
-        onOpenChange={(open) => { if (!open) setAddingExpense(false) }}
-        title="Add medical expense"
-        description="Fill in the details below to record a new medical expense."
-      >
-        <AddMedicalExpenseForm profileId={activeProfileId!} onClose={() => setAddingExpense(false)} />
-      </Modal>
-
-      <Modal
-        open={deletingExpenseId !== null}
-        onOpenChange={(open) => { if (!open) setDeletingExpenseId(null) }}
-        title="Delete expense"
-        description="Are you sure you want to delete this expense? This action cannot be undone."
-      >
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setDeletingExpenseId(null)} disabled={isDeleting}>
-            Cancel
-          </Button>
-          <Button variant="destructive" onClick={onConfirmDelete} disabled={isDeleting}>
-            {isDeleting && <Loader2 className="animate-spin" />}
-            Delete
-          </Button>
-        </DialogFooter>
-      </Modal>
-    </div>
+          <Modal
+            open={editingExpense !== null}
+            onOpenChange={(open) => { if (!open) setEditingExpense(null) }}
+            title="Edit medical expense"
+            description="Update the details of the selected medical expense."
+          >
+            {editingExpense && (
+              <MedicalExpenseForm
+                profileId={activeProfileId!}
+                onClose={() => setEditingExpense(null)}
+                expense={editingExpense}
+              />
+            )}
+          </Modal>
+        </>
+      }
+    />
   )
 }
 
