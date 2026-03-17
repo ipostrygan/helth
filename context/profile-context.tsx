@@ -16,12 +16,14 @@ const ProfileContext = createContext<ProfileContextType>({
 })
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [activeProfileId, setActiveProfileIdState] = useState<string | null>(
-    () => typeof window !== "undefined" ? localStorage.getItem(LAST_PROFILE_KEY) : null
-  )
+  const [activeProfileId, setActiveProfileIdState] = useState<string | null>(null)
 
   useEffect(() => {
-    if (activeProfileId) return
+    const stored = localStorage.getItem(LAST_PROFILE_KEY)
+    if (stored) {
+      setActiveProfileIdState(stored)
+      return
+    }
 
     getAllProfiles().then(profiles => {
       const primary = profiles.find(p => p.isPrimaryUser) ?? profiles[0]
