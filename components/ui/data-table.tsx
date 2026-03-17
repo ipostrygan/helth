@@ -27,7 +27,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import { PaginatedResult } from "@/app/actions/medical-expenses"
+import type { PaginatedResult } from "@/types/table"
 import {
   Select,
   SelectContent,

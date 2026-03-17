@@ -1,5 +1,4 @@
-const formatCurrency = (value: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(value)
+import { formatCurrency } from "@/lib/utils"
 
 export type CustomTooltipProps = {
   active?: boolean

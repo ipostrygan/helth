@@ -9,6 +9,7 @@ import { useMedicalExpensesByType } from "../hooks/use-medical-expenses-by-type"
 import { EXPENSE_TYPE_LABELS } from "../constants"
 import { DateRangePicker } from "@/components/ui/date-range-picker"
 import { CustomTooltip } from "./custom-tooltip"
+import { formatCurrency } from "@/lib/utils"
 
 const COLORS = [
   "#93c5d8",
@@ -17,9 +18,6 @@ const COLORS = [
   "#f0c08a",
   "#f49bad",
 ]
-
-const formatCurrency = (value: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(value)
 
 const MedicalExpensesStatistics = () => {
   const { activeProfileId } = useActiveProfile()

@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { Therapy } from "@/lib/generated/prisma/client";
 import { SortDirection } from "@tanstack/react-table";
-import { PaginatedResult } from "./medical-expenses";
+import type { PaginatedResult } from "@/types/table";
 
 export type TherapiesQuery = {
   profileId?: string;

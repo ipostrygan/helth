@@ -1,4 +1,4 @@
-import type { PaginatedResult } from "@/app/actions/medical-expenses";
+import type { PaginatedResult } from "@/types/table";
 import type { MedicalExpense } from "@/lib/generated/prisma/client";
 
 export type MedicalExpensesParams = {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { PaginatedResult } from "@/app/actions/medical-expenses";
+import type { PaginatedResult } from "@/types/table";
 import type { MedicalExpense } from "@/lib/generated/prisma/client";
 import { getMedicalExpenses, type MedicalExpensesParams } from "@/lib/api/medical-expenses";
 

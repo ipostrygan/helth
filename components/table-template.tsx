@@ -12,7 +12,7 @@ import { DateRangePicker } from "@/components/ui/date-range-picker"
 import { MultiSelectFilter } from "@/components/ui/multi-select-filter"
 import { DialogFooter } from "@/components/ui/dialog"
 import { Modal } from "@/components/ui/modal"
-import { PaginatedResult } from "@/app/actions/medical-expenses"
+import type { PaginatedResult } from "@/types/table"
 
 export interface FilterGroupConfig {
   label: string
