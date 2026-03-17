@@ -108,12 +108,12 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-between px-1">
-        <p className="text-sm">
+      <div className="flex flex-col gap-3 px-1 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-center text-sm sm:text-left">
           Showing {rangeStart}–{rangeEnd} of {data.total} items
         </p>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
           <div className="flex items-center gap-2 text-sm">
             Rows per page:
             <Select
@@ -133,7 +133,7 @@ export function DataTable<TData, TValue>({
 
         <Pagination className="mx-0 w-auto justify-end">
           <PaginationContent>
-            <PaginationItem>
+            <PaginationItem className="hidden sm:list-item">
               <PaginationFirst
                 href="#"
                 onClick={(e) => { e.preventDefault(); onPageChange(1) }}
@@ -181,7 +181,7 @@ export function DataTable<TData, TValue>({
                 className={!canNext ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
-            <PaginationItem>
+            <PaginationItem className="hidden sm:list-item">
               <PaginationLast
                 href="#"
                 onClick={(e) => { e.preventDefault(); onPageChange(totalPages) }}

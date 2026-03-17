@@ -3,7 +3,7 @@
 import { CalendarIcon } from "lucide-react"
 import { type DateRange } from "react-day-picker"
 import { format } from "date-fns"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -27,6 +27,14 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState<DateRange | undefined>(value)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
 
   const handleOpenChange = (next: boolean) => {
     if (next) setDraft(value)
@@ -51,7 +59,7 @@ export function DateRangePicker({
           variant="outline"
           disabled={disabled}
           className={cn(
-            "w-64 justify-start gap-2 font-normal",
+            "w-full justify-start gap-2 font-normal sm:w-64",
             !value?.from && "text-muted-foreground",
             className
           )}
@@ -65,7 +73,7 @@ export function DateRangePicker({
           mode="range"
           selected={draft}
           onSelect={setDraft}
-          numberOfMonths={2}
+          numberOfMonths={isMobile ? 1 : 2}
           autoFocus
           resetOnSelect
         />

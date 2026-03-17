@@ -199,7 +199,7 @@ const TherapiesPage = () => {
       onAddNew={() => router.push("/therapies/create")}
       addNewLabel="Add Therapy"
       title={`${profile.firstName}'s Therapies`}
-      description="Track your therapy sessions and progress"
+      description="Ongoing and finished therapy sessions"
       columns={columns}
       data={data}
       isLoading={isLoading}

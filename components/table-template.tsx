@@ -86,7 +86,7 @@ export function TableTemplate<TData>({
       </div>
 
       {filters && (
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {filters.onSearchChange && (
             <SearchInput
               value={filters.searchValue ?? ""}

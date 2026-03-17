@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CalendarDays, Stethoscope, Receipt, Sparkles, BriefcaseMedical } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./ui/sidebar";
+import { X } from "lucide-react";
+import { Button } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
 
 export const MENU_ITEMS = [
@@ -31,17 +33,23 @@ export const MENU_ITEMS = [
 
 function AppSidebar() {
   const pathname = usePathname()
+  const { isMobile, setOpenMobile } = useSidebar()
 
   return (
-    <Sidebar>
-      <SidebarHeader className="mb-6 font-semibold text-xl p-4">
-        <BriefcaseMedical />
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="mb-6 font-semibold text-xl p-4 flex flex-row items-center justify-between">
+        <Link href="/"><BriefcaseMedical /></Link>
+        {isMobile && (
+          <Button variant="ghost" size="icon" onClick={() => setOpenMobile(false)}>
+            <X />
+          </Button>
+        )}
       </SidebarHeader>
       <SidebarContent className="p-2">
         <SidebarMenu>
           {MENU_ITEMS.map(({ href, name, icon: Icon }) => (
             <SidebarMenuItem key={href}>
-              <SidebarMenuButton asChild isActive={pathname === href}>
+              <SidebarMenuButton asChild isActive={pathname === href} tooltip={name}>
                 <Link href={href}>
                   <Icon />
                   {name}
