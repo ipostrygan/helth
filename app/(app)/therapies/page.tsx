@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Therapy } from "@/lib/generated/prisma/client"
 import { useActiveProfile } from "@/context/profile-context"
@@ -28,6 +29,7 @@ const IS_ACTIVE_OPTIONS = [
 ]
 
 const TherapiesPage = () => {
+  const router = useRouter()
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
@@ -172,6 +174,9 @@ const TherapiesPage = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem onSelect={() => router.push(`/therapies/${row.original.id}/edit`)}>
+              Edit
+            </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
               onSelect={() => setDeletingId(row.original.id)}
@@ -191,6 +196,8 @@ const TherapiesPage = () => {
 
   return (
     <TableTemplate
+      onAddNew={() => router.push("/therapies/create")}
+      addNewLabel="Add Therapy"
       title={`${profile.firstName}'s Therapies`}
       description="Track your therapy sessions and progress"
       columns={columns}

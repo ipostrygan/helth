@@ -11,11 +11,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <ProfileProvider>
       <SidebarProvider>
         <AppSidebar />
-        <div className="flex-1">
-          <header className="bg-card px-2 h-18 flex items-center justify-end">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <header className="bg-card px-2 h-18 flex items-center justify-end shrink-0 z-10">
             <ProfileSwitcher profiles={profiles} />
           </header>
-          <main className="p-4">
+          <main className="p-4 overflow-y-auto flex-1">
             {children}
           </main>
         </div>

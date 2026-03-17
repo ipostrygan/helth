@@ -51,3 +51,9 @@ export async function deleteTherapy(id: string): Promise<void> {
   const res = await fetch(`/api/therapies/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete therapy");
 }
+
+export async function getTherapy(id: string): Promise<Therapy> {
+  const res = await fetch(`/api/therapies/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch therapy");
+  return res.json();
+}

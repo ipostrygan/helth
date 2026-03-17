@@ -70,3 +70,49 @@ export const getTherapies = async ({
 export const deleteTherapy = async (id: string): Promise<void> => {
   await prisma.therapy.delete({ where: { id } });
 };
+
+export type CreateTherapyInput = {
+  userId: string;
+  title: string;
+  description?: string;
+  startDate: Date;
+  endDate?: Date;
+  therapistName?: string;
+  therapistInfoLink?: string;
+  location?: string;
+  isActive: boolean;
+};
+
+export const createTherapy = async (input: CreateTherapyInput): Promise<void> => {
+  try {
+    await prisma.therapy.create({ data: input });
+  } catch (e) {
+    console.error(e);
+    throw new Error(e instanceof Error ? e.message : "Failed to create therapy");
+  }
+};
+
+export type UpdateTherapyInput = {
+  id: string;
+  title?: string;
+  description?: string;
+  startDate?: Date;
+  endDate?: Date;
+  therapistName?: string;
+  therapistInfoLink?: string;
+  location?: string;
+  isActive?: boolean;
+};
+
+export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput): Promise<void> => {
+  try {
+    await prisma.therapy.update({ where: { id }, data });
+  } catch (e) {
+    console.error(e);
+    throw new Error(e instanceof Error ? e.message : "Failed to update therapy");
+  }
+};
+
+export const getTherapyById = async (id: string): Promise<Therapy | null> => {
+  return prisma.therapy.findUnique({ where: { id } });
+};

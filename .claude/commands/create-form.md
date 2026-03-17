@@ -395,7 +395,7 @@ const {ModelName}Form = ({ profileId, onClose, {modelName} }: {ModelName}FormPro
   const { mutateAsync: create{ModelName} } = useCreate{ModelName}()
   const { mutateAsync: edit{ModelName} } = useEdit{ModelName}()
   // calendar open state if any DateTime fields
-  const { control, register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
+  const { control, register, handleSubmit, formState: { errors, isSubmitting, isDirty, isValid } } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {modelName} ? { /* map fields */ } : undefined,
   })
@@ -418,7 +418,7 @@ const {ModelName}Form = ({ profileId, onClose, {modelName} }: {ModelName}FormPro
         <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
-        <Button type="submit" isPending={isSubmitting}>
+        <Button type="submit" isPending={isSubmitting} disabled={!isDirty || !isValid}>
           {isEditMode ? "Save" : "Submit"}
         </Button>
       </DialogFooter>
@@ -460,7 +460,7 @@ const {ModelName}Form = ({ profileId, {modelName} }: {ModelName}FormProps) => {
   const { mutateAsync: create{ModelName} } = useCreate{ModelName}()
   const { mutateAsync: edit{ModelName} } = useEdit{ModelName}()
   // calendar open state if DateTime fields
-  const { control, register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
+  const { control, register, handleSubmit, formState: { errors, isSubmitting, isDirty, isValid } } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {modelName} ? { /* map fields */ } : undefined,
   })
@@ -499,6 +499,7 @@ const {ModelName}Form = ({ profileId, {modelName} }: {ModelName}FormProps) => {
             type="submit"
             form="{model-name}-form"
             isPending={isSubmitting}
+            disabled={!isDirty || !isValid}
           >
             {isEditMode ? "Save" : "Submit"}
           </Button>
