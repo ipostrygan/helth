@@ -1,0 +1,72 @@
+"use server";
+
+import prisma from "@/lib/prisma";
+import { Therapy } from "@/lib/generated/prisma/client";
+import { SortDirection } from "@tanstack/react-table";
+import { PaginatedResult } from "./medical-expenses";
+
+export type TherapiesQuery = {
+  profileId?: string;
+  page?: number;
+  pageSize?: number;
+  sortField?: keyof Therapy;
+  sortDirection?: SortDirection;
+  search?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  isActive?: string[];
+};
+
+export const getTherapies = async ({
+  profileId,
+  page = 1,
+  pageSize = 10,
+  sortField = "startDate",
+  sortDirection = "desc",
+  search = "",
+  dateFrom,
+  dateTo,
+  isActive,
+}: TherapiesQuery = {}): Promise<PaginatedResult<Therapy>> => {
+  const skip = (page - 1) * pageSize;
+  const where = {
+    ...(profileId ? { userId: profileId } : {}),
+    ...(search ? {
+      OR: [
+        { title: { contains: search, mode: "insensitive" as const } },
+        { description: { contains: search, mode: "insensitive" as const } },
+        { therapistName: { contains: search, mode: "insensitive" as const } },
+        { location: { contains: search, mode: "insensitive" as const } },
+      ],
+    } : {}),
+    ...(dateFrom || dateTo ? {
+      startDate: {
+        ...(dateFrom ? { gte: new Date(dateFrom) } : {}),
+        ...(dateTo ? { lte: new Date(dateTo) } : {}),
+      },
+    } : {}),
+    ...(isActive && isActive.length === 1 ? { isActive: isActive[0] === "true" } : {}),
+  };
+
+  const [data, total] = await prisma.$transaction([
+    prisma.therapy.findMany({
+      where,
+      skip,
+      take: pageSize,
+      orderBy: { [sortField]: sortDirection },
+    }),
+    prisma.therapy.count({ where }),
+  ]);
+
+  return {
+    data,
+    total,
+    page,
+    pageSize,
+    totalPages: Math.ceil(total / pageSize),
+  };
+};
+
+export const deleteTherapy = async (id: string): Promise<void> => {
+  await prisma.therapy.delete({ where: { id } });
+};

@@ -64,8 +64,14 @@ function Button({
       disabled={disabled || isPending}
       {...props}
     >
-      {isPending && <Loader2 className="animate-spin" />}
-      {children}
+      {asChild ? (
+        children
+      ) : (
+        <>
+          {isPending && <Loader2 className="animate-spin" />}
+          {children}
+        </>
+      )}
     </Comp>
   )
 }

@@ -41,6 +41,7 @@ export interface DeleteConfig {
 
 interface TableTemplateProps<TData> {
   title: string
+  description?: string
   columns: ColumnDef<TData>[]
   data: PaginatedResult<TData> | undefined
   isLoading: boolean
@@ -56,6 +57,7 @@ interface TableTemplateProps<TData> {
 
 export function TableTemplate<TData>({
   title,
+  description,
   columns,
   data,
   isLoading,
@@ -71,7 +73,10 @@ export function TableTemplate<TData>({
   return (
     <div className="space-y-4 p-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{title}</h1>
+        <div>
+          <h1 className="text-xl font-semibold">{title}</h1>
+          {description && <p className="text-sm text-muted-foreground">{description}</p>}
+        </div>
         {onAddNew && (
           <Button size="sm" onClick={onAddNew}>
             <Plus />

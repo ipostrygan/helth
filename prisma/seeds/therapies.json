@@ -1,0 +1,2002 @@
+[
+  {
+    "title": "Physical Therapy - Lower Back",
+    "description": "Rehabilitation for chronic lower back pain including exercises and manual therapy.",
+    "startDate": "2022-01-10",
+    "endDate": "2022-04-10",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Knee Recovery",
+    "description": "Post-operative knee rehabilitation after meniscus surgery.",
+    "startDate": "2022-03-15",
+    "endDate": "2022-07-15",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Shoulder Impingement",
+    "description": "Treatment for shoulder impingement syndrome with targeted strengthening exercises.",
+    "startDate": "2022-06-01",
+    "endDate": "2022-09-01",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Posture Correction",
+    "description": "Corrective therapy addressing kyphosis and forward head posture.",
+    "startDate": "2022-09-10",
+    "endDate": "2022-12-10",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Hip Flexor Strain",
+    "description": "Recovery from hip flexor strain with manual therapy and stretching protocol.",
+    "startDate": "2022-11-05",
+    "endDate": "2023-02-05",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Cervical Spine",
+    "description": "Cervical spine decompression and mobilization therapy.",
+    "startDate": "2023-01-20",
+    "endDate": "2023-04-20",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Ankle Sprain",
+    "description": "Rehabilitation after grade 2 lateral ankle sprain.",
+    "startDate": "2023-04-05",
+    "endDate": "2023-06-05",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Wrist Tendinitis",
+    "description": "Treatment for repetitive strain injury in the wrist tendons.",
+    "startDate": "2023-07-10",
+    "endDate": "2023-09-10",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Lumbar Disc",
+    "description": "Conservative management of lumbar disc herniation through targeted exercise.",
+    "startDate": "2023-10-01",
+    "endDate": "2024-01-01",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Rotator Cuff",
+    "description": "Strengthening and mobility restoration for partial rotator cuff tear.",
+    "startDate": "2024-02-10",
+    "endDate": "2024-06-10",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - IT Band Syndrome",
+    "description": "Treatment for iliotibial band friction syndrome in a runner.",
+    "startDate": "2024-07-01",
+    "endDate": "2024-10-01",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Plantar Fasciitis",
+    "description": "Ultrasound, stretching and orthotics for plantar fasciitis.",
+    "startDate": "2024-11-15",
+    "endDate": null,
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Post-Partum Core",
+    "description": "Pelvic floor and core rehabilitation after childbirth.",
+    "startDate": "2025-03-01",
+    "endDate": "2025-07-01",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Family Health Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Sciatica",
+    "description": "Neural mobilization and core stabilization for sciatic nerve pain.",
+    "startDate": "2025-08-10",
+    "endDate": "2025-11-10",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Thoracic Mobility",
+    "description": "Mobility work and joint mobilization for thoracic stiffness.",
+    "startDate": "2025-12-01",
+    "endDate": null,
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Sports Massage Therapy",
+    "description": "Regular deep tissue massage sessions for muscle recovery and tension relief.",
+    "startDate": "2022-02-01",
+    "endDate": "2022-05-01",
+    "therapistName": "Vasyl Hrytsenko",
+    "location": "FitLife Wellness Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Swedish Massage Therapy",
+    "description": "Relaxation massage for stress relief and improved circulation.",
+    "startDate": "2022-06-10",
+    "endDate": "2022-09-10",
+    "therapistName": "Tetyana Karpenko",
+    "location": "Therapeutic Spa & Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Lymphatic Drainage Massage",
+    "description": "Manual lymphatic drainage to reduce swelling and support immune function.",
+    "startDate": "2022-10-05",
+    "endDate": "2022-12-05",
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Trigger Point Massage",
+    "description": "Targeted myofascial release for chronic trigger points in neck and shoulders.",
+    "startDate": "2023-01-15",
+    "endDate": "2023-03-15",
+    "therapistName": "Vasyl Hrytsenko",
+    "location": "FitLife Wellness Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Prenatal Massage Therapy",
+    "description": "Specialized massage to relieve pregnancy discomfort and improve sleep.",
+    "startDate": "2023-04-20",
+    "endDate": "2023-07-20",
+    "therapistName": "Tetyana Karpenko",
+    "location": "Therapeutic Spa & Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Deep Tissue Massage",
+    "description": "Intensive deep tissue work for chronic muscle tightness and adhesions.",
+    "startDate": "2023-08-01",
+    "endDate": "2023-10-01",
+    "therapistName": "Vasyl Hrytsenko",
+    "location": "FitLife Wellness Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Hot Stone Massage",
+    "description": "Thermotherapy combined with massage for deep muscle relaxation.",
+    "startDate": "2024-01-10",
+    "endDate": "2024-03-10",
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Sports Massage - Marathon Training",
+    "description": "Weekly sports massage during marathon training block for recovery support.",
+    "startDate": "2024-04-01",
+    "endDate": "2024-07-01",
+    "therapistName": "Vasyl Hrytsenko",
+    "location": "FitLife Wellness Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Myofascial Release Therapy",
+    "description": "Sustained pressure techniques to release fascial restrictions and improve mobility.",
+    "startDate": "2024-09-15",
+    "endDate": null,
+    "therapistName": "Tetyana Karpenko",
+    "location": "Therapeutic Spa & Clinic",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Cognitive Behavioral Therapy",
+    "description": "CBT sessions focused on stress management and anxiety reduction.",
+    "startDate": "2022-02-15",
+    "endDate": "2022-08-15",
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "CBT - Insomnia Treatment",
+    "description": "CBT-I protocol for chronic insomnia including sleep restriction and stimulus control.",
+    "startDate": "2022-09-01",
+    "endDate": "2022-11-01",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Psychotherapy - Individual Sessions",
+    "description": "Exploratory psychotherapy addressing work burnout and identity concerns.",
+    "startDate": "2022-11-10",
+    "endDate": "2023-05-10",
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "CBT - Panic Disorder",
+    "description": "Structured CBT program for panic disorder with interoceptive exposure exercises.",
+    "startDate": "2023-02-01",
+    "endDate": "2023-06-01",
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "EMDR Therapy",
+    "description": "Eye Movement Desensitization and Reprocessing for trauma processing.",
+    "startDate": "2023-06-15",
+    "endDate": "2023-12-15",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Schema Therapy",
+    "description": "Schema-focused therapy addressing maladaptive early life patterns.",
+    "startDate": "2023-08-01",
+    "endDate": "2024-02-01",
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acceptance and Commitment Therapy",
+    "description": "ACT sessions to improve psychological flexibility and value-based living.",
+    "startDate": "2024-03-10",
+    "endDate": "2024-09-10",
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "CBT - Social Anxiety",
+    "description": "Graduated exposure and cognitive restructuring for social anxiety disorder.",
+    "startDate": "2024-10-01",
+    "endDate": null,
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Couples Therapy",
+    "description": "Gottman method couples therapy to improve communication and connection.",
+    "startDate": "2024-11-01",
+    "endDate": null,
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Grief Counseling",
+    "description": "Supportive therapy for processing loss and navigating bereavement.",
+    "startDate": "2025-01-15",
+    "endDate": "2025-05-15",
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Dialectical Behavior Therapy",
+    "description": "DBT skills training focusing on distress tolerance and emotional regulation.",
+    "startDate": "2025-06-01",
+    "endDate": "2025-12-01",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Mindfulness-Based Stress Reduction",
+    "description": "8-week MBSR program with meditation, body scan and mindful movement.",
+    "startDate": "2025-09-01",
+    "endDate": null,
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Nutritional Therapy - Weight Management",
+    "description": "Personalized nutrition planning and dietary coaching for sustainable weight loss.",
+    "startDate": "2022-03-01",
+    "endDate": "2022-09-01",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Gut Health",
+    "description": "Elimination diet and microbiome support for irritable bowel symptoms.",
+    "startDate": "2022-10-01",
+    "endDate": "2023-01-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "HealthFirst Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Nutritional Therapy - Athletic Performance",
+    "description": "Periodized nutrition planning aligned with training load and competition schedule.",
+    "startDate": "2023-01-10",
+    "endDate": "2023-07-10",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Prenatal",
+    "description": "Evidence-based prenatal nutrition support and supplementation guidance.",
+    "startDate": "2023-05-01",
+    "endDate": "2023-11-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "HealthFirst Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Nutritional Therapy - Hormone Balance",
+    "description": "Dietary interventions to support hormonal balance and thyroid function.",
+    "startDate": "2023-12-01",
+    "endDate": "2024-05-01",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Nutritional Therapy - Anti-Inflammatory Diet",
+    "description": "Structured anti-inflammatory eating plan to reduce joint pain and inflammation markers.",
+    "startDate": "2024-06-01",
+    "endDate": "2024-11-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "HealthFirst Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Post-Natal Recovery",
+    "description": "Nutritional rehabilitation and lactation support after delivery.",
+    "startDate": "2025-01-10",
+    "endDate": "2025-05-10",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Nutritional Therapy - Metabolic Health",
+    "description": "Carbohydrate tolerance assessment and metabolic optimization program.",
+    "startDate": "2025-07-01",
+    "endDate": null,
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "HealthFirst Clinic",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Chiropractic Therapy - Lumbar",
+    "description": "Spinal manipulation and mobilization for lumbar pain and restricted motion.",
+    "startDate": "2022-04-01",
+    "endDate": "2022-07-01",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Chiropractic Therapy - Cervical Adjustment",
+    "description": "Cervical manipulation for neck stiffness and tension headaches.",
+    "startDate": "2022-08-10",
+    "endDate": "2022-10-10",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Chiropractic Therapy - Sacroiliac Joint",
+    "description": "Manipulation and stabilization exercises for SI joint dysfunction.",
+    "startDate": "2023-02-15",
+    "endDate": "2023-05-15",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Chiropractic Therapy - Thoracic",
+    "description": "Thoracic spine adjustments for mid-back pain and rib mobility.",
+    "startDate": "2023-07-01",
+    "endDate": "2023-09-01",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Chiropractic Therapy - Scoliosis Management",
+    "description": "Ongoing chiropractic care and exercise program for mild scoliosis.",
+    "startDate": "2023-10-01",
+    "endDate": "2024-04-01",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Chiropractic Therapy - Extremity Adjustment",
+    "description": "Ankle and foot joint manipulation for chronic instability.",
+    "startDate": "2024-05-01",
+    "endDate": "2024-07-01",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Chiropractic Therapy - Pregnancy Support",
+    "description": "Webster technique for optimal fetal positioning and pelvic balance.",
+    "startDate": "2024-08-01",
+    "endDate": "2024-11-01",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Chiropractic Therapy - Maintenance Care",
+    "description": "Monthly maintenance adjustments for spinal health and injury prevention.",
+    "startDate": "2025-02-01",
+    "endDate": null,
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Chronic Pain",
+    "description": "Traditional acupuncture targeting chronic musculoskeletal pain points.",
+    "startDate": "2022-05-01",
+    "endDate": "2022-08-01",
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Migraine Prevention",
+    "description": "Preventive acupuncture protocol to reduce migraine frequency and severity.",
+    "startDate": "2022-09-01",
+    "endDate": "2022-12-01",
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Acupuncture - Fertility Support",
+    "description": "Acupuncture protocol to support hormonal balance and reproductive health.",
+    "startDate": "2023-03-01",
+    "endDate": "2023-07-01",
+    "therapistName": "Ivan Rudenko",
+    "location": "Lviv Therapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Acupuncture - Stress and Anxiety",
+    "description": "Auricular and body acupuncture for stress modulation and nervous system regulation.",
+    "startDate": "2023-08-10",
+    "endDate": "2023-11-10",
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Back Pain Relief",
+    "description": "Electroacupuncture for lumbar pain and nerve root irritation.",
+    "startDate": "2024-01-20",
+    "endDate": "2024-04-20",
+    "therapistName": "Ivan Rudenko",
+    "location": "Lviv Therapy Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Insomnia",
+    "description": "Acupuncture points targeting sleep quality and circadian rhythm regulation.",
+    "startDate": "2024-05-15",
+    "endDate": "2024-08-15",
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Acupuncture - Post-Natal Recovery",
+    "description": "Acupuncture for postpartum energy restoration and mood stabilization.",
+    "startDate": "2025-01-01",
+    "endDate": "2025-04-01",
+    "therapistName": "Ivan Rudenko",
+    "location": "Lviv Therapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Acupuncture - Seasonal Maintenance",
+    "description": "Quarterly acupuncture sessions aligned with seasonal transitions for preventive health.",
+    "startDate": "2025-10-01",
+    "endDate": null,
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Yoga Therapy - Stress Relief",
+    "description": "Yin yoga and restorative poses for parasympathetic nervous system activation.",
+    "startDate": "2022-03-10",
+    "endDate": "2022-06-10",
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Yoga Therapy - Back Pain",
+    "description": "Therapeutic yoga targeting spinal alignment and core support for back pain.",
+    "startDate": "2022-07-01",
+    "endDate": "2022-10-01",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Prenatal Yoga Therapy",
+    "description": "Guided yoga and breathing exercises tailored for prenatal wellness.",
+    "startDate": "2022-11-01",
+    "endDate": "2023-02-01",
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Yoga Therapy - Anxiety Management",
+    "description": "Pranayama and asana sequences for anxiety regulation and mental clarity.",
+    "startDate": "2023-03-15",
+    "endDate": "2023-06-15",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Yoga Therapy - Hip Opening",
+    "description": "Targeted hip flexor and glute release sequences for runners.",
+    "startDate": "2023-09-01",
+    "endDate": "2023-12-01",
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Pilates Therapy - Core Rehabilitation",
+    "description": "Clinical pilates for deep core activation and lumbar spine stability.",
+    "startDate": "2024-01-05",
+    "endDate": "2024-05-05",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Family Health Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Pilates Therapy - Scoliosis",
+    "description": "Scoliosis-specific pilates exercises to improve spinal symmetry and strength.",
+    "startDate": "2024-06-01",
+    "endDate": "2024-10-01",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Pilates Therapy - Post-Natal",
+    "description": "Diastasis recti rehabilitation and progressive return-to-exercise pilates.",
+    "startDate": "2024-11-01",
+    "endDate": "2025-03-01",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Family Health Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Yoga Therapy - Ongoing Maintenance",
+    "description": "Weekly therapeutic yoga for mobility, stress management and mindfulness.",
+    "startDate": "2025-04-01",
+    "endDate": null,
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Hydrotherapy - Joint Rehabilitation",
+    "description": "Warm pool exercises for reduced load joint rehabilitation.",
+    "startDate": "2022-05-15",
+    "endDate": "2022-08-15",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Hydrotherapy - Fibromyalgia",
+    "description": "Warm water therapy for pain management and fatigue in fibromyalgia.",
+    "startDate": "2022-09-20",
+    "endDate": "2022-12-20",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Hydrotherapy - Aqua Aerobics",
+    "description": "Low-impact aqua aerobics for cardiovascular conditioning and joint health.",
+    "startDate": "2023-04-01",
+    "endDate": "2023-07-01",
+    "therapistName": "Pavlo Sydorenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Hydrotherapy - Contrast Baths",
+    "description": "Alternating hot and cold water immersion for circulatory stimulation.",
+    "startDate": "2023-10-10",
+    "endDate": "2024-01-10",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Hydrotherapy - Post-Surgical",
+    "description": "Aquatic therapy for gait retraining and strength restoration after surgery.",
+    "startDate": "2024-03-01",
+    "endDate": "2024-06-01",
+    "therapistName": "Pavlo Sydorenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Hydrotherapy - Chronic Back Pain",
+    "description": "Warm water suspension exercises for spinal decompression and pain relief.",
+    "startDate": "2025-01-20",
+    "endDate": null,
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "AquaTherapy Center",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Occupational Therapy - Hand Function",
+    "description": "Fine motor retraining and adaptive strategies after wrist fracture.",
+    "startDate": "2022-06-01",
+    "endDate": "2022-09-01",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Occupational Therapy - Ergonomics",
+    "description": "Workstation ergonomic assessment and retraining for office workers.",
+    "startDate": "2023-01-05",
+    "endDate": "2023-03-05",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Occupational Therapy - Fatigue Management",
+    "description": "Energy conservation strategies and activity pacing for chronic fatigue.",
+    "startDate": "2023-07-10",
+    "endDate": "2023-10-10",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Occupational Therapy - Sensory Processing",
+    "description": "Sensory integration activities to improve attention and daily functioning.",
+    "startDate": "2024-02-01",
+    "endDate": "2024-05-01",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Occupational Therapy - Return to Work",
+    "description": "Graded return-to-work program after long-term illness absence.",
+    "startDate": "2024-09-01",
+    "endDate": "2024-12-01",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Osteopathic Manipulation Therapy",
+    "description": "Full-body osteopathic assessment and treatment for musculoskeletal complaints.",
+    "startDate": "2022-07-01",
+    "endDate": "2022-10-01",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Osteopathic Therapy - Craniosacral",
+    "description": "Gentle craniosacral techniques for headache relief and nervous system balance.",
+    "startDate": "2022-11-01",
+    "endDate": "2023-01-01",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "Kharkiv Medical Institute",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Osteopathic Therapy - Visceral",
+    "description": "Visceral manipulation for digestive complaints and abdominal tension.",
+    "startDate": "2023-03-01",
+    "endDate": "2023-06-01",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Osteopathic Therapy - Postural Assessment",
+    "description": "Comprehensive postural analysis and soft tissue treatment for imbalances.",
+    "startDate": "2023-09-01",
+    "endDate": "2023-11-01",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "Kharkiv Medical Institute",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Osteopathic Therapy - Sports Performance",
+    "description": "Optimizing tissue mechanics and joint mobility for athletic performance.",
+    "startDate": "2024-04-01",
+    "endDate": "2024-07-01",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Osteopathic Therapy - Pregnancy",
+    "description": "Gentle osteopathic treatment for round ligament pain and pelvic instability.",
+    "startDate": "2024-08-15",
+    "endDate": "2024-11-15",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "Kharkiv Medical Institute",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Art Therapy - Emotional Expression",
+    "description": "Visual art-making as a therapeutic medium for emotional processing.",
+    "startDate": "2022-08-01",
+    "endDate": "2022-11-01",
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Therapeutic Arts Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Art Therapy - Trauma Processing",
+    "description": "Non-verbal trauma processing through drawing, painting and collage.",
+    "startDate": "2023-02-10",
+    "endDate": "2023-06-10",
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Therapeutic Arts Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Music Therapy - Mood Regulation",
+    "description": "Active and receptive music therapy techniques for mood stabilization.",
+    "startDate": "2023-07-01",
+    "endDate": "2023-10-01",
+    "therapistName": "Pavlo Sydorenko",
+    "location": "Therapeutic Arts Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Dance Movement Therapy",
+    "description": "Somatic movement therapy to integrate body awareness and emotional expression.",
+    "startDate": "2024-01-15",
+    "endDate": "2024-04-15",
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Therapeutic Arts Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Art Therapy - Ongoing",
+    "description": "Continuing art therapy for self-discovery and creative wellness.",
+    "startDate": "2025-02-01",
+    "endDate": null,
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Therapeutic Arts Studio",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Kinesiology - Muscle Testing",
+    "description": "Applied kinesiology and muscle testing for structural and nutritional imbalances.",
+    "startDate": "2022-09-10",
+    "endDate": "2022-12-10",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Kinesiology - Stress Management",
+    "description": "Kinesiology techniques for identifying and clearing stress-related blocks.",
+    "startDate": "2023-04-01",
+    "endDate": "2023-07-01",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Kinesiology - Performance Enhancement",
+    "description": "Sports kinesiology to optimise neuromuscular coordination and athletic output.",
+    "startDate": "2023-11-01",
+    "endDate": "2024-02-01",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Speech Therapy - Voice Rehabilitation",
+    "description": "Vocal exercises and techniques for voice strain recovery.",
+    "startDate": "2022-10-01",
+    "endDate": "2022-12-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Speech Therapy - Stuttering",
+    "description": "Fluency shaping and stuttering modification therapy program.",
+    "startDate": "2023-05-01",
+    "endDate": "2023-09-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Speech Therapy - Language Skills",
+    "description": "Adult language therapy following neurological event affecting word retrieval.",
+    "startDate": "2024-07-01",
+    "endDate": "2024-11-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Lymphatic Drainage - Post-Surgery",
+    "description": "MLD therapy after abdominal surgery to reduce fluid retention and scarring.",
+    "startDate": "2022-07-20",
+    "endDate": "2022-09-20",
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Lymphatic Drainage - Immune Support",
+    "description": "Gentle lymphatic drainage to support immune function during recovery.",
+    "startDate": "2023-01-10",
+    "endDate": "2023-03-10",
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Lymphatic Drainage - Detox Program",
+    "description": "Series of lymphatic drainage sessions as part of seasonal detox protocol.",
+    "startDate": "2024-03-01",
+    "endDate": "2024-05-01",
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Mindfulness-Based Cognitive Therapy",
+    "description": "MBCT program combining mindfulness practices with cognitive therapy for recurrent depression.",
+    "startDate": "2022-04-01",
+    "endDate": "2022-06-01",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Mindfulness Meditation Therapy",
+    "description": "Structured mindfulness meditation program for chronic pain management.",
+    "startDate": "2022-08-01",
+    "endDate": "2022-10-01",
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Biofeedback Therapy",
+    "description": "Guided biofeedback sessions for heart rate variability training and stress reduction.",
+    "startDate": "2023-02-01",
+    "endDate": "2023-05-01",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Biofeedback - Muscle Tension",
+    "description": "EMG biofeedback training for chronic tension headache and jaw clenching.",
+    "startDate": "2023-09-15",
+    "endDate": "2023-12-15",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Respiratory Physiotherapy",
+    "description": "Breathing exercises and airway clearance techniques for recurrent bronchitis.",
+    "startDate": "2022-11-10",
+    "endDate": "2023-01-10",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Respiratory Therapy - Asthma Management",
+    "description": "Inspiratory muscle training and breathing pattern retraining for asthma.",
+    "startDate": "2023-05-15",
+    "endDate": "2023-08-15",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Respiratory Therapy - Post-COVID Recovery",
+    "description": "Structured pulmonary rehabilitation after COVID-19 to restore lung capacity.",
+    "startDate": "2024-02-01",
+    "endDate": "2024-05-01",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Cardiac Rehabilitation",
+    "description": "Supervised aerobic exercise and lifestyle counseling as part of cardiac rehab program.",
+    "startDate": "2022-08-20",
+    "endDate": "2022-12-20",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Cardiac Rehab - Phase 2",
+    "description": "Continued cardiac rehabilitation with progressive exercise intensity.",
+    "startDate": "2023-01-10",
+    "endDate": "2023-04-10",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Dermatological Therapy - Eczema",
+    "description": "Topical therapy protocol and lifestyle counseling for chronic eczema management.",
+    "startDate": "2022-09-01",
+    "endDate": "2022-12-01",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "Odessa Wellness Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Dermatological Therapy - Psoriasis",
+    "description": "Combination light therapy and topical treatments for psoriasis flares.",
+    "startDate": "2023-03-10",
+    "endDate": "2023-07-10",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "Odessa Wellness Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Neurological Rehabilitation",
+    "description": "Balance retraining and coordination exercises for vestibular dysfunction.",
+    "startDate": "2023-06-01",
+    "endDate": "2023-10-01",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "Kharkiv Medical Institute",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Vestibular Rehabilitation",
+    "description": "Canalith repositioning and habituation exercises for BPPV.",
+    "startDate": "2024-03-15",
+    "endDate": "2024-06-15",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "Kharkiv Medical Institute",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Vision Therapy",
+    "description": "Orthoptic exercises for convergence insufficiency and eye strain.",
+    "startDate": "2022-10-10",
+    "endDate": "2023-01-10",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Vision Therapy - Amblyopia",
+    "description": "Patching and visual exercises for amblyopia treatment.",
+    "startDate": "2023-08-01",
+    "endDate": "2023-12-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Psychotherapy - Burnout Recovery",
+    "description": "Structured psychotherapy addressing occupational burnout and loss of meaning.",
+    "startDate": "2025-01-10",
+    "endDate": null,
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Psychotherapy - Perinatal Mental Health",
+    "description": "Specialized psychotherapy for perinatal anxiety and prenatal depression.",
+    "startDate": "2025-03-01",
+    "endDate": null,
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Group Therapy - Stress Management",
+    "description": "Structured group psychotherapy program for work-related stress.",
+    "startDate": "2022-05-10",
+    "endDate": "2022-08-10",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Group Therapy - Grief Support",
+    "description": "Facilitated grief support group for processing loss.",
+    "startDate": "2022-11-01",
+    "endDate": "2023-02-01",
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Group Therapy - CBT for Depression",
+    "description": "Group-based CBT program focusing on behavioral activation for depression.",
+    "startDate": "2023-09-01",
+    "endDate": "2023-12-01",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Food Sensitivity",
+    "description": "Investigation and dietary management of food sensitivities and intolerances.",
+    "startDate": "2026-01-10",
+    "endDate": null,
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Running Mechanics",
+    "description": "Gait analysis and running retraining to prevent overuse injuries.",
+    "startDate": "2026-01-15",
+    "endDate": null,
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "CBT - Performance Anxiety",
+    "description": "Cognitive restructuring and exposure for performance anxiety at work.",
+    "startDate": "2026-02-01",
+    "endDate": null,
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Massage Therapy - Neck and Shoulders",
+    "description": "Targeted massage for upper trapezius and suboccipital tension.",
+    "startDate": "2026-02-10",
+    "endDate": null,
+    "therapistName": "Tetyana Karpenko",
+    "location": "Therapeutic Spa & Clinic",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Yoga Therapy - Restorative",
+    "description": "Restorative yoga with props for deep relaxation and nervous system recovery.",
+    "startDate": "2026-03-01",
+    "endDate": null,
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Elbow Tendinopathy",
+    "description": "Eccentric loading protocol for lateral epicondylitis (tennis elbow).",
+    "startDate": "2022-08-01",
+    "endDate": "2022-11-01",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Frozen Shoulder",
+    "description": "Grade III mobilization and stretching for adhesive capsulitis.",
+    "startDate": "2023-03-01",
+    "endDate": "2023-07-01",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Balance Training",
+    "description": "Proprioceptive and balance rehabilitation after vestibular episode.",
+    "startDate": "2023-11-01",
+    "endDate": "2024-02-01",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Digestive Health",
+    "description": "Acupuncture protocol targeting spleen and stomach meridians for bloating and IBS.",
+    "startDate": "2024-06-01",
+    "endDate": "2024-09-01",
+    "therapistName": "Ivan Rudenko",
+    "location": "Lviv Therapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Chiropractic - Functional Movement",
+    "description": "FMS-guided chiropractic care to correct movement dysfunction.",
+    "startDate": "2025-04-01",
+    "endDate": "2025-07-01",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Mindfulness - Chronic Pain Program",
+    "description": "8-week pain management program combining mindfulness and pain neuroscience education.",
+    "startDate": "2024-10-01",
+    "endDate": "2024-12-01",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Hydrotherapy - Pregnancy",
+    "description": "Warm water therapy for back pain relief and relaxation during pregnancy.",
+    "startDate": "2025-05-01",
+    "endDate": "2025-08-01",
+    "therapistName": "Pavlo Sydorenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Nutritional Therapy - Sports Recovery",
+    "description": "Recovery nutrition planning and supplementation strategy for endurance training.",
+    "startDate": "2025-08-01",
+    "endDate": "2025-12-01",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Kinesiology - Post-Injury Return",
+    "description": "Applied kinesiology assessment for return to sport after hamstring strain.",
+    "startDate": "2025-09-01",
+    "endDate": "2025-11-01",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Psychotherapy - Life Transitions",
+    "description": "Supportive therapy navigating major life transitions including relocation and career change.",
+    "startDate": "2025-10-01",
+    "endDate": null,
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Pilates Therapy - Spinal Decompression",
+    "description": "Reformer pilates for spinal elongation and disc health maintenance.",
+    "startDate": "2025-11-01",
+    "endDate": null,
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Occupational Therapy - ADHD Strategies",
+    "description": "Cognitive strategies and environmental modifications to support ADHD in adulthood.",
+    "startDate": "2025-06-01",
+    "endDate": "2025-09-01",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Osteopathic - Post-Natal",
+    "description": "Cranial and pelvic osteopathic treatment following vaginal delivery.",
+    "startDate": "2025-12-10",
+    "endDate": null,
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Acupuncture - Hormonal Balance",
+    "description": "Acupuncture for PMS symptom management and menstrual cycle regulation.",
+    "startDate": "2026-01-05",
+    "endDate": null,
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Patellar Tendinopathy",
+    "description": "Heavy slow resistance training protocol for patellar tendinopathy.",
+    "startDate": "2025-07-01",
+    "endDate": "2025-10-01",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Massage Therapy - Post-Marathon Recovery",
+    "description": "Intensive recovery massage after marathon race to accelerate muscle repair.",
+    "startDate": "2025-05-15",
+    "endDate": "2025-06-15",
+    "therapistName": "Vasyl Hrytsenko",
+    "location": "FitLife Wellness Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Bone Health",
+    "description": "Dietary calcium and vitamin D optimization for bone density maintenance.",
+    "startDate": "2025-04-01",
+    "endDate": "2025-08-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "HealthFirst Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Lymphatic Drainage - Ongoing",
+    "description": "Bi-weekly lymphatic drainage for general wellness and immune support.",
+    "startDate": "2026-02-15",
+    "endDate": null,
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Biofeedback - Anxiety",
+    "description": "Thermal biofeedback and HRV training for autonomic regulation in anxiety.",
+    "startDate": "2026-01-20",
+    "endDate": null,
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Yoga Therapy - Pregnancy",
+    "description": "Second trimester yoga supporting comfort and preparation for birth.",
+    "startDate": "2026-02-20",
+    "endDate": null,
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Chiropractic - Thoracolumbar Adjustment",
+    "description": "Regular adjustments for thoracolumbar fascia tension and range of motion.",
+    "startDate": "2026-03-05",
+    "endDate": null,
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Hydrotherapy - Arthritis Management",
+    "description": "Warm pool exercises for joint mobility and pain management in early arthritis.",
+    "startDate": "2025-09-10",
+    "endDate": "2025-12-10",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Music Therapy - Anxiety Reduction",
+    "description": "Guided music listening and rhythm-based activities for anxiety.",
+    "startDate": "2025-07-10",
+    "endDate": "2025-10-10",
+    "therapistName": "Pavlo Sydorenko",
+    "location": "Therapeutic Arts Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Dance Movement Therapy - Ongoing",
+    "description": "Ongoing weekly movement therapy sessions for body awareness and emotional processing.",
+    "startDate": "2026-01-08",
+    "endDate": null,
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Therapeutic Arts Studio",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Pilates Therapy - Hip Stability",
+    "description": "Hip stability and glute activation pilates for runners with hip drop.",
+    "startDate": "2025-10-15",
+    "endDate": "2026-01-15",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Family Health Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Osteopathic - Cranial",
+    "description": "Cranial osteopathy for tension headaches and sinus congestion.",
+    "startDate": "2026-02-05",
+    "endDate": null,
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "Kharkiv Medical Institute",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Respiratory Therapy - Breathing Retraining",
+    "description": "Buteyko breathing method to reduce over-breathing and improve CO2 tolerance.",
+    "startDate": "2026-01-25",
+    "endDate": null,
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "Kyiv Medical Center",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Achilles Tendinopathy",
+    "description": "Isometric and isotonic loading protocol for mid-portion Achilles tendinopathy.",
+    "startDate": "2022-05-01",
+    "endDate": "2022-08-01",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Groin Strain",
+    "description": "Adductor strengthening and mobility work for groin strain recovery.",
+    "startDate": "2022-12-01",
+    "endDate": "2023-02-01",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Neck Whiplash",
+    "description": "Graded mobilization and stabilization for whiplash associated disorder.",
+    "startDate": "2023-05-01",
+    "endDate": "2023-08-01",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Carpal Tunnel",
+    "description": "Nerve gliding exercises and manual therapy for carpal tunnel syndrome.",
+    "startDate": "2023-10-15",
+    "endDate": "2024-01-15",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Quadriceps Strain",
+    "description": "Phased return-to-sport program following quadriceps muscle strain.",
+    "startDate": "2024-08-01",
+    "endDate": "2024-11-01",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Physical Therapy - Osteoporosis Prevention",
+    "description": "Weight-bearing and resistance exercises for bone density maintenance.",
+    "startDate": "2025-02-15",
+    "endDate": "2025-06-15",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Massage - Scar Tissue Release",
+    "description": "Scar mobilization massage to improve tissue extensibility after abdominal surgery.",
+    "startDate": "2022-07-10",
+    "endDate": "2022-09-10",
+    "therapistName": "Tetyana Karpenko",
+    "location": "Therapeutic Spa & Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Massage - Headache Relief",
+    "description": "Suboccipital and scalp massage to reduce tension headache frequency.",
+    "startDate": "2023-06-01",
+    "endDate": "2023-08-01",
+    "therapistName": "Vasyl Hrytsenko",
+    "location": "FitLife Wellness Studio",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Massage - Postnatal Recovery",
+    "description": "Postnatal restorative massage for energy restoration and tissue healing.",
+    "startDate": "2025-01-20",
+    "endDate": "2025-03-20",
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Massage - Maintenance Sessions",
+    "description": "Monthly full-body maintenance massage for general wellbeing.",
+    "startDate": "2025-10-01",
+    "endDate": null,
+    "therapistName": "Vasyl Hrytsenko",
+    "location": "FitLife Wellness Studio",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "CBT - OCD",
+    "description": "Exposure and response prevention therapy for obsessive-compulsive disorder.",
+    "startDate": "2022-06-01",
+    "endDate": "2022-12-01",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "CBT - Health Anxiety",
+    "description": "Cognitive restructuring for health anxiety and hypochondriasis.",
+    "startDate": "2023-03-01",
+    "endDate": "2023-07-01",
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "CBT - PTSD",
+    "description": "Trauma-focused CBT with prolonged exposure for PTSD symptom reduction.",
+    "startDate": "2023-11-01",
+    "endDate": "2024-05-01",
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Cholesterol",
+    "description": "Dietary intervention for elevated LDL cholesterol management.",
+    "startDate": "2022-10-15",
+    "endDate": "2023-02-15",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Iron Deficiency",
+    "description": "Dietary iron enhancement protocol alongside supplementation for anaemia.",
+    "startDate": "2023-08-01",
+    "endDate": "2023-12-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "HealthFirst Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Nutritional Therapy - Blood Sugar",
+    "description": "Carbohydrate management strategies for blood sugar stabilization.",
+    "startDate": "2024-07-01",
+    "endDate": "2024-11-01",
+    "therapistName": "Dr. Iryna Savchenko",
+    "location": "NutriLife Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Chiropractic - Elbow Adjustment",
+    "description": "Elbow joint manipulation for radial head subluxation.",
+    "startDate": "2022-08-15",
+    "endDate": "2022-10-15",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Chiropractic - Rib Adjustment",
+    "description": "Rib head mobilization for intercostal pain and restricted breathing.",
+    "startDate": "2023-06-10",
+    "endDate": "2023-08-10",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Chiropractic - Foot Orthotics",
+    "description": "Gait analysis and custom orthotics therapy for overpronation.",
+    "startDate": "2024-08-10",
+    "endDate": "2024-11-10",
+    "therapistName": "Dr. Viktor Moroz",
+    "location": "Blue Cross Medical",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Neck Pain",
+    "description": "Dry needling and acupuncture for cervicogenic neck pain and stiffness.",
+    "startDate": "2022-11-01",
+    "endDate": "2023-02-01",
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Women's Health",
+    "description": "Acupuncture for endometriosis pain management and hormonal support.",
+    "startDate": "2023-10-01",
+    "endDate": "2024-02-01",
+    "therapistName": "Ivan Rudenko",
+    "location": "Lviv Therapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Acupuncture - Allergy Season",
+    "description": "Preventive acupuncture protocol to reduce seasonal allergy severity.",
+    "startDate": "2024-03-01",
+    "endDate": "2024-05-01",
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Pilates Therapy - Ankle Stability",
+    "description": "Foot and ankle stability pilates program for chronic ankle instability.",
+    "startDate": "2022-09-15",
+    "endDate": "2022-12-15",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Yoga Therapy - Immune Support",
+    "description": "Immune-focused yoga practices with inversions, twists and pranayama.",
+    "startDate": "2023-11-15",
+    "endDate": "2024-02-15",
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Osteopathic - Digestive",
+    "description": "Visceral and diaphragm work for chronic constipation and bloating.",
+    "startDate": "2024-05-01",
+    "endDate": "2024-08-01",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Neurological Rehab - Proprioception",
+    "description": "Proprioceptive training program following peripheral nerve injury.",
+    "startDate": "2025-03-10",
+    "endDate": "2025-07-10",
+    "therapistName": "Dr. Halyna Romanenko",
+    "location": "Kharkiv Medical Institute",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Occupational Therapy - Sleep Hygiene",
+    "description": "Behavioural and environmental modifications to improve sleep quality.",
+    "startDate": "2024-06-10",
+    "endDate": "2024-08-10",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Group Therapy - Mindfulness for Parents",
+    "description": "Mindfulness-based parenting group for stress reduction and emotional regulation.",
+    "startDate": "2025-11-01",
+    "endDate": null,
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physiotherapy - Diastasis Recti",
+    "description": "Corrective exercise for abdominal muscle separation following pregnancy.",
+    "startDate": "2025-06-15",
+    "endDate": "2025-10-15",
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Family Health Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Dry Needling Therapy",
+    "description": "Intramuscular dry needling for gluteal and piriformis trigger points.",
+    "startDate": "2022-11-20",
+    "endDate": "2023-01-20",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Dry Needling - Upper Trapezius",
+    "description": "Dry needling of upper trapezius and levator scapulae for chronic neck tension.",
+    "startDate": "2024-01-10",
+    "endDate": "2024-03-10",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physiotherapy - Urinary Incontinence",
+    "description": "Pelvic floor rehabilitation for stress urinary incontinence.",
+    "startDate": "2025-04-15",
+    "endDate": "2025-08-15",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Massage - Lymphatic Post-Partum",
+    "description": "Post-partum lymphatic drainage to reduce leg oedema and improve energy.",
+    "startDate": "2026-01-05",
+    "endDate": null,
+    "therapistName": "Olha Shevchenko",
+    "location": "Podil Wellness Center",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Stress Fracture Rehab",
+    "description": "Progressive loading rehabilitation after tibial stress fracture.",
+    "startDate": "2024-09-10",
+    "endDate": "2024-12-10",
+    "therapistName": "Dr. Mykola Petrenko",
+    "location": "SportsMed Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Hydrotherapy - Kneipp Therapy",
+    "description": "Traditional Kneipp alternating water applications for circulation and vitality.",
+    "startDate": "2023-07-15",
+    "endDate": "2023-09-15",
+    "therapistName": "Pavlo Sydorenko",
+    "location": "AquaTherapy Center",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Psychotherapy - Relationship Issues",
+    "description": "Individual therapy exploring relational patterns and attachment styles.",
+    "startDate": "2024-06-15",
+    "endDate": "2024-12-15",
+    "therapistName": "Dr. Oksana Boyko",
+    "location": "MindBody Wellness",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Vision Therapy - Computer Vision Syndrome",
+    "description": "Near point stress reduction and accommodative exercises for digital eye strain.",
+    "startDate": "2025-05-10",
+    "endDate": "2025-07-10",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "Kyiv Medical Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Acupuncture - Low Energy",
+    "description": "Acupuncture targeting kidney and adrenal points for chronic fatigue and low energy.",
+    "startDate": "2025-11-10",
+    "endDate": "2026-02-10",
+    "therapistName": "Yulia Tkachenko",
+    "location": "Pechersk Medical Group",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Kinesiology - Emotional Stress",
+    "description": "Kinesiology muscle testing and balancing for emotional stress patterns.",
+    "startDate": "2024-10-15",
+    "endDate": "2025-01-15",
+    "therapistName": "Serhiy Popov",
+    "location": "Movement & Balance Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physiotherapy - Piriformis Syndrome",
+    "description": "Soft tissue techniques and stretching for piriformis syndrome.",
+    "startDate": "2025-09-15",
+    "endDate": "2025-12-15",
+    "therapistName": "Andriy Kravchenko",
+    "location": "Central Physiotherapy",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Yoga Therapy - Menopause Support",
+    "description": "Yoga practices to alleviate perimenopausal symptoms and support hormone transition.",
+    "startDate": "2026-03-10",
+    "endDate": null,
+    "therapistName": "Natalia Bondarenko",
+    "location": "Harmony Yoga Studio",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Mindfulness - Compassion-Based Therapy",
+    "description": "Compassion-focused therapy for self-criticism and shame.",
+    "startDate": "2026-02-25",
+    "endDate": null,
+    "therapistName": "Dr. Larysa Melnik",
+    "location": "Life Balance Center",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Massage - Foot Reflexology",
+    "description": "Reflexology sessions targeting reflex zones for systemic relaxation.",
+    "startDate": "2026-03-01",
+    "endDate": null,
+    "therapistName": "Tetyana Karpenko",
+    "location": "Therapeutic Spa & Clinic",
+    "isActive": true,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Physical Therapy - Calf Strain",
+    "description": "Eccentric strengthening and return-to-run program for gastrocnemius strain.",
+    "startDate": "2023-08-20",
+    "endDate": "2023-11-20",
+    "therapistName": "Dr. Anna Kovalenko",
+    "location": "Kyiv Rehabilitation Center",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "CBT - Perfectionism",
+    "description": "Cognitive restructuring to address maladaptive perfectionism and procrastination.",
+    "startDate": "2024-04-01",
+    "endDate": "2024-08-01",
+    "therapistName": "Dr. Olena Marchenko",
+    "location": "Online",
+    "isActive": false,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  },
+  {
+    "title": "Nutritional Therapy - Microbiome Reset",
+    "description": "4-week dietary protocol to restore microbiome diversity after antibiotic treatment.",
+    "startDate": "2024-12-01",
+    "endDate": "2025-02-01",
+    "therapistName": "Dr. Kateryna Khomenko",
+    "location": "HealthFirst Clinic",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Chiropractic - Wrist Adjustment",
+    "description": "Carpal bone mobilization for restricted wrist range of motion.",
+    "startDate": "2025-06-10",
+    "endDate": "2025-08-10",
+    "therapistName": "Dr. Dmytro Bondarenko",
+    "location": "Obolon Health Hub",
+    "isActive": false,
+    "userId": "1b835d77-2aea-491f-a163-ec9627e4b719"
+  },
+  {
+    "title": "Pilates Therapy - Breathing Coordination",
+    "description": "Pilates breathing coordination exercises for thoracic expansion and posture.",
+    "startDate": "2026-03-10",
+    "endDate": null,
+    "therapistName": "Dr. Sofia Lysenko",
+    "location": "Family Health Center",
+    "isActive": true,
+    "userId": "47aed416-5118-4426-9bf9-332333a46aa0"
+  }
+]
