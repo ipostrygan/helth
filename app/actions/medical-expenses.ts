@@ -72,6 +72,49 @@ export const getMedicalExpenses = async ({
   };
 };
 
+export type ExpensesByTypeItem = {
+  type: ExpenseType;
+  total: number;
+  count: number;
+};
+
+export type ExpensesByTypeQuery = {
+  profileId?: string;
+  dateFrom?: string;
+  dateTo?: string;
+};
+
+export const getMedicalExpensesByType = async ({
+  profileId,
+  dateFrom,
+  dateTo,
+}: ExpensesByTypeQuery = {}): Promise<ExpensesByTypeItem[]> => {
+  const defaultDateFrom = new Date();
+  defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 1);
+
+  const resolvedDateFrom = dateFrom ? new Date(dateFrom) : defaultDateFrom;
+  const resolvedDateTo = dateTo ? new Date(dateTo) : new Date();
+
+  const grouped = await prisma.medicalExpense.groupBy({
+    by: ["type"],
+    where: {
+      ...(profileId ? { userId: profileId } : {}),
+      date: {
+        gte: resolvedDateFrom,
+        lte: resolvedDateTo,
+      },
+    },
+    _sum: { amount: true },
+    _count: { id: true },
+  });
+
+  return grouped.map((g) => ({
+    type: g.type,
+    total: g._sum.amount ?? 0,
+    count: g._count.id,
+  }));
+};
+
 export const deleteExpense = async (id: string): Promise<void> => {
   await prisma.medicalExpense.delete({ where: { id } });
 };
