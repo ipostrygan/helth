@@ -3,6 +3,7 @@ import { seedAuth } from "./seeds/auth";
 import { seedMedicalExpenses } from "./seeds/medical-expenses";
 import { seedTherapies } from "./seeds/therapies";
 import { seedUsers } from "./seeds/users";
+import { seedAppointments } from "./seeds/appointments";
 
 const prisma = new PrismaClient();
 
@@ -11,6 +12,7 @@ async function main() {
   const userIds = await seedUsers(prisma);
   await seedMedicalExpenses(prisma, userIds);
   await seedTherapies(prisma);
+  await seedAppointments(prisma, userIds);
 }
 
 main()
