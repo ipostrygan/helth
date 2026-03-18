@@ -2,20 +2,10 @@
 
 import prisma from "@/lib/prisma";
 import { ExpenseType, MedicalExpense } from "@/lib/generated/prisma/client";
-import { SortDirection } from "@tanstack/react-table";
 import type { PaginatedResult } from "@/types/table";
+import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/types";
 
-export type MedicalExpensesQuery = {
-  profileId?: string;
-  page?: number;
-  pageSize?: number;
-  sortField?: keyof MedicalExpense;
-  sortDirection?: SortDirection
-  search?: string;
-  dateFrom?: string;
-  dateTo?: string;
-  types?: string[];
-};
+export type MedicalExpensesQuery = MedicalExpensesQueryParams;
 
 export const getMedicalExpenses = async ({
   profileId,

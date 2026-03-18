@@ -1,17 +1,8 @@
 import type { PaginatedResult } from "@/types/table";
+import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/types";
 import type { MedicalExpense } from "@/lib/generated/prisma/client";
 
-export type MedicalExpensesParams = {
-  profileId?: string;
-  page?: number;
-  pageSize?: number;
-  sortField?: string;
-  sortDirection?: string;
-  search?: string;
-  dateFrom?: string;
-  dateTo?: string;
-  types?: string[];
-};
+export type MedicalExpensesParams = MedicalExpensesQueryParams;
 
 export async function getMedicalExpenses(
   params: MedicalExpensesParams

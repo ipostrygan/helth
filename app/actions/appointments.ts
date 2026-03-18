@@ -2,20 +2,10 @@
 
 import prisma from "@/lib/prisma";
 import { Appointment, AppointmentStatus, AppointmentType } from "@/lib/generated/prisma/client";
-import { SortDirection } from "@tanstack/react-table";
 import type { PaginatedResult } from "@/types/table";
+import type { AppointmentsQueryParams } from "@/app/(app)/appointments/types";
 
-export type AppointmentsQuery = {
-  profileId?: string;
-  page?: number;
-  pageSize?: number;
-  sortField?: keyof Appointment;
-  sortDirection?: SortDirection;
-  search?: string;
-  dateFrom?: string;
-  dateTo?: string;
-  statuses?: string[];
-};
+export type AppointmentsQuery = AppointmentsQueryParams;
 
 export const getAppointments = async ({
   profileId,

@@ -1,17 +1,8 @@
 import type { PaginatedResult } from "@/types/table";
+import type { TherapiesQueryParams } from "@/app/(app)/therapies/types";
 import type { Therapy } from "@/lib/generated/prisma/client";
 
-export type TherapiesParams = {
-  profileId?: string;
-  page?: number;
-  pageSize?: number;
-  sortField?: string;
-  sortDirection?: string;
-  search?: string;
-  dateFrom?: string;
-  dateTo?: string;
-  isActive?: string[];
-};
+export type TherapiesParams = TherapiesQueryParams;
 
 export async function getTherapies(
   params: TherapiesParams

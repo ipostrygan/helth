@@ -1,17 +1,8 @@
 import type { PaginatedResult } from "@/types/table";
+import type { AppointmentsQueryParams } from "@/app/(app)/appointments/types";
 import type { Appointment } from "@/lib/generated/prisma/client";
 
-export type AppointmentsParams = {
-  profileId?: string;
-  page?: number;
-  pageSize?: number;
-  sortField?: string;
-  sortDirection?: string;
-  search?: string;
-  dateFrom?: string;
-  dateTo?: string;
-  statuses?: string[];
-};
+export type AppointmentsParams = AppointmentsQueryParams;
 
 export async function getAppointments(
   params: AppointmentsParams

@@ -2,20 +2,10 @@
 
 import prisma from "@/lib/prisma";
 import { Therapy } from "@/lib/generated/prisma/client";
-import { SortDirection } from "@tanstack/react-table";
 import type { PaginatedResult } from "@/types/table";
+import type { TherapiesQueryParams } from "@/app/(app)/therapies/types";
 
-export type TherapiesQuery = {
-  profileId?: string;
-  page?: number;
-  pageSize?: number;
-  sortField?: keyof Therapy;
-  sortDirection?: SortDirection;
-  search?: string;
-  dateFrom?: string;
-  dateTo?: string;
-  isActive?: string[];
-};
+export type TherapiesQuery = TherapiesQueryParams;
 
 export const getTherapies = async ({
   profileId,
