@@ -1,11 +1,8 @@
 "use client"
 
-import { useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { AppointmentType, AppointmentStatus } from "@/lib/generated/prisma/enums"
 import type { Appointment } from "@/lib/generated/prisma/client"
@@ -15,9 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Field, FieldError, FieldGroup } from "@/components/ui/field"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { cn } from "@/lib/utils"
+import { DatePickerField } from "@/components/ui/date-picker-field"
 import { APPOINTMENT_TYPE_LABELS, APPOINTMENT_STATUS_LABELS } from "../constants"
 import { useCreateAppointment } from "../hooks/use-create-appointment"
 import { useEditAppointment } from "../hooks/use-edit-appointment"
@@ -46,8 +41,6 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
   const isEditMode = !!appointment
   const { mutateAsync: createAppointment } = useCreateAppointment()
   const { mutateAsync: editAppointment } = useEditAppointment()
-  const [dateOpen, setDateOpen] = useState(false)
-  const [endDateOpen, setEndDateOpen] = useState(false)
 
   const { control, register, handleSubmit, formState: { errors, isSubmitting, isDirty, isValid } } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -95,37 +88,12 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
               name="date"
               control={control}
               render={({ field }) => (
-                <Field>
-                  <Label>Date</Label>
-                  <Popover open={dateOpen} onOpenChange={setDateOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        aria-invalid={!!errors.date}
-                        className={cn(
-                          "w-full justify-start gap-2 font-normal",
-                          !field.value && "text-muted-foreground",
-                          errors.date && "border-destructive"
-                        )}
-                      >
-                        <CalendarIcon className="size-4 shrink-0" />
-                        {field.value ? format(field.value, "MMM d, yyyy") : "Pick a date"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(date) => {
-                          field.onChange(date)
-                          setDateOpen(false)
-                        }}
-                        autoFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FieldError errors={[errors.date]} />
-                </Field>
+                <DatePickerField
+                  label="Date"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={errors.date}
+                />
               )}
             />
 
@@ -133,34 +101,12 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
               name="endDate"
               control={control}
               render={({ field }) => (
-                <Field>
-                  <Label>End Date</Label>
-                  <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start gap-2 font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="size-4 shrink-0" />
-                        {field.value ? format(field.value, "MMM d, yyyy") : "Pick a date (optional)"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(date) => {
-                          field.onChange(date)
-                          setEndDateOpen(false)
-                        }}
-                        autoFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </Field>
+                <DatePickerField
+                  label="End Date"
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="Pick a date (optional)"
+                />
               )}
             />
 

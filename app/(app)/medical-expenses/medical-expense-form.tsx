@@ -1,11 +1,8 @@
 "use client"
 
-import { useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
 import { ExpenseType } from "@/lib/generated/prisma/enums"
 import type { MedicalExpense } from "@/lib/generated/prisma/client"
 import { Button } from "@/components/ui/button"
@@ -14,10 +11,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Field, FieldError, FieldGroup } from "@/components/ui/field"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
+import { DatePickerField } from "@/components/ui/date-picker-field"
 import { DialogFooter } from "@/components/ui/dialog"
-import { cn } from "@/lib/utils"
 import { EXPENSE_TYPE_LABELS } from "./constants"
 import { useCreateMedicalExpense } from "./hooks/use-create-medical-expense"
 import { useEditMedicalExpense } from "./hooks/use-edit-medical-expense"
@@ -39,7 +34,6 @@ type MedicalExpenseFormProps = {
 }
 
 const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormProps) => {
-  const [calendarOpen, setCalendarOpen] = useState(false)
   const { mutateAsync: createExpense } = useCreateMedicalExpense()
   const { mutateAsync: editExpense } = useEditMedicalExpense()
   const isEditMode = !!expense
@@ -90,37 +84,12 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
           name="date"
           control={control}
           render={({ field }) => (
-            <Field>
-              <Label>Date</Label>
-              <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    aria-invalid={!!errors.date}
-                    className={cn(
-                      "w-full justify-start gap-2 font-normal",
-                      !field.value && "text-muted-foreground",
-                      errors.date && "border-destructive"
-                    )}
-                  >
-                    <CalendarIcon className="size-4 shrink-0" />
-                    {field.value ? format(field.value, "MMM d, yyyy") : "Pick a date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={(date) => {
-                      field.onChange(date)
-                      setCalendarOpen(false)
-                    }}
-                    autoFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <FieldError errors={[errors.date]} />
-            </Field>
+            <DatePickerField
+              label="Date"
+              value={field.value}
+              onChange={field.onChange}
+              error={errors.date}
+            />
           )}
         />
 
