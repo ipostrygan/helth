@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import type { MedicalExpense } from "@/lib/generated/prisma/client"
 import { useActiveProfile } from "@/context/profile-context"
