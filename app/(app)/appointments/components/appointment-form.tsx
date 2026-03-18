@@ -22,8 +22,8 @@ const schema = z.object({
   description: z.string().optional(),
   date: z.date(),
   endDate: z.date().optional(),
-  type: z.nativeEnum(AppointmentType),
-  status: z.nativeEnum(AppointmentStatus),
+  type: z.enum(AppointmentType),
+  status: z.enum(AppointmentStatus),
   doctorName: z.string().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
@@ -49,7 +49,6 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
           title: appointment.title,
           description: appointment.description ?? undefined,
           date: new Date(appointment.date),
-          endDate: appointment.endDate ? new Date(appointment.endDate) : undefined,
           type: appointment.type,
           status: appointment.status,
           doctorName: appointment.doctorName ?? undefined,
@@ -93,19 +92,6 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
                   value={field.value}
                   onChange={field.onChange}
                   error={errors.date}
-                />
-              )}
-            />
-
-            <Controller
-              name="endDate"
-              control={control}
-              render={({ field }) => (
-                <DatePickerField
-                  label="End Date"
-                  value={field.value}
-                  onChange={field.onChange}
-                  placeholder="Pick a date (optional)"
                 />
               )}
             />

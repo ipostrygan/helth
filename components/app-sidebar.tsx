@@ -49,7 +49,7 @@ function AppSidebar() {
         <SidebarMenu>
           {MENU_ITEMS.map(({ href, name, icon: Icon }) => (
             <SidebarMenuItem key={href}>
-              <SidebarMenuButton asChild isActive={pathname === href} tooltip={name}>
+              <SidebarMenuButton asChild isActive={(pathname + "/").startsWith(href + "/")} tooltip={name}>
                 <Link href={href}>
                   <Icon />
                   {name}
