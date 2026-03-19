@@ -21,6 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
 import { TableTemplate } from "@/components/table-template"
 
 const IS_ACTIVE_OPTIONS = [
@@ -74,7 +75,14 @@ const TherapiesPage = () => {
           onSortChange={onSortChange}
         />
       ),
-      cell: ({ row }) => row.getValue("title"),
+      cell: ({ row }) => (
+        <Link
+          href={`/therapies/${row.original.id}`}
+          className="underline hover:no-underline"
+        >
+          {row.getValue("title")}
+        </Link>
+      ),
     },
     {
       accessorKey: "startDate",
