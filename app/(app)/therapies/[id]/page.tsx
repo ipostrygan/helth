@@ -10,14 +10,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import type { MedicalExpense } from "@/lib/generated/prisma/client"
 import { SortButton } from "@/components/ui/sort-button"
 import { EXPENSE_TYPE_LABELS } from "../../medical-expenses/constants"
-import { MoreHorizontal } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { RowActions } from "@/components/row-actions"
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
 
@@ -81,22 +74,9 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
     {
       id: "actions",
       cell: ({ row }) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm">
-              <MoreHorizontal />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              variant="destructive"
-              onSelect={() => setDeletingId(row.original.id)}
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <RowActions
+          onDelete={() => setDeletingId(row.original.id)}
+        />
       ),
     },
   ]

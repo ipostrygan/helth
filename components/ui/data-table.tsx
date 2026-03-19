@@ -64,6 +64,7 @@ export function DataTable<TData, TValue>({
     manualSorting: true,
   })
 
+  const isEmpty = data.total === 0 && !hasActiveFilters
   const current = data.page - 1 // 0-indexed for display
   const totalPages = data.totalPages
   const canPrev = data.page > 1
@@ -73,13 +74,19 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead
+                    key={header.id}
+                    className={[
+                      header.column.id === "actions" ? "sticky right-0 bg-background" : undefined,
+                      isEmpty ? "pointer-events-none" : undefined,
+                    ].filter(Boolean).join(" ") || undefined}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
@@ -93,7 +100,10 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className={cell.column.id === "actions" ? "sticky right-0 bg-background" : undefined}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

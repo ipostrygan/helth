@@ -14,15 +14,8 @@ import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
 import { format } from "date-fns"
 import { EXPENSE_TYPE_LABELS } from "./constants"
-import { MoreHorizontal } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Modal } from "@/components/ui/modal"
+import { RowActions } from "@/components/row-actions"
 import { TableTemplate } from "@/components/table-template"
 
 const EXPENSE_TYPE_OPTIONS = Object.entries(EXPENSE_TYPE_LABELS).map(([value, label]) => ({ value, label }))
@@ -92,25 +85,10 @@ const MedicalExpenses = () => {
     {
       id: "actions",
       cell: ({ row }) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm">
-              <MoreHorizontal />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => setEditingExpense(row.original)}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              variant="destructive"
-              onSelect={() => setDeletingExpenseId(row.original.id)}
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <RowActions
+          onEdit={() => setEditingExpense(row.original)}
+          onDelete={() => setDeletingExpenseId(row.original.id)}
+        />
       ),
     },
   ]

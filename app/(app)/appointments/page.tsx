@@ -14,15 +14,8 @@ import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
 import { format } from "date-fns"
 import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from "./constants"
-import { MoreHorizontal } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { TableTemplate } from "@/components/table-template"
+import { RowActions } from "@/components/row-actions"
 
 const APPOINTMENT_STATUS_OPTIONS = Object.entries(APPOINTMENT_STATUS_LABELS).map(([value, label]) => ({ value, label }))
 
@@ -107,25 +100,10 @@ const AppointmentsPage = () => {
     {
       id: "actions",
       cell: ({ row }) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm">
-              <MoreHorizontal />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => router.push(`/appointments/${row.original.id}/edit`)}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              variant="destructive"
-              onSelect={() => setDeletingId(row.original.id)}
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <RowActions
+          onEdit={() => router.push(`/appointments/${row.original.id}/edit`)}
+          onDelete={() => setDeletingId(row.original.id)}
+        />
       ),
     },
   ]
