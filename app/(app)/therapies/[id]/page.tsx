@@ -1,8 +1,25 @@
 "use client"
 
-import { use } from "react"
+import { use, useState } from "react"
 import { useTherapy } from "../hooks/use-therapy"
 import { Separator } from "@/components/ui/separator"
+import { TableTemplate } from "@/components/table-template"
+import { useMedicalExpenses } from "../../medical-expenses/hooks/use-medical-expenses"
+import { useDeleteMedicalExpense } from "../../medical-expenses/hooks/use-delete-medical-expense"
+import { ColumnDef } from "@tanstack/react-table"
+import type { MedicalExpense } from "@/lib/generated/prisma/client"
+import { SortButton } from "@/components/ui/sort-button"
+import { EXPENSE_TYPE_LABELS } from "../../medical-expenses/constants"
+import { MoreHorizontal } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
+import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
 
 type TherapyDetailPageProps = {
   params: Promise<{ id: string }>
@@ -12,8 +29,77 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
   const { id } = use(params)
   const { data: therapy, isLoading } = useTherapy(id)
 
+  const [filters, setFilters] = useQueryStates({
+    page:          parseAsInteger.withDefault(1),
+    pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
+    sortField:     parseAsString.withDefault("date"),
+    sortDirection: parseAsString.withDefault("desc"),
+  })
+
+  const { data: expensesData, isLoading: isExpensesLoading } = useMedicalExpenses({
+    therapyId: id,
+    ...filters,
+  })
+
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
+
   if (isLoading) return null
   if (!therapy) return null
+
+  const onSortChange = (field: string) => {
+    const direction = filters.sortField === field && filters.sortDirection === "asc" ? "desc" : "asc"
+    setFilters((prev) => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
+  }
+
+  const columns: ColumnDef<MedicalExpense>[] = [
+    {
+      accessorKey: "title",
+      header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+    },
+    {
+      accessorKey: "amount",
+      header: () => <SortButton field="amount" label="Amount" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      cell: ({ row }) =>
+        new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(row.getValue("amount")),
+    },
+    {
+      accessorKey: "date",
+      header: () => <SortButton field="date" label="Date" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      cell: ({ row }) => new Date(row.getValue("date")).toLocaleDateString(),
+    },
+    {
+      accessorKey: "type",
+      header: "Type",
+      cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue("type") as keyof typeof EXPENSE_TYPE_LABELS],
+    },
+    {
+      accessorKey: "description",
+      header: "Description",
+      cell: ({ row }) => row.getValue("description") ?? "—",
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon-sm">
+              <MoreHorizontal />
+              <span className="sr-only">Open menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              variant="destructive"
+              onSelect={() => setDeletingId(row.original.id)}
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+    },
+  ]
 
   return (
     <div className="px-6 pt-6 space-y-6">
@@ -74,6 +160,25 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
           </DetailRow>
         </div>
       </div>
+
+      <TableTemplate
+        title="Medical Expenses"
+        columns={columns}
+        data={expensesData}
+        isLoading={isExpensesLoading}
+        pageSize={filters.pageSize}
+        onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
+        onPageSizeChange={(pageSize) => setFilters((prev) => ({ ...prev, page: 1, pageSize }))}
+        deleteConfig={{
+          deletingId,
+          onCancel: () => setDeletingId(null),
+          onConfirm: () => {
+            if (deletingId === null) return
+            deleteExpense(deletingId, { onSuccess: () => setDeletingId(null) })
+          },
+          isPending: isDeleting,
+        }}
+      />
     </div>
   )
 }

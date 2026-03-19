@@ -10,9 +10,9 @@ const prisma = new PrismaClient();
 async function main() {
   await seedAuth(prisma);
   const userIds = await seedUsers(prisma);
-  const therapyIdsByUserId = await seedTherapies(prisma, userIds);
+  const { therapyIdsByUserId, therapyIdByTitle } = await seedTherapies(prisma, userIds);
   await seedMedicalExpenses(prisma, userIds, therapyIdsByUserId);
-  await seedAppointments(prisma, userIds);
+  await seedAppointments(prisma, userIds, therapyIdByTitle);
 }
 
 main()

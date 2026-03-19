@@ -1,7 +1,11 @@
 import { AppointmentStatus, AppointmentType, PrismaClient } from "@/lib/generated/prisma/client";
 import data from "./appointments.json";
 
-export async function seedAppointments(prisma: PrismaClient, userIds: string[]) {
+export async function seedAppointments(
+  prisma: PrismaClient,
+  userIds: string[],
+  therapyIdByTitle: Record<string, string>
+) {
   await prisma.appointment.deleteMany();
 
   await prisma.appointment.createMany({
@@ -17,6 +21,9 @@ export async function seedAppointments(prisma: PrismaClient, userIds: string[]) 
       notes: row.notes ?? null,
       relatedDocuments: row.relatedDocuments,
       userId: userIds[row.userId - 1],
+      therapyId: "therapyTitle" in row && row.therapyTitle
+        ? (therapyIdByTitle[row.therapyTitle as string] ?? null)
+        : null,
     })),
   });
 

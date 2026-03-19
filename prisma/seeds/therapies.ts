@@ -7,10 +7,15 @@ const THERAPY_USER_ID_MAP: Record<string, number> = {
   "1b835d77-2aea-491f-a163-ec9627e4b719": 1,
 };
 
+export type TherapySeedResult = {
+  therapyIdsByUserId: Record<string, string[]>;
+  therapyIdByTitle: Record<string, string>;
+};
+
 export async function seedTherapies(
   prisma: PrismaClient,
   userIds: string[]
-): Promise<Record<string, string[]>> {
+): Promise<TherapySeedResult> {
   await prisma.therapy.createMany({
     data: data.map((row) => ({
       ...row,
@@ -20,17 +25,20 @@ export async function seedTherapies(
     })),
   });
 
-  // Query back IDs grouped by userId for linking to expenses
+  // Query back IDs grouped by userId (for expenses) and by title (for appointments)
   const therapies = await prisma.therapy.findMany({
-    select: { id: true, userId: true },
+    select: { id: true, userId: true, title: true },
   });
 
   const therapyIdsByUserId: Record<string, string[]> = {};
+  const therapyIdByTitle: Record<string, string> = {};
+
   for (const t of therapies) {
     if (!therapyIdsByUserId[t.userId]) therapyIdsByUserId[t.userId] = [];
     therapyIdsByUserId[t.userId].push(t.id);
+    therapyIdByTitle[t.title] = t.id;
   }
 
   console.log(`Seeded ${data.length} therapies.`);
-  return therapyIdsByUserId;
+  return { therapyIdsByUserId, therapyIdByTitle };
 }

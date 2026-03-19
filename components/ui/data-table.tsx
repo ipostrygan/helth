@@ -45,6 +45,7 @@ interface DataTableProps<TData, TValue> {
   onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: number) => void
   pageSize: number
+  hasActiveFilters?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -53,6 +54,7 @@ export function DataTable<TData, TValue>({
   onPageChange,
   onPageSizeChange,
   pageSize = DEFAULT_PAGE_SIZE,
+  hasActiveFilters = false,
 }: DataTableProps<TData, TValue>) {
   "use no memo"
   const table = useReactTable({
@@ -108,10 +110,12 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="flex flex-col gap-3 px-1 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-center text-sm sm:text-left">
-          Showing {rangeStart}–{rangeEnd} of {data.total} items
-        </p>
+      {(data.total > 0 || hasActiveFilters) && <div className="flex flex-col gap-3 px-1 sm:flex-row sm:items-center sm:justify-between">
+        {data.total > 0 && (
+          <p className="text-center text-sm sm:text-left">
+            Showing {rangeStart}–{rangeEnd} of {data.total} items
+          </p>
+        )}
 
         <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
           <div className="flex items-center gap-2 text-sm">
@@ -192,7 +196,7 @@ export function DataTable<TData, TValue>({
           </PaginationContent>
         </Pagination>
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

@@ -17,6 +17,7 @@ export async function getMedicalExpenses(
     dateFrom,
     dateTo,
     types,
+    therapyId,
   } = params;
 
   const searchParams = new URLSearchParams({
@@ -29,6 +30,7 @@ export async function getMedicalExpenses(
     ...(dateFrom ? { dateFrom } : {}),
     ...(dateTo ? { dateTo } : {}),
     ...(types && types.length > 0 ? { types: types.join(",") } : {}),
+    ...(therapyId ? { therapyId } : {}),
   });
 
   const res = await fetch(`/api/medical-expenses?${searchParams}`);

@@ -17,10 +17,12 @@ export const getMedicalExpenses = async ({
   dateFrom,
   dateTo,
   types,
+  therapyId,
 }: MedicalExpensesQuery = {}): Promise<PaginatedResult<MedicalExpense>> => {
   const skip = (page - 1) * pageSize;
   const where = {
     ...(profileId ? { userId: profileId } : {}),
+    ...(therapyId ? { therapyId } : {}),
     ...(search ? {
       OR: [
         { title: { contains: search, mode: "insensitive" as const } },

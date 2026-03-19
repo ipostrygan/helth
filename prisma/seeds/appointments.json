@@ -153,7 +153,8 @@
     "location": "RehabPlus Center",
     "notes": "6-session course recommended.",
     "relatedDocuments": [],
-    "userId": 1
+    "userId": 1,
+    "therapyTitle": "Physical Therapy - Lower Back"
   },
   {
     "title": "Physiotherapy",
@@ -166,7 +167,8 @@
     "location": "RehabPlus Center",
     "notes": null,
     "relatedDocuments": [],
-    "userId": 1
+    "userId": 1,
+    "therapyTitle": "Physical Therapy - Lower Back"
   },
   {
     "title": "Physiotherapy",
@@ -179,7 +181,8 @@
     "location": "RehabPlus Center",
     "notes": null,
     "relatedDocuments": [],
-    "userId": 1
+    "userId": 1,
+    "therapyTitle": "Physical Therapy - Lower Back"
   },
   {
     "title": "Annual Physical",
@@ -231,7 +234,8 @@
     "location": "MindSpace Therapy Center",
     "notes": null,
     "relatedDocuments": [],
-    "userId": 2
+    "userId": 2,
+    "therapyTitle": "Psychotherapy - Life Transitions"
   },
   {
     "title": "Psychotherapy Session",
@@ -244,7 +248,8 @@
     "location": "MindSpace Therapy Center",
     "notes": null,
     "relatedDocuments": [],
-    "userId": 2
+    "userId": 2,
+    "therapyTitle": "Psychotherapy - Life Transitions"
   },
   {
     "title": "Ophthalmologist Checkup",
@@ -283,7 +288,8 @@
     "location": "MindSpace Therapy Center",
     "notes": null,
     "relatedDocuments": [],
-    "userId": 2
+    "userId": 2,
+    "therapyTitle": "Psychotherapy - Life Transitions"
   },
   {
     "title": "Thyroid Follow-up Lab",
@@ -322,7 +328,8 @@
     "location": "MindSpace Therapy Center",
     "notes": null,
     "relatedDocuments": [],
-    "userId": 2
+    "userId": 2,
+    "therapyTitle": "Psychotherapy - Life Transitions"
   },
   {
     "title": "Gynaecologist – Pap Smear Results",

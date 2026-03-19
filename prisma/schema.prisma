@@ -83,10 +83,11 @@ model Therapy {
   userId            String
   user              User             @relation(fields: [userId], references: [id])
   medicalExpenses   MedicalExpense[]
+  appointments      Appointment[]
 }
 
 model Appointment {
-  id               String          @id @default(uuid())
+  id               String            @id @default(uuid())
   title            String
   description      String?
   date             DateTime
@@ -98,7 +99,9 @@ model Appointment {
   notes            String?
   relatedDocuments String[]
   userId           String
-  user             User            @relation(fields: [userId], references: [id])
+  user             User              @relation(fields: [userId], references: [id])
+  therapyId        String?
+  therapy          Therapy?          @relation(fields: [therapyId], references: [id])
 }
 
 enum AppointmentStatus {

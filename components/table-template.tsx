@@ -123,6 +123,7 @@ export function TableTemplate<TData>({
           onPageChange={onPageChange}
           onPageSizeChange={onPageSizeChange}
           pageSize={pageSize}
+          hasActiveFilters={filters?.hasActiveFilters}
         />
       )}
 
