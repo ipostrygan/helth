@@ -16,6 +16,7 @@ import { DatePickerField } from "@/components/ui/date-picker-field"
 import { APPOINTMENT_TYPE_LABELS, APPOINTMENT_STATUS_LABELS } from "../constants"
 import { useCreateAppointment } from "../hooks/use-create-appointment"
 import { useEditAppointment } from "../hooks/use-edit-appointment"
+import { TherapyCombobox } from "@/app/(app)/medical-expenses/components/therapy-combobox"
 
 const schema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -27,6 +28,7 @@ const schema = z.object({
   doctorName: z.string().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
+  therapyId: z.string().nullable().optional(),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -54,8 +56,9 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
           doctorName: appointment.doctorName ?? undefined,
           location: appointment.location ?? undefined,
           notes: appointment.notes ?? undefined,
+          therapyId: appointment.therapyId ?? null,
         }
-      : { status: AppointmentStatus.Scheduled },
+      : { status: AppointmentStatus.Scheduled, therapyId: null },
   })
 
   const onSubmit = async (values: FormValues) => {
@@ -152,6 +155,21 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
               <Label htmlFor="notes">Notes</Label>
               <Textarea id="notes" rows={3} {...register("notes")} />
             </Field>
+
+            <Controller
+              name="therapyId"
+              control={control}
+              render={({ field }) => (
+                <Field>
+                  <Label>Therapy <span className="text-muted-foreground text-xs">(optional)</span></Label>
+                  <TherapyCombobox
+                    profileId={profileId}
+                    value={field.value ?? null}
+                    onChange={field.onChange}
+                  />
+                </Field>
+              )}
+            />
           </FieldGroup>
         </form>
       </div>

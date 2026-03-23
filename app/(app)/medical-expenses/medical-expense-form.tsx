@@ -16,6 +16,7 @@ import { DialogFooter } from "@/components/ui/dialog"
 import { EXPENSE_TYPE_LABELS } from "./constants"
 import { useCreateMedicalExpense } from "./hooks/use-create-medical-expense"
 import { useEditMedicalExpense } from "./hooks/use-edit-medical-expense"
+import { TherapyCombobox } from "./components/therapy-combobox"
 
 const schema = z.object({
   title: z.string().min(1, "Name is required"),
@@ -23,6 +24,7 @@ const schema = z.object({
   date: z.date(),
   type: z.enum(ExpenseType),
   description: z.string().optional(),
+  therapyId: z.string().nullable().optional(),
 })
 
 type FormValues = z.infer<typeof schema>
@@ -52,8 +54,9 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
           date: new Date(expense.date),
           type: expense.type,
           description: expense.description ?? undefined,
+          therapyId: expense.therapyId ?? null,
         }
-      : undefined,
+      : { therapyId: null },
   })
 
   const onSubmit = async (values: FormValues) => {
@@ -110,6 +113,21 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
                 </SelectContent>
               </Select>
               <FieldError errors={[fieldState.error]} />
+            </Field>
+          )}
+        />
+
+        <Controller
+          name="therapyId"
+          control={control}
+          render={({ field }) => (
+            <Field>
+              <Label>Therapy <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <TherapyCombobox
+                profileId={profileId}
+                value={field.value ?? null}
+                onChange={field.onChange}
+              />
             </Field>
           )}
         />

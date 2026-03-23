@@ -111,6 +111,7 @@ export type CreateExpenseInput = {
   date: Date;
   type: ExpenseType;
   description?: string;
+  therapyId?: string | null;
 };
 
 export const createExpense = async (input: CreateExpenseInput) => {
@@ -129,6 +130,7 @@ export type UpdateExpenseInput = {
   date: Date;
   type: ExpenseType;
   description?: string;
+  therapyId?: string | null;
 };
 
 export const updateExpense = async ({ id, ...data }: UpdateExpenseInput) => {

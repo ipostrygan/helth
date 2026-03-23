@@ -72,6 +72,7 @@ export type CreateAppointmentInput = {
   doctorName?: string;
   location?: string;
   notes?: string;
+  therapyId?: string | null;
 };
 
 export const createAppointment = async (input: CreateAppointmentInput) => {
@@ -94,6 +95,7 @@ export type UpdateAppointmentInput = {
   doctorName?: string;
   location?: string;
   notes?: string;
+  therapyId?: string | null;
 };
 
 export const updateAppointment = async ({ id, ...data }: UpdateAppointmentInput) => {
