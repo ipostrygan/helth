@@ -1,6 +1,7 @@
 "use client"
 
 import { use, useState } from "react"
+import { BackLink } from "@/components/back-link"
 import { useTherapy } from "../hooks/use-therapy"
 import { Separator } from "@/components/ui/separator"
 import { TableTemplate } from "@/components/table-template"
@@ -83,7 +84,8 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
 
   return (
     <div className="px-6 pt-6 space-y-6">
-      <div>
+      <div className="space-y-1">
+        <BackLink href="/therapies" />
         <h1 className="text-2xl font-semibold">{therapy.title}</h1>
       </div>
 

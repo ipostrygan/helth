@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronDown } from "lucide-react"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -43,7 +44,7 @@ export const MultiSelectFilter = ({ label, options, selected, onChange }: MultiS
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-1.5 h-9">
+        <Button variant="outline" size="sm" className={cn("gap-1.5 h-9", selected.length > 0 && "bg-secondary text-primary border-primary/40 hover:bg-secondary/80 hover:text-primary")}>
           {triggerLabel}
           <ChevronDown className="size-4 text-muted-foreground" />
         </Button>

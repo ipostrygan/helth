@@ -14,6 +14,7 @@ import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
 import { format } from "date-fns"
 import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from "./constants"
+import Link from "next/link"
 import { TableTemplate } from "@/components/table-template"
 import { RowActions } from "@/components/row-actions"
 
@@ -58,6 +59,11 @@ const AppointmentsPage = () => {
     {
       accessorKey: "title",
       header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      cell: ({ row }) => (
+        <Link href={`/appointments/${row.original.id}`} className="hover:underline">
+          {row.getValue("title")}
+        </Link>
+      ),
     },
     {
       accessorKey: "date",
