@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { ExpenseType } from "@/lib/generated/prisma/enums"
-import type { MedicalExpense } from "@/lib/generated/prisma/client"
+import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -32,7 +32,7 @@ type FormValues = z.infer<typeof schema>
 type MedicalExpenseFormProps = {
   profileId: string
   onClose: () => void
-  expense?: MedicalExpense
+  expense?: MedicalExpenseWithRelations
 }
 
 const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormProps) => {
@@ -127,6 +127,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
                 profileId={profileId}
                 value={field.value ?? null}
                 onChange={field.onChange}
+                selectedItem={expense?.therapy ?? null}
               />
             </Field>
           )}

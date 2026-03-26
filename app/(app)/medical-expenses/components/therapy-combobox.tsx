@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useTherapies } from "@/app/(app)/therapies/hooks/use-therapies"
 import { SearchCombobox } from "@/components/search-combobox"
 
@@ -8,18 +8,21 @@ type TherapyComboboxProps = {
   profileId: string
   value?: string | null
   onChange: (value: string | null) => void
+  selectedItem?: { id: string; title: string } | null
 }
 
-export function TherapyCombobox({ profileId, value, onChange }: TherapyComboboxProps) {
+export function TherapyCombobox({ profileId, value, onChange, selectedItem }: TherapyComboboxProps) {
   const [search, setSearch] = useState("")
 
   const { data, isLoading } = useTherapies({ profileId, search, pageSize: 20 })
-  const { data: allData } = useTherapies({ profileId, pageSize: 100 })
 
-  const items = (data?.data ?? []).map((t) => ({ id: t.id, label: t.title }))
-  const selectedLabel = value
-    ? (allData?.data ?? []).find((t) => t.id === value)?.title
-    : undefined
+  const items = useMemo(() => {
+    const fetched = (data?.data ?? []).map((t) => ({ id: t.id, label: t.title }))
+    if (selectedItem && !fetched.some((i) => i.id === selectedItem.id)) {
+      return [{ id: selectedItem.id, label: selectedItem.title }, ...fetched]
+    }
+    return fetched
+  }, [data, selectedItem])
 
   return (
     <SearchCombobox
@@ -31,7 +34,6 @@ export function TherapyCombobox({ profileId, value, onChange }: TherapyComboboxP
       placeholder="Select a therapy…"
       searchPlaceholder="Search therapies…"
       emptyText="No therapies found."
-      selectedLabel={selectedLabel}
     />
   )
 }
