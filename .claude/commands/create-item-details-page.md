@@ -209,7 +209,16 @@ If the child model's `use{ChildModelNames}` hook or action does not yet accept `
 
 ---
 
-## Step 7 — Generate the details page
+## Step 7 — Generate the details view
+
+**Decision:** After completing Step 4, determine which output to generate:
+
+- **If the model has one or more has-many relations** → generate a full details **page** (Step 7A)
+- **If the model has NO has-many relations** → generate a **Sheet component** that slides in from the right (Step 7B)
+
+---
+
+### Step 7A — Full details page (has-many relations exist)
 
 **Path:** `app/(app)/{model-names}/[id]/page.tsx`
 
@@ -351,15 +360,107 @@ export default {ModelName}DetailPage
 
 ---
 
+### Step 7B — Sheet component (no has-many relations)
+
+When the model has no has-many relations, generate a Sheet component instead of a page. **Do NOT generate an `[id]/page.tsx`.**
+
+**Path:** `app/(app)/{model-names}/components/{model-name}-details-sheet.tsx`
+
+Follow the `MedicalExpenseDetailsSheet` pattern exactly:
+
+```typescript
+"use client"
+
+import Link from "next/link"
+import type { {ModelName} } from "@/lib/generated/prisma/client"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+import { Separator } from "@/components/ui/separator"
+// Import enum label constants if needed:
+// import { ENUM_LABELS } from "../constants"
+// Import hooks for FK-referenced models (to resolve display names):
+// import { use{RelatedModel} } from "../../{related-model-names}/hooks/use-{related-model}"
+
+type Props = {
+  {modelName}: {ModelName} | null
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
+
+export function {ModelName}DetailsSheet({ {modelName}, open, onOpenChange }: Props) {
+  // Fetch related model display names for each FK field (only when FK is present):
+  // const { data: {relatedModel} } = use{RelatedModel}({modelName}?.{fkField} ?? "")
+
+  if (!{modelName}) return null
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="overflow-y-auto">
+        <SheetHeader className="pb-2">
+          <SheetTitle>{{modelName}.{primaryDisplayField}}</SheetTitle>
+        </SheetHeader>
+
+        <div className="px-4 space-y-4">
+          {/* One DetailRow + Separator per field, in logical order */}
+          {/* Between each pair of rows, add <Separator /> */}
+          {/* Last row has no trailing Separator */}
+        </div>
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+const DetailRow = ({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) => (
+  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0">
+    <span className="text-sm text-muted-foreground sm:w-36 shrink-0">{label}</span>
+    <span className="text-sm">{children}</span>
+  </div>
+)
+```
+
+**Important structural rules for the sheet:**
+- The sheet accepts the full item object (not just an ID) — the parent list page passes the selected row
+- Define `DetailRow` at the bottom of the file (after the exported component)
+- For FK fields, call the related model's single-item hook at the top of the component (using the FK value), then use the result's display name in the row. All FK hooks run unconditionally — pass `""` when the value is null/undefined (the hook should have `enabled: !!id` to skip the request)
+- Detail rows follow the same field ordering and formatting rules as Step 3
+- Use `sm:w-36` (not `sm:w-48`) for the label column width in the sheet variant
+
+**After generating the sheet, also update the list page** (`app/(app)/{model-names}/page.tsx`) to integrate the sheet:
+1. Add `useState<{ModelName} | null>(null)` for `viewing{ModelName}` state
+2. In the first column (primary display field), render a `<button>` that calls `setViewing{ModelName}(row.original)` on click, styled with `className="text-primary font-medium hover:text-primary/80 transition-colors text-left"`
+3. Render the `<{ModelName}DetailsSheet>` in the `modals` prop of `TableTemplate`:
+   ```tsx
+   <{ModelName}DetailsSheet
+     {modelName}={viewing{ModelName}}
+     open={viewing{ModelName} !== null}
+     onOpenChange={(open) => { if (!open) setViewing{ModelName}(null) }}
+   />
+   ```
+4. If the list page does not yet use a `modals` prop, add it
+
+---
+
 ## Step 8 — Final checks
 
 After generating all files:
 1. Remove all template comments and placeholder pseudo-code — replace with actual field names and logic
 2. Ensure all imports are correct and match actual file paths
-3. If the page already exists at `app/(app)/{model-names}/[id]/page.tsx`, replace its contents
-4. Do NOT generate a form component — that is out of scope for this skill
-5. Report:
+3. If a page already exists at `app/(app)/{model-names}/[id]/page.tsx` and the Sheet path was chosen, do NOT create a page — only create the sheet component and update the list page
+4. If a page already exists at the path and the page path was chosen, replace its contents
+5. Do NOT generate a form component — that is out of scope for this skill
+6. Report:
+   - Whether a full page (Step 7A) or Sheet component (Step 7B) was generated, and why
    - Which infrastructure files were created vs already existed
-   - Which fields were shown in the details card and why any were excluded
-   - Which has-many tables were added
+   - Which fields were shown in the details view and why any were excluded
+   - Which has-many tables were added (page path only)
    - Whether any child model infrastructure needed updating to accept the parent FK filter

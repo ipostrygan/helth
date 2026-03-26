@@ -45,6 +45,7 @@ interface TableTemplateProps<TData> {
   columns: ColumnDef<TData>[]
   data: PaginatedResult<TData> | undefined
   isLoading: boolean
+  isFetching?: boolean
   pageSize: number
   onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: number) => void
@@ -61,6 +62,7 @@ export function TableTemplate<TData>({
   columns,
   data,
   isLoading,
+  isFetching,
   pageSize,
   onPageChange,
   onPageSizeChange,
@@ -117,14 +119,16 @@ export function TableTemplate<TData>({
       {isLoading || !data ? (
         <TableSkeleton rows={pageSize} columns={columns.length} />
       ) : (
-        <DataTable
-          columns={columns}
-          data={data}
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange}
-          pageSize={pageSize}
-          hasActiveFilters={filters?.hasActiveFilters}
-        />
+        <div className={isFetching ? "opacity-50 pointer-events-none transition-opacity" : "transition-opacity"}>
+          <DataTable
+            columns={columns}
+            data={data}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+            pageSize={pageSize}
+            hasActiveFilters={filters?.hasActiveFilters}
+          />
+        </div>
       )}
 
       {deleteConfig && (

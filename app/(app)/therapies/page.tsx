@@ -4,12 +4,12 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Therapy } from "@/lib/generated/prisma/client"
-import { useActiveProfile } from "@/context/profile-context"
-import { useProfile } from "../users/hooks/use-profile"
-import { useTherapies } from "./hooks/use-therapies"
-import { useDeleteTherapy } from "./hooks/use-delete-therapy"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+import { useActiveProfile } from "@/context/profile-context"
+import { useProfile } from "../users/hooks/use-profile"
+import { useTherapies, type TherapiesParams } from "./hooks/use-therapies"
+import { useDeleteTherapy } from "./hooks/use-delete-therapy"
 import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
 import { format } from "date-fns"
@@ -44,19 +44,16 @@ const TherapiesPage = () => {
     isActive:      parseAsArrayOf(parseAsString).withDefault([]),
   })
 
-  const { data, isLoading } = useTherapies({
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const { mutate: deleteItem, isPending: isDeleting } = useDeleteTherapy()
+
+  const params: TherapiesParams = {
     profileId: activeProfileId ?? undefined,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined,
-  })
-
-  const [deletingId, setDeletingId] = useState<string | null>(null)
-  const { mutate: deleteItem, isPending: isDeleting } = useDeleteTherapy()
-
-  if (!profile) {
-    return null
   }
+  const { data, isLoading, isFetching } = useTherapies(params)
 
   const onSortChange = (field: string) => {
     const direction = filters.sortField === field && filters.sortDirection === "asc" ? "desc" : "asc"
@@ -78,7 +75,7 @@ const TherapiesPage = () => {
       cell: ({ row }) => (
         <Link
           href={`/therapies/${row.original.id}`}
-          className="underline hover:no-underline"
+          className="text-primary font-medium hover:text-primary/80 transition-colors"
         >
           {row.getValue("title")}
         </Link>
@@ -133,7 +130,7 @@ const TherapiesPage = () => {
             href={url}
             target={url.startsWith("http") ? "_blank" : undefined}
             rel={url.startsWith("http") ? "noopener noreferrer" : undefined}
-            className="underline hover:no-underline"
+            className="text-primary font-medium hover:text-primary/80 transition-colors"
           >
             {value}
           </a>
@@ -202,6 +199,10 @@ const TherapiesPage = () => {
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
+  if (!profile) {
+    return null
+  }
+
   return (
     <TableTemplate
       onAddNew={() => router.push("/therapies/create")}
@@ -211,6 +212,7 @@ const TherapiesPage = () => {
       columns={columns}
       data={data}
       isLoading={isLoading}
+      isFetching={isFetching}
       pageSize={filters.pageSize}
       onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
       onPageSizeChange={(pageSize) => setFilters((prev) => ({ ...prev, page: 1, pageSize }))}
@@ -235,7 +237,7 @@ const TherapiesPage = () => {
           },
         ],
         hasActiveFilters: !!(filters.search || filters.dateFrom || filters.dateTo || filters.isActive.length > 0),
-        onClearFilters: () => setFilters({ page: 1, search: "", dateFrom: null, dateTo: null, isActive: [] }),
+        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: "", dateFrom: null, dateTo: null, isActive: [] })),
       }}
       deleteConfig={{
         deletingId,

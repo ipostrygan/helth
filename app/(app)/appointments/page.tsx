@@ -4,12 +4,12 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Appointment } from "@/lib/generated/prisma/client"
-import { useActiveProfile } from "@/context/profile-context"
-import { useProfile } from "../users/hooks/use-profile"
-import { useAppointments } from "./hooks/use-appointments"
-import { useDeleteAppointment } from "./hooks/use-delete-appointment"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+import { useActiveProfile } from "@/context/profile-context"
+import { useProfile } from "../users/hooks/use-profile"
+import { useAppointments, type AppointmentsParams } from "./hooks/use-appointments"
+import { useDeleteAppointment } from "./hooks/use-delete-appointment"
 import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
 import { format } from "date-fns"
@@ -17,8 +17,6 @@ import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from "./constants"
 import Link from "next/link"
 import { TableTemplate } from "@/components/table-template"
 import { RowActions } from "@/components/row-actions"
-
-const APPOINTMENT_STATUS_OPTIONS = Object.entries(APPOINTMENT_STATUS_LABELS).map(([value, label]) => ({ value, label }))
 
 const AppointmentsPage = () => {
   const router = useRouter()
@@ -35,20 +33,17 @@ const AppointmentsPage = () => {
     statuses:      parseAsArrayOf(parseAsString).withDefault([]),
   })
 
-  const { data, isLoading } = useAppointments({
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const { mutate: deleteItem, isPending: isDeleting } = useDeleteAppointment()
+
+  const params: AppointmentsParams = {
     profileId: activeProfileId ?? undefined,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined,
     statuses: filters.statuses,
-  })
-
-  const [deletingId, setDeletingId] = useState<string | null>(null)
-  const { mutate: deleteItem, isPending: isDeleting } = useDeleteAppointment()
-
-  if (!profile) {
-    return null
   }
+  const { data, isLoading, isFetching } = useAppointments(params)
 
   const onSortChange = (field: string) => {
     const direction = filters.sortField === field && filters.sortDirection === "asc" ? "desc" : "asc"
@@ -60,7 +55,7 @@ const AppointmentsPage = () => {
       accessorKey: "title",
       header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
       cell: ({ row }) => (
-        <Link href={`/appointments/${row.original.id}`} className="hover:underline">
+        <Link href={`/appointments/${row.original.id}`} className="text-primary font-medium hover:text-primary/80 transition-colors">
           {row.getValue("title")}
         </Link>
       ),
@@ -119,6 +114,10 @@ const AppointmentsPage = () => {
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
+  if (!profile) {
+    return null
+  }
+
   return (
     <TableTemplate
       onAddNew={() => router.push("/appointments/create")}
@@ -128,6 +127,7 @@ const AppointmentsPage = () => {
       columns={columns}
       data={data}
       isLoading={isLoading}
+      isFetching={isFetching}
       pageSize={filters.pageSize}
       onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
       onPageSizeChange={(pageSize) => setFilters((prev) => ({ ...prev, page: 1, pageSize }))}
@@ -146,13 +146,13 @@ const AppointmentsPage = () => {
         filterGroups: [
           {
             label: "Status",
-            options: APPOINTMENT_STATUS_OPTIONS,
+            options: Object.entries(APPOINTMENT_STATUS_LABELS).map(([value, label]) => ({ value, label })),
             selected: filters.statuses,
             onChange: (statuses) => setFilters((prev) => ({ ...prev, page: 1, statuses })),
           },
         ],
         hasActiveFilters: !!(filters.search || filters.dateFrom || filters.dateTo || filters.statuses.length > 0),
-        onClearFilters: () => setFilters({ page: 1, search: "", dateFrom: null, dateTo: null, statuses: [] }),
+        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: "", dateFrom: null, dateTo: null, statuses: [] })),
       }}
       deleteConfig={{
         deletingId,

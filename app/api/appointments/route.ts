@@ -14,10 +14,11 @@ const searchParamsCache = createSearchParamsCache({
   dateFrom:      parseAsString,
   dateTo:        parseAsString,
   statuses:      parseAsArrayOf(parseAsString),
+  therapyId:     parseAsString,
 })
 
 export async function GET(req: NextRequest) {
-  const { profileId, page, pageSize, sortField, sortDirection, search, dateFrom, dateTo, statuses } =
+  const { profileId, page, pageSize, sortField, sortDirection, search, dateFrom, dateTo, statuses, therapyId } =
     searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
 
   const result = await getAppointments({
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
     dateFrom: dateFrom ?? undefined,
     dateTo: dateTo ?? undefined,
     statuses: statuses ?? undefined,
+    therapyId: therapyId ?? undefined,
   })
   return NextResponse.json(result)
 }

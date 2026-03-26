@@ -1,12 +1,12 @@
 import type { PaginatedResult } from "@/types/table";
 import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/types";
-import type { MedicalExpense } from "@/lib/generated/prisma/client";
+import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses";
 
 export type MedicalExpensesParams = MedicalExpensesQueryParams;
 
 export async function getMedicalExpenses(
   params: MedicalExpensesParams
-): Promise<PaginatedResult<MedicalExpense>> {
+): Promise<PaginatedResult<MedicalExpenseWithRelations>> {
   const {
     profileId,
     page = 1,
@@ -40,4 +40,10 @@ export async function getMedicalExpenses(
 export async function deleteMedicalExpense(id: string): Promise<void> {
   const res = await fetch(`/api/medical-expenses/${id}`, { method: "DELETE" });
   if (!res.ok) throw new Error("Failed to delete expense");
+}
+
+export async function getMedicalExpense(id: string): Promise<MedicalExpenseWithRelations> {
+  const res = await fetch(`/api/medical-expenses/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch expense");
+  return res.json();
 }

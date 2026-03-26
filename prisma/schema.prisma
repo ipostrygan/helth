@@ -58,16 +58,18 @@ enum AppointmentType {
 }
 
 model MedicalExpense {
-  id          String      @id @default(uuid())
-  title       String
-  amount      Float
-  date        DateTime
-  description String?
-  type        ExpenseType
-  userId      String
-  user        User        @relation(fields: [userId], references: [id])
-  therapyId   String?
-  therapy     Therapy?    @relation(fields: [therapyId], references: [id])
+  id             String       @id @default(uuid())
+  title          String
+  amount         Float
+  date           DateTime
+  description    String?
+  type           ExpenseType
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  therapyId      String?
+  therapy        Therapy?     @relation(fields: [therapyId], references: [id])
+  appointmentId  String?
+  appointment    Appointment? @relation(fields: [appointmentId], references: [id])
 }
 
 model Therapy {
@@ -102,6 +104,7 @@ model Appointment {
   user             User              @relation(fields: [userId], references: [id])
   therapyId        String?
   therapy          Therapy?          @relation(fields: [therapyId], references: [id])
+  medicalExpenses  MedicalExpense[]
 }
 
 enum AppointmentStatus {

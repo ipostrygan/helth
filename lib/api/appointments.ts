@@ -17,6 +17,7 @@ export async function getAppointments(
     dateFrom,
     dateTo,
     statuses,
+    therapyId,
   } = params;
 
   const searchParams = new URLSearchParams({
@@ -29,6 +30,7 @@ export async function getAppointments(
     ...(dateFrom ? { dateFrom } : {}),
     ...(dateTo ? { dateTo } : {}),
     ...(statuses && statuses.length > 0 ? { statuses: statuses.join(",") } : {}),
+    ...(therapyId ? { therapyId } : {}),
   });
 
   const res = await fetch(`/api/appointments?${searchParams}`);

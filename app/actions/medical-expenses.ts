@@ -7,6 +7,11 @@ import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/ty
 
 export type MedicalExpensesQuery = MedicalExpensesQueryParams;
 
+export type MedicalExpenseWithRelations = MedicalExpense & {
+  therapy: { id: string; title: string } | null;
+  appointment: { id: string; title: string } | null;
+};
+
 export const getMedicalExpenses = async ({
   profileId,
   page = 1,
@@ -18,7 +23,7 @@ export const getMedicalExpenses = async ({
   dateTo,
   types,
   therapyId,
-}: MedicalExpensesQuery = {}): Promise<PaginatedResult<MedicalExpense>> => {
+}: MedicalExpensesQuery = {}): Promise<PaginatedResult<MedicalExpenseWithRelations>> => {
   const skip = (page - 1) * pageSize;
   const where = {
     ...(profileId ? { userId: profileId } : {}),
@@ -44,6 +49,10 @@ export const getMedicalExpenses = async ({
       skip,
       take: pageSize,
       orderBy: { [sortField]: sortDirection },
+      include: {
+        therapy: { select: { id: true, title: true } },
+        appointment: { select: { id: true, title: true } },
+      },
     }),
     prisma.medicalExpense.count({ where }),
   ]);
@@ -100,6 +109,10 @@ export const getMedicalExpensesByType = async ({
   }));
 };
 
+export const getMedicalExpenseById = async (id: string): Promise<MedicalExpense | null> => {
+  return prisma.medicalExpense.findUnique({ where: { id } });
+};
+
 export const deleteExpense = async (id: string): Promise<void> => {
   await prisma.medicalExpense.delete({ where: { id } });
 };
@@ -112,6 +125,7 @@ export type CreateExpenseInput = {
   type: ExpenseType;
   description?: string;
   therapyId?: string | null;
+  appointmentId?: string | null;
 };
 
 export const createExpense = async (input: CreateExpenseInput) => {
@@ -131,6 +145,7 @@ export type UpdateExpenseInput = {
   type: ExpenseType;
   description?: string;
   therapyId?: string | null;
+  appointmentId?: string | null;
 };
 
 export const updateExpense = async ({ id, ...data }: UpdateExpenseInput) => {

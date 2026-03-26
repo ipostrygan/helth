@@ -7,10 +7,13 @@ import { Separator } from "@/components/ui/separator"
 import { TableTemplate } from "@/components/table-template"
 import { useMedicalExpenses } from "../../medical-expenses/hooks/use-medical-expenses"
 import { useDeleteMedicalExpense } from "../../medical-expenses/hooks/use-delete-medical-expense"
+import { useAppointments } from "../../appointments/hooks/use-appointments"
+import { useDeleteAppointment } from "../../appointments/hooks/use-delete-appointment"
 import { ColumnDef } from "@tanstack/react-table"
-import type { MedicalExpense } from "@/lib/generated/prisma/client"
+import type { MedicalExpense, Appointment } from "@/lib/generated/prisma/client"
 import { SortButton } from "@/components/ui/sort-button"
 import { EXPENSE_TYPE_LABELS } from "../../medical-expenses/constants"
+import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from "../../appointments/constants"
 import { RowActions } from "@/components/row-actions"
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
@@ -30,13 +33,31 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
     sortDirection: parseAsString.withDefault("desc"),
   })
 
+  const [apptFilters, setApptFilters] = useQueryStates({
+    apptPage:          parseAsInteger.withDefault(1),
+    apptPageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
+    apptSortField:     parseAsString.withDefault("date"),
+    apptSortDirection: parseAsString.withDefault("desc"),
+  })
+
   const { data: expensesData, isLoading: isExpensesLoading } = useMedicalExpenses({
     therapyId: id,
     ...filters,
   })
 
+  const { data: appointmentsData, isLoading: isAppointmentsLoading } = useAppointments({
+    therapyId: id,
+    page:          apptFilters.apptPage,
+    pageSize:      apptFilters.apptPageSize,
+    sortField:     apptFilters.apptSortField,
+    sortDirection: apptFilters.apptSortDirection,
+  })
+
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
+
+  const [deletingApptId, setDeletingApptId] = useState<string | null>(null)
+  const { mutate: deleteAppointment, isPending: isDeletingAppt } = useDeleteAppointment()
 
   if (isLoading) return null
   if (!therapy) return null
@@ -45,6 +66,44 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
     const direction = filters.sortField === field && filters.sortDirection === "asc" ? "desc" : "asc"
     setFilters((prev) => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
   }
+
+  const onApptSortChange = (field: string) => {
+    const direction = apptFilters.apptSortField === field && apptFilters.apptSortDirection === "asc" ? "desc" : "asc"
+    setApptFilters((prev) => ({ ...prev, apptPage: 1, apptSortField: field, apptSortDirection: direction }))
+  }
+
+  const apptColumns: ColumnDef<Appointment>[] = [
+    {
+      accessorKey: "title",
+      header: () => <SortButton field="title" label="Title" sortField={apptFilters.apptSortField} sortDirection={apptFilters.apptSortDirection} onSortChange={onApptSortChange} />,
+    },
+    {
+      accessorKey: "date",
+      header: () => <SortButton field="date" label="Date" sortField={apptFilters.apptSortField} sortDirection={apptFilters.apptSortDirection} onSortChange={onApptSortChange} />,
+      cell: ({ row }) => new Date(row.getValue("date")).toLocaleDateString(),
+    },
+    {
+      accessorKey: "type",
+      header: "Type",
+      cell: ({ row }) => APPOINTMENT_TYPE_LABELS[row.getValue("type") as keyof typeof APPOINTMENT_TYPE_LABELS],
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => APPOINTMENT_STATUS_LABELS[row.getValue("status") as keyof typeof APPOINTMENT_STATUS_LABELS],
+    },
+    {
+      accessorKey: "doctorName",
+      header: "Doctor",
+      cell: ({ row }) => row.getValue("doctorName") ?? "—",
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => (
+        <RowActions onDelete={() => setDeletingApptId(row.original.id)} />
+      ),
+    },
+  ]
 
   const columns: ColumnDef<MedicalExpense>[] = [
     {
@@ -142,6 +201,25 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
           </DetailRow>
         </div>
       </div>
+
+      <TableTemplate
+        title="Related Appointments"
+        columns={apptColumns}
+        data={appointmentsData}
+        isLoading={isAppointmentsLoading}
+        pageSize={apptFilters.apptPageSize}
+        onPageChange={(page) => setApptFilters((prev) => ({ ...prev, apptPage: page }))}
+        onPageSizeChange={(pageSize) => setApptFilters((prev) => ({ ...prev, apptPage: 1, apptPageSize: pageSize }))}
+        deleteConfig={{
+          deletingId: deletingApptId,
+          onCancel: () => setDeletingApptId(null),
+          onConfirm: () => {
+            if (deletingApptId === null) return
+            deleteAppointment(deletingApptId, { onSuccess: () => setDeletingApptId(null) })
+          },
+          isPending: isDeletingAppt,
+        }}
+      />
 
       <TableTemplate
         title="Medical Expenses"
