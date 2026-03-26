@@ -4,11 +4,11 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Appointment } from "@/lib/generated/prisma/client"
-import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs"
-import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
+import { baseFilterParsers } from "@/lib/query-filters"
 import { useActiveProfile } from "@/context/profile-context"
 import { useProfile } from "../users/hooks/use-profile"
-import { useAppointments, type AppointmentsParams } from "./hooks/use-appointments"
+import { useAppointments } from "./hooks/use-appointments"
 import { useDeleteAppointment } from "./hooks/use-delete-appointment"
 import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
@@ -23,20 +23,14 @@ const AppointmentsPage = () => {
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
-    page:          parseAsInteger.withDefault(1),
-    pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-    sortField:     parseAsString.withDefault("date"),
-    sortDirection: parseAsString.withDefault("desc"),
-    search:        parseAsString.withDefault(""),
-    dateFrom:      parseAsString,
-    dateTo:        parseAsString,
-    statuses:      parseAsArrayOf(parseAsString).withDefault([]),
+    ...baseFilterParsers("date"),
+    statuses: parseAsArrayOf(parseAsString).withDefault([]),
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteAppointment()
 
-  const params: AppointmentsParams = {
+  const params = {
     profileId: activeProfileId ?? undefined,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,

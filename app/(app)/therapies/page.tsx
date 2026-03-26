@@ -4,11 +4,11 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Therapy } from "@/lib/generated/prisma/client"
-import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs"
-import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
+import { baseFilterParsers } from "@/lib/query-filters"
 import { useActiveProfile } from "@/context/profile-context"
 import { useProfile } from "../users/hooks/use-profile"
-import { useTherapies, type TherapiesParams } from "./hooks/use-therapies"
+import { useTherapies } from "./hooks/use-therapies"
 import { useDeleteTherapy } from "./hooks/use-delete-therapy"
 import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
@@ -34,20 +34,14 @@ const TherapiesPage = () => {
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
-    page:          parseAsInteger.withDefault(1),
-    pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-    sortField:     parseAsString.withDefault("startDate"),
-    sortDirection: parseAsString.withDefault("desc"),
-    search:        parseAsString.withDefault(""),
-    dateFrom:      parseAsString,
-    dateTo:        parseAsString,
-    isActive:      parseAsArrayOf(parseAsString).withDefault([]),
+    ...baseFilterParsers("startDate"),
+    isActive: parseAsArrayOf(parseAsString).withDefault([]),
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteTherapy()
 
-  const params: TherapiesParams = {
+  const params = {
     profileId: activeProfileId ?? undefined,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,

@@ -5,8 +5,6 @@ import type { PaginatedResult } from "@/types/table";
 import type { Therapy } from "@/lib/generated/prisma/client";
 import { getTherapies, type TherapiesParams } from "@/lib/api/therapies";
 
-export type { TherapiesParams };
-
 export const therapiesQueryKey = (params: TherapiesParams) =>
   ["therapies", params] as const;
 

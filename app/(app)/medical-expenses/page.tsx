@@ -4,11 +4,11 @@ import { useState } from "react"
 import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses"
-import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs"
-import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
+import { baseFilterParsers } from "@/lib/query-filters"
 import { useActiveProfile } from "@/context/profile-context"
 import { useProfile } from "../users/hooks/use-profile"
-import { useMedicalExpenses, type MedicalExpensesParams } from "./hooks/use-medical-expenses"
+import { useMedicalExpenses } from "./hooks/use-medical-expenses"
 import { useDeleteMedicalExpense } from "./hooks/use-delete-medical-expense"
 import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
@@ -24,14 +24,8 @@ const MedicalExpensesPage = () => {
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
-    page:          parseAsInteger.withDefault(1),
-    pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-    sortField:     parseAsString.withDefault("date"),
-    sortDirection: parseAsString.withDefault("desc"),
-    search:        parseAsString.withDefault(""),
-    dateFrom:      parseAsString,
-    dateTo:        parseAsString,
-    types:         parseAsArrayOf(parseAsString).withDefault([]),
+    ...baseFilterParsers("date"),
+    types: parseAsArrayOf(parseAsString).withDefault([]),
   })
 
   const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(null)
@@ -40,7 +34,7 @@ const MedicalExpensesPage = () => {
   const [editingExpense, setEditingExpense] = useState<MedicalExpenseWithRelations | null>(null)
   const [viewingExpense, setViewingExpense] = useState<MedicalExpenseWithRelations | null>(null)
 
-  const params: MedicalExpensesParams = {
+  const params = {
     profileId: activeProfileId ?? undefined,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
