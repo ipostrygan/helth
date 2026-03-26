@@ -1,6 +1,7 @@
 "use client"
 
 import { ReactNode } from "react"
+import { cn } from "@/lib/utils"
 import { ColumnDef } from "@tanstack/react-table"
 import { type DateRange } from "react-day-picker"
 import { Plus } from "lucide-react"
@@ -54,6 +55,7 @@ interface TableTemplateProps<TData> {
   filters?: FiltersConfig
   deleteConfig?: DeleteConfig
   modals?: ReactNode
+  className?: string
 }
 
 export function TableTemplate<TData>({
@@ -71,9 +73,10 @@ export function TableTemplate<TData>({
   filters,
   deleteConfig,
   modals,
+  className,
 }: TableTemplateProps<TData>) {
   return (
-    <div className="space-y-4 p-4">
+    <div className={cn("space-y-4", className ?? "p-4")}>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold">{title}</h1>

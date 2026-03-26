@@ -117,9 +117,13 @@ const MedicalExpensesPage = () => {
     return null
   }
 
+  const totalSum = data?.totalSum ?? 0
+  const description = `Total sum of expenses for selected period: ${new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(totalSum)}`
+
   return (
     <TableTemplate
       title={`${profile.firstName}'s medical expenses`}
+      description={description}
       columns={columns}
       data={data}
       isLoading={isLoading}

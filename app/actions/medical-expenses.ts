@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { ExpenseType, MedicalExpense } from "@/lib/generated/prisma/client";
-import type { PaginatedResult } from "@/types/table";
+
 import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/types";
 
 export type MedicalExpensesQuery = MedicalExpensesQueryParams;
@@ -10,6 +10,15 @@ export type MedicalExpensesQuery = MedicalExpensesQueryParams;
 export type MedicalExpenseWithRelations = MedicalExpense & {
   therapy: { id: string; title: string } | null;
   appointment: { id: string; title: string } | null;
+};
+
+export type MedicalExpensePaginatedResult = {
+  data: MedicalExpenseWithRelations[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  totalSum: number;
 };
 
 export const getMedicalExpenses = async ({
@@ -23,11 +32,13 @@ export const getMedicalExpenses = async ({
   dateTo,
   types,
   therapyId,
-}: MedicalExpensesQuery = {}): Promise<PaginatedResult<MedicalExpenseWithRelations>> => {
+  appointmentId,
+}: MedicalExpensesQuery = {}): Promise<MedicalExpensePaginatedResult> => {
   const skip = (page - 1) * pageSize;
   const where = {
     ...(profileId ? { userId: profileId } : {}),
     ...(therapyId ? { therapyId } : {}),
+    ...(appointmentId ? { appointmentId } : {}),
     ...(search ? {
       OR: [
         { title: { contains: search, mode: "insensitive" as const } },
@@ -43,7 +54,7 @@ export const getMedicalExpenses = async ({
     ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {}),
   };
 
-  const [data, total] = await prisma.$transaction([
+  const [data, total, aggregate] = await prisma.$transaction([
     prisma.medicalExpense.findMany({
       where,
       skip,
@@ -55,6 +66,7 @@ export const getMedicalExpenses = async ({
       },
     }),
     prisma.medicalExpense.count({ where }),
+    prisma.medicalExpense.aggregate({ where, _sum: { amount: true } }),
   ]);
 
   return {
@@ -63,6 +75,7 @@ export const getMedicalExpenses = async ({
     page,
     pageSize,
     totalPages: Math.ceil(total / pageSize),
+    totalSum: aggregate._sum.amount ?? 0,
   };
 };
 

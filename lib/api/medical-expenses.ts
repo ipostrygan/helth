@@ -1,12 +1,11 @@
-import type { PaginatedResult } from "@/types/table";
 import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/types";
-import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses";
+import type { MedicalExpensePaginatedResult, MedicalExpenseWithRelations } from "@/app/actions/medical-expenses";
 
 export type MedicalExpensesParams = MedicalExpensesQueryParams;
 
 export async function getMedicalExpenses(
   params: MedicalExpensesParams
-): Promise<PaginatedResult<MedicalExpenseWithRelations>> {
+): Promise<MedicalExpensePaginatedResult> {
   const {
     profileId,
     page = 1,
@@ -18,6 +17,7 @@ export async function getMedicalExpenses(
     dateTo,
     types,
     therapyId,
+    appointmentId,
   } = params;
 
   const searchParams = new URLSearchParams({
@@ -31,6 +31,7 @@ export async function getMedicalExpenses(
     ...(dateTo ? { dateTo } : {}),
     ...(types && types.length > 0 ? { types: types.join(",") } : {}),
     ...(therapyId ? { therapyId } : {}),
+    ...(appointmentId ? { appointmentId } : {}),
   });
 
   const res = await fetch(`/api/medical-expenses?${searchParams}`);

@@ -203,6 +203,7 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
       </div>
 
       <TableTemplate
+        className="space-y-4"
         title="Related Appointments"
         columns={apptColumns}
         data={appointmentsData}
@@ -222,7 +223,9 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
       />
 
       <TableTemplate
+        className="space-y-4"
         title="Medical Expenses"
+        description={`Total sum of expenses: ${new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(expensesData?.totalSum ?? 0)}`}
         columns={columns}
         data={expensesData}
         isLoading={isExpensesLoading}
