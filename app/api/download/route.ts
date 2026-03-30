@@ -4,23 +4,12 @@ import { s3 } from "@/lib/s3";
 import prisma from "@/lib/prisma";
 
 async function isValidDocumentKey(key: string): Promise<boolean> {
-  const appointment = await prisma.appointment.findFirst({
-    where: { relatedDocuments: { has: key } },
-    select: { id: true },
-  });
-  if (appointment) return true;
-
-  const therapy = await prisma.therapy.findFirst({
-    where: { relatedDocuments: { has: key } },
-    select: { id: true },
-  });
-  if (therapy) return true;
-
-  const user = await prisma.user.findFirst({
-    where: { imageKey: key },
-    select: { id: true },
-  });
-  return !!user;
+  const [appointment, therapy, user] = await Promise.all([
+    prisma.appointment.findFirst({ where: { relatedDocuments: { has: key } }, select: { id: true } }),
+    prisma.therapy.findFirst({ where: { relatedDocuments: { has: key } }, select: { id: true } }),
+    prisma.user.findFirst({ where: { imageKey: key }, select: { id: true } }),
+  ]);
+  return !!(appointment ?? therapy ?? user);
 }
 
 export async function GET(req: NextRequest) {

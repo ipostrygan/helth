@@ -1,6 +1,7 @@
 import { editProfile } from "@/app/actions/profile";
 import { s3 } from "@/lib/s3";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import prisma from "@/lib/prisma";
 
 export async function PUT(
   req: Request, 
@@ -14,18 +15,26 @@ export async function PUT(
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const command = new PutObjectCommand({
+    const ext = file.name.split(".").pop();
+    const key = `users/${id}/profile${ext ? `.${ext}` : ""}`;
+
+    const user = await prisma.user.findUnique({ where: { id }, select: { imageKey: true } });
+    const oldKey = user?.imageKey;
+
+    await s3.send(new PutObjectCommand({
       Bucket: process.env.S3_BUCKET,
-      Key: file.name,
-      Body: buffer, 
+      Key: key,
+      Body: buffer,
       ContentType: file.type,
       ContentLength: buffer.length,
-    })
-    
-    await s3.send(command)
+    }));
+
+    if (oldKey && oldKey !== key) {
+      await s3.send(new DeleteObjectCommand({ Bucket: process.env.S3_BUCKET, Key: oldKey }));
+    }
 
     await editProfile(id, {
-      imageKey: file.name
+      imageKey: key
     })
     
     return new Response(
