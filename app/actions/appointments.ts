@@ -112,3 +112,19 @@ export const updateAppointment = async ({ id, ...data }: UpdateAppointmentInput)
 export const getAppointmentById = async (id: string): Promise<Appointment | null> => {
   return prisma.appointment.findUnique({ where: { id } });
 };
+
+export const addDocumentToAppointment = async (id: string, key: string): Promise<void> => {
+  await prisma.appointment.update({
+    where: { id },
+    data: { relatedDocuments: { push: key } },
+  });
+};
+
+export const removeDocumentFromAppointment = async (id: string, key: string): Promise<void> => {
+  const appointment = await prisma.appointment.findUnique({ where: { id }, select: { relatedDocuments: true } });
+  if (!appointment) return;
+  await prisma.appointment.update({
+    where: { id },
+    data: { relatedDocuments: appointment.relatedDocuments.filter((k) => k !== key) },
+  });
+};

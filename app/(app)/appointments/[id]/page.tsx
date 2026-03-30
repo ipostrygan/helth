@@ -2,7 +2,7 @@
 
 import { use, useState } from "react"
 import Link from "next/link"
-import { BackLink } from "@/components/back-link"
+import { Breadcrumbs } from "@/components/breadcrumbs"
 import { useAppointment } from "../hooks/use-appointment"
 import { useTherapy } from "../../therapies/hooks/use-therapy"
 import { Separator } from "@/components/ui/separator"
@@ -20,6 +20,8 @@ import { EXPENSE_TYPE_LABELS } from "../../medical-expenses/constants"
 import { RowActions } from "@/components/row-actions"
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+import { DocumentsCard } from "@/components/documents-card"
+import { useDocuments } from "@/app/(app)/hooks/use-documents"
 
 type AppointmentDetailPageProps = {
   params: Promise<{ id: string }>
@@ -36,6 +38,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   const { id } = use(params)
   const { data: appointment, isLoading } = useAppointment(id)
   const { data: therapy } = useTherapy(appointment?.therapyId ?? "")
+  const { uploadMutation, removeMutation } = useDocuments(`/api/appointments/${id}/documents`, ["appointments", id])
 
   const [filters, setFilters] = useQueryStates({
     page:          parseAsInteger.withDefault(1),
@@ -97,7 +100,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   return (
     <div className="px-6 pt-6 space-y-6">
       <div className="space-y-1">
-        <BackLink href="/appointments" />
+        <Breadcrumbs items={[{ label: "Appointments", href: "/appointments" }, { label: appointment.title }]} />
         <h1 className="text-2xl font-semibold">{appointment.title}</h1>
       </div>
 
@@ -153,6 +156,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
           </DetailRow>
         </div>
       </div>
+      <DocumentsCard documents={appointment.documents ?? []} uploadMutation={uploadMutation} removeMutation={removeMutation} />
       <TableTemplate
         className="space-y-4"
         title="Medical Expenses"

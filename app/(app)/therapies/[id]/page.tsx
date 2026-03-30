@@ -1,7 +1,7 @@
 "use client"
 
 import { use, useState } from "react"
-import { BackLink } from "@/components/back-link"
+import { Breadcrumbs } from "@/components/breadcrumbs"
 import { useTherapy } from "../hooks/use-therapy"
 import { Separator } from "@/components/ui/separator"
 import { TableTemplate } from "@/components/table-template"
@@ -17,6 +17,8 @@ import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from "../../appoin
 import { RowActions } from "@/components/row-actions"
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+import { DocumentsCard } from "@/components/documents-card"
+import { useDocuments } from "@/app/(app)/hooks/use-documents"
 
 type TherapyDetailPageProps = {
   params: Promise<{ id: string }>
@@ -25,6 +27,7 @@ type TherapyDetailPageProps = {
 const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
   const { id } = use(params)
   const { data: therapy, isLoading } = useTherapy(id)
+  const { uploadMutation, removeMutation } = useDocuments(`/api/therapies/${id}/documents`, ["therapies", id])
 
   const [filters, setFilters] = useQueryStates({
     page:          parseAsInteger.withDefault(1),
@@ -144,7 +147,7 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
   return (
     <div className="px-6 pt-6 space-y-6">
       <div className="space-y-1">
-        <BackLink href="/therapies" />
+        <Breadcrumbs items={[{ label: "Therapies", href: "/therapies" }, { label: therapy.title }]} />
         <h1 className="text-2xl font-semibold">{therapy.title}</h1>
       </div>
 
@@ -201,6 +204,8 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
           </DetailRow>
         </div>
       </div>
+
+      <DocumentsCard documents={therapy.documents ?? []} uploadMutation={uploadMutation} removeMutation={removeMutation} />
 
       <TableTemplate
         className="space-y-4"

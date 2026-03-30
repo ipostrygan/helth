@@ -106,3 +106,19 @@ export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput): Promis
 export const getTherapyById = async (id: string): Promise<Therapy | null> => {
   return prisma.therapy.findUnique({ where: { id } });
 };
+
+export const addDocumentToTherapy = async (id: string, key: string): Promise<void> => {
+  await prisma.therapy.update({
+    where: { id },
+    data: { relatedDocuments: { push: key } },
+  });
+};
+
+export const removeDocumentFromTherapy = async (id: string, key: string): Promise<void> => {
+  const therapy = await prisma.therapy.findUnique({ where: { id }, select: { relatedDocuments: true } });
+  if (!therapy) return;
+  await prisma.therapy.update({
+    where: { id },
+    data: { relatedDocuments: therapy.relatedDocuments.filter((k) => k !== key) },
+  });
+};

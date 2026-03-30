@@ -45,7 +45,6 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
   const { mutateAsync: editTherapy } = useEditTherapy()
   const [startCalendarOpen, setStartCalendarOpen] = useState(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState(false)
-
   const {
     control,
     register,

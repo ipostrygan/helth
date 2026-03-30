@@ -1,7 +1,6 @@
 "use server"
 
 import { User } from "@/lib/generated/prisma/client";
-import { getSignedImageUrl } from "@/lib/s3";
 import { EditProfileFormType } from "../(app)/profile/edit-profile-form";
 import prisma from "@/lib/prisma";
 import { UserProfile } from "../(app)/users/types/profile.types";
@@ -15,7 +14,7 @@ export const editProfile = async (id: string, data: EditProfileFormType) => {
 
 export const toUserProfile = async (user: User): Promise<UserProfile> => ({
   ...user,
-  imageUrl: user.imageKey ? await getSignedImageUrl(user.imageKey) : null
+  imageUrl: user.imageKey ? `/api/download?key=${encodeURIComponent(user.imageKey)}` : null,
 })
 
 export const getProfile = async (id: string): Promise<UserProfile> => {

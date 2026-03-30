@@ -82,6 +82,7 @@ model Therapy {
   therapistInfoLink String?
   location          String?
   isActive          Boolean          @default(true)
+  relatedDocuments  String[]
   userId            String
   user              User             @relation(fields: [userId], references: [id])
   medicalExpenses   MedicalExpense[]
