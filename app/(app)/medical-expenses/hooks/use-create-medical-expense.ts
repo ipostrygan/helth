@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createExpense } from "@/app/actions/medical-expenses";
+import { queryKeys } from "@/lib/query-keys";
 import { toast } from "sonner";
 
 export const useCreateMedicalExpense = () => {
@@ -10,7 +11,7 @@ export const useCreateMedicalExpense = () => {
   return useMutation({
     mutationFn: createExpense,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["medical-expenses"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.medicalExpenses.all });
       toast.success("Medical expense was successfully created");
     },
     onError: () => {

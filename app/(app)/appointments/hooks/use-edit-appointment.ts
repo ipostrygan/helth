@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateAppointment } from "@/app/actions/appointments";
+import { queryKeys } from "@/lib/query-keys";
 import { toast } from "sonner";
 
 export const useEditAppointment = () => {
@@ -10,7 +11,7 @@ export const useEditAppointment = () => {
   return useMutation({
     mutationFn: updateAppointment,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["appointments"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.appointments.all });
       toast.success("Appointment was successfully updated");
     },
     onError: () => {

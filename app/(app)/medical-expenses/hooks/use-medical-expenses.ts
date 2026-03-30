@@ -3,15 +3,13 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { MedicalExpensePaginatedResult } from "@/app/actions/medical-expenses";
 import { getMedicalExpenses, type MedicalExpensesParams } from "@/lib/api/medical-expenses";
+import { queryKeys } from "@/lib/query-keys";
 
 export type { MedicalExpensesParams };
 
-export const medicalExpensesQueryKey = (params: MedicalExpensesParams) =>
-  ["medical-expenses", params] as const;
-
 export const useMedicalExpenses = (params: MedicalExpensesParams = {}) => {
   return useQuery<MedicalExpensePaginatedResult>({
-    queryKey: medicalExpensesQueryKey(params),
+    queryKey: queryKeys.medicalExpenses.list(params),
     queryFn: () => getMedicalExpenses(params),
     placeholderData: keepPreviousData,
   });

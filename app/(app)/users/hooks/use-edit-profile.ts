@@ -2,8 +2,8 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { EditProfileFormType } from "../../profile/edit-profile-form"
-import { profileQueryKey } from "./use-profile"
 import { editProfile } from "@/lib/api/users"
+import { queryKeys } from "@/lib/query-keys"
 import { toast } from "sonner"
 
 export const useEditProfile = (id: string) => {
@@ -12,7 +12,7 @@ export const useEditProfile = (id: string) => {
   return useMutation({
     mutationFn: (data: EditProfileFormType) => editProfile(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: profileQueryKey(id) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.profile.detail(id) })
       toast.success("Profile was successfully updated")
     },
     onError: () => {

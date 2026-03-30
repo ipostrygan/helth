@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent } from "react";
 import { uploadProfileImage } from "@/lib/api/users";
+import { queryKeys } from "@/lib/query-keys";
 import { toast } from "sonner";
 
 export function useUploadFile(id: string) {
@@ -17,7 +18,7 @@ export function useUploadFile(id: string) {
       return uploadProfileImage(id, file);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['profile'] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.profile.all })
       toast.success("Profile photo was successfully uploaded");
     },
     onError: () => {

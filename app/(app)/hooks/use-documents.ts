@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-export const useDocuments = (apiPath: string, queryKey: string[]) => {
+export const useDocuments = (apiPath: string, queryKey: readonly string[]) => {
   const queryClient = useQueryClient()
 
   const uploadMutation = useMutation({

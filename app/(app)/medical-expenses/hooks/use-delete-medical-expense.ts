@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteMedicalExpense } from "@/lib/api/medical-expenses";
+import { queryKeys } from "@/lib/query-keys";
 import { toast } from "sonner";
 
 export const useDeleteMedicalExpense = () => {
@@ -10,7 +11,7 @@ export const useDeleteMedicalExpense = () => {
   return useMutation({
     mutationFn: (id: string) => deleteMedicalExpense(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["medical-expenses"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.medicalExpenses.all });
       toast.success("Medical expense was successfully deleted");
     },
     onError: () => {

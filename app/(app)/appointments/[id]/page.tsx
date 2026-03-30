@@ -22,6 +22,7 @@ import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
 import { DocumentsCard } from "@/components/documents-card"
 import { useDocuments } from "@/app/(app)/hooks/use-documents"
+import { queryKeys } from "@/lib/query-keys"
 
 type AppointmentDetailPageProps = {
   params: Promise<{ id: string }>
@@ -38,7 +39,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   const { id } = use(params)
   const { data: appointment, isLoading } = useAppointment(id)
   const { data: therapy } = useTherapy(appointment?.therapyId ?? "")
-  const { uploadMutation, removeMutation } = useDocuments(`/api/appointments/${id}/documents`, ["appointments", id])
+  const { uploadMutation, removeMutation } = useDocuments(`/api/appointments/${id}/documents`, queryKeys.appointments.detail(id))
 
   const [filters, setFilters] = useQueryStates({
     page:          parseAsInteger.withDefault(1),
