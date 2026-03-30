@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Appointment } from "@/lib/generated/prisma/client"
@@ -8,7 +8,7 @@ import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
 import { baseFilterParsers } from "@/lib/query-filters"
 import { useActiveProfile } from "@/context/profile-context"
 import { useProfile } from "../users/hooks/use-profile"
-import { useAppointments } from "./hooks/use-appointments"
+import { useAppointments, type AppointmentsParams } from "./hooks/use-appointments"
 import { useDeleteAppointment } from "./hooks/use-delete-appointment"
 import { SortButton } from "@/components/ui/sort-button"
 import { type DateRange } from "react-day-picker"
@@ -30,7 +30,7 @@ const AppointmentsPage = () => {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteAppointment()
 
-  const params = {
+  const params  = {
     profileId: activeProfileId ?? undefined,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
@@ -161,4 +161,6 @@ const AppointmentsPage = () => {
   )
 }
 
-export default AppointmentsPage
+export default function Page() {
+  return <Suspense><AppointmentsPage /></Suspense>
+}

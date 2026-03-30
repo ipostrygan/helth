@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses"
@@ -201,4 +201,6 @@ const MedicalExpensesPage = () => {
   )
 }
 
-export default MedicalExpensesPage
+export default function Page() {
+  return <Suspense><MedicalExpensesPage /></Suspense>
+}

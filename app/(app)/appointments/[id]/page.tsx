@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useState } from "react"
+import { Suspense, use, useState } from "react"
 import Link from "next/link"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { useAppointment } from "../hooks/use-appointment"
@@ -99,7 +99,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   if (!appointment) return null
 
   return (
-    <div className="px-6 pt-6 space-y-6">
+    <div className="px-6 pt-6 space-y-6 max-w-4xl mx-auto">
       <div className="space-y-1">
         <Breadcrumbs items={[{ label: "Appointments", href: "/appointments" }, { label: appointment.title }]} />
         <h1 className="text-2xl font-semibold">{appointment.title}</h1>
@@ -195,4 +195,6 @@ const DetailRow = ({
   </div>
 )
 
-export default AppointmentDetailPage
+export default function Page(props: AppointmentDetailPageProps) {
+  return <Suspense><AppointmentDetailPage {...props} /></Suspense>
+}

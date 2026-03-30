@@ -10,7 +10,9 @@ async function main() {
     prisma.user.findFirstOrThrow({ where: { firstName: "Miguel Angel" } }),
   ]);
   const userIds = [igor.id, iryna.id, angel.id];
-  await seedAppointments(prisma, userIds);
+  const therapies = await prisma.therapy.findMany({ select: { id: true, title: true } });
+  const therapyIdByTitle = Object.fromEntries(therapies.map((t) => [t.title, t.id]));
+  await seedAppointments(prisma, userIds, therapyIdByTitle);
 }
 
 main()

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Therapy } from "@/lib/generated/prisma/client"
@@ -246,4 +246,6 @@ const TherapiesPage = () => {
   )
 }
 
-export default TherapiesPage
+export default function Page() {
+  return <Suspense><TherapiesPage /></Suspense>
+}
