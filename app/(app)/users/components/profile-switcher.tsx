@@ -26,7 +26,7 @@ const ProfileSwitcher = ({ profiles }: ProfileSwitcherProps) => {
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [isPending, startTransition] = useTransition()
-
+ console.log("pp", profiles)
   const onLogout = () => {
     startTransition(async () => {
       await logout()
