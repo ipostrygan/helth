@@ -27,7 +27,8 @@ export async function GET(req: NextRequest) {
     result = await s3.send(
       new GetObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key })
     );
-  } catch {
+  } catch (err) {
+    console.error("S3 fetch failed for key:", key, err)
     return new NextResponse(null, { status: 404 });
   }
 
