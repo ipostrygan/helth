@@ -6,7 +6,6 @@ import { ProfileProvider } from "@/context/profile-context"
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const profiles = await getAllProfiles()
-  console.log("p", profiles)
   return (
     <ProfileProvider>
       <SidebarProvider>
