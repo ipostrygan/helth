@@ -22,7 +22,7 @@ export async function PUT(
     const oldKey = user?.imageKey
 
     await s3.send(new PutObjectCommand({
-      Bucket: process.env.S3_BUCKET,
+      Bucket: process.env.APP_S3_BUCKET,
       Key: key,
       Body: buffer,
       ContentType: file.type,
@@ -30,7 +30,7 @@ export async function PUT(
     }))
 
     if (oldKey && oldKey !== key) {
-      await s3.send(new DeleteObjectCommand({ Bucket: process.env.S3_BUCKET, Key: oldKey }))
+      await s3.send(new DeleteObjectCommand({ Bucket: process.env.APP_S3_BUCKET, Key: oldKey }))
     }
 
     await editProfile(id, {

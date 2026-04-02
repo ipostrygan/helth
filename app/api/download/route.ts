@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
   let result
   try {
     result = await s3.send(
-      new GetObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key })
+      new GetObjectCommand({ Bucket: process.env.APP_S3_BUCKET!, Key: key })
     )
   }
   catch (err) {
