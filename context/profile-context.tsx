@@ -1,7 +1,9 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { getAllProfiles } from '@/app/actions/profile'
+import { useQuery } from '@tanstack/react-query'
+import { getProfiles } from '@/lib/api/users'
+import { queryKeys } from '@/lib/query-keys'
 
 const LAST_PROFILE_KEY = 'lastProfileId'
 
@@ -20,17 +22,20 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     () => (typeof window !== 'undefined' ? localStorage.getItem(LAST_PROFILE_KEY) : null)
   )
 
-  useEffect(() => {
-    if (localStorage.getItem(LAST_PROFILE_KEY)) return
+  const { data: profiles } = useQuery({
+    queryKey: queryKeys.profile.all,
+    queryFn: getProfiles,
+    enabled: !activeProfileId
+  })
 
-    getAllProfiles().then((profiles) => {
-      const primary = profiles.find(p => p.isPrimaryUser) ?? profiles[0]
-      if (primary) {
-        localStorage.setItem(LAST_PROFILE_KEY, primary.id)
-        setActiveProfileIdState(primary.id)
-      }
-    })
-  }, [])
+  useEffect(() => {
+    if (activeProfileId || !profiles) return
+    const primary = profiles.find(p => p.isPrimaryUser) ?? profiles[0]
+    if (primary) {
+      localStorage.setItem(LAST_PROFILE_KEY, primary.id)
+      setActiveProfileIdState(primary.id)
+    }
+  }, [profiles, activeProfileId])
 
   const setActiveProfileId = (id: string) => {
     localStorage.setItem(LAST_PROFILE_KEY, id)

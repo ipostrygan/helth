@@ -7,11 +7,16 @@ import { useProfile } from '../users/hooks/use-profile'
 import EditProfileForm from './edit-profile-form'
 import PersonalInformation from './personal-information'
 import { useActiveProfile } from '@/context/profile-context'
+import ProfileSkeleton from './profile-skeleton'
 
 const Profile = () => {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const { activeProfileId } = useActiveProfile()
-  const { data: profile } = useProfile(activeProfileId)
+  const { data: profile, isLoading } = useProfile(activeProfileId)
+
+  if (isLoading) {
+    return <ProfileSkeleton />
+  }
 
   if (!profile) {
     return null

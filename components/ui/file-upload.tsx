@@ -146,7 +146,7 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
                 type="button"
                 variant="ghost"
                 size="icon-sm"
-                className="shrink-0 text-muted-foreground hover:text-destructive"
+                className="shrink-0 text-muted-foreground hover:text-destructive mt-2"
                 onClick={() => setPendingRemoveId(entry.id)}
                 aria-label={`Remove ${entry.file.name}`}
               >
