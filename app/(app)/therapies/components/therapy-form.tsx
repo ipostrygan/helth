@@ -79,7 +79,7 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
 
   return (
     <div className="flex flex-col min-h-full">
-      <div className="flex-1 p-6 max-w-2xl mx-auto w-full">
+      <div className="flex-1 p-6 w-full">
         <form id="therapy-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field>
@@ -207,7 +207,7 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
       </div>
 
       <div className="sticky bottom-0 border-t bg-background px-6 py-4">
-        <div className="max-w-2xl mx-auto flex justify-end gap-2">
+        <div className="flex justify-end gap-2">
           <Button
             type="button"
             variant="outline"

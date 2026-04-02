@@ -8,7 +8,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <ProfileProvider>
       <SidebarProvider>
         <AppSidebar />
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full min-w-0">
           <header className="bg-card px-2 h-18 flex items-center justify-between shrink-0 z-10">
             <SidebarTrigger />
             <ProfileSwitcher />

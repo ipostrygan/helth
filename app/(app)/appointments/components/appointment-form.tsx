@@ -72,8 +72,8 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="flex-1 p-6 max-w-2xl mx-auto w-full">
+    <div className="flex flex-col w-full">
+      <div className="flex-1 p-3 xs:p-6 w-full">
         <form id="appointment-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field>
@@ -178,8 +178,8 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
         </form>
       </div>
 
-      <div className="sticky bottom-0 border-t bg-background px-6 py-4">
-        <div className="max-w-2xl mx-auto flex justify-end gap-2">
+      <div className="sticky bottom-0 border-t bg-background py-4">
+        <div className="flex justify-end gap-2">
           <Button
             type="button"
             variant="outline"

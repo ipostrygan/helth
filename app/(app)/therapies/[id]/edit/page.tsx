@@ -19,7 +19,7 @@ const EditTherapyPage = ({ params }: EditPageProps) => {
   if (!therapy || !activeProfileId) return null
 
   return (
-    <div>
+    <div className="max-w-2xl mx-auto">
       <div className="px-6 pt-6 space-y-1">
         <Breadcrumbs items={[{ label: 'Therapies', href: '/therapies' }, { label: therapy.title, href: `/therapies/${id}` }, { label: 'Edit' }]} />
         <h1 className="text-2xl font-semibold">Edit Therapy</h1>
