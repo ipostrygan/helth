@@ -3,7 +3,7 @@
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { ExpenseType } from "@/lib/generated/prisma/enums"
+import { ExpenseType } from "@/lib/generated/prisma"
 import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
