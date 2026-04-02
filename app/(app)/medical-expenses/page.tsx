@@ -5,7 +5,7 @@ import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses"
 import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
-import { baseFilterParsers } from "@/lib/query-filters"
+import { baseFilterParsers, defaultDateFrom, defaultDateTo } from "@/lib/query-filters"
 import { useActiveProfile } from "@/context/profile-context"
 import { useProfile } from "../users/hooks/use-profile"
 import { useMedicalExpenses } from "./hooks/use-medical-expenses"
@@ -152,7 +152,7 @@ const MedicalExpensesPage = () => {
             onChange: (types) => setFilters((prev) => ({ ...prev, page: 1, types })),
           },
         ],
-        hasActiveFilters: !!(filters.search || filters.dateFrom || filters.dateTo || filters.types.length > 0),
+        hasActiveFilters: !!(filters.search || filters.dateFrom !== defaultDateFrom || filters.dateTo !== defaultDateTo || filters.types.length > 0),
         onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: "", dateFrom: null, dateTo: null, types: [] })),
       }}
       deleteConfig={{

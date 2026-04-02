@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 import type { Therapy } from "@/lib/generated/prisma/client"
 import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
-import { baseFilterParsers } from "@/lib/query-filters"
+import { baseFilterParsers, defaultDateFrom, defaultDateTo } from "@/lib/query-filters"
 import { useActiveProfile } from "@/context/profile-context"
 import { useProfile } from "../users/hooks/use-profile"
 import { useTherapies } from "./hooks/use-therapies"
@@ -230,7 +230,7 @@ const TherapiesPage = () => {
             onChange: (isActive) => setFilters((prev) => ({ ...prev, page: 1, isActive })),
           },
         ],
-        hasActiveFilters: !!(filters.search || filters.dateFrom || filters.dateTo || filters.isActive.length > 0),
+        hasActiveFilters: !!(filters.search || filters.dateFrom !== defaultDateFrom || filters.dateTo !== defaultDateTo || filters.isActive.length > 0),
         onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: "", dateFrom: null, dateTo: null, isActive: [] })),
       }}
       deleteConfig={{

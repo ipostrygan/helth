@@ -8,6 +8,10 @@ export const s3 = new S3Client({
   },
 });
 
+console.log("KEY:", process.env.AWS_ACCESS_KEY_ID?.slice(0, 5));
+console.log("SECRET:", !!process.env.AWS_SECRET_ACCESS_KEY);
+console.log("REGION:", process.env.AWS_REGION);
+
 export async function deleteS3Object(key: string) {
   const command = new DeleteObjectCommand({
     Bucket: process.env.S3_BUCKET!,

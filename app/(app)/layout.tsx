@@ -10,7 +10,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <ProfileProvider>
       <SidebarProvider>
         <AppSidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex flex-col w-full">
           <header className="bg-card px-2 h-18 flex items-center justify-between shrink-0 z-10">
             <SidebarTrigger />
             <ProfileSwitcher profiles={profiles} />

@@ -76,7 +76,7 @@ export function TableTemplate<TData>({
   className,
 }: TableTemplateProps<TData>) {
   return (
-    <div className={cn("space-y-4", className ?? "p-4")}>
+    <div className={cn("space-y-4", className ?? "p-0")}>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold">{title}</h1>
