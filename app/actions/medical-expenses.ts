@@ -58,28 +58,34 @@ export const getMedicalExpenses = async ({
     ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {})
   }
 
-  const [data, total, aggregate] = await prisma.$transaction([
-    prisma.medicalExpense.findMany({
-      where,
-      skip,
-      take: pageSize,
-      orderBy: { [sortField]: sortDirection },
-      include: {
-        therapy: { select: { id: true, title: true } },
-        appointment: { select: { id: true, title: true } }
-      }
-    }),
-    prisma.medicalExpense.count({ where }),
-    prisma.medicalExpense.aggregate({ where, _sum: { amount: true } })
-  ])
+  try {
+    const [data, total, aggregate] = await prisma.$transaction([
+      prisma.medicalExpense.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { [sortField]: sortDirection },
+        include: {
+          therapy: { select: { id: true, title: true } },
+          appointment: { select: { id: true, title: true } }
+        }
+      }),
+      prisma.medicalExpense.count({ where }),
+      prisma.medicalExpense.aggregate({ where, _sum: { amount: true } })
+    ])
 
-  return {
-    data,
-    total,
-    page,
-    pageSize,
-    totalPages: Math.ceil(total / pageSize),
-    totalSum: aggregate._sum.amount ?? 0
+    return {
+      data,
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+      totalSum: aggregate._sum.amount ?? 0
+    }
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to fetch medical expenses')
   }
 }
 
@@ -106,32 +112,50 @@ export const getMedicalExpensesByType = async ({
   const resolvedDateFrom = dateFrom ? new Date(dateFrom) : defaultDateFrom
   const resolvedDateTo = dateTo ? new Date(dateTo) : new Date()
 
-  const grouped = await prisma.medicalExpense.groupBy({
-    by: ['type'],
-    where: {
-      ...(profileId ? { userId: profileId } : {}),
-      date: {
-        gte: resolvedDateFrom,
-        lte: resolvedDateTo
-      }
-    },
-    _sum: { amount: true },
-    _count: { id: true }
-  })
+  try {
+    const grouped = await prisma.medicalExpense.groupBy({
+      by: ['type'],
+      where: {
+        ...(profileId ? { userId: profileId } : {}),
+        date: {
+          gte: resolvedDateFrom,
+          lte: resolvedDateTo
+        }
+      },
+      _sum: { amount: true },
+      _count: { id: true }
+    })
 
-  return grouped.map(g => ({
-    type: g.type,
-    total: g._sum.amount ?? 0,
-    count: g._count.id
-  }))
+    return grouped.map(g => ({
+      type: g.type,
+      total: g._sum.amount ?? 0,
+      count: g._count.id
+    }))
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to fetch medical expenses by type')
+  }
 }
 
 export const getMedicalExpenseById = async (id: string): Promise<MedicalExpense | null> => {
-  return prisma.medicalExpense.findUnique({ where: { id } })
+  try {
+    return await prisma.medicalExpense.findUnique({ where: { id } })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to fetch medical expense')
+  }
 }
 
 export const deleteExpense = async (id: string): Promise<void> => {
-  await prisma.medicalExpense.delete({ where: { id } })
+  try {
+    await prisma.medicalExpense.delete({ where: { id } })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to delete expense')
+  }
 }
 
 export type CreateExpenseInput = {

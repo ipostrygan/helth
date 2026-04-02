@@ -42,27 +42,39 @@ export const getTherapies = async ({
     ...(isActive && isActive.length === 1 ? { isActive: isActive[0] === 'true' } : {})
   }
 
-  const [data, total] = await prisma.$transaction([
-    prisma.therapy.findMany({
-      where,
-      skip,
-      take: pageSize,
-      orderBy: { [sortField]: sortDirection }
-    }),
-    prisma.therapy.count({ where })
-  ])
+  try {
+    const [data, total] = await prisma.$transaction([
+      prisma.therapy.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { [sortField]: sortDirection }
+      }),
+      prisma.therapy.count({ where })
+    ])
 
-  return {
-    data,
-    total,
-    page,
-    pageSize,
-    totalPages: Math.ceil(total / pageSize)
+    return {
+      data,
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize)
+    }
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to fetch therapies')
   }
 }
 
 export const deleteTherapy = async (id: string): Promise<void> => {
-  await prisma.therapy.delete({ where: { id } })
+  try {
+    await prisma.therapy.delete({ where: { id } })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to delete therapy')
+  }
 }
 
 export type CreateTherapyInput = {
@@ -110,21 +122,39 @@ export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput): Promis
 }
 
 export const getTherapyById = async (id: string): Promise<Therapy | null> => {
-  return prisma.therapy.findUnique({ where: { id } })
+  try {
+    return await prisma.therapy.findUnique({ where: { id } })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to fetch therapy')
+  }
 }
 
 export const addDocumentToTherapy = async (id: string, key: string): Promise<void> => {
-  await prisma.therapy.update({
-    where: { id },
-    data: { relatedDocuments: { push: key } }
-  })
+  try {
+    await prisma.therapy.update({
+      where: { id },
+      data: { relatedDocuments: { push: key } }
+    })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to add document to therapy')
+  }
 }
 
 export const removeDocumentFromTherapy = async (id: string, key: string): Promise<void> => {
-  const therapy = await prisma.therapy.findUnique({ where: { id }, select: { relatedDocuments: true } })
-  if (!therapy) return
-  await prisma.therapy.update({
-    where: { id },
-    data: { relatedDocuments: therapy.relatedDocuments.filter(k => k !== key) }
-  })
+  try {
+    const therapy = await prisma.therapy.findUnique({ where: { id }, select: { relatedDocuments: true } })
+    if (!therapy) return
+    await prisma.therapy.update({
+      where: { id },
+      data: { relatedDocuments: therapy.relatedDocuments.filter(k => k !== key) }
+    })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to remove document from therapy')
+  }
 }

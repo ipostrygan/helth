@@ -13,7 +13,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <SidebarTrigger />
             <ProfileSwitcher />
           </header>
-          <main className="p-4 overflow-y-auto flex-1">
+          <main className="p-4 flex-1">
             {children}
           </main>
         </div>

@@ -188,7 +188,7 @@ export const useEdit{ModelName} = () => {
 If the model has enum fields and `app/(app)/{model-names}/constants.ts` does not exist, create it:
 
 ```typescript
-import { EnumTypeName } from "@/lib/generated/prisma/enums";
+import { EnumTypeName } from "@/lib/generated/prisma";
 
 export const ENUM_TYPE_LABELS: Record<EnumTypeName, string> = {
   Value1: "Human Readable Value 1",
@@ -325,7 +325,7 @@ Build the Zod schema from all **FormFields** and **RelationFields**:
 - `DateTime` (required) → `z.date()`
 - `DateTime?` → `z.date().optional()`
 - `Boolean` → `z.boolean().default(false)`
-- Enum (required) → `z.nativeEnum(EnumType)` — import the enum from `@/lib/generated/prisma/enums`
+- Enum (required) → `z.nativeEnum(EnumType)` — import the enum from `@/lib/generated/prisma`
 - Enum (optional) → `z.nativeEnum(EnumType).optional()`
 - RelationField FK (e.g. `therapyId?: string`) → `z.string().optional()` (optional FK for optional relation) or `z.string().min(1)` if required
 
@@ -475,7 +475,7 @@ const {ModelName}Form = ({ profileId, {modelName} }: {ModelName}FormProps) => {
   }
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+    <div className="flex flex-col">
       <div className="flex-1 p-6 max-w-2xl mx-auto w-full">
         <form id="{model-name}-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>

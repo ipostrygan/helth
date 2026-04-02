@@ -458,7 +458,7 @@ export const useEdit{ModelName} = () => {
 **Path:** `app/(app)/{model-names}/constants.ts`
 
 ```typescript
-import { EnumTypeName } from "@/lib/generated/prisma/enums"
+import { EnumTypeName } from "@/lib/generated/prisma"
 
 export const ENUM_TYPE_LABELS: Record<EnumTypeName, string> = {
   Value1: "Human Readable Value 1",
