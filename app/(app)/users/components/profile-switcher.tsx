@@ -9,22 +9,19 @@ import {
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
 import { ChevronDownIcon, LogOutIcon } from 'lucide-react'
-import { UserProfile } from '../types/profile.types'
 import ProfileListItem from './profile-list-item'
 import { useProfile } from '../hooks/use-profile'
+import { useProfiles } from '../hooks/use-profiles'
 import SelectedProfile from './selected-profile'
 import Link from 'next/link'
 import { useActiveProfile } from '@/context/profile-context'
 import { logout } from '@/app/actions/auth'
 import { useTransition } from 'react'
 
-type ProfileSwitcherProps = {
-  profiles: UserProfile[]
-}
-
-const ProfileSwitcher = ({ profiles }: ProfileSwitcherProps) => {
+const ProfileSwitcher = () => {
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
+  const { data: profiles = [] } = useProfiles()
   const [isPending, startTransition] = useTransition()
 
   const onLogout = () => {

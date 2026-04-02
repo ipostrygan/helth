@@ -1,11 +1,9 @@
-import { getAllProfiles } from '@/app/actions/profile'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import AppSidebar from '@/components/app-sidebar'
 import ProfileSwitcher from './users/components/profile-switcher'
 import { ProfileProvider } from '@/context/profile-context'
 
-export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  const profiles = await getAllProfiles()
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <ProfileProvider>
       <SidebarProvider>
@@ -13,7 +11,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <div className="flex flex-col w-full">
           <header className="bg-card px-2 h-18 flex items-center justify-between shrink-0 z-10">
             <SidebarTrigger />
-            <ProfileSwitcher profiles={profiles} />
+            <ProfileSwitcher />
           </header>
           <main className="p-4 overflow-y-auto flex-1">
             {children}

@@ -1,6 +1,10 @@
 import type { UserProfile } from '@/app/(app)/users/types/profile.types'
 import type { EditProfileFormType } from '@/app/(app)/profile/edit-profile-form'
 
+export async function getProfiles(): Promise<UserProfile[]> {
+  return fetch('/api/users').then(res => res.json())
+}
+
 export async function getProfile(id: string): Promise<UserProfile | null> {
   return fetch(`/api/users/${id}`).then(res => res.json())
 }
