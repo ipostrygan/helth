@@ -50,7 +50,7 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
 
         await s3.send(
           new PutObjectCommand({
-            Bucket: process.env.S3_BUCKET,
+            Bucket: process.env.APP_S3_BUCKET,
             Key: key,
             Body: buffer,
             ContentType: file.type,

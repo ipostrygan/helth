@@ -1,9 +1,8 @@
 'use server'
 
-import { User } from '@/lib/generated/prisma/client'
 import { EditProfileFormType } from '../(app)/profile/edit-profile-form'
 import prisma from '@/lib/prisma'
-import { UserProfile } from '../(app)/users/types/profile.types'
+import { toUserProfile } from '@/lib/utils'
 
 export const editProfile = async (id: string, data: EditProfileFormType) => {
   await prisma.user.update({
@@ -12,18 +11,13 @@ export const editProfile = async (id: string, data: EditProfileFormType) => {
   })
 }
 
-export const toUserProfile = async (user: User): Promise<UserProfile> => ({
-  ...user,
-  imageUrl: user.imageKey ? `/api/download?key=${encodeURIComponent(user.imageKey)}` : null
-})
-
-export const getProfile = async (id: string): Promise<UserProfile> => {
+export const getProfile = async (id: string) => {
   const user = await prisma.user.findUnique({ where: { id } })
   if (!user) throw new Error('User not found')
   return toUserProfile(user)
 }
 
-export const getAllProfiles = async (): Promise<UserProfile[]> => {
+export const getAllProfiles = async () => {
   const users = await prisma.user.findMany()
   return Promise.all(users.map(toUserProfile))
 }
