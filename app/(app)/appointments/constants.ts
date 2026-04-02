@@ -1,4 +1,4 @@
-import { AppointmentStatus, AppointmentType } from "@/lib/generated/prisma/enums"
+import { AppointmentStatus, AppointmentType } from "@/lib/generated/prisma"
 
 export const APPOINTMENT_STATUS_LABELS: Record<AppointmentStatus, string> = {
   Scheduled:  "Scheduled",

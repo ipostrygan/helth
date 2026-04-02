@@ -1,4 +1,4 @@
-import { ExpenseType } from "@/lib/generated/prisma/enums"
+import { ExpenseType } from "@/lib/generated/prisma"
 
 export const EXPENSE_TYPE_LABELS: Record<ExpenseType, string> = {
   Pharmacy:    "Pharmacy",
