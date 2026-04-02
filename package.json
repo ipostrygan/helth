@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && find . -name 'enums.d.ts' -not -path '*/node_modules/*' && next build",
+    "build": "ls lib/generated/prisma && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
