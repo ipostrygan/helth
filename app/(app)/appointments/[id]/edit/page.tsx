@@ -19,8 +19,8 @@ const EditAppointmentPage = ({ params }: EditPageProps) => {
   if (!appointment || !activeProfileId) return null
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="px-6 pt-6 space-y-1">
+    <div className="max-w-2xl mx-auto h-full flex flex-col">
+      <div className="px-3 xs:px-6 pt-6 space-y-1">
         <Breadcrumbs items={[{ label: 'Appointments', href: '/appointments' }, { label: appointment.title, href: `/appointments/${id}` }, { label: 'Edit' }]} />
         <h1 className="text-2xl font-semibold">Edit Appointment</h1>
       </div>

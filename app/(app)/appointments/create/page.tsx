@@ -9,7 +9,7 @@ const CreateAppointmentPage = () => {
   if (!activeProfileId) return null
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto h-full flex flex-col">
       <div className="px-3 xs:px-6 pt-6">
         <h1 className="text-2xl font-semibold">Add Appointment</h1>
       </div>

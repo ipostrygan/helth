@@ -72,7 +72,7 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
   }
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full flex-1">
       <div className="flex-1 p-3 xs:p-6 w-full">
         <form id="appointment-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
