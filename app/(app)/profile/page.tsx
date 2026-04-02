@@ -17,10 +17,6 @@ const Profile = () => {
     return null
   }
 
-  console.log('KEY:', process.env.APP_AWS_ACCESS_KEY?.slice(0, 5))
-  console.log('SECRET:', !!process.env.APP_AWS_SECRET_KEY)
-  console.log('REGION:', process.env.AWS_REGION)
-  
   return (
     <div className="max-w-3xl m-auto">
       <div className="flex justify-end">

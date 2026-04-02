@@ -23,6 +23,9 @@ export async function GET(req: NextRequest) {
   const filename = key.split('/').pop() ?? 'download'
 
   let result
+  console.log('KEY:', process.env.APP_AWS_ACCESS_KEY?.slice(0, 5))
+  console.log('SECRET:', !!process.env.APP_AWS_SECRET_KEY)
+  console.log('REGION:', process.env.AWS_REGION)
   try {
     result = await s3.send(
       new GetObjectCommand({ Bucket: process.env.S3_BUCKET!, Key: key })
