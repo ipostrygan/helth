@@ -1,32 +1,32 @@
-"use client"
+'use client'
 
-import { Suspense, useState } from "react"
-import { useRouter } from "next/navigation"
-import { ColumnDef } from "@tanstack/react-table"
-import type { Therapy } from "@/lib/generated/prisma/client"
-import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
-import { baseFilterParsers, defaultDateFrom, defaultDateTo } from "@/lib/query-filters"
-import { useActiveProfile } from "@/context/profile-context"
-import { useProfile } from "../users/hooks/use-profile"
-import { useTherapies } from "./hooks/use-therapies"
-import { useDeleteTherapy } from "./hooks/use-delete-therapy"
-import { SortButton } from "@/components/ui/sort-button"
-import { type DateRange } from "react-day-picker"
-import { format } from "date-fns"
-import { MoreHorizontal } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Suspense, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ColumnDef } from '@tanstack/react-table'
+import type { Therapy } from '@/lib/generated/prisma/client'
+import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
+import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/query-filters'
+import { useActiveProfile } from '@/context/profile-context'
+import { useProfile } from '../users/hooks/use-profile'
+import { useTherapies } from './hooks/use-therapies'
+import { useDeleteTherapy } from './hooks/use-delete-therapy'
+import { SortButton } from '@/components/ui/sort-button'
+import { type DateRange } from 'react-day-picker'
+import { format } from 'date-fns'
+import { MoreHorizontal } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Link from "next/link"
-import { TableTemplate } from "@/components/table-template"
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import Link from 'next/link'
+import { TableTemplate } from '@/components/table-template'
 
 const IS_ACTIVE_OPTIONS = [
-  { value: "true", label: "Ongoing" },
-  { value: "false", label: "Finished" },
+  { value: 'true', label: 'Ongoing' },
+  { value: 'false', label: 'Finished' }
 ]
 
 const TherapiesPage = () => {
@@ -34,8 +34,8 @@ const TherapiesPage = () => {
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
-    ...baseFilterParsers("startDate"),
-    isActive: parseAsArrayOf(parseAsString).withDefault([]),
+    ...baseFilterParsers('startDate'),
+    isActive: parseAsArrayOf(parseAsString).withDefault([])
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
@@ -45,18 +45,18 @@ const TherapiesPage = () => {
     profileId: activeProfileId ?? undefined,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
-    dateTo: filters.dateTo ?? undefined,
+    dateTo: filters.dateTo ?? undefined
   }
   const { data, isLoading, isFetching } = useTherapies(params)
 
   const onSortChange = (field: string) => {
-    const direction = filters.sortField === field && filters.sortDirection === "asc" ? "desc" : "asc"
-    setFilters((prev) => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
+    const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'
+    setFilters(prev => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
   }
 
   const columns: ColumnDef<Therapy>[] = [
     {
-      accessorKey: "title",
+      accessorKey: 'title',
       header: () => (
         <SortButton
           label="Title"
@@ -71,12 +71,12 @@ const TherapiesPage = () => {
           href={`/therapies/${row.original.id}`}
           className="text-primary font-medium hover:text-primary/80 transition-colors"
         >
-          {row.getValue("title")}
+          {row.getValue('title')}
         </Link>
-      ),
+      )
     },
     {
-      accessorKey: "startDate",
+      accessorKey: 'startDate',
       header: () => (
         <SortButton
           label="Start Date"
@@ -86,10 +86,10 @@ const TherapiesPage = () => {
           onSortChange={onSortChange}
         />
       ),
-      cell: ({ row }) => new Date(row.getValue("startDate")).toLocaleDateString(),
+      cell: ({ row }) => new Date(row.getValue('startDate')).toLocaleDateString()
     },
     {
-      accessorKey: "endDate",
+      accessorKey: 'endDate',
       header: () => (
         <SortButton
           label="End Date"
@@ -100,12 +100,12 @@ const TherapiesPage = () => {
         />
       ),
       cell: ({ row }) => {
-        const val = row.getValue<string | null>("endDate")
-        return val ? new Date(val).toLocaleDateString() : "—"
-      },
+        const val = row.getValue<string | null>('endDate')
+        return val ? new Date(val).toLocaleDateString() : '—'
+      }
     },
     {
-      accessorKey: "therapistName",
+      accessorKey: 'therapistName',
       header: () => (
         <SortButton
           label="Therapist"
@@ -116,28 +116,28 @@ const TherapiesPage = () => {
         />
       ),
       cell: ({ row }) => {
-        const value = row.getValue<string | null>("therapistName") ?? "—"
+        const value = row.getValue<string | null>('therapistName') ?? '—'
         const url = row.original.therapistInfoLink
-        if (!url || value === "—") return value
+        if (!url || value === '—') return value
         return (
           <a
             href={url}
-            target={url.startsWith("http") ? "_blank" : undefined}
-            rel={url.startsWith("http") ? "noopener noreferrer" : undefined}
+            target={url.startsWith('http') ? '_blank' : undefined}
+            rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
             className="text-primary font-medium hover:text-primary/80 transition-colors"
           >
             {value}
           </a>
         )
-      },
+      }
     },
     {
-      accessorKey: "location",
-      header: "Location",
-      cell: ({ row }) => row.getValue("location") ?? "—",
+      accessorKey: 'location',
+      header: 'Location',
+      cell: ({ row }) => row.getValue('location') ?? '—'
     },
     {
-      accessorKey: "isActive",
+      accessorKey: 'isActive',
       header: () => (
         <SortButton
           label="Status"
@@ -148,22 +148,22 @@ const TherapiesPage = () => {
         />
       ),
       cell: ({ row }) => {
-        const active = row.getValue<boolean>("isActive")
+        const active = row.getValue<boolean>('isActive')
         return (
           <span
             className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
               active
-                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                : "bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400"
+                ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400'
             }`}
           >
-            {active ? "Ongoing" : "Finished"}
+            {active ? 'Ongoing' : 'Finished'}
           </span>
         )
-      },
+      }
     },
     {
-      id: "actions",
+      id: 'actions',
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -184,12 +184,12 @@ const TherapiesPage = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      ),
-    },
+      )
+    }
   ]
 
-  const dateRange =
-    filters.dateFrom || filters.dateTo
+  const dateRange
+    = filters.dateFrom || filters.dateTo
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
@@ -199,7 +199,7 @@ const TherapiesPage = () => {
 
   return (
     <TableTemplate
-      onAddNew={() => router.push("/therapies/create")}
+      onAddNew={() => router.push('/therapies/create')}
       addNewLabel="Add Therapy"
       title={`${profile.firstName}'s Therapies`}
       description="Ongoing and finished therapy sessions"
@@ -208,30 +208,30 @@ const TherapiesPage = () => {
       isLoading={isLoading}
       isFetching={isFetching}
       pageSize={filters.pageSize}
-      onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
-      onPageSizeChange={(pageSize) => setFilters((prev) => ({ ...prev, page: 1, pageSize }))}
+      onPageChange={page => setFilters(prev => ({ ...prev, page }))}
+      onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
       filters={{
         searchValue: filters.search,
-        onSearchChange: (search) => setFilters((prev) => ({ ...prev, page: 1, search })),
-        searchPlaceholder: "Search therapies...",
+        onSearchChange: search => setFilters(prev => ({ ...prev, page: 1, search })),
+        searchPlaceholder: 'Search therapies...',
         dateRange,
         onDateRangeChange: (range: DateRange | undefined) =>
-          setFilters((prev) => ({
+          setFilters(prev => ({
             ...prev,
             page: 1,
-            dateFrom: range?.from ? format(range.from, "yyyy-MM-dd") : null,
-            dateTo: range?.to ? format(range.to, "yyyy-MM-dd") : null,
+            dateFrom: range?.from ? format(range.from, 'yyyy-MM-dd') : null,
+            dateTo: range?.to ? format(range.to, 'yyyy-MM-dd') : null
           })),
         filterGroups: [
           {
-            label: "Status",
+            label: 'Status',
             options: IS_ACTIVE_OPTIONS,
             selected: filters.isActive,
-            onChange: (isActive) => setFilters((prev) => ({ ...prev, page: 1, isActive })),
-          },
+            onChange: isActive => setFilters(prev => ({ ...prev, page: 1, isActive }))
+          }
         ],
         hasActiveFilters: !!(filters.search || filters.dateFrom !== defaultDateFrom || filters.dateTo !== defaultDateTo || filters.isActive.length > 0),
-        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: "", dateFrom: null, dateTo: null, isActive: [] })),
+        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: '', dateFrom: null, dateTo: null, isActive: [] }))
       }}
       deleteConfig={{
         deletingId,
@@ -240,7 +240,7 @@ const TherapiesPage = () => {
           if (deletingId === null) return
           deleteItem(deletingId, { onSuccess: () => setDeletingId(null) })
         },
-        isPending: isDeleting,
+        isPending: isDeleting
       }}
     />
   )

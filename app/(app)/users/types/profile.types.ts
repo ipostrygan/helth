@@ -1,4 +1,4 @@
-import { User } from "@/lib/generated/prisma/client";
+import { User } from '@/lib/generated/prisma/client'
 
 export type UserProfile = Omit<User, 'imageKey'> & {
   imageUrl: string | null
@@ -6,6 +6,5 @@ export type UserProfile = Omit<User, 'imageKey'> & {
 }
 
 export type PageProps = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>
 }
-

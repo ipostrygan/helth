@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Field, FieldGroup } from "@/components/ui/field"
-import { Button } from "@/components/ui/button"
-import { Controller, useForm } from "react-hook-form"
-import { UserProfile } from "../users/types/profile.types"
-import { useEditProfile } from "../users/hooks/use-edit-profile"
-import { getDirtyValues } from "@/utils/form"
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Field, FieldGroup } from '@/components/ui/field'
+import { Button } from '@/components/ui/button'
+import { Controller, useForm } from 'react-hook-form'
+import { UserProfile } from '../users/types/profile.types'
+import { useEditProfile } from '../users/hooks/use-edit-profile'
+import { getDirtyValues } from '@/utils/form'
 
 type EditProfileFormProps = {
   data: UserProfile
@@ -57,12 +57,12 @@ const EditProfileForm = ({ onClose, data }: EditProfileFormProps) => {
         <Controller
           name="weight"
           control={control}
-          render={({ field }) =>
+          render={({ field }) => (
             <Field>
               <Label htmlFor="weight">Weight (kg)</Label>
               <Input id="weight" type="number" {...field} />
             </Field>
-          }
+          )}
         />
         <Controller
           name="height"

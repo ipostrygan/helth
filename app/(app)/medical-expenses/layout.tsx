@@ -1,4 +1,4 @@
-import { TabsNav } from "./tabs-nav"
+import { TabsNav } from './tabs-nav'
 
 export default function MedicalExpensesLayout({ children }: { children: React.ReactNode }) {
   return (

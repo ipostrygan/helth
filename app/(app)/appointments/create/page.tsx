@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useActiveProfile } from "@/context/profile-context"
-import AppointmentForm from "../components/appointment-form"
+import { useActiveProfile } from '@/context/profile-context'
+import AppointmentForm from '../components/appointment-form'
 
 const CreateAppointmentPage = () => {
   const { activeProfileId } = useActiveProfile()

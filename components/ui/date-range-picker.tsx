@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
-import { CalendarIcon } from "lucide-react"
-import { type DateRange } from "react-day-picker"
-import { format } from "date-fns"
-import { useEffect, useState } from "react"
+import { CalendarIcon } from 'lucide-react'
+import { type DateRange } from 'react-day-picker'
+import { format } from 'date-fns'
+import { useEffect, useState } from 'react'
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 type DateRangePickerProps = {
   value?: DateRange
@@ -21,9 +21,9 @@ type DateRangePickerProps = {
 export function DateRangePicker({
   value,
   onChange,
-  placeholder = "Pick a date range",
+  placeholder = 'Pick a date range',
   className,
-  disabled,
+  disabled
 }: DateRangePickerProps) {
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState<DateRange | undefined>(value)
@@ -32,8 +32,8 @@ export function DateRangePicker({
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640)
     check()
-    window.addEventListener("resize", check)
-    return () => window.removeEventListener("resize", check)
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
   }, [])
 
   const handleOpenChange = (next: boolean) => {
@@ -48,8 +48,8 @@ export function DateRangePicker({
 
   const label = value?.from
     ? value.to
-      ? `${format(value.from, "MMM d, yyyy")} – ${format(value.to, "MMM d, yyyy")}`
-      : format(value.from, "MMM d, yyyy")
+      ? `${format(value.from, 'MMM d, yyyy')} – ${format(value.to, 'MMM d, yyyy')}`
+      : format(value.from, 'MMM d, yyyy')
     : placeholder
 
   return (
@@ -59,8 +59,8 @@ export function DateRangePicker({
           variant="outline"
           disabled={disabled}
           className={cn(
-            "w-full justify-start gap-2 font-normal sm:w-64",
-            !value?.from && "text-muted-foreground",
+            'w-full justify-start gap-2 font-normal sm:w-64',
+            !value?.from && 'text-muted-foreground',
             className
           )}
         >

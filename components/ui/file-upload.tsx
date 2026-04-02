@@ -1,18 +1,18 @@
-"use client"
+'use client'
 
-import { useCallback, useId, useState } from "react"
-import { FileIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
+import { useCallback, useId, useState } from 'react'
+import { FileIcon, ImageIcon, UploadIcon, XIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+  DialogTitle
+} from '@/components/ui/dialog'
 
 type UploadedFile = {
   id: string
@@ -26,8 +26,8 @@ type FileUploadProps = {
   className?: string
 }
 
-const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp", "application/pdf"]
-const ACCEPTED_ATTR = "image/*,application/pdf"
+const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf']
+const ACCEPTED_ATTR = 'image/*,application/pdf'
 
 function formatBytes(bytes: number) {
   if (bytes < 1024) return `${bytes} B`
@@ -42,12 +42,12 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
 
   const addFiles = useCallback(
     (incoming: FileList | File[]) => {
-      const files = Array.from(incoming).filter((f) => ACCEPTED_TYPES.includes(f.type))
+      const files = Array.from(incoming).filter(f => ACCEPTED_TYPES.includes(f.type))
       if (!files.length) return
 
-      const newEntries: UploadedFile[] = files.slice(0, maxFiles - value.length).map((file) => ({
+      const newEntries: UploadedFile[] = files.slice(0, maxFiles - value.length).map(file => ({
         id: `${file.name}-${file.size}-${Date.now()}-${Math.random()}`,
-        file,
+        file
       }))
 
       onChange?.([...value, ...newEntries])
@@ -57,7 +57,7 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
 
   const confirmRemove = () => {
     if (!pendingRemoveId) return
-    onChange?.(value.filter((f) => f.id !== pendingRemoveId))
+    onChange?.(value.filter(f => f.id !== pendingRemoveId))
     setPendingRemoveId(null)
   }
 
@@ -80,13 +80,13 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) addFiles(e.target.files)
-    e.target.value = ""
+    e.target.value = ''
   }
 
   const canAddMore = value.length < maxFiles
 
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
+    <div className={cn('flex flex-col gap-3', className)}>
       {canAddMore && (
         <Label
           htmlFor={inputId}
@@ -94,10 +94,10 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
           onDragLeave={onDragLeave}
           onDrop={onDrop}
           className={cn(
-            "flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-6 py-8 text-center cursor-pointer transition-colors font-normal",
+            'flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-6 py-8 text-center cursor-pointer transition-colors font-normal',
             isDragging
-              ? "border-primary bg-primary/5"
-              : "border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50"
+              ? 'border-primary bg-primary/5'
+              : 'border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50'
           )}
         >
           <div className="flex size-10 items-center justify-center rounded-full bg-muted">
@@ -105,7 +105,9 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
           </div>
           <div>
             <p className="text-sm font-medium">
-              Drop files here or <span className="text-primary">browse</span>
+              Drop files here or
+              {' '}
+              <span className="text-primary">browse</span>
             </p>
             <p className="text-xs text-muted-foreground mt-0.5">Images (JPG, PNG, GIF, WebP) and PDF files</p>
           </div>
@@ -122,17 +124,19 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
 
       {value.length > 0 && (
         <ul className="flex flex-col gap-2">
-          {value.map((entry) => (
+          {value.map(entry => (
             <li
               key={entry.id}
               className="flex items-center gap-3 rounded-lg border bg-muted/30 px-3 py-2"
             >
               <div className="flex size-10 items-center justify-center rounded bg-muted shrink-0">
-                {entry.file.type === "application/pdf" ? (
-                  <FileIcon className="size-5 text-muted-foreground" />
-                ) : (
-                  <ImageIcon className="size-5 text-muted-foreground" />
-                )}
+                {entry.file.type === 'application/pdf'
+                  ? (
+                      <FileIcon className="size-5 text-muted-foreground" />
+                    )
+                  : (
+                      <ImageIcon className="size-5 text-muted-foreground" />
+                    )}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{entry.file.name}</p>
@@ -153,14 +157,15 @@ function FileUpload({ value = [], onChange, maxFiles = 10, className }: FileUplo
         </ul>
       )}
 
-      <Dialog open={!!pendingRemoveId} onOpenChange={(open) => !open && setPendingRemoveId(null)}>
+      <Dialog open={!!pendingRemoveId} onOpenChange={open => !open && setPendingRemoveId(null)}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Remove file</DialogTitle>
             <DialogDescription>
-              Are you sure you want to remove{" "}
+              Are you sure you want to remove
+              {' '}
               <span className="font-medium text-foreground">
-                {value.find((f) => f.id === pendingRemoveId)?.file.name}
+                {value.find(f => f.id === pendingRemoveId)?.file.name}
               </span>
               ?
             </DialogDescription>

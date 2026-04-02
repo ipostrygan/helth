@@ -1,17 +1,17 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import type { MedicalExpense } from "@/lib/generated/prisma/client"
+import Link from 'next/link'
+import type { MedicalExpense } from '@/lib/generated/prisma/client'
 import {
   Sheet,
   SheetContent,
   SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet"
-import { Separator } from "@/components/ui/separator"
-import { EXPENSE_TYPE_LABELS } from "../constants"
-import { useTherapy } from "../../therapies/hooks/use-therapy"
-import { useAppointment } from "../../appointments/hooks/use-appointment"
+  SheetTitle
+} from '@/components/ui/sheet'
+import { Separator } from '@/components/ui/separator'
+import { EXPENSE_TYPE_LABELS } from '../constants'
+import { useTherapy } from '../../therapies/hooks/use-therapy'
+import { useAppointment } from '../../appointments/hooks/use-appointment'
 
 type Props = {
   expense: MedicalExpense | null
@@ -20,8 +20,8 @@ type Props = {
 }
 
 export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Props) {
-  const { data: therapy } = useTherapy(expense?.therapyId ?? "")
-  const { data: appointment } = useAppointment(expense?.appointmentId ?? "")
+  const { data: therapy } = useTherapy(expense?.therapyId ?? '')
+  const { data: appointment } = useAppointment(expense?.appointmentId ?? '')
 
   if (!expense) return null
 
@@ -34,7 +34,7 @@ export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Prop
 
         <div className="px-4 space-y-4">
           <DetailRow label="Amount">
-            {new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(expense.amount)}
+            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(expense.amount)}
           </DetailRow>
           <Separator />
           <DetailRow label="Date">
@@ -46,23 +46,27 @@ export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Prop
           </DetailRow>
           <Separator />
           <DetailRow label="Therapy">
-            {expense.therapyId ? (
-              <Link href={`/therapies/${expense.therapyId}`} className="underline hover:no-underline">
-                {therapy?.title ?? expense.therapyId}
-              </Link>
-            ) : "—"}
+            {expense.therapyId
+              ? (
+                  <Link href={`/therapies/${expense.therapyId}`} className="underline hover:no-underline">
+                    {therapy?.title ?? expense.therapyId}
+                  </Link>
+                )
+              : '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Appointment">
-            {expense.appointmentId ? (
-              <Link href={`/appointments/${expense.appointmentId}`} className="underline hover:no-underline">
-                {appointment?.title ?? expense.appointmentId}
-              </Link>
-            ) : "—"}
+            {expense.appointmentId
+              ? (
+                  <Link href={`/appointments/${expense.appointmentId}`} className="underline hover:no-underline">
+                    {appointment?.title ?? expense.appointmentId}
+                  </Link>
+                )
+              : '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Description">
-            {expense.description ?? "—"}
+            {expense.description ?? '—'}
           </DetailRow>
         </div>
       </SheetContent>
@@ -72,7 +76,7 @@ export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Prop
 
 const DetailRow = ({
   label,
-  children,
+  children
 }: {
   label: string
   children: React.ReactNode

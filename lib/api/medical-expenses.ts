@@ -1,7 +1,7 @@
-import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/types";
-import type { MedicalExpensePaginatedResult, MedicalExpenseWithRelations } from "@/app/actions/medical-expenses";
+import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
+import type { MedicalExpensePaginatedResult, MedicalExpenseWithRelations } from '@/app/actions/medical-expenses'
 
-export type MedicalExpensesParams = MedicalExpensesQueryParams;
+export type MedicalExpensesParams = MedicalExpensesQueryParams
 
 export async function getMedicalExpenses(
   params: MedicalExpensesParams
@@ -10,15 +10,15 @@ export async function getMedicalExpenses(
     profileId,
     page = 1,
     pageSize = 10,
-    sortField = "date",
-    sortDirection = "desc",
-    search = "",
+    sortField = 'date',
+    sortDirection = 'desc',
+    search = '',
     dateFrom,
     dateTo,
     types,
     therapyId,
-    appointmentId,
-  } = params;
+    appointmentId
+  } = params
 
   const searchParams = new URLSearchParams({
     ...(profileId ? { profileId } : {}),
@@ -29,22 +29,22 @@ export async function getMedicalExpenses(
     ...(search ? { search } : {}),
     ...(dateFrom ? { dateFrom } : {}),
     ...(dateTo ? { dateTo } : {}),
-    ...(types && types.length > 0 ? { types: types.join(",") } : {}),
+    ...(types && types.length > 0 ? { types: types.join(',') } : {}),
     ...(therapyId ? { therapyId } : {}),
-    ...(appointmentId ? { appointmentId } : {}),
-  });
+    ...(appointmentId ? { appointmentId } : {})
+  })
 
-  const res = await fetch(`/api/medical-expenses?${searchParams}`);
-  return res.json();
+  const res = await fetch(`/api/medical-expenses?${searchParams}`)
+  return res.json()
 }
 
 export async function deleteMedicalExpense(id: string): Promise<void> {
-  const res = await fetch(`/api/medical-expenses/${id}`, { method: "DELETE" });
-  if (!res.ok) throw new Error("Failed to delete expense");
+  const res = await fetch(`/api/medical-expenses/${id}`, { method: 'DELETE' })
+  if (!res.ok) throw new Error('Failed to delete expense')
 }
 
 export async function getMedicalExpense(id: string): Promise<MedicalExpenseWithRelations> {
-  const res = await fetch(`/api/medical-expenses/${id}`);
-  if (!res.ok) throw new Error("Failed to fetch expense");
-  return res.json();
+  const res = await fetch(`/api/medical-expenses/${id}`)
+  if (!res.ok) throw new Error('Failed to fetch expense')
+  return res.json()
 }

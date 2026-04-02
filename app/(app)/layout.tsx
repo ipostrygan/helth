@@ -1,8 +1,8 @@
-import { getAllProfiles } from "@/app/actions/profile"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/app-sidebar"
-import ProfileSwitcher from "./users/components/profile-switcher"
-import { ProfileProvider } from "@/context/profile-context"
+import { getAllProfiles } from '@/app/actions/profile'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import AppSidebar from '@/components/app-sidebar'
+import ProfileSwitcher from './users/components/profile-switcher'
+import { ProfileProvider } from '@/context/profile-context'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const profiles = await getAllProfiles()

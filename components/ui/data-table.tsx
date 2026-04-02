@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { Fragment } from "react"
+import { Fragment } from 'react'
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
+  useReactTable
+} from '@tanstack/react-table'
 
 import {
   Table,
@@ -14,8 +14,8 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+  TableRow
+} from '@/components/ui/table'
 import {
   Pagination,
   PaginationContent,
@@ -25,17 +25,17 @@ import {
   PaginationLast,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-import type { PaginatedResult } from "@/types/table"
+  PaginationPrevious
+} from '@/components/ui/pagination'
+import type { PaginatedResult } from '@/types/table'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
+  SelectValue
+} from '@/components/ui/select'
+import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 
 const PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100]
 
@@ -54,14 +54,14 @@ export function DataTable<TData, TValue>({
   onPageChange,
   onPageSizeChange,
   pageSize = DEFAULT_PAGE_SIZE,
-  hasActiveFilters = false,
+  hasActiveFilters = false
 }: DataTableProps<TData, TValue>) {
-  "use no memo"
+  'use no memo'
   const table = useReactTable({
     data: data.data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
-    manualSorting: true,
+    manualSorting: true
   })
 
   const isEmpty = data.total === 0 && !hasActiveFilters
@@ -77,15 +77,15 @@ export function DataTable<TData, TValue>({
       <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map(header => (
                   <TableHead
                     key={header.id}
                     className={[
-                      header.column.id === "actions" ? "sticky right-0 bg-background" : undefined,
-                      isEmpty ? "pointer-events-none" : undefined,
-                    ].filter(Boolean).join(" ") || undefined}
+                      header.column.id === 'actions' ? 'sticky right-0 bg-background' : undefined,
+                      isEmpty ? 'pointer-events-none' : undefined
+                    ].filter(Boolean).join(' ') || undefined}
                   >
                     {header.isPlaceholder
                       ? null
@@ -96,117 +96,131 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className={cell.column.id === "actions" ? "sticky right-0 bg-background" : undefined}
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            {table.getRowModel().rows.length
+              ? (
+                  table.getRowModel().rows.map(row => (
+                    <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                      {row.getVisibleCells().map(cell => (
+                        <TableCell
+                          key={cell.id}
+                          className={cell.column.id === 'actions' ? 'sticky right-0 bg-background' : undefined}
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                )
+              : (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                      No results.
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
+                  </TableRow>
+                )}
           </TableBody>
         </Table>
       </div>
 
-      {(data.total > 0 || hasActiveFilters) && <div className="flex flex-col gap-3 px-1 sm:flex-row sm:items-center sm:justify-between">
-        {data.total > 0 && (
-          <p className="text-center text-sm sm:text-left">
-            Showing {rangeStart}–{rangeEnd} of {data.total} items
-          </p>
-        )}
+      {(data.total > 0 || hasActiveFilters) && (
+        <div className="flex flex-col gap-3 px-1 sm:flex-row sm:items-center sm:justify-between">
+          {data.total > 0 && (
+            <p className="text-center text-sm sm:text-left">
+              Showing
+              {' '}
+              {rangeStart}
+              –
+              {rangeEnd}
+              {' '}
+              of
+              {' '}
+              {data.total}
+              {' '}
+              items
+            </p>
+          )}
 
-        <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
-          <div className="flex items-center gap-2 text-sm">
-            Rows per page:
-            <Select
-              value={String(pageSize)}
-              onValueChange={(val) => { onPageSizeChange(Number(val)) }}
-            >
-              <SelectTrigger className="h-8 w-17.5">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {PAGE_SIZE_OPTIONS.map((size) => (
-                  <SelectItem key={size} value={String(size)}>{size}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+            <div className="flex items-center gap-2 text-sm">
+              Rows per page:
+              <Select
+                value={String(pageSize)}
+                onValueChange={(val) => { onPageSizeChange(Number(val)) }}
+              >
+                <SelectTrigger className="h-8 w-17.5">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {PAGE_SIZE_OPTIONS.map(size => (
+                    <SelectItem key={size} value={String(size)}>{size}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Pagination className="mx-0 w-auto justify-end">
+              <PaginationContent>
+                <PaginationItem className="hidden sm:list-item">
+                  <PaginationFirst
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onPageChange(1) }}
+                    aria-disabled={!canPrev}
+                    className={!canPrev ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onPageChange(data.page - 1) }}
+                    aria-disabled={!canPrev}
+                    className={!canPrev ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+
+                {Array.from({ length: totalPages }, (_, i) => {
+                  const show = i === 0 || i === totalPages - 1 || Math.abs(i - current) <= 1
+                  const showEllipsisBefore = i === totalPages - 1 && current < totalPages - 3
+                  const showEllipsisAfter = i === 0 && current > 2
+
+                  if (!show) return null
+                  return (
+                    <Fragment key={i}>
+                      {showEllipsisBefore && <PaginationItem><PaginationEllipsis /></PaginationItem>}
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#"
+                          isActive={i === current}
+                          onClick={(e) => { e.preventDefault(); onPageChange(i + 1) }}
+                        >
+                          {i + 1}
+                        </PaginationLink>
+                      </PaginationItem>
+                      {showEllipsisAfter && <PaginationItem><PaginationEllipsis /></PaginationItem>}
+                    </Fragment>
+                  )
+                })}
+
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onPageChange(data.page + 1) }}
+                    aria-disabled={!canNext}
+                    className={!canNext ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+                <PaginationItem className="hidden sm:list-item">
+                  <PaginationLast
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onPageChange(totalPages) }}
+                    aria-disabled={!canNext}
+                    className={!canNext ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
-
-        <Pagination className="mx-0 w-auto justify-end">
-          <PaginationContent>
-            <PaginationItem className="hidden sm:list-item">
-              <PaginationFirst
-                href="#"
-                onClick={(e) => { e.preventDefault(); onPageChange(1) }}
-                aria-disabled={!canPrev}
-                className={!canPrev ? "pointer-events-none opacity-50" : ""}
-              />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={(e) => { e.preventDefault(); onPageChange(data.page - 1) }}
-                aria-disabled={!canPrev}
-                className={!canPrev ? "pointer-events-none opacity-50" : ""}
-              />
-            </PaginationItem>
-
-            {Array.from({ length: totalPages }, (_, i) => {
-              const show = i === 0 || i === totalPages - 1 || Math.abs(i - current) <= 1
-              const showEllipsisBefore = i === totalPages - 1 && current < totalPages - 3
-              const showEllipsisAfter = i === 0 && current > 2
-
-              if (!show) return null
-              return (
-                <Fragment key={i}>
-                  {showEllipsisBefore && <PaginationItem><PaginationEllipsis /></PaginationItem>}
-                  <PaginationItem>
-                    <PaginationLink
-                      href="#"
-                      isActive={i === current}
-                      onClick={(e) => { e.preventDefault(); onPageChange(i + 1) }}
-                    >
-                      {i + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                  {showEllipsisAfter && <PaginationItem><PaginationEllipsis /></PaginationItem>}
-                </Fragment>
-              )
-            })}
-
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={(e) => { e.preventDefault(); onPageChange(data.page + 1) }}
-                aria-disabled={!canNext}
-                className={!canNext ? "pointer-events-none opacity-50" : ""}
-              />
-            </PaginationItem>
-            <PaginationItem className="hidden sm:list-item">
-              <PaginationLast
-                href="#"
-                onClick={(e) => { e.preventDefault(); onPageChange(totalPages) }}
-                aria-disabled={!canNext}
-                className={!canNext ? "pointer-events-none opacity-50" : ""}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
         </div>
-      </div>}
+      )}
     </div>
   )
 }

@@ -1,12 +1,12 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test'
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-import dotenv from 'dotenv';
-import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+import dotenv from 'dotenv'
+import path from 'path'
+dotenv.config({ path: path.resolve(__dirname, '.env') })
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -28,25 +28,25 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
-    storageState: 'playwright/.auth/user.json',
+    storageState: 'playwright/.auth/user.json'
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'] }
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices['Desktop Firefox'] }
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+      use: { ...devices['Desktop Safari'] }
+    }
 
     /* Test against mobile viewports. */
     // {
@@ -67,7 +67,7 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
-  ],
+  ]
 
   /* Run your local dev server before starting the tests */
   // webServer: {
@@ -75,4 +75,4 @@ export default defineConfig({
   //   url: 'http://localhost:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+})

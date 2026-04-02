@@ -1,6 +1,6 @@
-import type { BaseQueryParams } from "@/types/queries";
+import type { BaseQueryParams } from '@/types/queries'
 
 export type AppointmentsQueryParams = BaseQueryParams & {
-  statuses?: string[];
-  therapyId?: string;
-};
+  statuses?: string[]
+  therapyId?: string
+}

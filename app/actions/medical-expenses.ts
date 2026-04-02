@@ -1,58 +1,62 @@
-"use server";
+'use server'
 
-import prisma from "@/lib/prisma";
-import { ExpenseType, MedicalExpense } from "@/lib/generated/prisma/client";
+import prisma from '@/lib/prisma'
+import { ExpenseType, MedicalExpense } from '@/lib/generated/prisma/client'
 
-import type { MedicalExpensesQueryParams } from "@/app/(app)/medical-expenses/types";
+import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
 
-export type MedicalExpensesQuery = MedicalExpensesQueryParams;
+export type MedicalExpensesQuery = MedicalExpensesQueryParams
 
 export type MedicalExpenseWithRelations = MedicalExpense & {
-  therapy: { id: string; title: string } | null;
-  appointment: { id: string; title: string } | null;
-};
+  therapy: { id: string, title: string } | null
+  appointment: { id: string, title: string } | null
+}
 
 export type MedicalExpensePaginatedResult = {
-  data: MedicalExpenseWithRelations[];
-  total: number;
-  page: number;
-  pageSize: number;
-  totalPages: number;
-  totalSum: number;
-};
+  data: MedicalExpenseWithRelations[]
+  total: number
+  page: number
+  pageSize: number
+  totalPages: number
+  totalSum: number
+}
 
 export const getMedicalExpenses = async ({
   profileId,
   page = 1,
   pageSize = 10,
-  sortField = "date",
-  sortDirection = "desc",
-  search = "",
+  sortField = 'date',
+  sortDirection = 'desc',
+  search = '',
   dateFrom,
   dateTo,
   types,
   therapyId,
-  appointmentId,
+  appointmentId
 }: MedicalExpensesQuery = {}): Promise<MedicalExpensePaginatedResult> => {
-  const skip = (page - 1) * pageSize;
+  const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
     ...(therapyId ? { therapyId } : {}),
     ...(appointmentId ? { appointmentId } : {}),
-    ...(search ? {
-      OR: [
-        { title: { contains: search, mode: "insensitive" as const } },
-        { description: { contains: search, mode: "insensitive" as const } },
-      ],
-    } : {}),
-    ...(dateFrom || dateTo ? {
-      date: {
-        ...(dateFrom ? { gte: new Date(dateFrom) } : {}),
-        ...(dateTo ? { lte: new Date(dateTo) } : {}),
-      },
-    } : {}),
-    ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {}),
-  };
+    ...(search
+      ? {
+          OR: [
+            { title: { contains: search, mode: 'insensitive' as const } },
+            { description: { contains: search, mode: 'insensitive' as const } }
+          ]
+        }
+      : {}),
+    ...(dateFrom || dateTo
+      ? {
+          date: {
+            ...(dateFrom ? { gte: new Date(dateFrom) } : {}),
+            ...(dateTo ? { lte: new Date(dateTo) } : {})
+          }
+        }
+      : {}),
+    ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {})
+  }
 
   const [data, total, aggregate] = await prisma.$transaction([
     prisma.medicalExpense.findMany({
@@ -62,12 +66,12 @@ export const getMedicalExpenses = async ({
       orderBy: { [sortField]: sortDirection },
       include: {
         therapy: { select: { id: true, title: true } },
-        appointment: { select: { id: true, title: true } },
-      },
+        appointment: { select: { id: true, title: true } }
+      }
     }),
     prisma.medicalExpense.count({ where }),
-    prisma.medicalExpense.aggregate({ where, _sum: { amount: true } }),
-  ]);
+    prisma.medicalExpense.aggregate({ where, _sum: { amount: true } })
+  ])
 
   return {
     data,
@@ -75,97 +79,99 @@ export const getMedicalExpenses = async ({
     page,
     pageSize,
     totalPages: Math.ceil(total / pageSize),
-    totalSum: aggregate._sum.amount ?? 0,
-  };
-};
+    totalSum: aggregate._sum.amount ?? 0
+  }
+}
 
 export type ExpensesByTypeItem = {
-  type: ExpenseType;
-  total: number;
-  count: number;
-};
+  type: ExpenseType
+  total: number
+  count: number
+}
 
 export type ExpensesByTypeQuery = {
-  profileId?: string;
-  dateFrom?: string;
-  dateTo?: string;
-};
+  profileId?: string
+  dateFrom?: string
+  dateTo?: string
+}
 
 export const getMedicalExpensesByType = async ({
   profileId,
   dateFrom,
-  dateTo,
+  dateTo
 }: ExpensesByTypeQuery = {}): Promise<ExpensesByTypeItem[]> => {
-  const defaultDateFrom = new Date();
-  defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 1);
+  const defaultDateFrom = new Date()
+  defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 1)
 
-  const resolvedDateFrom = dateFrom ? new Date(dateFrom) : defaultDateFrom;
-  const resolvedDateTo = dateTo ? new Date(dateTo) : new Date();
+  const resolvedDateFrom = dateFrom ? new Date(dateFrom) : defaultDateFrom
+  const resolvedDateTo = dateTo ? new Date(dateTo) : new Date()
 
   const grouped = await prisma.medicalExpense.groupBy({
-    by: ["type"],
+    by: ['type'],
     where: {
       ...(profileId ? { userId: profileId } : {}),
       date: {
         gte: resolvedDateFrom,
-        lte: resolvedDateTo,
-      },
+        lte: resolvedDateTo
+      }
     },
     _sum: { amount: true },
-    _count: { id: true },
-  });
+    _count: { id: true }
+  })
 
-  return grouped.map((g) => ({
+  return grouped.map(g => ({
     type: g.type,
     total: g._sum.amount ?? 0,
-    count: g._count.id,
-  }));
-};
+    count: g._count.id
+  }))
+}
 
 export const getMedicalExpenseById = async (id: string): Promise<MedicalExpense | null> => {
-  return prisma.medicalExpense.findUnique({ where: { id } });
-};
+  return prisma.medicalExpense.findUnique({ where: { id } })
+}
 
 export const deleteExpense = async (id: string): Promise<void> => {
-  await prisma.medicalExpense.delete({ where: { id } });
-};
+  await prisma.medicalExpense.delete({ where: { id } })
+}
 
 export type CreateExpenseInput = {
-  userId: string;
-  title: string;
-  amount: number;
-  date: Date;
-  type: ExpenseType;
-  description?: string;
-  therapyId?: string | null;
-  appointmentId?: string | null;
-};
+  userId: string
+  title: string
+  amount: number
+  date: Date
+  type: ExpenseType
+  description?: string
+  therapyId?: string | null
+  appointmentId?: string | null
+}
 
 export const createExpense = async (input: CreateExpenseInput) => {
   try {
-    await prisma.medicalExpense.create({ data: input });
-  } catch (e) {
-    console.error(e);
-    throw new Error(e instanceof Error ? e.message : "Failed to create expense");
+    await prisma.medicalExpense.create({ data: input })
   }
-};
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to create expense')
+  }
+}
 
 export type UpdateExpenseInput = {
-  id: string;
-  title: string;
-  amount: number;
-  date: Date;
-  type: ExpenseType;
-  description?: string;
-  therapyId?: string | null;
-  appointmentId?: string | null;
-};
+  id: string
+  title: string
+  amount: number
+  date: Date
+  type: ExpenseType
+  description?: string
+  therapyId?: string | null
+  appointmentId?: string | null
+}
 
 export const updateExpense = async ({ id, ...data }: UpdateExpenseInput) => {
   try {
-    await prisma.medicalExpense.update({ where: { id }, data });
-  } catch (e) {
-    console.error(e);
-    throw new Error(e instanceof Error ? e.message : "Failed to update expense");
+    await prisma.medicalExpense.update({ where: { id }, data })
   }
-};
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to update expense')
+  }
+}

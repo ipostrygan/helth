@@ -1,34 +1,34 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useForm, Controller } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { useRouter } from "next/navigation"
-import type { Therapy } from "@/lib/generated/prisma/client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Field, FieldError, FieldGroup } from "@/components/ui/field"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { cn } from "@/lib/utils"
-import { useCreateTherapy } from "../hooks/use-create-therapy"
-import { useEditTherapy } from "../hooks/use-edit-therapy"
+import { useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { format } from 'date-fns'
+import { CalendarIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import type { Therapy } from '@/lib/generated/prisma/client'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Field, FieldError, FieldGroup } from '@/components/ui/field'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { cn } from '@/lib/utils'
+import { useCreateTherapy } from '../hooks/use-create-therapy'
+import { useEditTherapy } from '../hooks/use-edit-therapy'
 
 const schema = z.object({
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
   startDate: z.date(),
   endDate: z.date().optional(),
   therapistName: z.string().optional(),
   therapistInfoLink: z.string().optional(),
   location: z.string().optional(),
-  isActive: z.boolean(),
+  isActive: z.boolean()
 })
 
 type FormValues = z.infer<typeof schema>
@@ -49,9 +49,9 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
     control,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isDirty, isValid },
+    formState: { errors, isSubmitting, isDirty, isValid }
   } = useForm<FormValues>({
-    mode: "all",
+    mode: 'all',
     resolver: zodResolver(schema),
     defaultValues: therapy
       ? {
@@ -62,18 +62,19 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
           therapistName: therapy.therapistName ?? undefined,
           therapistInfoLink: therapy.therapistInfoLink ?? undefined,
           location: therapy.location ?? undefined,
-          isActive: therapy.isActive,
+          isActive: therapy.isActive
         }
-      : { isActive: true },
+      : { isActive: true }
   })
 
   const onSubmit = async (values: FormValues) => {
     if (isEditMode) {
       await editTherapy({ id: therapy.id, ...values })
-    } else {
+    }
+    else {
       await createTherapy({ ...values, userId: profileId })
     }
-    router.push("/therapies")
+    router.push('/therapies')
   }
 
   return (
@@ -83,13 +84,13 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
           <FieldGroup>
             <Field>
               <Label htmlFor="title">Title</Label>
-              <Input id="title" {...register("title")} aria-invalid={!!errors.title} />
+              <Input id="title" {...register('title')} aria-invalid={!!errors.title} />
               <FieldError errors={[errors.title]} />
             </Field>
 
             <Field>
               <Label htmlFor="description">Description</Label>
-              <Textarea id="description" rows={3} {...register("description")} />
+              <Textarea id="description" rows={3} {...register('description')} />
             </Field>
 
             <Controller
@@ -104,13 +105,13 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
                         variant="outline"
                         aria-invalid={!!errors.startDate}
                         className={cn(
-                          "w-full justify-start gap-2 font-normal",
-                          !field.value && "text-muted-foreground",
-                          errors.startDate && "border-destructive"
+                          'w-full justify-start gap-2 font-normal',
+                          !field.value && 'text-muted-foreground',
+                          errors.startDate && 'border-destructive'
                         )}
                       >
                         <CalendarIcon className="size-4 shrink-0" />
-                        {field.value ? format(field.value, "MMM d, yyyy") : "Pick a date"}
+                        {field.value ? format(field.value, 'MMM d, yyyy') : 'Pick a date'}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -141,12 +142,12 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-full justify-start gap-2 font-normal",
-                          !field.value && "text-muted-foreground"
+                          'w-full justify-start gap-2 font-normal',
+                          !field.value && 'text-muted-foreground'
                         )}
                       >
                         <CalendarIcon className="size-4 shrink-0" />
-                        {field.value ? format(field.value, "MMM d, yyyy") : "Pick a date (optional)"}
+                        {field.value ? format(field.value, 'MMM d, yyyy') : 'Pick a date (optional)'}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -167,17 +168,17 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
 
             <Field>
               <Label htmlFor="therapistName">Therapist Name</Label>
-              <Input id="therapistName" {...register("therapistName")} />
+              <Input id="therapistName" {...register('therapistName')} />
             </Field>
 
             <Field>
               <Label htmlFor="therapistInfoLink">Therapist Info Link</Label>
-              <Input id="therapistInfoLink" {...register("therapistInfoLink")} />
+              <Input id="therapistInfoLink" {...register('therapistInfoLink')} />
             </Field>
 
             <Field>
               <Label htmlFor="location">Location</Label>
-              <Input id="location" {...register("location")} />
+              <Input id="location" {...register('location')} />
             </Field>
 
             <Controller
@@ -187,8 +188,8 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
                 <Field>
                   <Label>Status</Label>
                   <Select
-                    value={field.value ? "true" : "false"}
-                    onValueChange={(val) => field.onChange(val === "true")}
+                    value={field.value ? 'true' : 'false'}
+                    onValueChange={val => field.onChange(val === 'true')}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue />
@@ -210,13 +211,13 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push("/therapies")}
+            onClick={() => router.push('/therapies')}
             disabled={isSubmitting}
           >
             Cancel
           </Button>
           <Button type="submit" form="therapy-form" isPending={isSubmitting} disabled={!isDirty || !isValid}>
-            {isEditMode ? "Save" : "Submit"}
+            {isEditMode ? 'Save' : 'Submit'}
           </Button>
         </div>
       </div>

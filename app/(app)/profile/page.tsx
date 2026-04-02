@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import Modal from "@/components/modal"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { useProfile } from "../users/hooks/use-profile"
-import EditProfileForm from "./edit-profile-form"
-import PersonalInformation from "./personal-information"
-import { useActiveProfile } from "@/context/profile-context"
+import Modal from '@/components/modal'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { useProfile } from '../users/hooks/use-profile'
+import EditProfileForm from './edit-profile-form'
+import PersonalInformation from './personal-information'
+import { useActiveProfile } from '@/context/profile-context'
 
 const Profile = () => {
   const [editModalOpen, setEditModalOpen] = useState(false)

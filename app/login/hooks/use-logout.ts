@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { useMutation } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
-import { logout } from "@/app/actions/auth"
+import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import { logout } from '@/app/actions/auth'
 
 export const useLogout = () => {
   const router = useRouter()
@@ -10,7 +10,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      router.push("/login")
-    },
+      router.push('/login')
+    }
   })
 }

@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useActiveProfile } from "@/context/profile-context"
-import TherapyForm from "../components/therapy-form"
+import { useActiveProfile } from '@/context/profile-context'
+import TherapyForm from '../components/therapy-form'
 
 const CreateTherapyPage = () => {
   const { activeProfileId } = useActiveProfile()

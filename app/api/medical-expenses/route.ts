@@ -1,21 +1,21 @@
-import { NextRequest, NextResponse } from "next/server";
-import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server";
-import { getMedicalExpenses } from "../../actions/medical-expenses";
-import { MedicalExpense } from "@/lib/generated/prisma/client";
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "@/lib/constants";
+import { NextRequest, NextResponse } from 'next/server'
+import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from 'nuqs/server'
+import { getMedicalExpenses } from '../../actions/medical-expenses'
+import { MedicalExpense } from '@/lib/generated/prisma/client'
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
 
 const searchParamsCache = createSearchParamsCache({
-  profileId:     parseAsString,
-  page:          parseAsInteger.withDefault(DEFAULT_PAGE),
-  pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-  sortField:     parseAsString.withDefault("date"),
-  sortDirection: parseAsString.withDefault("desc"),
-  search:        parseAsString.withDefault(""),
-  dateFrom:      parseAsString,
-  dateTo:        parseAsString,
-  types:         parseAsArrayOf(parseAsString),
-  therapyId:     parseAsString,
-  appointmentId: parseAsString,
+  profileId: parseAsString,
+  page: parseAsInteger.withDefault(DEFAULT_PAGE),
+  pageSize: parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
+  sortField: parseAsString.withDefault('date'),
+  sortDirection: parseAsString.withDefault('desc'),
+  search: parseAsString.withDefault(''),
+  dateFrom: parseAsString,
+  dateTo: parseAsString,
+  types: parseAsArrayOf(parseAsString),
+  therapyId: parseAsString,
+  appointmentId: parseAsString
 })
 
 export async function GET(req: NextRequest) {
@@ -26,13 +26,13 @@ export async function GET(req: NextRequest) {
     page,
     pageSize,
     sortField: sortField as keyof MedicalExpense,
-    sortDirection: sortDirection as "asc" | "desc",
+    sortDirection: sortDirection as 'asc' | 'desc',
     search,
     dateFrom: dateFrom ?? undefined,
     dateTo: dateTo ?? undefined,
     types: types ?? undefined,
     therapyId: therapyId ?? undefined,
-    appointmentId: appointmentId ?? undefined,
+    appointmentId: appointmentId ?? undefined
   })
   return NextResponse.json(result)
 }

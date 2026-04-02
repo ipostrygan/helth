@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import type { UseMutationResult } from "@tanstack/react-query";
+import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
+import type { UseMutationResult } from '@tanstack/react-query'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,41 +11,41 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileCard } from "@/components/file-card";
-import { FileUpload, type UploadedFile } from "@/components/ui/file-upload";
-import { Button } from "@/components/ui/button";
-import type { DocumentItem } from "@/lib/api/appointments";
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { FileCard } from '@/components/file-card'
+import { FileUpload, type UploadedFile } from '@/components/ui/file-upload'
+import { Button } from '@/components/ui/button'
+import type { DocumentItem } from '@/lib/api/appointments'
 
 type DocumentsCardProps = {
-  documents: DocumentItem[];
-  uploadMutation: UseMutationResult<void, Error, File[]>;
-  removeMutation: UseMutationResult<void, Error, string>;
-};
+  documents: DocumentItem[]
+  uploadMutation: UseMutationResult<void, Error, File[]>
+  removeMutation: UseMutationResult<void, Error, string>
+}
 
 export const DocumentsCard = ({
   documents,
   uploadMutation,
-  removeMutation,
+  removeMutation
 }: DocumentsCardProps) => {
-  const [stagedFiles, setStagedFiles] = useState<UploadedFile[]>([]);
-  const [pendingDeleteKey, setPendingDeleteKey] = useState<string | null>(null);
+  const [stagedFiles, setStagedFiles] = useState<UploadedFile[]>([])
+  const [pendingDeleteKey, setPendingDeleteKey] = useState<string | null>(null)
 
-  const pendingDoc = documents.find((d) => d.key === pendingDeleteKey);
+  const pendingDoc = documents.find(d => d.key === pendingDeleteKey)
 
   const handleUpload = async () => {
-    if (!stagedFiles.length) return;
-    await uploadMutation.mutateAsync(stagedFiles.map((f) => f.file));
-    setStagedFiles([]);
-  };
+    if (!stagedFiles.length) return
+    await uploadMutation.mutateAsync(stagedFiles.map(f => f.file))
+    setStagedFiles([])
+  }
 
   const confirmDelete = async () => {
-    if (!pendingDeleteKey) return;
-    await removeMutation.mutateAsync(pendingDeleteKey);
-    setPendingDeleteKey(null);
-  };
+    if (!pendingDeleteKey) return
+    await removeMutation.mutateAsync(pendingDeleteKey)
+    setPendingDeleteKey(null)
+  }
 
   return (
     <>
@@ -57,14 +57,14 @@ export const DocumentsCard = ({
 
           {documents.length > 0 && (
             <div className="space-y-2 flex-1 grow-0">
-              {documents.map((doc) => (
+              {documents.map(doc => (
                 <FileCard
                   key={doc.key}
                   file={{
                     id: doc.key,
                     name: doc.name,
                     url: doc.url,
-                    downloadUrl: doc.downloadUrl,
+                    downloadUrl: doc.downloadUrl
                   }}
                   onDelete={setPendingDeleteKey}
                 />
@@ -81,14 +81,16 @@ export const DocumentsCard = ({
                 disabled={uploadMutation.isPending}
                 className="w-full"
               >
-                {uploadMutation.isPending ? (
-                  <>
-                    <Loader2 className="size-4 animate-spin" />
-                    Uploading…
-                  </>
-                ) : (
-                  `Upload ${stagedFiles.length} file${stagedFiles.length > 1 ? "s" : ""}`
-                )}
+                {uploadMutation.isPending
+                  ? (
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        Uploading…
+                      </>
+                    )
+                  : (
+                      `Upload ${stagedFiles.length} file${stagedFiles.length > 1 ? 's' : ''}`
+                    )}
               </Button>
             )}
           </div>
@@ -98,14 +100,15 @@ export const DocumentsCard = ({
       <AlertDialog
         open={!!pendingDeleteKey}
         onOpenChange={(open) => {
-          if (!open) setPendingDeleteKey(null);
+          if (!open) setPendingDeleteKey(null)
         }}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete document</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete{" "}
+              Are you sure you want to delete
+              {' '}
               <span className="font-medium text-foreground">
                 {pendingDoc?.name}
               </span>
@@ -121,18 +124,20 @@ export const DocumentsCard = ({
               onClick={confirmDelete}
               disabled={removeMutation.isPending}
             >
-              {removeMutation.isPending ? (
-                <>
-                  <Loader2 className="size-4 animate-spin" />
-                  Deleting…
-                </>
-              ) : (
-                "Delete"
-              )}
+              {removeMutation.isPending
+                ? (
+                    <>
+                      <Loader2 className="size-4 animate-spin" />
+                      Deleting…
+                    </>
+                  )
+                : (
+                    'Delete'
+                  )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
-  );
-};
+  )
+}

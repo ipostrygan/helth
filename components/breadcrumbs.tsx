@@ -1,13 +1,13 @@
-import React from "react"
-import Link from "next/link"
+import React from 'react'
+import Link from 'next/link'
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+  BreadcrumbSeparator
+} from '@/components/ui/breadcrumb'
 
 type BreadcrumbEntry = {
   label: string
@@ -27,13 +27,15 @@ export const Breadcrumbs = ({ items }: BreadcrumbsProps) => (
           <React.Fragment key={index}>
             {index > 0 && <BreadcrumbSeparator />}
             <BreadcrumbItem>
-              {isLast ? (
-                <BreadcrumbPage>{item.label}</BreadcrumbPage>
-              ) : (
-                <BreadcrumbLink asChild>
-                  <Link href={item.href!}>{item.label}</Link>
-                </BreadcrumbLink>
-              )}
+              {isLast
+                ? (
+                    <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                  )
+                : (
+                    <BreadcrumbLink asChild>
+                      <Link href={item.href!}>{item.label}</Link>
+                    </BreadcrumbLink>
+                  )}
             </BreadcrumbItem>
           </React.Fragment>
         )

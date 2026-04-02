@@ -1,10 +1,10 @@
-"use server"
+'use server'
 
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
-import { cookies } from "next/headers"
-import prisma from "@/lib/prisma"
-import { redirect } from "next/navigation"
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { cookies } from 'next/headers'
+import prisma from '@/lib/prisma'
+import { redirect } from 'next/navigation'
 
 type LoginInput = {
   username: string
@@ -15,22 +15,22 @@ export const login = async ({ username, password }: LoginInput) => {
   const auth = await prisma.auth.findUnique({ where: { username } })
 
   if (!auth || !(await bcrypt.compare(password, auth.password))) {
-    return { error: "Invalid credentials" }
+    return { error: 'Invalid credentials' }
   }
 
   const token = jwt.sign(
     { sub: auth.id, username: auth.username },
     process.env.JWT_SECRET!,
-    { expiresIn: "1d" }
+    { expiresIn: '1d' }
   )
 
   const cookieStore = await cookies()
-  cookieStore.set("token", token, {
+  cookieStore.set('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
     maxAge: 60 * 60 * 24 * 7,
-    path: "/",
+    path: '/'
   })
 
   return { success: true }
@@ -38,6 +38,6 @@ export const login = async ({ username, password }: LoginInput) => {
 
 export const logout = async () => {
   const cookieStore = await cookies()
-  cookieStore.delete("token")
-  redirect("/login")
+  cookieStore.delete('token')
+  redirect('/login')
 }

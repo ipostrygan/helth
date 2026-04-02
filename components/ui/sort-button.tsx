@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface SortButtonProps {
   field: string
@@ -14,11 +14,13 @@ interface SortButtonProps {
 export function SortButton({ field, label, sortField, sortDirection, onSortChange }: SortButtonProps) {
   const isSorted = sortField === field
   const Icon = isSorted
-    ? sortDirection === "asc" ? ArrowUp : ArrowDown
+    ? sortDirection === 'asc' ? ArrowUp : ArrowDown
     : ArrowUpDown
   return (
     <Button variant="ghost" onClick={() => onSortChange(field)}>
-      {label} <Icon className="ml-1 h-4 w-4" />
+      {label}
+      {' '}
+      <Icon className="ml-1 h-4 w-4" />
     </Button>
   )
 }

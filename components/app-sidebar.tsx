@@ -1,34 +1,34 @@
-"use client"
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { CalendarDays, Stethoscope, Receipt, Sparkles, BriefcaseMedical } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./ui/sidebar";
-import { X } from "lucide-react";
-import { Button } from "./ui/button";
-import { ThemeToggle } from "./theme-toggle";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { CalendarDays, Stethoscope, Receipt, Sparkles, BriefcaseMedical } from 'lucide-react'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from './ui/sidebar'
+import { X } from 'lucide-react'
+import { Button } from './ui/button'
+import { ThemeToggle } from './theme-toggle'
 
 export const MENU_ITEMS = [
   {
-    name: "Appointments",
-    href: "/appointments",
-    icon: CalendarDays,
+    name: 'Appointments',
+    href: '/appointments',
+    icon: CalendarDays
   },
   {
-    name: "Therapies",
-    href: "/therapies",
-    icon: Stethoscope,
+    name: 'Therapies',
+    href: '/therapies',
+    icon: Stethoscope
   },
   {
-    name: "Medical expenses",
-    href: "/medical-expenses",
-    icon: Receipt,
+    name: 'Medical expenses',
+    href: '/medical-expenses',
+    icon: Receipt
   },
   {
-    name: "Self-care",
-    href: "/self-care",
-    icon: Sparkles,
-  },
+    name: 'Self-care',
+    href: '/self-care',
+    icon: Sparkles
+  }
 ]
 
 function AppSidebar() {
@@ -49,7 +49,7 @@ function AppSidebar() {
         <SidebarMenu>
           {MENU_ITEMS.map(({ href, name, icon: Icon }) => (
             <SidebarMenuItem key={href}>
-              <SidebarMenuButton asChild isActive={(pathname + "/").startsWith(href + "/")} tooltip={name}>
+              <SidebarMenuButton asChild isActive={(pathname + '/').startsWith(href + '/')} tooltip={name}>
                 <Link href={href}>
                   <Icon />
                   {name}

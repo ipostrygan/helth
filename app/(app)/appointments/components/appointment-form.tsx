@@ -1,25 +1,25 @@
-"use client"
+'use client'
 
-import { useForm, Controller } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useRouter } from "next/navigation"
-import { AppointmentType, AppointmentStatus } from "@/lib/generated/prisma"
-import type { Appointment } from "@/lib/generated/prisma/client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Field, FieldError, FieldGroup } from "@/components/ui/field"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DatePickerField } from "@/components/ui/date-picker-field"
-import { APPOINTMENT_TYPE_LABELS, APPOINTMENT_STATUS_LABELS } from "../constants"
-import { useCreateAppointment } from "../hooks/use-create-appointment"
-import { useEditAppointment } from "../hooks/use-edit-appointment"
-import { TherapyCombobox } from "@/app/(app)/medical-expenses/components/therapy-combobox"
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { useRouter } from 'next/navigation'
+import { AppointmentType, AppointmentStatus } from '@/lib/generated/prisma'
+import type { Appointment } from '@/lib/generated/prisma/client'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Field, FieldError, FieldGroup } from '@/components/ui/field'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { DatePickerField } from '@/components/ui/date-picker-field'
+import { APPOINTMENT_TYPE_LABELS, APPOINTMENT_STATUS_LABELS } from '../constants'
+import { useCreateAppointment } from '../hooks/use-create-appointment'
+import { useEditAppointment } from '../hooks/use-edit-appointment'
+import { TherapyCombobox } from '@/app/(app)/medical-expenses/components/therapy-combobox'
 
 const schema = z.object({
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
   date: z.date(),
   endDate: z.date().optional(),
@@ -28,7 +28,7 @@ const schema = z.object({
   doctorName: z.string().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
-  therapyId: z.string().nullable().optional(),
+  therapyId: z.string().nullable().optional()
 })
 
 type FormValues = z.infer<typeof schema>
@@ -56,18 +56,19 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
           doctorName: appointment.doctorName ?? undefined,
           location: appointment.location ?? undefined,
           notes: appointment.notes ?? undefined,
-          therapyId: appointment.therapyId ?? null,
+          therapyId: appointment.therapyId ?? null
         }
-      : { status: AppointmentStatus.Scheduled, therapyId: null },
+      : { status: AppointmentStatus.Scheduled, therapyId: null }
   })
 
   const onSubmit = async (values: FormValues) => {
     if (isEditMode) {
       await editAppointment({ id: appointment.id, ...values })
-    } else {
+    }
+    else {
       await createAppointment({ ...values, userId: profileId })
     }
-    router.push("/appointments")
+    router.push('/appointments')
   }
 
   return (
@@ -77,13 +78,13 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
           <FieldGroup>
             <Field>
               <Label htmlFor="title">Title</Label>
-              <Input id="title" {...register("title")} aria-invalid={!!errors.title} />
+              <Input id="title" {...register('title')} aria-invalid={!!errors.title} />
               <FieldError errors={[errors.title]} />
             </Field>
 
             <Field>
               <Label htmlFor="description">Description</Label>
-              <Textarea id="description" rows={3} {...register("description")} />
+              <Textarea id="description" rows={3} {...register('description')} />
             </Field>
 
             <Controller
@@ -143,17 +144,17 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
 
             <Field>
               <Label htmlFor="doctorName">Doctor</Label>
-              <Input id="doctorName" {...register("doctorName")} />
+              <Input id="doctorName" {...register('doctorName')} />
             </Field>
 
             <Field>
               <Label htmlFor="location">Location</Label>
-              <Input id="location" {...register("location")} />
+              <Input id="location" {...register('location')} />
             </Field>
 
             <Field>
               <Label htmlFor="notes">Notes</Label>
-              <Textarea id="notes" rows={3} {...register("notes")} />
+              <Textarea id="notes" rows={3} {...register('notes')} />
             </Field>
 
             <Controller
@@ -161,7 +162,10 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
               control={control}
               render={({ field }) => (
                 <Field>
-                  <Label>Therapy <span className="text-muted-foreground text-xs">(optional)</span></Label>
+                  <Label>
+                    Therapy
+                    <span className="text-muted-foreground text-xs">(optional)</span>
+                  </Label>
                   <TherapyCombobox
                     profileId={profileId}
                     value={field.value ?? null}
@@ -179,7 +183,7 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push("/appointments")}
+            onClick={() => router.push('/appointments')}
             disabled={isSubmitting}
           >
             Cancel
@@ -190,7 +194,7 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
             isPending={isSubmitting}
             disabled={!isDirty || !isValid}
           >
-            {isEditMode ? "Save" : "Submit"}
+            {isEditMode ? 'Save' : 'Submit'}
           </Button>
         </div>
       </div>

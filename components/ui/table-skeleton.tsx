@@ -1,12 +1,12 @@
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+  TableRow
+} from '@/components/ui/table'
 
 interface TableSkeletonProps {
   rows?: number

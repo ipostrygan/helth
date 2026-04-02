@@ -1,9 +1,9 @@
-"use server"
+'use server'
 
-import { User } from "@/lib/generated/prisma/client";
-import { EditProfileFormType } from "../(app)/profile/edit-profile-form";
-import prisma from "@/lib/prisma";
-import { UserProfile } from "../(app)/users/types/profile.types";
+import { User } from '@/lib/generated/prisma/client'
+import { EditProfileFormType } from '../(app)/profile/edit-profile-form'
+import prisma from '@/lib/prisma'
+import { UserProfile } from '../(app)/users/types/profile.types'
 
 export const editProfile = async (id: string, data: EditProfileFormType) => {
   await prisma.user.update({
@@ -14,12 +14,12 @@ export const editProfile = async (id: string, data: EditProfileFormType) => {
 
 export const toUserProfile = async (user: User): Promise<UserProfile> => ({
   ...user,
-  imageUrl: user.imageKey ? `/api/download?key=${encodeURIComponent(user.imageKey)}` : null,
+  imageUrl: user.imageKey ? `/api/download?key=${encodeURIComponent(user.imageKey)}` : null
 })
 
 export const getProfile = async (id: string): Promise<UserProfile> => {
   const user = await prisma.user.findUnique({ where: { id } })
-  if (!user) throw new Error("User not found")
+  if (!user) throw new Error('User not found')
   return toUserProfile(user)
 }
 

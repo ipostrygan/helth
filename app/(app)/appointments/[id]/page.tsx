@@ -1,98 +1,98 @@
-"use client"
+'use client'
 
-import { Suspense, use, useState } from "react"
-import Link from "next/link"
-import { Breadcrumbs } from "@/components/breadcrumbs"
-import { useAppointment } from "../hooks/use-appointment"
-import { useTherapy } from "../../therapies/hooks/use-therapy"
-import { Separator } from "@/components/ui/separator"
+import { Suspense, use, useState } from 'react'
+import Link from 'next/link'
+import { Breadcrumbs } from '@/components/breadcrumbs'
+import { useAppointment } from '../hooks/use-appointment'
+import { useTherapy } from '../../therapies/hooks/use-therapy'
+import { Separator } from '@/components/ui/separator'
 import {
   APPOINTMENT_TYPE_LABELS,
-  APPOINTMENT_STATUS_LABELS,
-} from "../constants"
-import type { AppointmentStatus, MedicalExpense } from "@/lib/generated/prisma/client"
-import { TableTemplate } from "@/components/table-template"
-import { useMedicalExpenses } from "../../medical-expenses/hooks/use-medical-expenses"
-import { useDeleteMedicalExpense } from "../../medical-expenses/hooks/use-delete-medical-expense"
-import { ColumnDef } from "@tanstack/react-table"
-import { SortButton } from "@/components/ui/sort-button"
-import { EXPENSE_TYPE_LABELS } from "../../medical-expenses/constants"
-import { RowActions } from "@/components/row-actions"
-import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
-import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
-import { DocumentsCard } from "@/components/documents-card"
-import { useDocuments } from "@/app/(app)/hooks/use-documents"
-import { queryKeys } from "@/lib/query-keys"
+  APPOINTMENT_STATUS_LABELS
+} from '../constants'
+import type { AppointmentStatus, MedicalExpense } from '@/lib/generated/prisma/client'
+import { TableTemplate } from '@/components/table-template'
+import { useMedicalExpenses } from '../../medical-expenses/hooks/use-medical-expenses'
+import { useDeleteMedicalExpense } from '../../medical-expenses/hooks/use-delete-medical-expense'
+import { ColumnDef } from '@tanstack/react-table'
+import { SortButton } from '@/components/ui/sort-button'
+import { EXPENSE_TYPE_LABELS } from '../../medical-expenses/constants'
+import { RowActions } from '@/components/row-actions'
+import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
+import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
+import { DocumentsCard } from '@/components/documents-card'
+import { useDocuments } from '@/app/(app)/hooks/use-documents'
+import { queryKeys } from '@/lib/query-keys'
 
 type AppointmentDetailPageProps = {
   params: Promise<{ id: string }>
 }
 
 const STATUS_STYLES: Record<AppointmentStatus, string> = {
-  Scheduled:  "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
-  Completed:  "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-  Cancelled:  "bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400",
-  NoShow:     "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
+  Scheduled: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+  Completed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+  Cancelled: 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400',
+  NoShow: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400'
 }
 
 const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   const { id } = use(params)
   const { data: appointment, isLoading } = useAppointment(id)
-  const { data: therapy } = useTherapy(appointment?.therapyId ?? "")
+  const { data: therapy } = useTherapy(appointment?.therapyId ?? '')
   const { uploadMutation, removeMutation } = useDocuments(`/api/appointments/${id}/documents`, queryKeys.appointments.detail(id))
 
   const [filters, setFilters] = useQueryStates({
-    page:          parseAsInteger.withDefault(1),
-    pageSize:      parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-    sortField:     parseAsString.withDefault("date"),
-    sortDirection: parseAsString.withDefault("desc"),
+    page: parseAsInteger.withDefault(1),
+    pageSize: parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
+    sortField: parseAsString.withDefault('date'),
+    sortDirection: parseAsString.withDefault('desc')
   })
 
   const { data: expensesData, isLoading: isExpensesLoading } = useMedicalExpenses({
     appointmentId: id,
-    ...filters,
+    ...filters
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
 
   const onSortChange = (field: string) => {
-    const direction = filters.sortField === field && filters.sortDirection === "asc" ? "desc" : "asc"
-    setFilters((prev) => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
+    const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'
+    setFilters(prev => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
   }
 
   const columns: ColumnDef<MedicalExpense>[] = [
     {
-      accessorKey: "title",
-      header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      accessorKey: 'title',
+      header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />
     },
     {
-      accessorKey: "amount",
+      accessorKey: 'amount',
       header: () => <SortButton field="amount" label="Amount" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
       cell: ({ row }) =>
-        new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(row.getValue("amount")),
+        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(row.getValue('amount'))
     },
     {
-      accessorKey: "date",
+      accessorKey: 'date',
       header: () => <SortButton field="date" label="Date" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
-      cell: ({ row }) => new Date(row.getValue("date")).toLocaleDateString(),
+      cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
     },
     {
-      accessorKey: "type",
-      header: "Type",
-      cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue("type") as keyof typeof EXPENSE_TYPE_LABELS],
+      accessorKey: 'type',
+      header: 'Type',
+      cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue('type') as keyof typeof EXPENSE_TYPE_LABELS]
     },
     {
-      accessorKey: "description",
-      header: "Description",
-      cell: ({ row }) => row.getValue("description") ?? "—",
+      accessorKey: 'description',
+      header: 'Description',
+      cell: ({ row }) => row.getValue('description') ?? '—'
     },
     {
-      id: "actions",
+      id: 'actions',
       cell: ({ row }) => (
         <RowActions onDelete={() => setDeletingId(row.original.id)} />
-      ),
-    },
+      )
+    }
   ]
 
   if (isLoading) return null
@@ -101,7 +101,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   return (
     <div className="px-6 pt-6 space-y-6 max-w-4xl mx-auto">
       <div className="space-y-1">
-        <Breadcrumbs items={[{ label: "Appointments", href: "/appointments" }, { label: appointment.title }]} />
+        <Breadcrumbs items={[{ label: 'Appointments', href: '/appointments' }, { label: appointment.title }]} />
         <h1 className="text-2xl font-semibold">{appointment.title}</h1>
       </div>
 
@@ -127,33 +127,35 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
           </DetailRow>
           <Separator />
           <DetailRow label="End Date">
-            {appointment.endDate ? new Date(appointment.endDate).toLocaleDateString() : "—"}
+            {appointment.endDate ? new Date(appointment.endDate).toLocaleDateString() : '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Therapy">
-            {appointment.therapyId ? (
-              <Link href={`/therapies/${appointment.therapyId}`} className="underline hover:no-underline">
-                {therapy?.title ?? appointment.therapyId}
-              </Link>
-            ) : (
-              "—"
-            )}
+            {appointment.therapyId
+              ? (
+                  <Link href={`/therapies/${appointment.therapyId}`} className="underline hover:no-underline">
+                    {therapy?.title ?? appointment.therapyId}
+                  </Link>
+                )
+              : (
+                  '—'
+                )}
           </DetailRow>
           <Separator />
           <DetailRow label="Doctor">
-            {appointment.doctorName ?? "—"}
+            {appointment.doctorName ?? '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Location">
-            {appointment.location ?? "—"}
+            {appointment.location ?? '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Notes">
-            {appointment.notes ?? "—"}
+            {appointment.notes ?? '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Description">
-            {appointment.description ?? "—"}
+            {appointment.description ?? '—'}
           </DetailRow>
         </div>
       </div>
@@ -161,13 +163,13 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
       <TableTemplate
         className="space-y-4"
         title="Medical Expenses"
-        description={`Total sum of expenses: ${new Intl.NumberFormat("en-US", { style: "currency", currency: "EUR" }).format(expensesData?.totalSum ?? 0)}`}
+        description={`Total sum of expenses: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(expensesData?.totalSum ?? 0)}`}
         columns={columns}
         data={expensesData}
         isLoading={isExpensesLoading}
         pageSize={filters.pageSize}
-        onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
-        onPageSizeChange={(pageSize) => setFilters((prev) => ({ ...prev, page: 1, pageSize }))}
+        onPageChange={page => setFilters(prev => ({ ...prev, page }))}
+        onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
         deleteConfig={{
           deletingId,
           onCancel: () => setDeletingId(null),
@@ -175,7 +177,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
             if (deletingId === null) return
             deleteExpense(deletingId, { onSuccess: () => setDeletingId(null) })
           },
-          isPending: isDeleting,
+          isPending: isDeleting
         }}
       />
     </div>
@@ -184,7 +186,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
 
 const DetailRow = ({
   label,
-  children,
+  children
 }: {
   label: string
   children: React.ReactNode

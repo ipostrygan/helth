@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
-import { editProfile, getProfile } from "../../../actions/profile";
+import { NextResponse } from 'next/server'
+import { editProfile, getProfile } from '../../../actions/profile'
 
-export async function GET(_: Request, { params }: { params: Promise<{ id: string }>}) {
+export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const user = await getProfile(id)
-  return NextResponse.json(user);
+  return NextResponse.json(user)
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {

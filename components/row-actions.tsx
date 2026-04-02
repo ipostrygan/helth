@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import { MoreHorizontal } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { MoreHorizontal } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 
 type RowActionsProps = {
   onDelete: () => void

@@ -1,23 +1,23 @@
-"use client"
+'use client'
 
-import { ReactNode } from "react"
-import { cn } from "@/lib/utils"
-import { ColumnDef } from "@tanstack/react-table"
-import { type DateRange } from "react-day-picker"
-import { Plus } from "lucide-react"
-import { DataTable } from "@/components/ui/data-table"
-import { TableSkeleton } from "@/components/ui/table-skeleton"
-import { Button } from "@/components/ui/button"
-import { SearchInput } from "@/components/ui/search-input"
-import { DateRangePicker } from "@/components/ui/date-range-picker"
-import { MultiSelectFilter } from "@/components/ui/multi-select-filter"
-import { DialogFooter } from "@/components/ui/dialog"
-import { Modal } from "@/components/ui/modal"
-import type { PaginatedResult } from "@/types/table"
+import { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
+import { ColumnDef } from '@tanstack/react-table'
+import { type DateRange } from 'react-day-picker'
+import { Plus } from 'lucide-react'
+import { DataTable } from '@/components/ui/data-table'
+import { TableSkeleton } from '@/components/ui/table-skeleton'
+import { Button } from '@/components/ui/button'
+import { SearchInput } from '@/components/ui/search-input'
+import { DateRangePicker } from '@/components/ui/date-range-picker'
+import { MultiSelectFilter } from '@/components/ui/multi-select-filter'
+import { DialogFooter } from '@/components/ui/dialog'
+import { Modal } from '@/components/ui/modal'
+import type { PaginatedResult } from '@/types/table'
 
 export interface FilterGroupConfig {
   label: string
-  options: { value: string; label: string }[]
+  options: { value: string, label: string }[]
   selected: string[]
   onChange: (selected: string[]) => void
 }
@@ -69,14 +69,14 @@ export function TableTemplate<TData>({
   onPageChange,
   onPageSizeChange,
   onAddNew,
-  addNewLabel = "Add new",
+  addNewLabel = 'Add new',
   filters,
   deleteConfig,
   modals,
-  className,
+  className
 }: TableTemplateProps<TData>) {
   return (
-    <div className={cn("space-y-4", className ?? "p-0")}>
+    <div className={cn('space-y-4', className ?? 'p-0')}>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-semibold">{title}</h1>
@@ -94,7 +94,7 @@ export function TableTemplate<TData>({
         <div className="flex flex-wrap items-center gap-2">
           {filters.onSearchChange && (
             <SearchInput
-              value={filters.searchValue ?? ""}
+              value={filters.searchValue ?? ''}
               onChange={filters.onSearchChange}
               placeholder={filters.searchPlaceholder}
             />
@@ -102,7 +102,7 @@ export function TableTemplate<TData>({
           {filters.onDateRangeChange && (
             <DateRangePicker value={filters.dateRange} onChange={filters.onDateRangeChange} />
           )}
-          {filters.filterGroups?.map((group) => (
+          {filters.filterGroups?.map(group => (
             <MultiSelectFilter
               key={group.label}
               label={group.label}
@@ -119,20 +119,22 @@ export function TableTemplate<TData>({
         </div>
       )}
 
-      {isLoading || !data ? (
-        <TableSkeleton rows={pageSize} columns={columns.length} />
-      ) : (
-        <div className={isFetching ? "opacity-50 pointer-events-none transition-opacity" : "transition-opacity"}>
-          <DataTable
-            columns={columns}
-            data={data}
-            onPageChange={onPageChange}
-            onPageSizeChange={onPageSizeChange}
-            pageSize={pageSize}
-            hasActiveFilters={filters?.hasActiveFilters}
-          />
-        </div>
-      )}
+      {isLoading || !data
+        ? (
+            <TableSkeleton rows={pageSize} columns={columns.length} />
+          )
+        : (
+            <div className={isFetching ? 'opacity-50 pointer-events-none transition-opacity' : 'transition-opacity'}>
+              <DataTable
+                columns={columns}
+                data={data}
+                onPageChange={onPageChange}
+                onPageSizeChange={onPageSizeChange}
+                pageSize={pageSize}
+                hasActiveFilters={filters?.hasActiveFilters}
+              />
+            </div>
+          )}
 
       {deleteConfig && (
         <Modal

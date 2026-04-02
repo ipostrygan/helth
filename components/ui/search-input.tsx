@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { Search } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
+import { Search } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 const DEBOUNCE_TIME = 250
 
@@ -14,7 +14,7 @@ type SearchInputProps = {
   className?: string
 }
 
-export const SearchInput = ({ value, onChange, placeholder = "Search...", className }: SearchInputProps) => {
+export const SearchInput = ({ value, onChange, placeholder = 'Search...', className }: SearchInputProps) => {
   const [inputValue, setInputValue] = useState(value)
   const timer = useRef<ReturnType<typeof setTimeout>>(null)
 
@@ -30,7 +30,7 @@ export const SearchInput = ({ value, onChange, placeholder = "Search...", classN
   }
 
   return (
-    <div className={cn("relative w-full sm:w-64", className)}>
+    <div className={cn('relative w-full sm:w-64', className)}>
       <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
       <Input
         className="pl-8 text-sm"

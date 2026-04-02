@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
 import {
   QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query"
+  QueryClientProvider
+} from '@tanstack/react-query'
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import { useState } from "react"
+import { useState } from 'react'
 
 type ReactQueryProviderProps = {
   children: React.ReactNode
@@ -18,10 +18,10 @@ export function ReactQueryProvider({ children }: ReactQueryProviderProps) {
         defaultOptions: {
           queries: {
             staleTime: 1000 * 60, // 1 minute
-            refetchOnWindowFocus: false,
-          },
-        },
-      }),
+            refetchOnWindowFocus: false
+          }
+        }
+      })
   )
 
   return (

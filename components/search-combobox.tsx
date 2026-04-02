@@ -1,22 +1,22 @@
-"use client"
+'use client'
 
-import { CheckIcon, ChevronsUpDownIcon, XIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { CheckIcon, ChevronsUpDownIcon, XIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList,
-} from "@/components/ui/command"
+  CommandList
+} from '@/components/ui/command'
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
+  PopoverTrigger
+} from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 export type SearchComboboxItem = {
   id: string
@@ -51,20 +51,20 @@ export function SearchCombobox({
   items,
   isLoading,
   onSearchChange,
-  placeholder = "Select an item…",
-  searchPlaceholder = "Search…",
-  emptyText = "No items found.",
-  selectedLabel,
+  placeholder = 'Select an item…',
+  searchPlaceholder = 'Search…',
+  emptyText = 'No items found.',
+  selectedLabel
 }: SearchComboboxProps) {
   const [open, setOpen] = useState(false)
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 300)
 
   useEffect(() => {
     onSearchChange?.(debouncedSearch)
   }, [debouncedSearch, onSearchChange])
 
-  const selected = value ? items.find((item) => item.id === value) : null
+  const selected = value ? items.find(item => item.id === value) : null
   const displayLabel = selected?.label ?? selectedLabel
 
   return (
@@ -78,11 +78,13 @@ export function SearchCombobox({
             aria-expanded={open}
             className="w-full justify-between font-normal"
           >
-            {displayLabel ? (
-              <span className="truncate">{displayLabel}</span>
-            ) : (
-              <span className="text-muted-foreground">{placeholder}</span>
-            )}
+            {displayLabel
+              ? (
+                  <span className="truncate">{displayLabel}</span>
+                )
+              : (
+                  <span className="text-muted-foreground">{placeholder}</span>
+                )}
             <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -109,30 +111,34 @@ export function SearchCombobox({
             value={search}
             onValueChange={setSearch}
           />
-          <CommandList className="overflow-y-auto max-h-68" onWheel={(e) => e.stopPropagation()}>
-            {isLoading ? (
-              <CommandEmpty>Loading…</CommandEmpty>
-            ) : items.length === 0 ? (
-              <CommandEmpty>{emptyText}</CommandEmpty>
-            ) : (
-              <CommandGroup>
-                {items.map((item) => (
-                  <CommandItem
-                    key={item.id}
-                    value={item.id}
-                    onSelect={() => {
-                      onChange(item.id === value ? null : item.id)
-                      setOpen(false)
-                    }}
-                  >
-                    <CheckIcon
-                      className={cn("mr-2 size-4", value === item.id ? "opacity-100" : "opacity-0")}
-                    />
-                    {item.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            )}
+          <CommandList className="overflow-y-auto max-h-68" onWheel={e => e.stopPropagation()}>
+            {isLoading
+              ? (
+                  <CommandEmpty>Loading…</CommandEmpty>
+                )
+              : items.length === 0
+                ? (
+                    <CommandEmpty>{emptyText}</CommandEmpty>
+                  )
+                : (
+                    <CommandGroup>
+                      {items.map(item => (
+                        <CommandItem
+                          key={item.id}
+                          value={item.id}
+                          onSelect={() => {
+                            onChange(item.id === value ? null : item.id)
+                            setOpen(false)
+                          }}
+                        >
+                          <CheckIcon
+                            className={cn('mr-2 size-4', value === item.id ? 'opacity-100' : 'opacity-0')}
+                          />
+                          {item.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  )}
           </CommandList>
         </Command>
       </PopoverContent>

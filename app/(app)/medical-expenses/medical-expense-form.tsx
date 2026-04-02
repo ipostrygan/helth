@@ -1,30 +1,30 @@
-"use client"
+'use client'
 
-import { useForm, Controller } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { ExpenseType } from "@/lib/generated/prisma"
-import type { MedicalExpenseWithRelations } from "@/app/actions/medical-expenses"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Field, FieldError, FieldGroup } from "@/components/ui/field"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { DatePickerField } from "@/components/ui/date-picker-field"
-import { DialogFooter } from "@/components/ui/dialog"
-import { EXPENSE_TYPE_LABELS } from "./constants"
-import { useCreateMedicalExpense } from "./hooks/use-create-medical-expense"
-import { useEditMedicalExpense } from "./hooks/use-edit-medical-expense"
-import { TherapyCombobox } from "./components/therapy-combobox"
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { ExpenseType } from '@/lib/generated/prisma'
+import type { MedicalExpenseWithRelations } from '@/app/actions/medical-expenses'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Field, FieldError, FieldGroup } from '@/components/ui/field'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { DatePickerField } from '@/components/ui/date-picker-field'
+import { DialogFooter } from '@/components/ui/dialog'
+import { EXPENSE_TYPE_LABELS } from './constants'
+import { useCreateMedicalExpense } from './hooks/use-create-medical-expense'
+import { useEditMedicalExpense } from './hooks/use-edit-medical-expense'
+import { TherapyCombobox } from './components/therapy-combobox'
 
 const schema = z.object({
-  title: z.string().min(1, "Name is required"),
-  amount: z.number().positive("Amount must be greater than 0"),
+  title: z.string().min(1, 'Name is required'),
+  amount: z.number().positive('Amount must be greater than 0'),
   date: z.date(),
   type: z.enum(ExpenseType),
   description: z.string().optional(),
-  therapyId: z.string().nullable().optional(),
+  therapyId: z.string().nullable().optional()
 })
 
 type FormValues = z.infer<typeof schema>
@@ -44,7 +44,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
     control,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting }
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: expense
@@ -54,15 +54,16 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
           date: new Date(expense.date),
           type: expense.type,
           description: expense.description ?? undefined,
-          therapyId: expense.therapyId ?? null,
+          therapyId: expense.therapyId ?? null
         }
-      : { therapyId: null },
+      : { therapyId: null }
   })
 
   const onSubmit = async (values: FormValues) => {
     if (isEditMode) {
       await editExpense({ id: expense.id, ...values })
-    } else {
+    }
+    else {
       await createExpense({ ...values, userId: profileId })
     }
     onClose()
@@ -73,13 +74,13 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
       <FieldGroup>
         <Field>
           <Label htmlFor="title">Name</Label>
-          <Input id="title" {...register("title")} aria-invalid={!!errors.title} />
+          <Input id="title" {...register('title')} aria-invalid={!!errors.title} />
           <FieldError errors={[errors.title]} />
         </Field>
 
         <Field>
           <Label htmlFor="amount">Amount (€)</Label>
-          <Input id="amount" type="number" step="0.01" {...register("amount", { valueAsNumber: true })} aria-invalid={!!errors.amount} />
+          <Input id="amount" type="number" step="0.01" {...register('amount', { valueAsNumber: true })} aria-invalid={!!errors.amount} />
           <FieldError errors={[errors.amount]} />
         </Field>
 
@@ -122,7 +123,10 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
           control={control}
           render={({ field }) => (
             <Field>
-              <Label>Therapy <span className="text-muted-foreground text-xs">(optional)</span></Label>
+              <Label>
+                Therapy
+                <span className="text-muted-foreground text-xs">(optional)</span>
+              </Label>
               <TherapyCombobox
                 profileId={profileId}
                 value={field.value ?? null}
@@ -135,7 +139,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
 
         <Field>
           <Label htmlFor="description">Description</Label>
-          <Textarea id="description" rows={3} {...register("description")} />
+          <Textarea id="description" rows={3} {...register('description')} />
         </Field>
       </FieldGroup>
 
@@ -144,7 +148,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
           Cancel
         </Button>
         <Button type="submit" isPending={isSubmitting}>
-          {isEditMode ? "Save" : "Submit"}
+          {isEditMode ? 'Save' : 'Submit'}
         </Button>
       </DialogFooter>
     </form>
