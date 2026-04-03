@@ -12,11 +12,15 @@ export async function getProfile(id: string): Promise<UserProfile | null> {
 export async function editProfile(
   id: string,
   data: EditProfileFormType
-): Promise<Response> {
-  return fetch(`/api/users/${id}`, {
+): Promise<void> {
+  const res = await fetch(`/api/users/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data)
   })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error ?? 'Failed to update profile')
+  }
 }
 
 export async function uploadProfileImage(

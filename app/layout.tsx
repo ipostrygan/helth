@@ -18,7 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Medical tracker',
-  description: 'App for tracking family medical data'
+  description: 'App for tracking family medical data',
+  manifest: '/manifest.webmanifest'
 }
 
 export default function RootLayout({

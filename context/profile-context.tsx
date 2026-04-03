@@ -18,9 +18,12 @@ const ProfileContext = createContext<ProfileContextType>({
 })
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [activeProfileId, setActiveProfileIdState] = useState<string | null>(
-    () => (typeof window !== 'undefined' ? localStorage.getItem(LAST_PROFILE_KEY) : null)
-  )
+  const [activeProfileId, setActiveProfileIdState] = useState<string | null>(null)
+
+  useEffect(() => {
+    const stored = localStorage.getItem(LAST_PROFILE_KEY)
+    if (stored) setActiveProfileIdState(stored)
+  }, [])
 
   const { data: profiles } = useQuery({
     queryKey: queryKeys.profile.all,

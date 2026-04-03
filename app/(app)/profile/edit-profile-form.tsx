@@ -57,20 +57,20 @@ const EditProfileForm = ({ onClose, data }: EditProfileFormProps) => {
         <Controller
           name="weight"
           control={control}
-          render={({ field }) => (
+          render={({ field: { onChange, ...field } }) => (
             <Field>
               <Label htmlFor="weight">Weight (kg)</Label>
-              <Input id="weight" type="number" {...field} />
+              <Input id="weight" type="number" {...field} onChange={e => onChange(e.target.valueAsNumber)} />
             </Field>
           )}
         />
         <Controller
           name="height"
           control={control}
-          render={({ field }) => (
+          render={({ field: { onChange, ...field } }) => (
             <Field>
               <Label htmlFor="height">Height (cm)</Label>
-              <Input id="height" type="number" {...field} />
+              <Input id="height" type="number" {...field} onChange={e => onChange(e.target.valueAsNumber)} />
             </Field>
           )}
         />
