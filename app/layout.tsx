@@ -19,7 +19,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Helth',
   description: 'App for tracking family medical data',
-  manifest: '/manifest.webmanifest'
+  manifest: '/manifest.webmanifest',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#09090b' }
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'MedTracker'
+  }
 }
 
 export default function RootLayout({
