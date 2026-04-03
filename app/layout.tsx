@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Medical tracker',
+  title: 'Helth',
   description: 'App for tracking family medical data',
   manifest: '/manifest.webmanifest'
 }
