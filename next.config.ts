@@ -8,6 +8,9 @@ const withPWA = require('next-pwa')({
 })
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    '**/*': ['./lib/generated/prisma/**/*'],
+  },
   images: {
     localPatterns: [
       {
