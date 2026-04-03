@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Medical Tracker',
-    short_name: 'MedTracker',
+    name: 'Helth',
+    short_name: 'Helth',
     description: 'App for tracking family medical data',
     start_url: '/',
     display: 'standalone',

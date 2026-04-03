@@ -27,7 +27,8 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'MedTracker'
+    title: 'Helth',
+    startupImage: ['/icons/icon-512x512.png']
   }
 }
 
