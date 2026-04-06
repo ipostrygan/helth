@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { FieldGroup, Field } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useTransition } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { login } from '@/app/actions/auth'
@@ -16,11 +17,12 @@ type LoginFormType = {
 
 const LoginPage = () => {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const {
     control,
     handleSubmit,
-    formState: { isDirty, isValid, isSubmitting }
+    formState: { isDirty, isValid }
   } = useForm({
     defaultValues: {
       username: '',
@@ -28,13 +30,15 @@ const LoginPage = () => {
     }
   })
 
-  const onSubmit = async (data: LoginFormType) => {
-    const result = await login(data)
-    if (result.error) {
-      toast.error(`Login failed: ${result.error}`)
-      return
-    }
-    router.push('/')
+  const onSubmit = (data: LoginFormType) => {
+    startTransition(async () => {
+      const result = await login(data)
+      if (result.error) {
+        toast.error(`Login failed: ${result.error}`)
+        return
+      }
+      router.push('/')
+    })
   }
 
   return (
@@ -64,8 +68,8 @@ const LoginPage = () => {
           <Field orientation="horizontal" className="justify-end">
             <Button
               type="submit"
-              disabled={!isDirty || !isValid || isSubmitting}
-              isPending={isSubmitting}
+              disabled={!isDirty || !isValid || isPending}
+              isPending={isPending}
             >
               Login
             </Button>

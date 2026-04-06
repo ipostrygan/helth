@@ -101,7 +101,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   if (!appointment) return null
 
   return (
-    <div className="px-6 pt-6 space-y-6 max-w-4xl mx-auto">
+    <div className="sm:px-6 sm:pt-6 space-y-6 max-w-4xl mx-auto">
       <div className="space-y-1">
         <Breadcrumbs items={[{ label: 'Appointments', href: '/appointments' }, { label: appointment.title }]} />
         <h1 className="text-2xl font-semibold">{appointment.title}</h1>

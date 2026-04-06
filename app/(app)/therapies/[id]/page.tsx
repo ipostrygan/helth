@@ -149,7 +149,7 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
   ]
 
   return (
-    <div className="px-6 pt-6 space-y-6 max-w-4xl mx-auto">
+    <div className="sm:px-6 sm:pt-6 space-y-6 max-w-4xl mx-auto">
       <div className="space-y-1">
         <Breadcrumbs items={[{ label: 'Therapies', href: '/therapies' }, { label: therapy.title }]} />
         <h1 className="text-2xl font-semibold">{therapy.title}</h1>
