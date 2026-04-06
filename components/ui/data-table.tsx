@@ -111,15 +111,14 @@ export function DataTable<TData, TValue>({
                     </TableRow>
                   ))
                 )
-              : (
-                  <TableRow>
-                    <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
+              : null}
           </TableBody>
         </Table>
+        {!table.getRowModel().rows.length && (
+          <div className="h-24 flex items-center justify-center text-muted-foreground text-sm">
+            No results.
+          </div>
+        )}
       </div>
 
       {(data.total > 0 || hasActiveFilters) && (

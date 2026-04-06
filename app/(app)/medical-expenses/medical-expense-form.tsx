@@ -44,7 +44,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
     control,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting, isDirty, isValid }
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: expense
@@ -73,13 +73,13 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
     <form onSubmit={handleSubmit(onSubmit)}>
       <FieldGroup>
         <Field>
-          <Label htmlFor="title">Name</Label>
+          <Label htmlFor="title" required>Name</Label>
           <Input id="title" {...register('title')} aria-invalid={!!errors.title} />
           <FieldError errors={[errors.title]} />
         </Field>
 
         <Field>
-          <Label htmlFor="amount">Amount (€)</Label>
+          <Label htmlFor="amount" required>Amount (€)</Label>
           <Input id="amount" type="number" step="0.01" {...register('amount', { valueAsNumber: true })} aria-invalid={!!errors.amount} />
           <FieldError errors={[errors.amount]} />
         </Field>
@@ -90,6 +90,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
           render={({ field }) => (
             <DatePickerField
               label="Date"
+              required
               value={field.value}
               onChange={field.onChange}
               error={errors.date}
@@ -102,7 +103,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
           control={control}
           render={({ field, fieldState }) => (
             <Field>
-              <Label>Type</Label>
+              <Label required>Type</Label>
               <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger aria-invalid={!!fieldState.error} className="w-full">
                   <SelectValue placeholder="Select a type" />
@@ -147,7 +148,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
         <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
-        <Button type="submit" isPending={isSubmitting}>
+        <Button type="submit" isPending={isSubmitting} disabled={!isDirty || !isValid}>
           {isEditMode ? 'Save' : 'Submit'}
         </Button>
       </DialogFooter>

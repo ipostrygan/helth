@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils'
 
 type DatePickerFieldProps = {
   label: string
+  required?: boolean
   value: Date | undefined
   onChange: (date: Date | undefined) => void
   error?: { message?: string }
@@ -20,6 +21,7 @@ type DatePickerFieldProps = {
 
 export function DatePickerField({
   label,
+  required,
   value,
   onChange,
   error,
@@ -29,7 +31,7 @@ export function DatePickerField({
 
   return (
     <Field>
-      <Label>{label}</Label>
+      <Label required={required}>{label}</Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

@@ -71,7 +71,7 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
         <form id="therapy-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field>
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title" required>Title</Label>
               <Input id="title" {...register('title')} aria-invalid={!!errors.title} />
               <FieldError errors={[errors.title]} />
             </Field>
@@ -86,7 +86,7 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
               control={control}
               render={({ field }) => (
                 <Field>
-                  <Label>Start Date</Label>
+                  <Label required>Start Date</Label>
                   <Popover open={startCalendarOpen} onOpenChange={setStartCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button

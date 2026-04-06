@@ -14,8 +14,8 @@ export function TabsNav() {
   const activeTab = TABS.find(t => t.href === pathname)?.href ?? TABS[0].href
 
   return (
-    <Tabs value={activeTab} className="p-0">
-      <TabsList>
+    <Tabs value={activeTab}>
+      <TabsList className="p-0">
         {TABS.map(tab => (
           <TabsTrigger key={tab.href} value={tab.href} asChild>
             <Link href={tab.href}>{tab.label}</Link>

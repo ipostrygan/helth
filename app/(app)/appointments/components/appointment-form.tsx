@@ -66,7 +66,7 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
         <form id="appointment-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field>
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title" required>Title</Label>
               <Input id="title" {...register('title')} aria-invalid={!!errors.title} />
               <FieldError errors={[errors.title]} />
             </Field>
@@ -82,6 +82,7 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
               render={({ field }) => (
                 <DatePickerField
                   label="Date"
+                  required
                   value={field.value}
                   onChange={field.onChange}
                   error={errors.date}
@@ -94,7 +95,7 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
               control={control}
               render={({ field, fieldState }) => (
                 <Field>
-                  <Label>Type</Label>
+                  <Label required>Type</Label>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger aria-invalid={!!fieldState.error} className="w-full">
                       <SelectValue placeholder="Select a type" />
