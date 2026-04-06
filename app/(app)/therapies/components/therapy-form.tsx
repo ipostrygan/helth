@@ -17,8 +17,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
 import { cn } from '@/lib/utils'
-import { useCreateTherapy } from '../hooks/use-create-therapy'
-import { useEditTherapy } from '../hooks/use-edit-therapy'
 
 const schema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -33,16 +31,16 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>
 
+export type TherapyFormValues = FormValues
+
 type TherapyFormProps = {
-  profileId: string
   therapy?: Therapy
+  onSubmit: (values: FormValues) => Promise<void>
 }
 
-const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
+const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
   const router = useRouter()
   const isEditMode = !!therapy
-  const { mutateAsync: createTherapy } = useCreateTherapy()
-  const { mutateAsync: editTherapy } = useEditTherapy()
   const [startCalendarOpen, setStartCalendarOpen] = useState(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState(false)
   const {
@@ -66,16 +64,6 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
         }
       : { isActive: true }
   })
-
-  const onSubmit = async (values: FormValues) => {
-    if (isEditMode) {
-      await editTherapy({ id: therapy.id, ...values })
-    }
-    else {
-      await createTherapy({ ...values, userId: profileId })
-    }
-    router.push('/therapies')
-  }
 
   return (
     <div className="flex flex-col w-full flex-1">
@@ -211,7 +199,7 @@ const TherapyForm = ({ profileId, therapy }: TherapyFormProps) => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push('/therapies')}
+            onClick={() => router.push(isEditMode ? `/therapies/${therapy.id}` : '/therapies')}
             disabled={isSubmitting}
           >
             Cancel

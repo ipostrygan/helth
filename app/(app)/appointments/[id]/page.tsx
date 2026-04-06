@@ -2,7 +2,9 @@
 
 import { Suspense, use, useState } from 'react'
 import Link from 'next/link'
+import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
+import { Button } from '@/components/ui/button'
 import { useAppointment } from '../hooks/use-appointment'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
 import { Separator } from '@/components/ui/separator'
@@ -106,8 +108,14 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
       </div>
 
       <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-        <div className="px-6 py-4 border-b">
+        <div className="px-6 py-4 border-b flex items-center justify-between">
           <h2 className="text-base font-semibold">Details</h2>
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/appointments/${id}/edit`}>
+              <Pencil className="size-4 mr-1" />
+              Edit
+            </Link>
+          </Button>
         </div>
         <div className="px-6 py-4 space-y-4">
           <DetailRow label="Type">

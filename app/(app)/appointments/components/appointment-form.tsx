@@ -14,8 +14,6 @@ import { Field, FieldError, FieldGroup } from '@/components/ui/field'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { DatePickerField } from '@/components/ui/date-picker-field'
 import { APPOINTMENT_TYPE_LABELS, APPOINTMENT_STATUS_LABELS } from '../constants'
-import { useCreateAppointment } from '../hooks/use-create-appointment'
-import { useEditAppointment } from '../hooks/use-edit-appointment'
 import { TherapyCombobox } from '@/app/(app)/medical-expenses/components/therapy-combobox'
 
 const schema = z.object({
@@ -33,16 +31,17 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>
 
+export type AppointmentFormValues = FormValues
+
 type AppointmentFormProps = {
   profileId: string
   appointment?: Appointment
+  onSubmit: (values: FormValues) => Promise<void>
 }
 
-const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
+const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormProps) => {
   const router = useRouter()
   const isEditMode = !!appointment
-  const { mutateAsync: createAppointment } = useCreateAppointment()
-  const { mutateAsync: editAppointment } = useEditAppointment()
 
   const { control, register, handleSubmit, formState: { errors, isSubmitting, isDirty, isValid } } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -60,16 +59,6 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
         }
       : { status: AppointmentStatus.Scheduled, therapyId: null }
   })
-
-  const onSubmit = async (values: FormValues) => {
-    if (isEditMode) {
-      await editAppointment({ id: appointment.id, ...values })
-    }
-    else {
-      await createAppointment({ ...values, userId: profileId })
-    }
-    router.push('/appointments')
-  }
 
   return (
     <div className="flex flex-col w-full flex-1">
@@ -183,7 +172,7 @@ const AppointmentForm = ({ profileId, appointment }: AppointmentFormProps) => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push('/appointments')}
+            onClick={() => router.push(isEditMode ? `/appointments/${appointment.id}` : '/appointments')}
             disabled={isSubmitting}
           >
             Cancel
