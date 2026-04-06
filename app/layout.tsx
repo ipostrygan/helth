@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { ReactQueryProvider } from './react-query-provider'
@@ -16,14 +16,17 @@ const geistMono = Geist_Mono({
   subsets: ['latin']
 })
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#09090b' }
+  ]
+}
+
 export const metadata: Metadata = {
   title: 'Helth',
   description: 'App for tracking family medical data',
   manifest: '/manifest.webmanifest',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#09090b' }
-  ],
   icons: {
     apple: [
       { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' }
