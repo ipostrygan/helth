@@ -11,9 +11,12 @@ export async function proxy(req: NextRequest) {
   }
 
   const token = req.cookies.get('token')?.value
+  const isApi = pathname.startsWith('/api')
 
   if (!token) {
-    return NextResponse.redirect(new URL('/login', req.url))
+    return isApi
+      ? NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      : NextResponse.redirect(new URL('/login', req.url))
   }
 
   try {
@@ -21,10 +24,12 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next()
   }
   catch {
-    return NextResponse.redirect(new URL('/login', req.url))
+    return isApi
+      ? NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      : NextResponse.redirect(new URL('/login', req.url))
   }
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)']
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|icons/|sw.js|workbox-).*)']
 }

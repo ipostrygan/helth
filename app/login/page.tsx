@@ -42,7 +42,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="container max-w-xl min-h-screen flex flex-col justify-center m-auto">
+    <div className="container max-w-xl min-h-screen flex flex-col justify-center m-auto max-sm:px-6">
       <form onSubmit={handleSubmit(onSubmit)}>
         <FieldGroup>
           <Controller
