@@ -51,7 +51,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
     sortDirection: parseAsString.withDefault('desc')
   })
 
-  const { data: expensesData, isLoading: isExpensesLoading } = useMedicalExpenses({
+  const { data: expensesData, isLoading: isExpensesLoading, isError: isExpensesError } = useMedicalExpenses({
     appointmentId: id,
     ...filters
   })
@@ -176,6 +176,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
         columns={columns}
         data={expensesData}
         isLoading={isExpensesLoading}
+        isError={isExpensesError}
         pageSize={filters.pageSize}
         onPageChange={page => setFilters(prev => ({ ...prev, page }))}
         onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}

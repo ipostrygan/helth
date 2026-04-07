@@ -37,7 +37,7 @@ const AppointmentsPage = () => {
     dateTo: filters.dateTo ?? undefined,
     statuses: filters.statuses
   }
-  const { data, isLoading, isFetching } = useAppointments(params)
+  const { data, isLoading, isFetching, isError } = useAppointments(params)
 
   const onSortChange = (field: string) => {
     const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'
@@ -122,6 +122,7 @@ const AppointmentsPage = () => {
       data={data}
       isLoading={isLoading}
       isFetching={isFetching}
+      isError={isError}
       pageSize={filters.pageSize}
       onPageChange={page => setFilters(prev => ({ ...prev, page }))}
       onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}

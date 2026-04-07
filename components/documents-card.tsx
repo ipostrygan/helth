@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { FileCard } from '@/components/file-card'
+import { StagedFileCard } from '@/components/staged-file-card'
 import { FileUpload, type UploadedFile } from '@/components/ui/file-upload'
 import { Button } from '@/components/ui/button'
 import type { DocumentItem } from '@/lib/api/appointments'
@@ -53,47 +54,52 @@ export const DocumentsCard = ({
         <CardHeader className="border-b gap-0">
           <CardTitle className="text-base">Documents</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-4 lg:flex-row">
-
-          {documents.length > 0 && (
-            <div className="space-y-2 flex-1 grow-0">
-              {documents.map(doc => (
-                <FileCard
-                  key={doc.key}
-                  file={{
-                    id: doc.key,
-                    name: doc.name,
-                    url: doc.url,
-                    downloadUrl: doc.downloadUrl
-                  }}
-                  onDelete={setPendingDeleteKey}
-                />
-              ))}
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex-1">
+            <FileUpload value={stagedFiles} onChange={setStagedFiles} />
+          </div>
+          {(documents.length > 0 || stagedFiles.length > 0) && (
+            <div className="flex flex-col gap-2 flex-1">
+              {documents.length > 0 && (
+                <div className="space-y-2">
+                  {documents.map(doc => (
+                    <FileCard
+                      key={doc.key}
+                      file={{
+                        id: doc.key,
+                        name: doc.name,
+                        url: doc.url,
+                        downloadUrl: doc.downloadUrl
+                      }}
+                      onDelete={setPendingDeleteKey}
+                    />
+                  ))}
+                </div>
+              )}
+              {stagedFiles.length > 0 && (
+                <>
+                  <div className="flex flex-col gap-2">
+                    {stagedFiles.map(entry => (
+                      <StagedFileCard
+                        key={entry.id}
+                        entry={entry}
+                        onRemove={id => setStagedFiles(stagedFiles.filter(f => f.id !== id))}
+                      />
+                    ))}
+                  </div>
+                  <Button
+                    type="button"
+                    onClick={handleUpload}
+                    disabled={uploadMutation.isPending}
+                    isPending={uploadMutation.isPending}
+                    className="w-full"
+                  >
+                    {`Upload ${stagedFiles.length} file${stagedFiles.length > 1 ? 's' : ''}`}
+                  </Button>
+                </>
+              )}
             </div>
           )}
-          <div className="flex flex-col flex-1">
-            <FileUpload value={stagedFiles} onChange={setStagedFiles} />
-
-            {stagedFiles.length > 0 && (
-              <Button
-                type="button"
-                onClick={handleUpload}
-                disabled={uploadMutation.isPending}
-                className="w-full"
-              >
-                {uploadMutation.isPending
-                  ? (
-                      <>
-                        <Loader2 className="size-4 animate-spin" />
-                        Uploading…
-                      </>
-                    )
-                  : (
-                      `Upload ${stagedFiles.length} file${stagedFiles.length > 1 ? 's' : ''}`
-                    )}
-              </Button>
-            )}
-          </div>
         </CardContent>
       </Card>
 

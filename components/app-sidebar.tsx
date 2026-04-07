@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { CalendarDays, Stethoscope, Receipt, Sparkles, BriefcaseMedical } from 'lucide-react'
+import { CalendarDays, Stethoscope, Receipt, Heart, BriefcaseMedical } from 'lucide-react'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from './ui/sidebar'
 import { X } from 'lucide-react'
 import { Button } from './ui/button'
@@ -27,7 +27,7 @@ export const MENU_ITEMS = [
   {
     name: 'Self-care',
     href: '/self-care',
-    icon: Sparkles
+    icon: Heart
   }
 ]
 

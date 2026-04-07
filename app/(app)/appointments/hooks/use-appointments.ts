@@ -12,6 +12,7 @@ export const useAppointments = (params: AppointmentsParams = {}) => {
   return useQuery<PaginatedResult<Appointment>>({
     queryKey: queryKeys.appointments.list(params),
     queryFn: () => getAppointments(params),
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
+    enabled: !!params.profileId
   })
 }

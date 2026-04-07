@@ -10,6 +10,7 @@ export const useTherapies = (params: TherapiesParams = {}) => {
   return useQuery<PaginatedResult<Therapy>>({
     queryKey: queryKeys.therapies.list(params),
     queryFn: () => getTherapies(params),
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
+    enabled: !!params.profileId
   })
 }

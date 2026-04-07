@@ -48,12 +48,12 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
     apptSortDirection: parseAsString.withDefault('desc')
   })
 
-  const { data: expensesData, isLoading: isExpensesLoading } = useMedicalExpenses({
+  const { data: expensesData, isLoading: isExpensesLoading, isError: isExpensesError } = useMedicalExpenses({
     therapyId: id,
     ...filters
   })
 
-  const { data: appointmentsData, isLoading: isAppointmentsLoading } = useAppointments({
+  const { data: appointmentsData, isLoading: isAppointmentsLoading, isError: isAppointmentsError } = useAppointments({
     therapyId: id,
     page: apptFilters.apptPage,
     pageSize: apptFilters.apptPageSize,
@@ -228,6 +228,7 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
         columns={apptColumns}
         data={appointmentsData}
         isLoading={isAppointmentsLoading}
+        isError={isAppointmentsError}
         pageSize={apptFilters.apptPageSize}
         onPageChange={page => setApptFilters(prev => ({ ...prev, apptPage: page }))}
         onPageSizeChange={pageSize => setApptFilters(prev => ({ ...prev, apptPage: 1, apptPageSize: pageSize }))}
@@ -249,6 +250,7 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
         columns={columns}
         data={expensesData}
         isLoading={isExpensesLoading}
+        isError={isExpensesError}
         pageSize={filters.pageSize}
         onPageChange={page => setFilters(prev => ({ ...prev, page }))}
         onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}

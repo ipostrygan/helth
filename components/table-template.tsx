@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { type DateRange } from 'react-day-picker'
-import { Plus } from 'lucide-react'
+import { AlertCircle, Plus } from 'lucide-react'
 import { DataTable } from '@/components/ui/data-table'
 import { TableSkeleton } from '@/components/ui/table-skeleton'
 import { Button } from '@/components/ui/button'
@@ -47,6 +47,9 @@ interface TableTemplateProps<TData> {
   data: PaginatedResult<TData> | undefined
   isLoading: boolean
   isFetching?: boolean
+  isError?: boolean
+  errorTitle?: string
+  errorMessage?: string
   pageSize: number
   onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: number) => void
@@ -65,6 +68,9 @@ export function TableTemplate<TData>({
   data,
   isLoading,
   isFetching,
+  isError,
+  errorTitle = 'Failed to load data',
+  errorMessage = 'Something went wrong. Please try again later.',
   pageSize,
   onPageChange,
   onPageSizeChange,
@@ -119,22 +125,34 @@ export function TableTemplate<TData>({
         </div>
       )}
 
-      {isLoading || !data
+      {isLoading
         ? (
             <TableSkeleton rows={pageSize} columns={columns.length} />
           )
-        : (
-            <div className={isFetching ? 'opacity-50 pointer-events-none transition-opacity' : 'transition-opacity'}>
-              <DataTable
-                columns={columns}
-                data={data}
-                onPageChange={onPageChange}
-                onPageSizeChange={onPageSizeChange}
-                pageSize={pageSize}
-                hasActiveFilters={filters?.hasActiveFilters}
-              />
-            </div>
-          )}
+        : isError
+          ? (
+              <div className="flex flex-col items-center justify-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 py-12 text-center">
+                <AlertCircle className="h-8 w-8 text-destructive" />
+                <p className="text-lg font-semibold text-destructive">{errorTitle}</p>
+                <p className="text-sm text-muted-foreground">{errorMessage}</p>
+              </div>
+            )
+          : !data
+              ? (
+                  <TableSkeleton rows={pageSize} columns={columns.length} />
+                )
+              : (
+                  <div className={isFetching ? 'opacity-50 pointer-events-none transition-opacity' : 'transition-opacity'}>
+                    <DataTable
+                      columns={columns}
+                      data={data}
+                      onPageChange={onPageChange}
+                      onPageSizeChange={onPageSizeChange}
+                      pageSize={pageSize}
+                      hasActiveFilters={filters?.hasActiveFilters}
+                    />
+                  </div>
+                )}
 
       {deleteConfig && (
         <Modal

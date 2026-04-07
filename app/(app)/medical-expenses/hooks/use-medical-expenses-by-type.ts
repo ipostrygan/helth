@@ -11,6 +11,7 @@ import { queryKeys } from '@/lib/query-keys'
 export const useMedicalExpensesByType = (params: ExpensesByTypeQuery = {}) => {
   return useQuery<ExpensesByTypeItem[]>({
     queryKey: queryKeys.medicalExpenses.byType(params),
-    queryFn: () => getMedicalExpensesByType(params)
+    queryFn: () => getMedicalExpensesByType(params),
+    enabled: !!params.profileId
   })
 }

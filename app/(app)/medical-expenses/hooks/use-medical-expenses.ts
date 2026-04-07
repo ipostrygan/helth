@@ -11,6 +11,7 @@ export const useMedicalExpenses = (params: MedicalExpensesParams = {}) => {
   return useQuery<MedicalExpensePaginatedResult>({
     queryKey: queryKeys.medicalExpenses.list(params),
     queryFn: () => getMedicalExpenses(params),
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
+    enabled: !!params.profileId
   })
 }
