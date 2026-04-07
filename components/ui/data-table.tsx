@@ -162,7 +162,10 @@ export function DataTable<TData, TValue>({
                 <PaginationItem className="hidden sm:list-item">
                   <PaginationFirst
                     href="#"
-                    onClick={(e) => { e.preventDefault(); onPageChange(1) }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onPageChange(1)
+                    }}
                     aria-disabled={!canPrev}
                     className={!canPrev ? 'pointer-events-none opacity-50' : ''}
                   />
@@ -170,7 +173,10 @@ export function DataTable<TData, TValue>({
                 <PaginationItem>
                   <PaginationPrevious
                     href="#"
-                    onClick={(e) => { e.preventDefault(); onPageChange(data.page - 1) }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onPageChange(data.page - 1)
+                    }}
                     aria-disabled={!canPrev}
                     className={!canPrev ? 'pointer-events-none opacity-50' : ''}
                   />
@@ -189,7 +195,10 @@ export function DataTable<TData, TValue>({
                         <PaginationLink
                           href="#"
                           isActive={i === current}
-                          onClick={(e) => { e.preventDefault(); onPageChange(i + 1) }}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            onPageChange(i + 1)
+                          }}
                         >
                           {i + 1}
                         </PaginationLink>
@@ -202,7 +211,10 @@ export function DataTable<TData, TValue>({
                 <PaginationItem>
                   <PaginationNext
                     href="#"
-                    onClick={(e) => { e.preventDefault(); onPageChange(data.page + 1) }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onPageChange(data.page + 1)
+                    }}
                     aria-disabled={!canNext}
                     className={!canNext ? 'pointer-events-none opacity-50' : ''}
                   />
@@ -210,7 +222,10 @@ export function DataTable<TData, TValue>({
                 <PaginationItem className="hidden sm:list-item">
                   <PaginationLast
                     href="#"
-                    onClick={(e) => { e.preventDefault(); onPageChange(totalPages) }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onPageChange(totalPages)
+                    }}
                     aria-disabled={!canNext}
                     className={!canNext ? 'pointer-events-none opacity-50' : ''}
                   />

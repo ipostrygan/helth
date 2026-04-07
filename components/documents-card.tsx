@@ -50,7 +50,7 @@ export const DocumentsCard = ({
   return (
     <>
       <Card>
-        <CardHeader className="border-b">
+        <CardHeader className="border-b gap-0">
           <CardTitle className="text-base">Documents</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4 lg:flex-row">

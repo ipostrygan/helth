@@ -21,7 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import Link from 'next/link'
+import { AppLink } from '@/components/ui/app-link'
 import { TableTemplate } from '@/components/table-template'
 
 const IS_ACTIVE_OPTIONS = [
@@ -67,12 +67,9 @@ const TherapiesPage = () => {
         />
       ),
       cell: ({ row }) => (
-        <Link
-          href={`/therapies/${row.original.id}`}
-          className="text-primary font-medium hover:text-primary/80 transition-colors"
-        >
+        <AppLink href={`/therapies/${row.original.id}`} className="font-medium">
           {row.getValue('title')}
-        </Link>
+        </AppLink>
       )
     },
     {
@@ -120,14 +117,15 @@ const TherapiesPage = () => {
         const url = row.original.therapistInfoLink
         if (!url || value === '—') return value
         return (
-          <a
+          <AppLink
+            external
             href={url}
             target={url.startsWith('http') ? '_blank' : undefined}
             rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="text-primary font-medium hover:text-primary/80 transition-colors"
+            className="font-medium"
           >
             {value}
-          </a>
+          </AppLink>
         )
       }
     },

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { AppLink } from '@/components/ui/app-link'
 import type { MedicalExpense } from '@/lib/generated/prisma/client'
 import {
   Sheet,
@@ -48,9 +48,9 @@ export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Prop
           <DetailRow label="Therapy">
             {expense.therapyId
               ? (
-                  <Link href={`/therapies/${expense.therapyId}`} className="underline hover:no-underline">
+                  <AppLink href={`/therapies/${expense.therapyId}`}>
                     {therapy?.title ?? expense.therapyId}
-                  </Link>
+                  </AppLink>
                 )
               : '—'}
           </DetailRow>
@@ -58,9 +58,9 @@ export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Prop
           <DetailRow label="Appointment">
             {expense.appointmentId
               ? (
-                  <Link href={`/appointments/${expense.appointmentId}`} className="underline hover:no-underline">
+                  <AppLink href={`/appointments/${expense.appointmentId}`}>
                     {appointment?.title ?? expense.appointmentId}
-                  </Link>
+                  </AppLink>
                 )
               : '—'}
           </DetailRow>

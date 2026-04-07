@@ -2,6 +2,7 @@
 
 import { Suspense, use, useState } from 'react'
 import Link from 'next/link'
+import { AppLink } from '@/components/ui/app-link'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
@@ -141,9 +142,9 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
           <DetailRow label="Therapy">
             {appointment.therapyId
               ? (
-                  <Link href={`/therapies/${appointment.therapyId}`} className="underline hover:no-underline">
+                  <AppLink href={`/therapies/${appointment.therapyId}`}>
                     {therapy?.title ?? appointment.therapyId}
-                  </Link>
+                  </AppLink>
                 )
               : (
                   '—'

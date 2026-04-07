@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import Link from 'next/link'
+import { AppLink } from '@/components/ui/app-link'
 import { ColumnDef } from '@tanstack/react-table'
 import type { MedicalExpenseWithRelations } from '@/app/actions/medical-expenses'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
@@ -83,7 +83,7 @@ const MedicalExpensesPage = () => {
       cell: ({ row }) => {
         const therapy = row.original.therapy
         return therapy
-          ? <Link href={`/therapies/${therapy.id}`} className="text-primary hover:text-primary/80 transition-colors">{therapy.title}</Link>
+          ? <AppLink href={`/therapies/${therapy.id}`}>{therapy.title}</AppLink>
           : '—'
       }
     },
@@ -93,7 +93,7 @@ const MedicalExpensesPage = () => {
       cell: ({ row }) => {
         const appointment = row.original.appointment
         return appointment
-          ? <Link href={`/appointments/${appointment.id}`} className="text-primary hover:text-primary/80 transition-colors">{appointment.title}</Link>
+          ? <AppLink href={`/appointments/${appointment.id}`}>{appointment.title}</AppLink>
           : '—'
       }
     },

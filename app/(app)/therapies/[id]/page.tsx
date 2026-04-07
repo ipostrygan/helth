@@ -2,6 +2,7 @@
 
 import { Suspense, use, useState } from 'react'
 import Link from 'next/link'
+import { AppLink } from '@/components/ui/app-link'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
@@ -191,14 +192,14 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
               ? (
                   therapy.therapistInfoLink
                     ? (
-                        <a
+                        <AppLink
+                          external
                           href={therapy.therapistInfoLink}
                           target={therapy.therapistInfoLink.startsWith('http') ? '_blank' : undefined}
                           rel={therapy.therapistInfoLink.startsWith('http') ? 'noopener noreferrer' : undefined}
-                          className="underline hover:no-underline"
                         >
                           {therapy.therapistName}
-                        </a>
+                        </AppLink>
                       )
                     : (
                         therapy.therapistName
