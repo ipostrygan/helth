@@ -2,10 +2,8 @@
 
 import prisma from '@/lib/prisma'
 import { Therapy } from '@/lib/generated/prisma/client'
-import type { PaginatedResult } from '@/types/table'
+import type { PaginatedResult } from '@/types'
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
-
-export type TherapiesQuery = TherapiesQueryParams
 
 export const getTherapies = async ({
   profileId,
@@ -17,7 +15,7 @@ export const getTherapies = async ({
   dateFrom,
   dateTo,
   isActive
-}: TherapiesQuery = {}): Promise<PaginatedResult<Therapy>> => {
+}: TherapiesQueryParams = {}): Promise<PaginatedResult<Therapy>> => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),

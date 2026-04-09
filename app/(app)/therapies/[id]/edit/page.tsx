@@ -7,12 +7,9 @@ import { Breadcrumbs } from '@/components/breadcrumbs'
 import { useTherapy } from '../../hooks/use-therapy'
 import TherapyForm, { type TherapyFormValues } from '../../components/therapy-form'
 import { useEditTherapy } from '../../hooks/use-edit-therapy'
+import { type PageProps } from '@/types'
 
-type EditPageProps = {
-  params: Promise<{ id: string }>
-}
-
-const EditTherapyPage = ({ params }: EditPageProps) => {
+const EditTherapyPage = ({ params }: PageProps) => {
   const { id } = use(params)
   const router = useRouter()
   const { activeProfileId } = useActiveProfile()

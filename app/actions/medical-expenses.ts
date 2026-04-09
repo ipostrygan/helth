@@ -5,8 +5,6 @@ import { ExpenseType, MedicalExpense } from '@/lib/generated/prisma/client'
 
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
 
-export type MedicalExpensesQuery = MedicalExpensesQueryParams
-
 export type MedicalExpenseWithRelations = MedicalExpense & {
   therapy: { id: string, title: string } | null
   appointment: { id: string, title: string } | null
@@ -33,7 +31,7 @@ export const getMedicalExpenses = async ({
   types,
   therapyId,
   appointmentId
-}: MedicalExpensesQuery = {}): Promise<MedicalExpensePaginatedResult> => {
+}: MedicalExpensesQueryParams = {}): Promise<MedicalExpensePaginatedResult> => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),

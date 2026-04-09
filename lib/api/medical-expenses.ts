@@ -1,10 +1,8 @@
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
 import type { MedicalExpensePaginatedResult, MedicalExpenseWithRelations } from '@/app/actions/medical-expenses'
 
-export type MedicalExpensesParams = MedicalExpensesQueryParams
-
 export async function getMedicalExpenses(
-  params: MedicalExpensesParams
+  params: MedicalExpensesQueryParams
 ): Promise<MedicalExpensePaginatedResult> {
   const {
     profileId,

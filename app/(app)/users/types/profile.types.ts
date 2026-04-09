@@ -4,7 +4,3 @@ export type UserProfile = Omit<User, 'imageKey'> & {
   imageUrl: string | null
   imageKey: string | null
 }
-
-export type PageProps = {
-  params: Promise<{ id: string }>
-}

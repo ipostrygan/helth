@@ -1,11 +1,39 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { Appointment, AppointmentStatus, AppointmentType } from '@/lib/generated/prisma/client'
-import type { PaginatedResult } from '@/types/table'
+import { Appointment, AppointmentStatus, AppointmentType, ExpenseType } from '@/lib/generated/prisma/client'
+import type { PaginatedResult } from '@/types'
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 
-export type AppointmentsQuery = AppointmentsQueryParams
+const APPOINTMENT_TYPE_TO_EXPENSE_TYPE: Record<AppointmentType, ExpenseType> = {
+  [AppointmentType.GeneralPractitioner]: ExpenseType.DoctorVisit,
+  [AppointmentType.Specialist]: ExpenseType.DoctorVisit,
+  [AppointmentType.Dental]: ExpenseType.Dental,
+  [AppointmentType.MentalHealth]: ExpenseType.MentalHealth,
+  [AppointmentType.Lab]: ExpenseType.Procedure,
+  [AppointmentType.Imaging]: ExpenseType.Procedure,
+  [AppointmentType.Emergency]: ExpenseType.DoctorVisit,
+  [AppointmentType.FollowUp]: ExpenseType.DoctorVisit,
+  [AppointmentType.Vaccination]: ExpenseType.DoctorVisit,
+  [AppointmentType.Other]: ExpenseType.DoctorVisit
+}
+
+type AppointmentFields = {
+  title: string
+  date: Date
+  type: AppointmentType
+  status: AppointmentStatus
+  cost?: number
+  description?: string
+  endDate?: Date
+  doctorName?: string
+  location?: string
+  notes?: string
+  therapyId?: string | null
+}
+
+export type CreateAppointmentInput = AppointmentFields & { userId: string }
+export type UpdateAppointmentInput = Partial<AppointmentFields> & { id: string }
 
 export const getAppointments = async ({
   profileId,
@@ -18,7 +46,7 @@ export const getAppointments = async ({
   dateTo,
   statuses,
   therapyId
-}: AppointmentsQuery = {}): Promise<PaginatedResult<Appointment>> => {
+}: AppointmentsQueryParams = {}): Promise<PaginatedResult<Appointment>> => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
@@ -79,23 +107,22 @@ export const deleteAppointment = async (id: string): Promise<void> => {
   }
 }
 
-export type CreateAppointmentInput = {
-  userId: string
-  title: string
-  date: Date
-  type: AppointmentType
-  status: AppointmentStatus
-  description?: string
-  endDate?: Date
-  doctorName?: string
-  location?: string
-  notes?: string
-  therapyId?: string | null
-}
-
 export const createAppointment = async (input: CreateAppointmentInput) => {
   try {
-    await prisma.appointment.create({ data: { ...input, relatedDocuments: [] } })
+    const appointment = await prisma.appointment.create({ data: { ...input, relatedDocuments: [] } })
+    if (input.cost != null && !isNaN(input.cost)) {
+      await prisma.medicalExpense.create({
+        data: {
+          userId: input.userId,
+          title: input.title,
+          amount: input.cost,
+          date: input.date,
+          type: APPOINTMENT_TYPE_TO_EXPENSE_TYPE[input.type],
+          therapyId: input.therapyId ?? null,
+          appointmentId: appointment.id
+        }
+      })
+    }
   }
   catch (e) {
     console.error(e)
@@ -103,23 +130,15 @@ export const createAppointment = async (input: CreateAppointmentInput) => {
   }
 }
 
-export type UpdateAppointmentInput = {
-  id: string
-  title?: string
-  date?: Date
-  type?: AppointmentType
-  status?: AppointmentStatus
-  description?: string
-  endDate?: Date
-  doctorName?: string
-  location?: string
-  notes?: string
-  therapyId?: string | null
-}
-
 export const updateAppointment = async ({ id, ...data }: UpdateAppointmentInput) => {
   try {
     await prisma.appointment.update({ where: { id }, data })
+    if (data.cost != null && !isNaN(data.cost)) {
+      await prisma.medicalExpense.updateMany({
+        where: { appointmentId: id },
+        data: { amount: data.cost }
+      })
+    }
   }
   catch (e) {
     console.error(e)

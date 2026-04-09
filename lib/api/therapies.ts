@@ -1,14 +1,12 @@
-import type { PaginatedResult } from '@/types/table'
+import type { PaginatedResult } from '@/types'
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import type { DocumentItem } from '@/lib/api/appointments'
 
 export type TherapyWithDocuments = Therapy & { documents: DocumentItem[] }
 
-export type TherapiesParams = TherapiesQueryParams
-
 export async function getTherapies(
-  params: TherapiesParams
+  params: TherapiesQueryParams
 ): Promise<PaginatedResult<Therapy>> {
   const {
     profileId,

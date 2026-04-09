@@ -1,14 +1,12 @@
-import type { PaginatedResult } from '@/types/table'
+import type { PaginatedResult } from '@/types'
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 import type { Appointment } from '@/lib/generated/prisma/client'
 
 export type DocumentItem = { key: string, name: string, url: string, downloadUrl: string }
 export type AppointmentWithDocuments = Appointment & { documents: DocumentItem[] }
 
-export type AppointmentsParams = AppointmentsQueryParams
-
 export async function getAppointments(
-  params: AppointmentsParams
+  params: AppointmentsQueryParams
 ): Promise<PaginatedResult<Appointment>> {
   const {
     profileId,

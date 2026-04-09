@@ -23,6 +23,7 @@ const schema = z.object({
   endDate: z.date().optional(),
   type: z.enum(AppointmentType),
   status: z.enum(AppointmentStatus),
+  cost: z.number().nonnegative().optional(),
   doctorName: z.string().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
@@ -35,7 +36,7 @@ export type AppointmentFormValues = FormValues
 
 type AppointmentFormProps = {
   profileId: string
-  appointment?: Appointment
+  appointment?: Appointment & { cost?: number | null }
   onSubmit: (values: FormValues) => Promise<void>
 }
 
@@ -52,12 +53,13 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
           date: new Date(appointment.date),
           type: appointment.type,
           status: appointment.status,
+          cost: appointment.cost ?? undefined,
           doctorName: appointment.doctorName ?? undefined,
           location: appointment.location ?? undefined,
           notes: appointment.notes ?? undefined,
           therapyId: appointment.therapyId ?? null
         }
-      : { status: AppointmentStatus.Scheduled, therapyId: null }
+      : { status: AppointmentStatus.Scheduled, therapyId: null, cost: undefined }
   })
 
   return (
@@ -131,6 +133,19 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
                 </Field>
               )}
             />
+
+            <Field>
+              <Label htmlFor="cost">Cost</Label>
+              <Input
+                id="cost"
+                type="number"
+                step="0.01"
+                min="0"
+                {...register('cost', { valueAsNumber: true })}
+                aria-invalid={!!errors.cost}
+              />
+              <FieldError errors={[errors.cost]} />
+            </Field>
 
             <Field>
               <Label htmlFor="doctorName">Doctor</Label>
