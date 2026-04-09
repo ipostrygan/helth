@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { CalendarDays, Stethoscope, Receipt, Heart, BriefcaseMedical } from 'lucide-react'
+import { CalendarDays, Stethoscope, Receipt, Heart } from 'lucide-react'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from './ui/sidebar'
 import { X } from 'lucide-react'
 import { Button } from './ui/button'
@@ -37,8 +38,13 @@ function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="mb-6 font-semibold text-xl p-4 flex flex-row items-center justify-between">
-        <Link href="/"><BriefcaseMedical /></Link>
+      <SidebarHeader className="mb-6 font-semibold text-xl p-2 flex flex-row items-center justify-between">
+        <Link href="/" className="group-data-[collapsible=icon]:hidden w-full">
+          <Image src="/images/logo-rectangle.svg" alt="Health Tracker" width={148} height={40} className="object-contain w-full" />
+        </Link>
+        <Link href="/" className="hidden group-data-[collapsible=icon]:flex items-center justify-center w-full">
+          <Image src="/images/logo-circle.png" alt="Health Tracker" width={47} height={47} className="object-contain w-full h-auto" />
+        </Link>
         {isMobile && (
           <Button variant="ghost" size="icon" onClick={() => setOpenMobile(false)}>
             <X />

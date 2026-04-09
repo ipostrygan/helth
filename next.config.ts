@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
     localPatterns: [
       {
         pathname: '/api/download'
+      },
+      {
+        pathname: '/icons/**'
+      },
+      {
+        pathname: '/images/**'
       }
     ]
   }

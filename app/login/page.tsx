@@ -9,6 +9,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { login } from '@/app/actions/auth'
 import { toast } from 'sonner'
+import Image from 'next/image'
 
 type LoginFormType = {
   username: string
@@ -43,6 +44,14 @@ const LoginPage = () => {
 
   return (
     <div className="container max-w-xl min-h-screen flex flex-col justify-center m-auto max-sm:px-6">
+      <div className="relative w-full h-42 rounded-xl mb-6 overflow-hidden">
+        <Image
+          src="/images/logo-rectangle.svg"
+          alt="Health Tracker"
+          fill
+          className="object-cover"
+        />
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FieldGroup>
           <Controller
