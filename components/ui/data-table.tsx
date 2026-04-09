@@ -27,7 +27,7 @@ import {
   PaginationNext,
   PaginationPrevious
 } from '@/components/ui/pagination'
-import type { PaginatedResult } from '@/types/table'
+import type { PaginatedResult } from '@/types'
 import {
   Select,
   SelectContent,
