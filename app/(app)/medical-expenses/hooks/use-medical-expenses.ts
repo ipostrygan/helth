@@ -8,11 +8,11 @@ import { queryKeys } from '@/lib/query-keys'
 
 export type { MedicalExpensesQueryParams }
 
-export const useMedicalExpenses = (params: MedicalExpensesQueryParams = {}) => {
+export const useMedicalExpenses = (params: MedicalExpensesQueryParams = {}, scope?: keyof MedicalExpensesQueryParams) => {
   return useQuery<MedicalExpensePaginatedResult>({
     queryKey: queryKeys.medicalExpenses.list(params),
     queryFn: () => getMedicalExpenses(params),
     placeholderData: keepPreviousData,
-    enabled: !!params.profileId
+    enabled: scope ? !!params[scope] : false
   })
 }

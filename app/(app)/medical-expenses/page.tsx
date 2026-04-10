@@ -41,7 +41,7 @@ const MedicalExpensesPage = () => {
     dateTo: filters.dateTo ?? undefined,
     types: filters.types
   }
-  const { data, isLoading, isFetching, isError } = useMedicalExpenses(params)
+  const { data, isLoading, isFetching, isError } = useMedicalExpenses(params, 'profileId')
 
   const onSortChange = (field: string) => {
     const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'

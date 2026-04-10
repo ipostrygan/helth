@@ -51,7 +51,7 @@ const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
   const { data: expensesData, isLoading: isExpensesLoading, isError: isExpensesError } = useMedicalExpenses({
     therapyId: id,
     ...filters
-  })
+  }, 'therapyId')
 
   const { data: appointmentsData, isLoading: isAppointmentsLoading, isError: isAppointmentsError } = useAppointments({
     therapyId: id,

@@ -54,7 +54,7 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
   const { data: expensesData, isLoading: isExpensesLoading, isError: isExpensesError } = useMedicalExpenses({
     appointmentId: id,
     ...filters
-  })
+  }, 'appointmentId')
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
