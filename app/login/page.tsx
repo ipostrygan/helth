@@ -44,14 +44,13 @@ const LoginPage = () => {
 
   return (
     <div className="container max-w-xl min-h-screen flex flex-col justify-center m-auto max-sm:px-6">
-      <div className="relative w-full h-42 rounded-xl mb-6 overflow-hidden">
-        <Image
-          src="/images/logo-rectangle.svg"
-          alt="Health Tracker"
-          fill
-          className="object-cover"
-        />
-      </div>
+      <Image
+        src="/images/logo-rectangle.svg"
+        alt="Health Tracker"
+        width={0}
+        height={0}
+        className="w-full h-auto rounded-xl mb-6"
+      />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FieldGroup>
           <Controller
