@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
   if (!valid) return new NextResponse(null, { status: 404 })
 
   const forceDownload = req.nextUrl.searchParams.get('download') === 'true'
-  const filename = key.split('/').pop() ?? 'download'
+  const filename = encodeURIComponent(key.split('/').pop() ?? 'download')
 
   let result
   try {
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
   if (result.ContentLength) headers.set('Content-Length', String(result.ContentLength))
   headers.set(
     'Content-Disposition',
-    forceDownload ? `attachment; filename="${filename}"` : `inline; filename="${filename}"`
+    forceDownload ? `attachment; filename*=UTF-8''${filename}` : `inline; filename*=UTF-8''${filename}`
   )
 
   return new NextResponse(body as unknown as ReadableStream, { headers })
