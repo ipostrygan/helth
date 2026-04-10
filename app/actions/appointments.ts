@@ -23,9 +23,8 @@ type AppointmentFields = {
   date: Date
   type: AppointmentType
   status: AppointmentStatus
-  cost?: number
+  cost: number
   description?: string
-  endDate?: Date
   doctorName?: string
   location?: string
   notes?: string

@@ -135,10 +135,6 @@ const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
             {new Date(appointment.date).toLocaleDateString()}
           </DetailRow>
           <Separator />
-          <DetailRow label="End Date">
-            {appointment.endDate ? new Date(appointment.endDate).toLocaleDateString() : '—'}
-          </DetailRow>
-          <Separator />
           <DetailRow label="Therapy">
             {appointment.therapyId
               ? (

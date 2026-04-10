@@ -60,14 +60,6 @@ const AppointmentsPage = () => {
       cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
     },
     {
-      accessorKey: 'endDate',
-      header: () => <SortButton field="endDate" label="End Date" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
-      cell: ({ row }) => {
-        const val = row.getValue('endDate')
-        return val ? new Date(val as string).toLocaleDateString() : '—'
-      }
-    },
-    {
       accessorKey: 'type',
       header: 'Type',
       cell: ({ row }) => APPOINTMENT_TYPE_LABELS[row.getValue('type') as keyof typeof APPOINTMENT_TYPE_LABELS]
@@ -83,14 +75,9 @@ const AppointmentsPage = () => {
       cell: ({ row }) => row.getValue('doctorName') ?? '—'
     },
     {
-      accessorKey: 'location',
-      header: () => <SortButton field="location" label="Location" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
-      cell: ({ row }) => row.getValue('location') ?? '—'
-    },
-    {
-      accessorKey: 'notes',
-      header: 'Notes',
-      cell: ({ row }) => row.getValue('notes') ?? '—'
+      accessorKey: 'cost',
+      header: 'Cost (€)',
+      cell: ({ row }) => row.getValue('cost') ?? '—'
     },
     {
       id: 'actions',

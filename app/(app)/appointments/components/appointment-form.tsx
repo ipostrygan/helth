@@ -20,10 +20,9 @@ const schema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
   date: z.date(),
-  endDate: z.date().optional(),
   type: z.enum(AppointmentType),
   status: z.enum(AppointmentStatus),
-  cost: z.number().nonnegative().optional(),
+  cost: z.number().nonnegative(),
   doctorName: z.string().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
@@ -53,13 +52,13 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
           date: new Date(appointment.date),
           type: appointment.type,
           status: appointment.status,
-          cost: appointment.cost ?? undefined,
+          cost: appointment.cost ?? 0,
           doctorName: appointment.doctorName ?? undefined,
           location: appointment.location ?? undefined,
           notes: appointment.notes ?? undefined,
           therapyId: appointment.therapyId ?? null
         }
-      : { status: AppointmentStatus.Scheduled, therapyId: null, cost: undefined }
+      : { status: AppointmentStatus.Scheduled, therapyId: null, cost: 0 }
   })
 
   return (

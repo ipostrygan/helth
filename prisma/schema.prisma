@@ -96,10 +96,9 @@ model Appointment {
   title            String
   description      String?
   date             DateTime
-  endDate          DateTime?
   type             AppointmentType
   status           AppointmentStatus @default(Scheduled)
-  cost             Float?
+  cost             Float
   doctorName       String?
   location         String?
   notes            String?
