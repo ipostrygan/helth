@@ -18,6 +18,7 @@ export async function seedAppointments(
       doctorName: row.doctorName ?? null,
       location: row.location ?? null,
       notes: row.notes ?? null,
+      cost: 0,
       relatedDocuments: row.relatedDocuments,
       userId: userIds[row.userId - 1],
       therapyId: 'therapyTitle' in row && row.therapyTitle
