@@ -55,9 +55,6 @@ export const DocumentsCard = ({
           <CardTitle className="text-base">Documents</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <div className="flex-1">
-            <FileUpload value={stagedFiles} onChange={setStagedFiles} />
-          </div>
           {(documents.length > 0 || stagedFiles.length > 0) && (
             <div className="flex flex-col gap-2 flex-1">
               {documents.length > 0 && (
@@ -100,6 +97,9 @@ export const DocumentsCard = ({
               )}
             </div>
           )}
+          <div className="flex-1">
+            <FileUpload value={stagedFiles} onChange={setStagedFiles} />
+          </div>
         </CardContent>
       </Card>
 
