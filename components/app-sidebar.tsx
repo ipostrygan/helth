@@ -40,10 +40,10 @@ function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="mb-6 font-semibold text-xl p-2 flex flex-row items-center justify-between">
         <Link href="/" className="group-data-[collapsible=icon]:hidden w-full">
-          <Image src="/images/logo-rectangle.svg" alt="Health Tracker" width={148} height={40} className="object-contain w-full" />
+          <Image src="/images/logo-rectangle.svg" alt="Helth" width={148} height={40} className="object-contain w-full" />
         </Link>
         <Link href="/" className="hidden group-data-[collapsible=icon]:flex items-center justify-center w-full">
-          <Image src="/images/logo-circle.png" alt="Health Tracker" width={47} height={47} className="object-contain w-full h-auto" />
+          <Image src="/images/logo-circle.svg" alt="Helth" width={47} height={47} className="object-contain w-full h-auto" />
         </Link>
         {isMobile && (
           <Button variant="ghost" size="icon" onClick={() => setOpenMobile(false)}>
