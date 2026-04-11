@@ -52,7 +52,10 @@ export async function getAppointment(id: string): Promise<AppointmentWithDocumen
 export async function uploadAppointmentDocuments(id: string, files: File[]): Promise<{ keys: string[] }> {
   const formData = new FormData()
   files.forEach(file => formData.append('files', file))
-  const res = await fetch(`/api/appointments/${id}/documents`, { method: 'POST', body: formData })
+  const res = await fetch(`/api/appointments/${id}/documents`, {
+    method: 'POST',
+    body: formData
+  })
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
     throw new Error(err.error ?? 'Failed to upload documents')

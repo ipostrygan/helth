@@ -1,5 +1,6 @@
 // table
-export type SortDirection = 'asc' | 'desc'
+export const SORT_DIRECTIONS = ['asc', 'desc'] as const
+export type SortDirection = typeof SORT_DIRECTIONS[number]
 
 export type PaginatedResult<T> = {
   data: T[]

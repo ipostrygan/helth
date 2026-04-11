@@ -1,18 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from 'nuqs/server'
+import { createSearchParamsCache, parseAsArrayOf, parseAsString } from 'nuqs/server'
 import { getTherapies } from '../../actions/therapies'
 import { Therapy } from '@/lib/generated/prisma/client'
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
+import { baseSearchParams } from '@/lib/search-params'
 
 const searchParamsCache = createSearchParamsCache({
-  profileId: parseAsString,
-  page: parseAsInteger.withDefault(DEFAULT_PAGE),
-  pageSize: parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-  sortField: parseAsString.withDefault('startDate'),
-  sortDirection: parseAsString.withDefault('desc'),
-  search: parseAsString.withDefault(''),
-  dateFrom: parseAsString,
-  dateTo: parseAsString,
+  ...baseSearchParams('startDate'),
   isActive: parseAsArrayOf(parseAsString)
 })
 
@@ -25,7 +18,7 @@ export async function GET(req: NextRequest) {
     page,
     pageSize,
     sortField: sortField as keyof Therapy,
-    sortDirection: sortDirection as 'asc' | 'desc',
+    sortDirection,
     search,
     dateFrom: dateFrom ?? undefined,
     dateTo: dateTo ?? undefined,

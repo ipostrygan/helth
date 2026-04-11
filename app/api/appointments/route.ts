@@ -1,18 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from 'nuqs/server'
+import { createSearchParamsCache, parseAsArrayOf, parseAsString } from 'nuqs/server'
 import { getAppointments } from '../../actions/appointments'
-import { Appointment } from '@/lib/generated/prisma/client'
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
+import { baseSearchParams } from '@/lib/search-params'
 
 const searchParamsCache = createSearchParamsCache({
-  profileId: parseAsString,
-  page: parseAsInteger.withDefault(DEFAULT_PAGE),
-  pageSize: parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-  sortField: parseAsString.withDefault('date'),
-  sortDirection: parseAsString.withDefault('desc'),
-  search: parseAsString.withDefault(''),
-  dateFrom: parseAsString,
-  dateTo: parseAsString,
+  ...baseSearchParams(),
   statuses: parseAsArrayOf(parseAsString),
   therapyId: parseAsString
 })
@@ -25,8 +17,8 @@ export async function GET(req: NextRequest) {
     profileId: profileId ?? undefined,
     page,
     pageSize,
-    sortField: sortField as keyof Appointment,
-    sortDirection: sortDirection as 'asc' | 'desc',
+    sortField,
+    sortDirection,
     search,
     dateFrom: dateFrom ?? undefined,
     dateTo: dateTo ?? undefined,

@@ -3,13 +3,13 @@ import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { s3, deleteS3Object } from '@/lib/s3'
 import { randomUUID } from 'crypto'
 
-const ALLOWED_TYPES = new Set([
+const ALLOWED_TYPES = [
   'application/pdf',
   'image/jpeg',
   'image/png',
   'image/gif',
   'image/webp'
-])
+]
 
 interface DocumentHandlerOptions {
   getById: (id: string) => Promise<{ relatedDocuments: string[] } | null>
@@ -31,7 +31,7 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
       return NextResponse.json({ error: 'No files provided' }, { status: 400 })
     }
 
-    const invalidFile = files.find(f => !ALLOWED_TYPES.has(f.type))
+    const invalidFile = files.find(f => !ALLOWED_TYPES.includes(f.type))
     if (invalidFile) {
       return NextResponse.json(
         { error: `Unsupported file type: ${invalidFile.type}. Only PDF and image files are allowed.` },
