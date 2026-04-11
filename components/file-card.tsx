@@ -24,7 +24,7 @@ export const FileCard = ({ file, onDelete }: FileCardProps) => (
   >
     <FileText className="size-4 text-muted-foreground" />
     <span className="flex-1 truncate">{file.name}</span>
-    {file.sizeKb != null && (
+    {!!file.sizeKb && (
       <span className="text-xs text-muted-foreground shrink-0">
         {file.sizeKb}
         {' '}
@@ -45,7 +45,10 @@ export const FileCard = ({ file, onDelete }: FileCardProps) => (
       variant="ghost"
       size="icon-sm"
       className="text-muted-foreground hover:text-destructive"
-      onClick={(e) => { e.stopPropagation(); onDelete(file.id) }}
+      onClick={(e) => {
+        e.stopPropagation()
+        onDelete(file.id)
+      }}
       aria-label={`Remove ${file.name}`}
     >
       <Trash2 className="size-4" />

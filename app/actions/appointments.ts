@@ -55,8 +55,7 @@ export const getAppointments = async ({
           OR: [
             { title: { contains: search, mode: 'insensitive' as const } },
             { doctorName: { contains: search, mode: 'insensitive' as const } },
-            { location: { contains: search, mode: 'insensitive' as const } },
-            { notes: { contains: search, mode: 'insensitive' as const } }
+            { location: { contains: search, mode: 'insensitive' as const } }
           ]
         }
       : {}),
@@ -108,20 +107,22 @@ export const deleteAppointment = async (id: string): Promise<void> => {
 
 export const createAppointment = async (input: CreateAppointmentInput) => {
   try {
-    const appointment = await prisma.appointment.create({ data: { ...input, relatedDocuments: [] } })
-    if (input.cost != null && !isNaN(input.cost)) {
-      await prisma.medicalExpense.create({
-        data: {
-          userId: input.userId,
-          title: input.title,
-          amount: input.cost,
-          date: input.date,
-          type: APPOINTMENT_TYPE_TO_EXPENSE_TYPE[input.type],
-          therapyId: input.therapyId ?? null,
-          appointmentId: appointment.id
-        }
-      })
-    }
+    await prisma.$transaction(async (tx) => {
+      const appointment = await tx.appointment.create({ data: { ...input, relatedDocuments: [] } })
+      if (input.cost && !isNaN(input.cost)) {
+        await tx.medicalExpense.create({
+          data: {
+            userId: input.userId,
+            title: input.title,
+            amount: input.cost,
+            date: input.date,
+            type: APPOINTMENT_TYPE_TO_EXPENSE_TYPE[input.type],
+            therapyId: input.therapyId ?? null,
+            appointmentId: appointment.id
+          }
+        })
+      }
+    })
   }
   catch (e) {
     console.error(e)
@@ -131,13 +132,12 @@ export const createAppointment = async (input: CreateAppointmentInput) => {
 
 export const updateAppointment = async ({ id, ...data }: UpdateAppointmentInput) => {
   try {
-    await prisma.appointment.update({ where: { id }, data })
-    if (data.cost != null && !isNaN(data.cost)) {
-      await prisma.medicalExpense.updateMany({
-        where: { appointmentId: id },
-        data: { amount: data.cost }
-      })
-    }
+    await prisma.$transaction([
+      prisma.appointment.update({ where: { id }, data }),
+      ...(data.cost && !isNaN(data.cost)
+        ? [prisma.medicalExpense.updateMany({ where: { appointmentId: id }, data: { amount: data.cost } })]
+        : [])
+    ])
   }
   catch (e) {
     console.error(e)
