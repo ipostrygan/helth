@@ -1,7 +1,8 @@
 'use client'
 
-import { Suspense, use, useState } from 'react'
+import { Suspense, useState } from 'react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { AppLink } from '@/components/ui/app-link'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
@@ -25,12 +26,8 @@ import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
 
-type TherapyDetailPageProps = {
-  params: Promise<{ id: string }>
-}
-
-const TherapyDetailPage = ({ params }: TherapyDetailPageProps) => {
-  const { id } = use(params)
+const TherapyDetailPage = () => {
+  const { id } = useParams<{ id: string }>()
   const { data: therapy, isLoading } = useTherapy(id)
   const { uploadMutation, removeMutation } = useDocuments(`/api/therapies/${id}/documents`, queryKeys.therapies.detail(id))
 
@@ -281,6 +278,6 @@ const DetailRow = ({
   </div>
 )
 
-export default function Page(props: TherapyDetailPageProps) {
-  return <Suspense><TherapyDetailPage {...props} /></Suspense>
+export default function Page() {
+  return <Suspense><TherapyDetailPage /></Suspense>
 }

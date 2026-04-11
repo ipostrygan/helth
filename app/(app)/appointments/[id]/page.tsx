@@ -1,7 +1,8 @@
 'use client'
 
-import { Suspense, use } from 'react'
+import { Suspense } from 'react'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { AppLink } from '@/components/ui/app-link'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
@@ -18,10 +19,6 @@ import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
 
-type AppointmentDetailPageProps = {
-  params: Promise<{ id: string }>
-}
-
 const STATUS_STYLES: Record<AppointmentStatus, string> = {
   Scheduled: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
   Completed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
@@ -29,14 +26,13 @@ const STATUS_STYLES: Record<AppointmentStatus, string> = {
   NoShow: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400'
 }
 
-const AppointmentDetailPage = ({ params }: AppointmentDetailPageProps) => {
-  const { id } = use(params)
+const AppointmentDetailPage = () => {
+  const { id } = useParams<{ id: string }>()
   const { data: appointment, isLoading } = useAppointment(id)
   const { data: therapy } = useTherapy(appointment?.therapyId ?? '')
   const { uploadMutation, removeMutation } = useDocuments(`/api/appointments/${id}/documents`, queryKeys.appointments.detail(id))
 
-  if (isLoading) return null
-  if (!appointment) return null
+  if (isLoading || !appointment) return null
 
   return (
     <div className="sm:px-6 sm:pt-6 space-y-6 max-w-4xl mx-auto">
@@ -123,6 +119,6 @@ const DetailRow = ({
   </div>
 )
 
-export default function Page(props: AppointmentDetailPageProps) {
-  return <Suspense><AppointmentDetailPage {...props} /></Suspense>
+export default function Page() {
+  return <Suspense><AppointmentDetailPage /></Suspense>
 }

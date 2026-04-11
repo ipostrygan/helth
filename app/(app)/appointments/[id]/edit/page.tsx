@@ -1,19 +1,14 @@
 'use client'
 
-import { use } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { useActiveProfile } from '@/context/profile-context'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { useAppointment } from '../../hooks/use-appointment'
 import AppointmentForm, { type AppointmentFormValues } from '../../components/appointment-form'
 import { useEditAppointment } from '../../hooks/use-edit-appointment'
 
-type EditPageProps = {
-  params: Promise<{ id: string }>
-}
-
-const EditAppointmentPage = ({ params }: EditPageProps) => {
-  const { id } = use(params)
+const EditAppointmentPage = () => {
+  const { id } = useParams<{ id: string }>()
   const router = useRouter()
   const { activeProfileId } = useActiveProfile()
   const { data: appointment, isLoading } = useAppointment(id)

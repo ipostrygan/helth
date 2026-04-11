@@ -1,16 +1,13 @@
 'use client'
 
-import { use } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { useActiveProfile } from '@/context/profile-context'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { useTherapy } from '../../hooks/use-therapy'
 import TherapyForm, { type TherapyFormValues } from '../../components/therapy-form'
 import { useEditTherapy } from '../../hooks/use-edit-therapy'
-import { type PageProps } from '@/types'
-
-const EditTherapyPage = ({ params }: PageProps) => {
-  const { id } = use(params)
+const EditTherapyPage = () => {
+  const { id } = useParams<{ id: string }>()
   const router = useRouter()
   const { activeProfileId } = useActiveProfile()
   const { data: therapy, isLoading } = useTherapy(id)
