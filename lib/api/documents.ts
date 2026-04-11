@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { s3, deleteS3Object } from '@/lib/s3'
-import { randomUUID } from 'crypto'
 
 const ALLOWED_TYPES = [
   'application/pdf',
@@ -15,6 +14,26 @@ interface DocumentHandlerOptions {
   getById: (id: string) => Promise<{ relatedDocuments: string[] } | null>
   addDocument: (id: string, key: string) => Promise<unknown>
   removeDocument: (id: string, key: string) => Promise<unknown>
+}
+
+async function uploadFile(
+  id: string,
+  file: File,
+  addDocument: (id: string, key: string) => Promise<unknown>
+) {
+  const key = `medical-docs/${id}/${file.name}`
+  const buffer = Buffer.from(await file.arrayBuffer())
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: process.env.APP_S3_BUCKET,
+      Key: key,
+      Body: buffer,
+      ContentType: file.type,
+      ContentLength: buffer.length,
+      ContentDisposition: `attachment; filename="${file.name}"`
+    })
+  )
+  await addDocument(id, key)
 }
 
 export function createDocumentHandlers({ getById, addDocument, removeDocument }: DocumentHandlerOptions) {
@@ -40,25 +59,7 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
     }
 
     try {
-      for (const file of files) {
-        const key = `medical-docs/${id}/${randomUUID()}/${file.name}`
-
-        const buffer = Buffer.from(await file.arrayBuffer())
-
-        await s3.send(
-          new PutObjectCommand({
-            Bucket: process.env.APP_S3_BUCKET,
-            Key: key,
-            Body: buffer,
-            ContentType: file.type,
-            ContentLength: buffer.length,
-            ContentDisposition: `attachment; filename="${file.name}"`
-          })
-        )
-
-        await addDocument(id, key)
-      }
-
+      await Promise.all(files.map(file => uploadFile(id, file, addDocument)))
       return NextResponse.json(null, { status: 201 })
     }
     catch (err) {
@@ -71,14 +72,13 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
     const { id } = await params
 
     const entity = await getById(id)
-    if (!entity) return new NextResponse(null, { status: 404 })
 
     const { key } = await req.json()
     if (!key) {
       return NextResponse.json({ error: 'key is required' }, { status: 400 })
     }
 
-    if (!entity.relatedDocuments.includes(key)) {
+    if (!entity || !entity.relatedDocuments.includes(key)) {
       return NextResponse.json({ error: 'Document not found' }, { status: 404 })
     }
 

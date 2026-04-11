@@ -11,7 +11,7 @@ export const useDocuments = (apiPath: string, queryKey: readonly string[]) => {
       files.forEach(f => formData.append('files', f))
       const res = await fetch(apiPath, { method: 'POST', body: formData })
       if (!res.ok) {
-        const err = await res.json().catch(() => ({}))
+        const err = await res.json()
         throw new Error(err.error ?? 'Upload failed')
       }
     },
