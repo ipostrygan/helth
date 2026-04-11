@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PutObjectCommand } from '@aws-sdk/client-s3'
-import { s3, deleteS3Object } from '@/lib/s3'
+import { uploadS3Object, deleteS3Object } from '@/lib/s3'
 
 const ALLOWED_TYPES = [
   'application/pdf',
@@ -22,17 +21,7 @@ async function uploadFile(
   addDocument: (id: string, key: string) => Promise<unknown>
 ) {
   const key = `medical-docs/${id}/${file.name}`
-  const buffer = Buffer.from(await file.arrayBuffer())
-  await s3.send(
-    new PutObjectCommand({
-      Bucket: process.env.APP_S3_BUCKET,
-      Key: key,
-      Body: buffer,
-      ContentType: file.type,
-      ContentLength: buffer.length,
-      ContentDisposition: `attachment; filename="${file.name}"`
-    })
-  )
+  await uploadS3Object(key, file, `attachment; filename="${file.name}"`)
   await addDocument(id, key)
 }
 

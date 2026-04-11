@@ -1,4 +1,4 @@
-import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3'
+import { S3Client, DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 
 export const s3 = new S3Client({
   region: process.env.APP_AWS_REGION,
@@ -7,6 +7,18 @@ export const s3 = new S3Client({
     secretAccessKey: process.env.APP_AWS_SECRET_KEY!.trim()
   }
 })
+
+export async function uploadS3Object(key: string, file: File, contentDisposition = `inline; filename="${file.name}"`) {
+  const buffer = Buffer.from(await file.arrayBuffer())
+  await s3.send(new PutObjectCommand({
+    Bucket: process.env.APP_S3_BUCKET!,
+    Key: key,
+    Body: buffer,
+    ContentType: file.type,
+    ContentLength: buffer.length,
+    ContentDisposition: contentDisposition
+  }))
+}
 
 export async function deleteS3Object(key: string) {
   const command = new DeleteObjectCommand({
