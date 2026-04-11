@@ -227,7 +227,8 @@ Follow the therapy details page pattern exactly:
 ```typescript
 "use client"
 
-import { use, useState } from "react"
+import { useState } from "react"
+import { useParams } from "next/navigation"
 import Link from "next/link"
 import { use{ModelName} } from "../hooks/use-{model-name}"
 import { Separator } from "@/components/ui/separator"
@@ -245,12 +246,8 @@ import { RowActions } from "@/components/row-actions"
 import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { DEFAULT_PAGE_SIZE } from "@/lib/constants"
 
-type {ModelName}DetailPageProps = {
-  params: Promise<{ id: string }>
-}
-
-const {ModelName}DetailPage = ({ params }: {ModelName}DetailPageProps) => {
-  const { id } = use(params)
+const {ModelName}DetailPage = () => {
+  const { id } = useParams<{ id: string }>()
   const { data: {modelName}, isLoading } = use{ModelName}(id)
 
   // One useQueryStates block per has-many relation:
