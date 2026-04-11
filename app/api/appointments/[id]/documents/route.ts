@@ -1,8 +1,10 @@
+import prisma from '@/lib/prisma'
 import { createDocumentHandlers } from '@/lib/api/documents'
-import { addDocumentToAppointment, removeDocumentFromAppointment, getAppointmentById } from '@/app/actions/appointments'
+import { addDocument, removeDocument } from '@/lib/document-actions'
+import { getAppointmentById } from '@/app/actions/appointments'
 
 export const { POST, DELETE } = createDocumentHandlers({
   getById: getAppointmentById,
-  addDocument: addDocumentToAppointment,
-  removeDocument: removeDocumentFromAppointment
+  addDocument: (id, key) => addDocument(prisma.appointment, id, key),
+  removeDocument: (id, key) => removeDocument(prisma.appointment, id, key)
 })

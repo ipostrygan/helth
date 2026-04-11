@@ -12,7 +12,7 @@ async function isValidDocumentKey(key: string): Promise<boolean> {
   return !!(appointment ?? therapy ?? user)
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ filename: string }> }) {
   const key = req.nextUrl.searchParams.get('key')
   if (!key) return new NextResponse(null, { status: 400 })
 
@@ -20,7 +20,8 @@ export async function GET(req: NextRequest) {
   if (!valid) return new NextResponse(null, { status: 404 })
 
   const forceDownload = req.nextUrl.searchParams.get('download') === 'true'
-  const filename = encodeURIComponent(key.split('/').pop() ?? 'download')
+  const { filename: rawFilename } = await params
+  const filename = encodeURIComponent(decodeURIComponent(rawFilename))
 
   let result
   try {

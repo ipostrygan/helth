@@ -9,11 +9,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   const documents = item.relatedDocuments.map((key) => {
     const name = key.split('/').pop() ?? key
     const encodedKey = encodeURIComponent(key)
+    const encodedName = encodeURIComponent(name)
     return {
       key,
       name,
-      url: `/api/download?key=${encodedKey}`,
-      downloadUrl: `/api/download?key=${encodedKey}&download=true`
+      url: `/api/download/${encodedName}?key=${encodedKey}`,
+      downloadUrl: `/api/download/${encodedName}?key=${encodedKey}&download=true`
     }
   })
 

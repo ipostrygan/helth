@@ -128,31 +128,3 @@ export const getTherapyById = async (id: string): Promise<Therapy | null> => {
     throw new Error(e instanceof Error ? e.message : 'Failed to fetch therapy')
   }
 }
-
-export const addDocumentToTherapy = async (id: string, key: string): Promise<void> => {
-  try {
-    await prisma.therapy.update({
-      where: { id },
-      data: { relatedDocuments: { push: key } }
-    })
-  }
-  catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to add document to therapy')
-  }
-}
-
-export const removeDocumentFromTherapy = async (id: string, key: string): Promise<void> => {
-  try {
-    const therapy = await prisma.therapy.findUnique({ where: { id }, select: { relatedDocuments: true } })
-    if (!therapy) return
-    await prisma.therapy.update({
-      where: { id },
-      data: { relatedDocuments: therapy.relatedDocuments.filter(k => k !== key) }
-    })
-  }
-  catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to remove document from therapy')
-  }
-}

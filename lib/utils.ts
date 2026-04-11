@@ -11,5 +11,5 @@ export const formatCurrency = (value: number) =>
 
 export const toUserProfile = (user: User) => ({
   ...user,
-  imageUrl: user.imageKey ? `/api/download?key=${encodeURIComponent(user.imageKey)}` : null
+  imageUrl: user.imageKey ? `/api/download/${encodeURIComponent(user.imageKey.split('/').pop() ?? 'image')}?key=${encodeURIComponent(user.imageKey)}` : null
 })

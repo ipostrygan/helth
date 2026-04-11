@@ -50,6 +50,7 @@ const LoginPage = () => {
         width={0}
         height={0}
         className="w-full h-auto rounded-xl mb-6"
+        loading="eager"
       />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FieldGroup>

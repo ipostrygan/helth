@@ -39,12 +39,9 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
       )
     }
 
-    const uploadedKeys: string[] = []
-
     try {
       for (const file of files) {
-        const ext = file.name.split('.').pop()
-        const key = `medical-docs/${id}/${randomUUID()}.${ext}`
+        const key = `medical-docs/${id}/${randomUUID()}/${file.name}`
 
         const buffer = Buffer.from(await file.arrayBuffer())
 
@@ -54,15 +51,15 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
             Key: key,
             Body: buffer,
             ContentType: file.type,
-            ContentLength: buffer.length
+            ContentLength: buffer.length,
+            ContentDisposition: `attachment; filename="${file.name}"`
           })
         )
 
         await addDocument(id, key)
-        uploadedKeys.push(key)
       }
 
-      return NextResponse.json({ keys: uploadedKeys }, { status: 201 })
+      return NextResponse.json(null, { status: 201 })
     }
     catch (err) {
       console.error(err)

@@ -154,31 +154,3 @@ export const getAppointmentById = async (id: string): Promise<Appointment | null
     throw new Error(e instanceof Error ? e.message : 'Failed to fetch appointment')
   }
 }
-
-export const addDocumentToAppointment = async (id: string, key: string): Promise<void> => {
-  try {
-    await prisma.appointment.update({
-      where: { id },
-      data: { relatedDocuments: { push: key } }
-    })
-  }
-  catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to add document to appointment')
-  }
-}
-
-export const removeDocumentFromAppointment = async (id: string, key: string): Promise<void> => {
-  try {
-    const appointment = await prisma.appointment.findUnique({ where: { id }, select: { relatedDocuments: true } })
-    if (!appointment) return
-    await prisma.appointment.update({
-      where: { id },
-      data: { relatedDocuments: appointment.relatedDocuments.filter(k => k !== key) }
-    })
-  }
-  catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to remove document from appointment')
-  }
-}
