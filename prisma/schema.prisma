@@ -33,9 +33,10 @@ model User {
   familyRole      String?
   imageKey        String?
   isPrimaryUser   Boolean          @default(false)
-  medicalExpenses MedicalExpense[]
-  therapies       Therapy[]
-  appointments    Appointment[]
+  medicalExpenses   MedicalExpense[]
+  therapies         Therapy[]
+  appointments      Appointment[]
+  selfCareActivities  SelfCareActivity[]
 }
 
 enum ExpenseType {
@@ -113,6 +114,15 @@ model Appointment {
 enum AppointmentStatus {
   Scheduled
   Completed
-  Cancelled
-  NoShow
+}
+
+model SelfCareActivity {
+  id          String   @id @default(uuid())
+  title       String
+  date        DateTime
+  description String?
+  medication  String
+  dosage      String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 }

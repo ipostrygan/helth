@@ -26,8 +26,8 @@ export const MENU_ITEMS = [
     icon: Receipt
   },
   {
-    name: 'Self-care',
-    href: '/self-care',
+    name: 'Self-care activities',
+    href: '/self-care-activities',
     icon: Heart
   }
 ]

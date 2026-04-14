@@ -1,6 +1,7 @@
 import { editProfile } from '@/app/actions/profile'
 import { deleteS3Object, uploadS3Object } from '@/lib/s3'
 import prisma from '@/lib/prisma'
+import { validateFileSize } from '@/lib/utils'
 
 export async function PUT(
   req: Request,
@@ -10,6 +11,11 @@ export async function PUT(
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File
+
+    const sizeError = validateFileSize(file)
+    if (sizeError) {
+      return new Response(JSON.stringify({ error: sizeError }), { status: 400 })
+    }
 
     const ext = file.name.split('.').pop()
     const key = `users/${id}/profile${ext ? `.${ext}` : ''}`

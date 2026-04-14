@@ -1,0 +1,1641 @@
+[
+  {
+    "title": "Morning Vitamin D",
+    "date": "2025-04-11",
+    "description": "Daily morning routine",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Evening Magnesium",
+    "date": "2025-04-11",
+    "description": "Sleep support",
+    "medication": "Magnesium Glycinate",
+    "dosage": "400 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Omega-3 Supplement",
+    "date": "2025-04-11",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc Supplement",
+    "date": "2025-04-12",
+    "description": "Immune support",
+    "medication": "Zinc",
+    "dosage": "15 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Morning Vitamin C",
+    "date": "2025-04-12",
+    "medication": "Vitamin C",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "B12 Injection",
+    "date": "2025-04-13",
+    "description": "Weekly B12 shot",
+    "medication": "Methylcobalamin B12",
+    "dosage": "1000 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Supplement",
+    "date": "2025-04-13",
+    "description": "Taken with orange juice",
+    "medication": "Ferrous Sulfate",
+    "dosage": "325 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Probiotic",
+    "date": "2025-04-14",
+    "description": "Gut health",
+    "medication": "Lactobacillus probiotic",
+    "dosage": "10 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Evening Melatonin",
+    "date": "2025-04-14",
+    "medication": "Melatonin",
+    "dosage": "3 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Allergy Medication",
+    "date": "2025-04-14",
+    "description": "Seasonal allergies",
+    "medication": "Cetirizine",
+    "dosage": "10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Morning Multivitamin",
+    "date": "2025-04-15",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin B Complex",
+    "date": "2025-04-15",
+    "description": "Energy boost",
+    "medication": "Vitamin B Complex",
+    "dosage": "50 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium Supplement",
+    "date": "2025-04-15",
+    "medication": "Calcium Carbonate",
+    "dosage": "600 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Evening Ashwagandha",
+    "date": "2025-04-16",
+    "description": "Stress reduction",
+    "medication": "Ashwagandha",
+    "dosage": "300 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Morning Vitamin D",
+    "date": "2025-04-16",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Turmeric Supplement",
+    "date": "2025-04-17",
+    "description": "Anti-inflammatory",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Collagen Peptides",
+    "date": "2025-04-17",
+    "description": "Joint and skin health",
+    "medication": "Hydrolyzed Collagen",
+    "dosage": "10 g",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Evening Magnesium",
+    "date": "2025-04-18",
+    "medication": "Magnesium Glycinate",
+    "dosage": "400 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc Supplement",
+    "date": "2025-04-18",
+    "medication": "Zinc",
+    "dosage": "15 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Probiotic Morning",
+    "date": "2025-04-19",
+    "description": "Gut health routine",
+    "medication": "Lactobacillus probiotic",
+    "dosage": "10 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Morning Omega-3",
+    "date": "2025-04-19",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Evening Melatonin",
+    "date": "2025-04-20",
+    "medication": "Melatonin",
+    "dosage": "5 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin C Boost",
+    "date": "2025-04-20",
+    "description": "Fighting a cold",
+    "medication": "Vitamin C",
+    "dosage": "1000 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Morning Multivitamin",
+    "date": "2025-04-21",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Allergy Relief",
+    "date": "2025-04-21",
+    "description": "Spring allergies",
+    "medication": "Loratadine",
+    "dosage": "10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium and D3",
+    "date": "2025-04-22",
+    "description": "Bone health",
+    "medication": "Calcium + Vitamin D3",
+    "dosage": "600/400 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Evening Valerian",
+    "date": "2025-04-22",
+    "description": "Sleep aid",
+    "medication": "Valerian Root",
+    "dosage": "450 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Iron Supplement",
+    "date": "2025-04-23",
+    "medication": "Ferrous Sulfate",
+    "dosage": "325 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Morning B12",
+    "date": "2025-04-23",
+    "medication": "Methylcobalamin B12",
+    "dosage": "1000 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Ashwagandha Evening",
+    "date": "2025-04-24",
+    "medication": "Ashwagandha",
+    "dosage": "300 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Zinc Daily",
+    "date": "2025-04-24",
+    "medication": "Zinc",
+    "dosage": "25 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin D Morning",
+    "date": "2025-04-25",
+    "medication": "Vitamin D3",
+    "dosage": "4000 IU",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Probiotic",
+    "date": "2025-04-25",
+    "medication": "Multi-strain probiotic",
+    "dosage": "20 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Turmeric and Pepper",
+    "date": "2025-04-26",
+    "description": "Anti-inflammatory blend",
+    "medication": "Turmeric Curcumin + BioPerine",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Morning Omega-3",
+    "date": "2025-04-26",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "2000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Evening Magnesium",
+    "date": "2025-04-27",
+    "medication": "Magnesium Citrate",
+    "dosage": "300 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Collagen Morning",
+    "date": "2025-04-27",
+    "medication": "Hydrolyzed Collagen",
+    "dosage": "10 g",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin B Complex",
+    "date": "2025-04-28",
+    "medication": "Vitamin B Complex",
+    "dosage": "100 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Morning Vitamin C",
+    "date": "2025-04-28",
+    "medication": "Vitamin C",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Allergy Medication",
+    "date": "2025-04-29",
+    "medication": "Cetirizine",
+    "dosage": "10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium Supplement",
+    "date": "2025-04-29",
+    "medication": "Calcium Carbonate",
+    "dosage": "1200 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Melatonin Night",
+    "date": "2025-04-30",
+    "medication": "Melatonin",
+    "dosage": "1 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Morning Multivitamin",
+    "date": "2025-04-30",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin D3 Daily",
+    "date": "2025-05-01",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Probiotic Capsule",
+    "date": "2025-05-01",
+    "description": "After breakfast",
+    "medication": "Lactobacillus probiotic",
+    "dosage": "15 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Evening Ashwagandha",
+    "date": "2025-05-02",
+    "medication": "Ashwagandha",
+    "dosage": "600 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc and Copper",
+    "date": "2025-05-02",
+    "description": "Balanced mineral intake",
+    "medication": "Zinc + Copper",
+    "dosage": "15/1 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Omega-3 Daily",
+    "date": "2025-05-03",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Magnesium Evening",
+    "date": "2025-05-03",
+    "medication": "Magnesium Glycinate",
+    "dosage": "400 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Daily",
+    "date": "2025-05-04",
+    "description": "With vitamin C for absorption",
+    "medication": "Ferrous Gluconate",
+    "dosage": "28 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Morning B12",
+    "date": "2025-05-04",
+    "medication": "Cyanocobalamin B12",
+    "dosage": "500 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Turmeric Morning",
+    "date": "2025-05-05",
+    "medication": "Turmeric Curcumin",
+    "dosage": "1000 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin C and Zinc",
+    "date": "2025-05-05",
+    "description": "Immune support combo",
+    "medication": "Vitamin C + Zinc",
+    "dosage": "500/10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Valerian Root",
+    "date": "2025-05-06",
+    "description": "Sleep support",
+    "medication": "Valerian Root",
+    "dosage": "600 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Morning Vitamin D",
+    "date": "2025-05-06",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Collagen Powder",
+    "date": "2025-05-07",
+    "description": "In morning smoothie",
+    "medication": "Marine Collagen",
+    "dosage": "5 g",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Allergy Relief",
+    "date": "2025-05-07",
+    "medication": "Fexofenadine",
+    "dosage": "180 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "B Complex Vitamins",
+    "date": "2025-05-08",
+    "medication": "Vitamin B Complex",
+    "dosage": "50 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium Daily",
+    "date": "2025-05-08",
+    "medication": "Calcium Carbonate",
+    "dosage": "600 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Evening Melatonin",
+    "date": "2025-05-09",
+    "description": "Adjusting sleep schedule",
+    "medication": "Melatonin",
+    "dosage": "5 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Morning Probiotic",
+    "date": "2025-05-09",
+    "medication": "Bifidobacterium probiotic",
+    "dosage": "10 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc Supplement",
+    "date": "2025-05-10",
+    "medication": "Zinc Picolinate",
+    "dosage": "30 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Morning Omega-3",
+    "date": "2025-05-10",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Ashwagandha Capsule",
+    "date": "2025-05-11",
+    "description": "Stress management",
+    "medication": "KSM-66 Ashwagandha",
+    "dosage": "300 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Evening Magnesium",
+    "date": "2025-05-11",
+    "medication": "Magnesium Glycinate",
+    "dosage": "400 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin D3",
+    "date": "2025-05-12",
+    "medication": "Vitamin D3",
+    "dosage": "5000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Turmeric Evening",
+    "date": "2025-05-12",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Multivitamin Morning",
+    "date": "2025-05-13",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Iron Supplement",
+    "date": "2025-05-13",
+    "description": "With food",
+    "medication": "Ferrous Sulfate",
+    "dosage": "65 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Collagen Peptides",
+    "date": "2025-05-14",
+    "medication": "Hydrolyzed Collagen",
+    "dosage": "10 g",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Melatonin",
+    "date": "2025-05-14",
+    "medication": "Melatonin",
+    "dosage": "2 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin B12",
+    "date": "2025-05-15",
+    "medication": "Methylcobalamin B12",
+    "dosage": "1000 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Morning Vitamin C",
+    "date": "2025-05-15",
+    "medication": "Vitamin C",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Probiotic Daily",
+    "date": "2025-05-16",
+    "medication": "Multi-strain probiotic",
+    "dosage": "50 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc Daily",
+    "date": "2025-05-16",
+    "medication": "Zinc",
+    "dosage": "15 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Allergy Medication",
+    "date": "2025-05-17",
+    "description": "Spring allergy season",
+    "medication": "Cetirizine",
+    "dosage": "10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium Morning",
+    "date": "2025-05-17",
+    "medication": "Calcium Citrate",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Evening Ashwagandha",
+    "date": "2025-05-18",
+    "medication": "Ashwagandha",
+    "dosage": "300 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Omega-3 Supplement",
+    "date": "2025-05-18",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "2000 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Magnesium Citrate",
+    "date": "2025-05-19",
+    "description": "Before bed",
+    "medication": "Magnesium Citrate",
+    "dosage": "400 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin D Morning",
+    "date": "2025-05-19",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "B Complex Morning",
+    "date": "2025-05-20",
+    "medication": "Vitamin B Complex",
+    "dosage": "100 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Turmeric Capsule",
+    "date": "2025-05-20",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Iron Daily",
+    "date": "2025-05-21",
+    "medication": "Ferrous Gluconate",
+    "dosage": "28 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Collagen Morning",
+    "date": "2025-05-21",
+    "description": "Mixed in coffee",
+    "medication": "Bovine Collagen",
+    "dosage": "10 g",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Melatonin Low Dose",
+    "date": "2025-05-22",
+    "medication": "Melatonin",
+    "dosage": "0.5 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Zinc Supplement",
+    "date": "2025-05-22",
+    "medication": "Zinc Picolinate",
+    "dosage": "15 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Morning Probiotic",
+    "date": "2025-05-23",
+    "medication": "Lactobacillus acidophilus",
+    "dosage": "5 billion CFU",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin C Daily",
+    "date": "2025-05-23",
+    "medication": "Vitamin C",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Ashwagandha Morning",
+    "date": "2025-05-24",
+    "medication": "Ashwagandha Root",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Calcium Supplement",
+    "date": "2025-05-24",
+    "medication": "Calcium Carbonate",
+    "dosage": "1200 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Omega-3 Evening",
+    "date": "2025-05-25",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin D3",
+    "date": "2025-05-25",
+    "description": "Summer dose reduction",
+    "medication": "Vitamin D3",
+    "dosage": "1000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Magnesium Before Bed",
+    "date": "2025-05-26",
+    "medication": "Magnesium Glycinate",
+    "dosage": "300 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Multivitamin",
+    "date": "2025-05-26",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Evening",
+    "date": "2025-05-27",
+    "medication": "Ferrous Sulfate",
+    "dosage": "325 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Turmeric Daily",
+    "date": "2025-05-27",
+    "medication": "Turmeric Curcumin",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "B12 Daily",
+    "date": "2025-05-28",
+    "medication": "Methylcobalamin B12",
+    "dosage": "500 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Allergy Relief",
+    "date": "2025-05-28",
+    "medication": "Loratadine",
+    "dosage": "10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Probiotic Evening",
+    "date": "2025-05-29",
+    "medication": "Multi-strain probiotic",
+    "dosage": "20 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc and Selenium",
+    "date": "2025-05-29",
+    "description": "Immune support",
+    "medication": "Zinc + Selenium",
+    "dosage": "15/200 mcg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin C Morning",
+    "date": "2025-05-30",
+    "medication": "Vitamin C (Ester-C)",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Collagen Evening",
+    "date": "2025-05-30",
+    "medication": "Marine Collagen",
+    "dosage": "5 g",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Melatonin Extended",
+    "date": "2025-05-31",
+    "description": "Extended release formula",
+    "medication": "Melatonin ER",
+    "dosage": "2 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Morning Vitamin D",
+    "date": "2025-05-31",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Magnesium Malate",
+    "date": "2025-06-01",
+    "description": "Energy and muscle support",
+    "medication": "Magnesium Malate",
+    "dosage": "400 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Omega-3 Morning",
+    "date": "2025-06-01",
+    "medication": "Algae Omega-3",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Ashwagandha",
+    "date": "2025-06-02",
+    "medication": "KSM-66 Ashwagandha",
+    "dosage": "600 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc Daily",
+    "date": "2025-06-02",
+    "medication": "Zinc Citrate",
+    "dosage": "20 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "B Complex",
+    "date": "2025-06-03",
+    "medication": "Vitamin B Complex",
+    "dosage": "50 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Iron Morning",
+    "date": "2025-06-03",
+    "medication": "Iron Bisglycinate",
+    "dosage": "25 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Probiotic Daily",
+    "date": "2025-06-04",
+    "medication": "Lactobacillus rhamnosus",
+    "dosage": "10 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Turmeric Morning",
+    "date": "2025-06-04",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin D",
+    "date": "2025-06-05",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Melatonin",
+    "date": "2025-06-05",
+    "medication": "Melatonin",
+    "dosage": "3 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium with D3",
+    "date": "2025-06-06",
+    "description": "Bone density support",
+    "medication": "Calcium + Vitamin D3",
+    "dosage": "600/400 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Allergy Daily",
+    "date": "2025-06-06",
+    "medication": "Cetirizine",
+    "dosage": "5 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Collagen Peptides",
+    "date": "2025-06-07",
+    "medication": "Hydrolyzed Collagen",
+    "dosage": "15 g",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Magnesium Evening",
+    "date": "2025-06-07",
+    "medication": "Magnesium Threonate",
+    "dosage": "144 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin C",
+    "date": "2025-06-08",
+    "medication": "Vitamin C",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Zinc Supplement",
+    "date": "2025-06-08",
+    "medication": "Zinc",
+    "dosage": "15 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "B12 Weekly",
+    "date": "2025-06-09",
+    "description": "Weekly injection",
+    "medication": "Methylcobalamin B12",
+    "dosage": "1000 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Probiotic Morning",
+    "date": "2025-06-09",
+    "medication": "Bifidobacterium longum",
+    "dosage": "5 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Omega-3 Daily",
+    "date": "2025-06-10",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Ashwagandha Evening",
+    "date": "2025-06-10",
+    "medication": "Ashwagandha",
+    "dosage": "300 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Iron Supplement",
+    "date": "2025-06-11",
+    "medication": "Ferrous Sulfate",
+    "dosage": "325 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Multivitamin Daily",
+    "date": "2025-06-11",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Melatonin",
+    "date": "2025-06-12",
+    "medication": "Melatonin",
+    "dosage": "5 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin D3 Morning",
+    "date": "2025-06-12",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Turmeric Daily",
+    "date": "2025-06-13",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Calcium Morning",
+    "date": "2025-06-13",
+    "medication": "Calcium Carbonate",
+    "dosage": "600 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Zinc Daily",
+    "date": "2025-06-14",
+    "medication": "Zinc Picolinate",
+    "dosage": "15 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Probiotic",
+    "date": "2025-06-14",
+    "description": "Digestive health",
+    "medication": "Multi-strain probiotic",
+    "dosage": "10 billion CFU",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "B Complex Morning",
+    "date": "2025-06-15",
+    "medication": "Vitamin B Complex",
+    "dosage": "100 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Collagen Daily",
+    "date": "2025-06-15",
+    "medication": "Bovine Collagen",
+    "dosage": "10 g",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Magnesium Glycinate",
+    "date": "2025-06-16",
+    "description": "Evening relaxation",
+    "medication": "Magnesium Glycinate",
+    "dosage": "400 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Allergy Medication",
+    "date": "2025-06-16",
+    "medication": "Fexofenadine",
+    "dosage": "120 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin C Supplement",
+    "date": "2025-06-17",
+    "medication": "Liposomal Vitamin C",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Omega-3 Capsule",
+    "date": "2025-06-17",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "2000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Ashwagandha Daily",
+    "date": "2025-06-18",
+    "medication": "Ashwagandha",
+    "dosage": "600 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Daily",
+    "date": "2025-06-18",
+    "medication": "Iron Bisglycinate",
+    "dosage": "18 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin D Morning",
+    "date": "2025-06-19",
+    "medication": "Vitamin D3",
+    "dosage": "1000 IU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Melatonin Low Dose",
+    "date": "2025-06-19",
+    "medication": "Melatonin",
+    "dosage": "1 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Probiotic Capsule",
+    "date": "2025-06-20",
+    "medication": "Lactobacillus acidophilus",
+    "dosage": "5 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Turmeric Evening",
+    "date": "2025-06-20",
+    "medication": "Turmeric Curcumin",
+    "dosage": "1000 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "B12 Supplement",
+    "date": "2025-06-21",
+    "medication": "Methylcobalamin B12",
+    "dosage": "500 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Calcium Citrate",
+    "date": "2025-06-21",
+    "description": "Better absorption",
+    "medication": "Calcium Citrate",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Zinc Morning",
+    "date": "2025-06-22",
+    "medication": "Zinc",
+    "dosage": "15 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Magnesium Before Bed",
+    "date": "2025-06-22",
+    "medication": "Magnesium Glycinate",
+    "dosage": "300 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Omega-3 Evening",
+    "date": "2025-06-23",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Multivitamin Daily",
+    "date": "2025-06-23",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Allergy Relief",
+    "date": "2025-06-24",
+    "medication": "Cetirizine",
+    "dosage": "10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Probiotic Daily",
+    "date": "2025-06-24",
+    "description": "After dinner",
+    "medication": "Multi-strain probiotic",
+    "dosage": "20 billion CFU",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Collagen Peptides",
+    "date": "2025-06-25",
+    "medication": "Hydrolyzed Collagen",
+    "dosage": "10 g",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "B Complex",
+    "date": "2025-06-25",
+    "medication": "Vitamin B Complex",
+    "dosage": "50 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin D3",
+    "date": "2025-06-26",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Supplement",
+    "date": "2025-06-26",
+    "medication": "Ferrous Sulfate",
+    "dosage": "325 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Ashwagandha Morning",
+    "date": "2025-06-27",
+    "description": "Adaptogen routine",
+    "medication": "Ashwagandha",
+    "dosage": "300 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Melatonin",
+    "date": "2025-06-27",
+    "medication": "Melatonin",
+    "dosage": "3 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Turmeric Daily",
+    "date": "2025-06-28",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Zinc Picolinate",
+    "date": "2025-06-28",
+    "medication": "Zinc Picolinate",
+    "dosage": "30 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Magnesium Malate",
+    "date": "2025-06-29",
+    "description": "Muscle function",
+    "medication": "Magnesium Malate",
+    "dosage": "400 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin C Morning",
+    "date": "2025-06-29",
+    "medication": "Vitamin C",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Probiotic",
+    "date": "2025-06-30",
+    "medication": "Lactobacillus rhamnosus",
+    "dosage": "10 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Calcium Daily",
+    "date": "2025-06-30",
+    "medication": "Calcium Carbonate",
+    "dosage": "600 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Omega-3 Morning",
+    "date": "2025-07-01",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin D Supplement",
+    "date": "2025-07-01",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Morning",
+    "date": "2025-07-02",
+    "medication": "Iron Bisglycinate",
+    "dosage": "25 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Melatonin Night",
+    "date": "2025-07-02",
+    "medication": "Melatonin",
+    "dosage": "5 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "B12 Daily",
+    "date": "2025-07-03",
+    "medication": "Cyanocobalamin B12",
+    "dosage": "1000 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Multivitamin",
+    "date": "2025-07-03",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Collagen Morning",
+    "date": "2025-07-04",
+    "medication": "Bovine Collagen",
+    "dosage": "10 g",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc Supplement",
+    "date": "2025-07-04",
+    "medication": "Zinc",
+    "dosage": "15 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Ashwagandha",
+    "date": "2025-07-05",
+    "description": "Evening wind-down",
+    "medication": "Ashwagandha",
+    "dosage": "600 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Turmeric Capsule",
+    "date": "2025-07-05",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Magnesium Evening",
+    "date": "2025-07-06",
+    "medication": "Magnesium Glycinate",
+    "dosage": "400 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Allergy Medication",
+    "date": "2025-07-06",
+    "medication": "Loratadine",
+    "dosage": "10 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Probiotic Daily",
+    "date": "2025-07-07",
+    "medication": "Multi-strain probiotic",
+    "dosage": "50 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin C Boost",
+    "date": "2025-07-07",
+    "medication": "Vitamin C",
+    "dosage": "2000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium with Magnesium",
+    "date": "2025-07-08",
+    "description": "Bone and muscle health",
+    "medication": "Calcium + Magnesium",
+    "dosage": "600/200 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Omega-3 Evening",
+    "date": "2025-07-08",
+    "medication": "Algae Omega-3",
+    "dosage": "500 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Iron Supplement",
+    "date": "2025-07-09",
+    "medication": "Ferrous Gluconate",
+    "dosage": "28 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "B Complex Morning",
+    "date": "2025-07-09",
+    "medication": "Vitamin B Complex",
+    "dosage": "100 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin D3 Daily",
+    "date": "2025-07-10",
+    "medication": "Vitamin D3",
+    "dosage": "4000 IU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Melatonin",
+    "date": "2025-07-10",
+    "medication": "Melatonin",
+    "dosage": "2 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Zinc Daily",
+    "date": "2025-07-11",
+    "medication": "Zinc Picolinate",
+    "dosage": "15 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Turmeric with Pepper",
+    "date": "2025-07-11",
+    "description": "With black pepper for absorption",
+    "medication": "Turmeric + BioPerine",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Probiotic Morning",
+    "date": "2025-07-12",
+    "medication": "Lactobacillus acidophilus",
+    "dosage": "10 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Ashwagandha Daily",
+    "date": "2025-07-12",
+    "medication": "KSM-66 Ashwagandha",
+    "dosage": "300 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Vitamin C Daily",
+    "date": "2025-07-13",
+    "medication": "Liposomal Vitamin C",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Magnesium Citrate",
+    "date": "2025-07-13",
+    "medication": "Magnesium Citrate",
+    "dosage": "300 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Daily",
+    "date": "2025-07-14",
+    "medication": "Iron Bisglycinate",
+    "dosage": "18 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Collagen Peptides",
+    "date": "2025-07-14",
+    "description": "Post-workout recovery",
+    "medication": "Hydrolyzed Collagen",
+    "dosage": "15 g",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Multivitamin Morning",
+    "date": "2025-07-15",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Omega-3 Daily",
+    "date": "2025-07-15",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "B12 Supplement",
+    "date": "2025-07-16",
+    "medication": "Methylcobalamin B12",
+    "dosage": "1000 mcg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Calcium Supplement",
+    "date": "2025-07-16",
+    "medication": "Calcium Carbonate",
+    "dosage": "1200 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Evening Melatonin",
+    "date": "2025-07-17",
+    "description": "Before bedtime",
+    "medication": "Melatonin",
+    "dosage": "5 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Zinc Morning",
+    "date": "2025-07-17",
+    "medication": "Zinc",
+    "dosage": "25 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Turmeric Daily",
+    "date": "2025-07-18",
+    "medication": "Turmeric Curcumin",
+    "dosage": "500 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Probiotic",
+    "date": "2025-07-18",
+    "medication": "Bifidobacterium probiotic",
+    "dosage": "20 billion CFU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Vitamin D3",
+    "date": "2025-07-19",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Allergy Relief",
+    "date": "2025-07-19",
+    "medication": "Cetirizine",
+    "dosage": "10 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Magnesium Evening",
+    "date": "2025-07-20",
+    "medication": "Magnesium Glycinate",
+    "dosage": "400 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Iron Supplement",
+    "date": "2025-07-20",
+    "description": "Treating mild anemia",
+    "medication": "Ferrous Sulfate",
+    "dosage": "325 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Omega-3 Morning",
+    "date": "2025-07-21",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "2000 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Ashwagandha",
+    "date": "2025-07-21",
+    "medication": "Ashwagandha Root",
+    "dosage": "500 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "B Complex",
+    "date": "2025-07-22",
+    "medication": "Vitamin B Complex",
+    "dosage": "50 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin C Morning",
+    "date": "2025-07-22",
+    "medication": "Vitamin C",
+    "dosage": "1000 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Collagen Daily",
+    "date": "2025-07-23",
+    "medication": "Marine Collagen",
+    "dosage": "5 g",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Melatonin",
+    "date": "2025-07-23",
+    "medication": "Melatonin",
+    "dosage": "3 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Zinc Picolinate",
+    "date": "2025-07-24",
+    "medication": "Zinc Picolinate",
+    "dosage": "30 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Morning Multivitamin",
+    "date": "2025-07-24",
+    "medication": "Multivitamin Complex",
+    "dosage": "1 tablet",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Calcium Daily",
+    "date": "2025-07-25",
+    "medication": "Calcium Citrate",
+    "dosage": "500 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Turmeric Morning",
+    "date": "2025-07-25",
+    "description": "Anti-inflammatory support",
+    "medication": "Turmeric Curcumin",
+    "dosage": "1000 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Probiotic Daily",
+    "date": "2025-07-26",
+    "medication": "Lactobacillus probiotic",
+    "dosage": "15 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Iron Morning",
+    "date": "2025-07-26",
+    "medication": "Iron Bisglycinate",
+    "dosage": "25 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "B12 Weekly",
+    "date": "2025-07-27",
+    "description": "Weekly supplement",
+    "medication": "Methylcobalamin B12",
+    "dosage": "1000 mcg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Magnesium Malate",
+    "date": "2025-07-27",
+    "medication": "Magnesium Malate",
+    "dosage": "400 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Omega-3 Evening",
+    "date": "2025-07-28",
+    "medication": "Fish Oil Omega-3",
+    "dosage": "1000 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Allergy Daily",
+    "date": "2025-07-28",
+    "medication": "Loratadine",
+    "dosage": "10 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Vitamin D3",
+    "date": "2025-07-29",
+    "medication": "Vitamin D3",
+    "dosage": "2000 IU",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Collagen Peptides",
+    "date": "2025-07-29",
+    "medication": "Hydrolyzed Collagen",
+    "dosage": "10 g",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  },
+  {
+    "title": "Ashwagandha Morning",
+    "date": "2025-07-30",
+    "medication": "KSM-66 Ashwagandha",
+    "dosage": "600 mg",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Zinc Supplement",
+    "date": "2025-07-30",
+    "medication": "Zinc",
+    "dosage": "15 mg",
+    "userId": "e46a3d88-4624-4d0f-bf5e-59adacd03642"
+  },
+  {
+    "title": "Probiotic Morning",
+    "date": "2025-07-31",
+    "description": "Morning gut health routine",
+    "medication": "Multi-strain probiotic",
+    "dosage": "20 billion CFU",
+    "userId": "43f14463-9cc7-41b8-b2ad-a886eb7f0a12"
+  },
+  {
+    "title": "Melatonin",
+    "date": "2025-07-31",
+    "medication": "Melatonin",
+    "dosage": "5 mg",
+    "userId": "662e967f-5afb-4579-b07f-92c71b2631bc"
+  }
+]

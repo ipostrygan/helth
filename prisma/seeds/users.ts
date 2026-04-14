@@ -1,6 +1,10 @@
 import { PrismaClient } from '@/lib/generated/prisma/client'
 
 export async function seedUsers(prisma: PrismaClient): Promise<string[]> {
+  await prisma.medicalExpense.deleteMany()
+  await prisma.appointment.deleteMany()
+  await prisma.selfCareActivity.deleteMany()
+  await prisma.therapy.deleteMany()
   await prisma.user.deleteMany()
 
   const u1 = await prisma.user.create({

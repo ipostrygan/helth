@@ -4,6 +4,7 @@ import { seedMedicalExpenses } from './seeds/medical-expenses'
 import { seedTherapies } from './seeds/therapies'
 import { seedUsers } from './seeds/users'
 import { seedAppointments } from './seeds/appointments'
+import { seedSelfCareActivities } from './seeds/self-care-activities'
 
 const prisma = new PrismaClient()
 
@@ -13,6 +14,7 @@ async function main() {
   const { therapyIdsByUserId, therapyIdByTitle } = await seedTherapies(prisma, userIds)
   await seedMedicalExpenses(prisma, userIds, therapyIdsByUserId)
   await seedAppointments(prisma, userIds, therapyIdByTitle)
+  await seedSelfCareActivities(prisma, userIds)
 }
 
 main()
