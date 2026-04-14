@@ -1,4 +1,3 @@
-import type { Metadata, Viewport } from 'next'
 import { Geist } from 'next/font/google'
 import './globals.css'
 import { ReactQueryProvider } from './react-query-provider'
@@ -11,14 +10,14 @@ const geistSans = Geist({
   subsets: ['latin']
 })
 
-export const viewport: Viewport = {
+export const viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#09090b' }
   ]
 }
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Helth',
   description: 'App for tracking family medical data',
   manifest: '/manifest.webmanifest',

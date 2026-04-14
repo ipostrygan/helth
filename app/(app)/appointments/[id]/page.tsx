@@ -14,16 +14,13 @@ import {
   APPOINTMENT_TYPE_LABELS,
   APPOINTMENT_STATUS_LABELS
 } from '../constants'
-import type { AppointmentStatus } from '@/lib/generated/prisma/client'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
 
-const STATUS_STYLES: Record<AppointmentStatus, string> = {
+const STATUS_STYLES = {
   Scheduled: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-  Completed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-  Cancelled: 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400',
-  NoShow: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400'
+  Completed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
 }
 
 const AppointmentDetailPage = () => {
