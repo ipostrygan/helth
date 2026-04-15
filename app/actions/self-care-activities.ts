@@ -72,3 +72,7 @@ export const deleteSelfCareActivity = async (id: string): Promise<void> => {
     throw new Error(e instanceof Error ? e.message : 'Failed to delete self-care session')
   }
 }
+
+export const getSelfCareActivityById = async (id: string): Promise<SelfCareActivity | null> => {
+  return prisma.selfCareActivity.findUnique({ where: { id } })
+}

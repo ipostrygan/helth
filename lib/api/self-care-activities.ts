@@ -36,3 +36,9 @@ export async function deleteSelfCareActivity(id: string): Promise<void> {
   const res = await fetch(`/api/self-care-activities/${id}`, { method: 'DELETE' })
   if (!res.ok) throw new Error('Failed to delete self-care activity')
 }
+
+export async function getSelfCareActivity(id: string): Promise<SelfCareActivity> {
+  const res = await fetch(`/api/self-care-activities/${id}`)
+  if (!res.ok) throw new Error('Failed to fetch self-care activity')
+  return res.json()
+}
