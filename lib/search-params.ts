@@ -3,7 +3,7 @@ import { format, subMonths } from 'date-fns'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { SORT_DIRECTIONS } from '@/types'
 
-export const defaultDateFrom = format(subMonths(new Date(), 1), 'yyyy-MM-dd')
+export const defaultDateFrom = format(subMonths(new Date(), 4), 'yyyy-MM-dd')
 export const defaultDateTo = format(new Date(), 'yyyy-MM-dd')
 
 export const baseFilterParsers = (defaultSortField = 'date') => ({
