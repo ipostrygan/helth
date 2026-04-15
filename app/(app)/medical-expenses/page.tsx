@@ -154,7 +154,7 @@ const MedicalExpensesPage = () => {
           }
         ],
         hasActiveFilters: !!(filters.search || filters.dateFrom !== defaultDateFrom || filters.dateTo !== defaultDateTo || filters.types.length > 0),
-        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: '', dateFrom: null, dateTo: null, types: [] }))
+        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: 'date', sortDirection: 'desc', search: '', dateFrom: null, dateTo: null, types: [] }))
       }}
       deleteConfig={{
         deletingId: deletingExpenseId,

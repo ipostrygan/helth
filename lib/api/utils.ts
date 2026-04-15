@@ -1,4 +1,26 @@
+import { NextResponse } from 'next/server'
+import { z } from 'zod'
 import type { BaseQueryParams } from '@/types'
+
+export function validateQueryParams<T extends z.ZodTypeAny>(
+  schema: T,
+  data: unknown
+): { success: true, data: z.infer<T> } | { success: false, response: NextResponse } {
+  const result = schema.safeParse(data)
+  if (!result.success) {
+    const details = Object.fromEntries(
+      result.error.issues.map(i => [i.path.join('.'), i.message])
+    )
+    return {
+      success: false,
+      response: NextResponse.json(
+        { error: 'Invalid query parameters', details },
+        { status: 400 }
+      )
+    }
+  }
+  return { success: true, data: result.data }
+}
 
 export function buildSearchParams(
   base: BaseQueryParams,
@@ -51,7 +73,7 @@ export async function uploadDocuments(basePath: string, files: File[]): Promise<
   files.forEach(file => formData.append('files', file))
   const res = await fetch(`${basePath}/documents`, { method: 'POST', body: formData })
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
+    const err = await res.json()
     throw new Error(err.error ?? 'Failed to upload documents')
   }
   return res.json()

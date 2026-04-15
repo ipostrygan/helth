@@ -4,7 +4,16 @@ import prisma from '@/lib/prisma'
 import { SelfCareActivity } from '@/lib/generated/prisma/client'
 import type { PaginatedResult, BaseQueryParams } from '@/types'
 
-export type SelfCareActivitiesQuery = BaseQueryParams
+type SelfCareActivityFields = {
+  title: string
+  date: Date
+  description?: string
+  medication: string
+  dosage: string
+}
+
+export type CreateSelfCareActivityInput = SelfCareActivityFields & { userId: string }
+export type UpdateSelfCareActivityInput = Partial<SelfCareActivityFields> & { id: string }
 
 export const getSelfCareActivities = async ({
   profileId,
@@ -15,7 +24,7 @@ export const getSelfCareActivities = async ({
   search = '',
   dateFrom,
   dateTo
-}: SelfCareActivitiesQuery = {}): Promise<PaginatedResult<SelfCareActivity>> => {
+}: BaseQueryParams = {}): Promise<PaginatedResult<SelfCareActivity>> => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
@@ -63,7 +72,7 @@ export const getSelfCareActivities = async ({
   }
 }
 
-export const deleteSelfCareActivity = async (id: string): Promise<void> => {
+export const deleteSelfCareActivity = async (id: string) => {
   try {
     await prisma.selfCareActivity.delete({ where: { id } })
   }
@@ -73,19 +82,9 @@ export const deleteSelfCareActivity = async (id: string): Promise<void> => {
   }
 }
 
-export const getSelfCareActivityById = async (id: string): Promise<SelfCareActivity | null> => {
+export const getSelfCareActivityById = async (id: string) => {
   return prisma.selfCareActivity.findUnique({ where: { id } })
 }
-
-type SelfCareActivityFields = {
-  title: string
-  date: Date
-  description?: string
-  medication: string
-  dosage: string
-}
-
-export type CreateSelfCareActivityInput = SelfCareActivityFields & { userId: string }
 
 export const createSelfCareActivity = async (input: CreateSelfCareActivityInput) => {
   try {
@@ -96,8 +95,6 @@ export const createSelfCareActivity = async (input: CreateSelfCareActivityInput)
     throw new Error(e instanceof Error ? e.message : 'Failed to create self-care activity')
   }
 }
-
-export type UpdateSelfCareActivityInput = Partial<SelfCareActivityFields> & { id: string }
 
 export const updateSelfCareActivity = async ({ id, ...data }: UpdateSelfCareActivityInput) => {
   try {

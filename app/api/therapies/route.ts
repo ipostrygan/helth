@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSearchParamsCache, parseAsArrayOf, parseAsString } from 'nuqs/server'
 import { getTherapies } from '../../actions/therapies'
-import { Therapy } from '@/lib/generated/prisma/client'
-import { baseSearchParams } from '@/lib/search-params'
+import { baseSearchParams, therapiesQueryParamsSchema } from '@/lib/search-params'
+import { validateQueryParams } from '@/lib/api/utils'
 
 const searchParamsCache = createSearchParamsCache({
   ...baseSearchParams('startDate'),
@@ -10,19 +10,11 @@ const searchParamsCache = createSearchParamsCache({
 })
 
 export async function GET(req: NextRequest) {
-  const { profileId, page, pageSize, sortField, sortDirection, search, dateFrom, dateTo, isActive }
-    = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
-
-  const result = await getTherapies({
-    profileId: profileId ?? undefined,
-    page,
-    pageSize,
-    sortField: sortField as keyof Therapy,
-    sortDirection,
-    search,
-    dateFrom: dateFrom ?? undefined,
-    dateTo: dateTo ?? undefined,
-    isActive: isActive ?? undefined
-  })
+  const parsed = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
+  const validation = validateQueryParams(therapiesQueryParamsSchema, parsed)
+  if (!validation.success) {
+    return validation.response
+  }
+  const result = await getTherapies(validation.data)
   return NextResponse.json(result)
 }

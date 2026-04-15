@@ -18,6 +18,7 @@ export async function getTherapies(
   }
 
   const res = await fetch(`${BASE}?${sp}`)
+  if (!res.ok) throw new Error(`Failed to fetch therapies: ${res.status}`)
   return res.json()
 }
 

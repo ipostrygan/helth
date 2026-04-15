@@ -4,7 +4,11 @@ import { useState } from 'react'
 import { ColumnDef } from '@tanstack/react-table'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
 import { useQueryStates } from 'nuqs'
-import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
+import {
+  baseFilterParsers,
+  defaultDateFrom,
+  defaultDateTo
+} from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
 import { useSelfCareActivities } from './hooks/use-self-care-activities'
@@ -35,7 +39,8 @@ export default function Page() {
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
-  const { mutate: deleteItem, isPending: isDeleting } = useDeleteSelfCareActivity()
+  const { mutate: deleteItem, isPending: isDeleting }
+    = useDeleteSelfCareActivity()
   const [addingItem, setAddingItem] = useState(false)
   const [editingItem, setEditingItem] = useState<SelfCareActivity | null>(null)
 
@@ -47,11 +52,20 @@ export default function Page() {
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined
   }
-  const { data, isLoading, isFetching, isError } = useSelfCareActivities(params)
+  const { data, isLoading, isFetching, isError }
+    = useSelfCareActivities(params)
 
   const onSortChange = (field: string) => {
-    const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'
-    setFilters(prev => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
+    const direction
+      = filters.sortField === field && filters.sortDirection === 'asc'
+        ? 'desc'
+        : 'asc'
+    setFilters(prev => ({
+      ...prev,
+      page: 1,
+      sortField: field,
+      sortDirection: direction
+    }))
   }
 
   const columns: ColumnDef<SelfCareActivity>[] = [
@@ -125,7 +139,9 @@ export default function Page() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => setEditingItem(row.original)}>Edit</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setEditingItem(row.original)}>
+              Edit
+            </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
               onSelect={() => setDeletingId(row.original.id)}
@@ -140,7 +156,10 @@ export default function Page() {
 
   const dateRange
     = filters.dateFrom || filters.dateTo
-      ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
+      ? {
+          from: filters.dateFrom ? new Date(filters.dateFrom) : undefined,
+          to: filters.dateTo ? new Date(filters.dateTo) : undefined
+        }
       : undefined
 
   if (!profile) {
@@ -150,7 +169,7 @@ export default function Page() {
   return (
     <TableTemplate
       onAddNew={() => setAddingItem(true)}
-      addNewLabel="Add Self-Care Activity"
+      addNewLabel="Add activity"
       title={`${profile.firstName}'s self-care activities`}
       description="Self-care activities - taking medications, applying treatments, wellness routines"
       columns={columns}
@@ -160,10 +179,12 @@ export default function Page() {
       isError={isError}
       pageSize={filters.pageSize}
       onPageChange={page => setFilters(prev => ({ ...prev, page }))}
-      onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
+      onPageSizeChange={pageSize =>
+        setFilters(prev => ({ ...prev, page: 1, pageSize }))}
       filters={{
         searchValue: filters.search,
-        onSearchChange: search => setFilters(prev => ({ ...prev, page: 1, search })),
+        onSearchChange: search =>
+          setFilters(prev => ({ ...prev, page: 1, search })),
         searchPlaceholder: 'Search self-care activities...',
         dateRange,
         onDateRangeChange: (range: DateRange | undefined) =>
@@ -173,8 +194,21 @@ export default function Page() {
             dateFrom: range?.from ? format(range.from, 'yyyy-MM-dd') : null,
             dateTo: range?.to ? format(range.to, 'yyyy-MM-dd') : null
           })),
-        hasActiveFilters: !!(filters.search || filters.dateFrom !== defaultDateFrom || filters.dateTo !== defaultDateTo),
-        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: '', dateFrom: null, dateTo: null }))
+        hasActiveFilters: !!(
+          filters.search
+          || filters.dateFrom !== defaultDateFrom
+          || filters.dateTo !== defaultDateTo
+        ),
+        onClearFilters: () =>
+          setFilters(() => ({
+            page: 1,
+            pageSize: filters.pageSize,
+            sortField: 'date',
+            sortDirection: 'desc',
+            search: '',
+            dateFrom: null,
+            dateTo: null
+          }))
       }}
       deleteConfig={{
         deletingId,
@@ -190,20 +224,29 @@ export default function Page() {
           <SelfCareActivityDetailsSheet
             selfCareActivity={openActivity ?? null}
             open={!!openId && !!openActivity}
-            onOpenChange={(open) => { if (!open) setOpenId(null) }}
+            onOpenChange={(open) => {
+              if (!open) setOpenId(null)
+            }}
           />
           <Modal
             open={addingItem}
-            onOpenChange={(open) => { if (!open) setAddingItem(false) }}
-            title="Add Self-Care Activity"
+            onOpenChange={(open) => {
+              if (!open) setAddingItem(false)
+            }}
+            title="Add self-care activity"
             description="Fill in the details below."
           >
-            <SelfCareActivityForm profileId={activeProfileId!} onClose={() => setAddingItem(false)} />
+            <SelfCareActivityForm
+              profileId={activeProfileId!}
+              onClose={() => setAddingItem(false)}
+            />
           </Modal>
           <Modal
             open={editingItem !== null}
-            onOpenChange={(open) => { if (!open) setEditingItem(null) }}
-            title="Edit Self-Care Activity"
+            onOpenChange={(open) => {
+              if (!open) setEditingItem(null)
+            }}
+            title="Edit self-care activity"
             description="Update the details of the selected self-care activity."
           >
             {editingItem && (

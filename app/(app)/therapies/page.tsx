@@ -230,7 +230,7 @@ const TherapiesPage = () => {
           }
         ],
         hasActiveFilters: !!(filters.search || filters.dateFrom !== defaultDateFrom || filters.dateTo !== defaultDateTo || filters.isActive.length > 0),
-        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: filters.sortField, sortDirection: filters.sortDirection, search: '', dateFrom: null, dateTo: null, isActive: [] }))
+        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: 'startDate', sortDirection: 'desc', search: '', dateFrom: null, dateTo: null, isActive: [] }))
       }}
       deleteConfig={{
         deletingId,

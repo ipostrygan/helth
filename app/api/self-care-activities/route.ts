@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSelfCareActivities } from '../../actions/self-care-activities'
-import { SelfCareActivity } from '@/lib/generated/prisma/client'
-import { baseSearchParams } from '@/lib/search-params'
+import { baseSearchParams, selfCareActivitiesQueryParamsSchema } from '@/lib/search-params'
+import { validateQueryParams } from '@/lib/api/utils'
 import { createSearchParamsCache } from 'nuqs/server'
 
 const searchParamsCache = createSearchParamsCache({
@@ -9,18 +9,11 @@ const searchParamsCache = createSearchParamsCache({
 })
 
 export async function GET(req: NextRequest) {
-  const { profileId, page, pageSize, sortField, sortDirection, search, dateFrom, dateTo }
-    = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
-
-  const result = await getSelfCareActivities({
-    profileId: profileId ?? undefined,
-    page,
-    pageSize,
-    sortField: sortField as keyof SelfCareActivity,
-    sortDirection,
-    search,
-    dateFrom: dateFrom ?? undefined,
-    dateTo: dateTo ?? undefined
-  })
+  const parsed = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
+  const validation = validateQueryParams(selfCareActivitiesQueryParamsSchema, parsed)
+  if (!validation.success) {
+    return validation.response
+  }
+  const result = await getSelfCareActivities(validation.data)
   return NextResponse.json(result)
 }

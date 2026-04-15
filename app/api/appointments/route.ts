@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createSearchParamsCache, parseAsArrayOf, parseAsString } from 'nuqs/server'
+import {
+  createSearchParamsCache,
+  parseAsArrayOf,
+  parseAsString
+} from 'nuqs/server'
 import { getAppointments } from '../../actions/appointments'
-import { baseSearchParams } from '@/lib/search-params'
+import {
+  baseSearchParams,
+  appointmentsQueryParamsSchema
+} from '@/lib/search-params'
+import { validateQueryParams } from '@/lib/api/utils'
 
 const searchParamsCache = createSearchParamsCache({
   ...baseSearchParams(),
@@ -10,20 +18,13 @@ const searchParamsCache = createSearchParamsCache({
 })
 
 export async function GET(req: NextRequest) {
-  const { profileId, page, pageSize, sortField, sortDirection, search, dateFrom, dateTo, statuses, therapyId }
-    = searchParamsCache.parse(Object.fromEntries(req.nextUrl.searchParams))
-
-  const result = await getAppointments({
-    profileId: profileId ?? undefined,
-    page,
-    pageSize,
-    sortField,
-    sortDirection,
-    search,
-    dateFrom: dateFrom ?? undefined,
-    dateTo: dateTo ?? undefined,
-    statuses: statuses ?? undefined,
-    therapyId: therapyId ?? undefined
-  })
+  const parsed = searchParamsCache.parse(
+    Object.fromEntries(req.nextUrl.searchParams)
+  )
+  const validation = validateQueryParams(appointmentsQueryParamsSchema, parsed)
+  if (!validation.success) {
+    return validation.response
+  }
+  const result = await getAppointments(validation.data)
   return NextResponse.json(result)
 }

@@ -13,6 +13,7 @@ export async function getMedicalExpenses(
     appointmentId: params.appointmentId
   })
   const res = await fetch(`${BASE}?${sp}`)
+  if (!res.ok) throw new Error(`Failed to fetch medical expenses: ${res.status}`)
   return res.json()
 }
 

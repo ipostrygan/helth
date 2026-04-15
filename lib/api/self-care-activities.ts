@@ -9,8 +9,11 @@ export type SelfCareActivitiesParams = BaseQueryParams
 export async function getSelfCareActivities(
   params: SelfCareActivitiesParams
 ): Promise<PaginatedResult<SelfCareActivity>> {
-  const sp = buildSearchParams(params)
-  const res = await fetch(`${BASE}?${sp}`)
+  const searchParams = buildSearchParams(params)
+  const res = await fetch(`${BASE}?${searchParams}`)
+  if (!res.ok) {
+    throw new Error(`Failed to fetch self-care activities: ${res.status}`)
+  }
   return res.json()
 }
 

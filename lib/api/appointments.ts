@@ -16,6 +16,7 @@ export async function getAppointments(
     therapyId: params.therapyId
   })
   const res = await fetch(`${BASE}?${searchParams}`)
+  if (!res.ok) throw new Error(`Failed to fetch appointments: ${res.status}`)
   return res.json()
 }
 
