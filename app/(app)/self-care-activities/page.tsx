@@ -22,7 +22,9 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { TableTemplate } from '@/components/table-template'
+import { Modal } from '@/components/ui/modal'
 import { SelfCareActivityDetailsSheet } from './components/self-care-activity-details-sheet'
+import SelfCareActivityForm from './self-care-activity-form'
 
 export default function Page() {
   const [openId, setOpenId] = useState<string | null>(null)
@@ -34,6 +36,8 @@ export default function Page() {
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteSelfCareActivity()
+  const [addingItem, setAddingItem] = useState(false)
+  const [editingItem, setEditingItem] = useState<SelfCareActivity | null>(null)
 
   const { data: openActivity } = useSelfCareActivity(openId ?? '')
 
@@ -121,6 +125,7 @@ export default function Page() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem onSelect={() => setEditingItem(row.original)}>Edit</DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
               onSelect={() => setDeletingId(row.original.id)}
@@ -144,6 +149,8 @@ export default function Page() {
 
   return (
     <TableTemplate
+      onAddNew={() => setAddingItem(true)}
+      addNewLabel="Add Self-Care Activity"
       title={`${profile.firstName}'s self-care activities`}
       description="Self-care activities - taking medications, applying treatments, wellness routines"
       columns={columns}
@@ -179,11 +186,35 @@ export default function Page() {
         isPending: isDeleting
       }}
       modals={(
-        <SelfCareActivityDetailsSheet
-          selfCareActivity={openActivity ?? null}
-          open={!!openId && !!openActivity}
-          onOpenChange={(open) => { if (!open) setOpenId(null) }}
-        />
+        <>
+          <SelfCareActivityDetailsSheet
+            selfCareActivity={openActivity ?? null}
+            open={!!openId && !!openActivity}
+            onOpenChange={(open) => { if (!open) setOpenId(null) }}
+          />
+          <Modal
+            open={addingItem}
+            onOpenChange={(open) => { if (!open) setAddingItem(false) }}
+            title="Add Self-Care Activity"
+            description="Fill in the details below."
+          >
+            <SelfCareActivityForm profileId={activeProfileId!} onClose={() => setAddingItem(false)} />
+          </Modal>
+          <Modal
+            open={editingItem !== null}
+            onOpenChange={(open) => { if (!open) setEditingItem(null) }}
+            title="Edit Self-Care Activity"
+            description="Update the details of the selected self-care activity."
+          >
+            {editingItem && (
+              <SelfCareActivityForm
+                profileId={activeProfileId!}
+                onClose={() => setEditingItem(null)}
+                selfCareActivity={editingItem}
+              />
+            )}
+          </Modal>
+        </>
       )}
     />
   )

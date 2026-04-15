@@ -76,3 +76,35 @@ export const deleteSelfCareActivity = async (id: string): Promise<void> => {
 export const getSelfCareActivityById = async (id: string): Promise<SelfCareActivity | null> => {
   return prisma.selfCareActivity.findUnique({ where: { id } })
 }
+
+type SelfCareActivityFields = {
+  title: string
+  date: Date
+  description?: string
+  medication: string
+  dosage: string
+}
+
+export type CreateSelfCareActivityInput = SelfCareActivityFields & { userId: string }
+
+export const createSelfCareActivity = async (input: CreateSelfCareActivityInput) => {
+  try {
+    await prisma.selfCareActivity.create({ data: input })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to create self-care activity')
+  }
+}
+
+export type UpdateSelfCareActivityInput = Partial<SelfCareActivityFields> & { id: string }
+
+export const updateSelfCareActivity = async ({ id, ...data }: UpdateSelfCareActivityInput) => {
+  try {
+    await prisma.selfCareActivity.update({ where: { id }, data })
+  }
+  catch (e) {
+    console.error(e)
+    throw new Error(e instanceof Error ? e.message : 'Failed to update self-care activity')
+  }
+}
