@@ -17,17 +17,6 @@ const BASE_CLASS = 'text-primary hover:text-primary/80 transition-colors'
 export function AppLink({ external, className, children, href, ...rest }: AppLinkProps) {
   const cls = cn(BASE_CLASS, className)
 
-  if (external) {
-    return (
-      <a href={href} className={cls} {...rest}>
-        {children}
-      </a>
-    )
-  }
-
-  return (
-    <Link href={href} className={cls} {...rest}>
-      {children}
-    </Link>
-  )
+  const Tag = external ? 'a' : Link
+  return <Tag href={href} className={cls} {...rest}>{children}</Tag>
 }

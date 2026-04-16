@@ -19,20 +19,20 @@ export const baseQueryParamsSchema = z.object({
 
 export const appointmentsQueryParamsSchema = baseQueryParamsSchema.extend({
   sortField: z.enum(['date', 'title', 'type', 'status', 'cost', 'doctorName', 'location']),
-  statuses: z.array(z.string()).optional(),
-  therapyId: z.string().optional()
+  statuses: z.array(z.string()).nullish(),
+  therapyId: z.string().nullish()
 })
 
 export const medicalExpensesQueryParamsSchema = baseQueryParamsSchema.extend({
   sortField: z.enum(['date', 'title', 'amount', 'type']),
-  types: z.array(z.string()).optional(),
-  therapyId: z.string().optional(),
-  appointmentId: z.string().optional()
+  types: z.array(z.string()).nullish(),
+  therapyId: z.string().nullish(),
+  appointmentId: z.string().nullish()
 })
 
 export const therapiesQueryParamsSchema = baseQueryParamsSchema.extend({
   sortField: z.enum(['startDate', 'endDate', 'title', 'isActive', 'therapistName']),
-  isActive: z.array(z.string()).optional()
+  isActive: z.array(z.string()).nullish()
 })
 
 export const selfCareActivitiesQueryParamsSchema = baseQueryParamsSchema.extend({
