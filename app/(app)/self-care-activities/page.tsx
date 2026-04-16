@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { ColumnDef } from '@tanstack/react-table'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
 import { useQueryStates } from 'nuqs'
@@ -31,6 +31,14 @@ import { SelfCareActivityDetailsSheet } from './components/self-care-activity-de
 import SelfCareActivityForm from './self-care-activity-form'
 
 export default function Page() {
+  return (
+    <Suspense>
+      <SelfCareActivitiesPage />
+    </Suspense>
+  )
+}
+
+function SelfCareActivitiesPage() {
   const [openId, setOpenId] = useState<string | null>(null)
   const { activeProfileId } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
