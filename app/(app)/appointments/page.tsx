@@ -61,12 +61,12 @@ const AppointmentsPage = () => {
     },
     {
       accessorKey: 'type',
-      header: 'Type',
+      header: () => <SortButton field="type" label="Type" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
       cell: ({ row }) => APPOINTMENT_TYPE_LABELS[row.getValue('type') as keyof typeof APPOINTMENT_TYPE_LABELS]
     },
     {
       accessorKey: 'status',
-      header: 'Status',
+      header: () => <SortButton field="status" label="Status" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
       cell: ({ row }) => APPOINTMENT_STATUS_LABELS[row.getValue('status') as keyof typeof APPOINTMENT_STATUS_LABELS]
     },
     {
@@ -76,7 +76,7 @@ const AppointmentsPage = () => {
     },
     {
       accessorKey: 'cost',
-      header: 'Cost (€)',
+      header: () => <SortButton field="cost" label="Cost (€)" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
       cell: ({ row }) => row.getValue('cost') ?? '—'
     },
     {

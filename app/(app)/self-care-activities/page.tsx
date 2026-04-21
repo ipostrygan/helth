@@ -125,15 +125,7 @@ function SelfCareActivitiesPage() {
     },
     {
       accessorKey: 'dosage',
-      header: () => (
-        <SortButton
-          label="Dosage"
-          field="dosage"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Dosage',
       cell: ({ row }) => row.getValue('dosage')
     },
     {

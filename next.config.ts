@@ -17,10 +17,13 @@ const nextConfig: NextConfig = {
         pathname: '/api/download/**'
       },
       {
+        pathname: '/api/users/*/image'
+      },
+      {
         pathname: '/icons/**'
       },
       {
-        pathname: '/images/**'
+        pathname: '/users/**'
       }
     ]
   }

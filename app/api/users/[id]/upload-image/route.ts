@@ -18,10 +18,12 @@ export async function PUT(
     }
 
     const ext = file.name.split('.').pop()
-    const key = `users/${id}/profile${ext ? `.${ext}` : ''}`
 
-    const user = await prisma.user.findUnique({ where: { id }, select: { imageKey: true } })
+    const user = await prisma.user.findUnique({ where: { id }, select: { imageKey: true, firstName: true } })
     const oldKey = user?.imageKey
+
+    const safeName = (user?.firstName ?? 'user').toLowerCase().replace(/[^a-z0-9]/g, '-')
+    const key = `users/${safeName}-${id}${ext ? `.${ext}` : ''}`
 
     await uploadS3Object(key, file)
 

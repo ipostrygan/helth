@@ -2,7 +2,6 @@
 
 import { EditProfileFormType } from '../(app)/profile/edit-profile-form'
 import prisma from '@/lib/prisma'
-import { toUserProfile } from '@/lib/utils'
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library'
 
 export const editProfile = async (id: string, data: EditProfileFormType) => {
@@ -23,9 +22,9 @@ export const editProfile = async (id: string, data: EditProfileFormType) => {
 
 export const getProfile = async (id: string) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id } })
-    if (!user) return { error: 'User not found', data: null, status: 404 }
-    return { error: null, data: toUserProfile(user), status: 200 }
+    const data = await prisma.user.findUnique({ where: { id } })
+    if (!data) return { error: 'User not found', data: null, status: 404 }
+    return { error: null, data, status: 200 }
   }
   catch (e) {
     if (e instanceof PrismaClientValidationError) {
@@ -37,8 +36,8 @@ export const getProfile = async (id: string) => {
 
 export const getAllProfiles = async () => {
   try {
-    const users = await prisma.user.findMany()
-    return { error: null, data: await Promise.all(users.map(toUserProfile)), status: 200 }
+    const data = await prisma.user.findMany()
+    return { error: null, data, status: 200 }
   }
   catch (e) {
     return { error: e instanceof Error ? e.message : 'Failed to fetch profiles', data: null, status: 500 }

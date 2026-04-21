@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import Image from 'next/image'
 import { Camera, Loader2 } from 'lucide-react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -26,10 +26,7 @@ const UserAvatar = ({
   const [imageLoaded, setImageLoaded] = useState(false)
 
   const initials = `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
-
-  useEffect(() => {
-    setImageLoaded(false)
-  }, [profile.imageKey])
+  const imageUrl = `/api/users/${profile.id}/image`
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -60,19 +57,19 @@ const UserAvatar = ({
   const avatarEl = (
     <Avatar className={cn('@container font-semibold', className ?? 'size-62.5')}>
       <AvatarFallback className="text-[33cqw]">{initials}</AvatarFallback>
-      {profile.imageUrl && (
+      {imageUrl !== null && (
         <Image
-          src={profile.imageUrl}
+          src={imageUrl}
           alt={`${profile.firstName} ${profile.lastName}'s avatar`}
-          width={250}
-          height={250}
+          fill
+          unoptimized
+          loading="lazy"
           className={cn(
-            'absolute inset-0 aspect-square size-full object-cover transition-opacity duration-300',
+            'object-cover transition-opacity duration-300',
             imageLoaded ? 'opacity-100' : 'opacity-0'
           )}
-          loading="eager"
-          priority
           onLoad={() => setImageLoaded(true)}
+          onError={() => setImageLoaded(false)}
         />
       )}
     </Avatar>
