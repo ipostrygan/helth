@@ -7,14 +7,14 @@ import { z } from 'zod'
 const dateParam = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must be yyyy-MM-dd').optional()
 
 export const baseQueryParamsSchema = z.object({
-  profileId: z.string().optional(),
+  profileId: z.string().nullish(),
   page: z.number().int().positive('must be a positive integer'),
   pageSize: z.number().int().positive('must be a positive integer').max(100, 'must be ≤ 100'),
   sortField: z.string(),
   sortDirection: z.enum(SORT_DIRECTIONS),
   search: z.string(),
-  dateFrom: dateParam,
-  dateTo: dateParam
+  dateFrom: dateParam.nullish(),
+  dateTo: dateParam.nullish()
 })
 
 export const appointmentsQueryParamsSchema = baseQueryParamsSchema.extend({

@@ -12,14 +12,14 @@ export type PaginatedResult<T> = {
 
 // queries
 export type BaseQueryParams = {
-  profileId?: string
+  profileId?: string | null
   page?: number
   pageSize?: number
   sortField?: string
   sortDirection?: string
   search?: string
-  dateFrom?: string
-  dateTo?: string
+  dateFrom?: string | null
+  dateTo?: string | null
 }
 
 // app

@@ -7,6 +7,7 @@ import { AppLink } from '@/components/ui/app-link'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
+import { useActiveProfile } from '@/context/profile-context'
 import { useTherapy } from '../hooks/use-therapy'
 import { Separator } from '@/components/ui/separator'
 import { DetailRow } from '@/components/ui/detail-row'
@@ -28,6 +29,7 @@ import { queryKeys } from '@/lib/query-keys'
 
 const TherapyDetailPage = () => {
   const { id } = useParams<{ id: string }>()
+  const { activeProfileId } = useActiveProfile()
   const { data: therapy, isLoading } = useTherapy(id)
   const { uploadMutation, removeMutation } = useDocuments(`/api/therapies/${id}/documents`, queryKeys.therapies.detail(id))
 
@@ -51,6 +53,7 @@ const TherapyDetailPage = () => {
   }, 'therapyId')
 
   const { data: appointmentsData, isLoading: isAppointmentsLoading, isError: isAppointmentsError } = useAppointments({
+    profileId: activeProfileId ?? undefined,
     therapyId: id,
     page: apptFilters.apptPage,
     pageSize: apptFilters.apptPageSize,
@@ -64,8 +67,9 @@ const TherapyDetailPage = () => {
   const [deletingApptId, setDeletingApptId] = useState<string | null>(null)
   const { mutate: deleteAppointment, isPending: isDeletingAppt } = useDeleteAppointment()
 
-  if (isLoading) return null
-  if (!therapy) return null
+  if (isLoading || !therapy) {
+    return null
+  }
 
   const expenseSorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
   const onExpenseSortingChange: OnChangeFn<SortingState> = (updater) => {
