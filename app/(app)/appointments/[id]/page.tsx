@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { useAppointment } from '../hooks/use-appointment'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
 import { Separator } from '@/components/ui/separator'
+import { DetailRow } from '@/components/ui/detail-row'
 import {
   APPOINTMENT_TYPE_LABELS,
   APPOINTMENT_STATUS_LABELS
@@ -103,18 +104,6 @@ const AppointmentDetailPage = () => {
   )
 }
 
-const DetailRow = ({
-  label,
-  children
-}: {
-  label: string
-  children: React.ReactNode
-}) => (
-  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0">
-    <span className="text-sm text-muted-foreground sm:w-48 shrink-0">{label}</span>
-    <span className="text-sm">{children}</span>
-  </div>
-)
 
 export default function Page() {
   return <Suspense><AppointmentDetailPage /></Suspense>

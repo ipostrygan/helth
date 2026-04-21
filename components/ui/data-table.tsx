@@ -3,11 +3,15 @@
 import { Fragment } from 'react'
 import {
   ColumnDef,
+  OnChangeFn,
+  SortingState,
   flexRender,
   getCoreRowModel,
   useReactTable
 } from '@tanstack/react-table'
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -46,6 +50,8 @@ interface DataTableProps<TData, TValue> {
   onPageSizeChange: (pageSize: number) => void
   pageSize: number
   hasActiveFilters?: boolean
+  sorting?: SortingState
+  onSortingChange?: OnChangeFn<SortingState>
 }
 
 export function DataTable<TData, TValue>({
@@ -54,14 +60,18 @@ export function DataTable<TData, TValue>({
   onPageChange,
   onPageSizeChange,
   pageSize = DEFAULT_PAGE_SIZE,
-  hasActiveFilters = false
+  hasActiveFilters = false,
+  sorting,
+  onSortingChange
 }: DataTableProps<TData, TValue>) {
   'use no memo'
   const table = useReactTable({
     data: data.data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
-    manualSorting: true
+    manualSorting: true,
+    state: { sorting },
+    onSortingChange
   })
 
   const isEmpty = data.total === 0 && !hasActiveFilters
@@ -79,19 +89,36 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <TableHead
-                    key={header.id}
-                    className={[
-                      header.column.id === 'actions' ? 'sticky right-0 bg-background' : undefined,
-                      isEmpty ? 'pointer-events-none' : undefined
-                    ].filter(Boolean).join(' ') || undefined}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const canSort = header.column.getCanSort()
+                  const sorted = header.column.getIsSorted()
+                  const SortIcon = sorted === 'asc' ? ArrowUp : sorted === 'desc' ? ArrowDown : ArrowUpDown
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className={[
+                        header.column.id === 'actions' ? 'sticky right-0 bg-background' : undefined,
+                        isEmpty ? 'pointer-events-none' : undefined
+                      ].filter(Boolean).join(' ') || undefined}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : canSort
+                          ? (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={header.column.getToggleSortingHandler()}
+                                className="-ml-3"
+                              >
+                                {flexRender(header.column.columnDef.header, header.getContext())}
+                                <SortIcon className="h-4 w-4 shrink-0" />
+                              </Button>
+                            )
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>
+                  )
+                })}
               </TableRow>
             ))}
           </TableHeader>

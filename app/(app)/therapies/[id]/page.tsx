@@ -9,14 +9,14 @@ import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
 import { useTherapy } from '../hooks/use-therapy'
 import { Separator } from '@/components/ui/separator'
+import { DetailRow } from '@/components/ui/detail-row'
 import { TableTemplate } from '@/components/table-template'
 import { useMedicalExpenses } from '../../medical-expenses/hooks/use-medical-expenses'
 import { useDeleteMedicalExpense } from '../../medical-expenses/hooks/use-delete-medical-expense'
 import { useAppointments } from '../../appointments/hooks/use-appointments'
 import { useDeleteAppointment } from '../../appointments/hooks/use-delete-appointment'
-import { ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
 import type { MedicalExpense, Appointment } from '@/lib/generated/prisma/client'
-import { SortButton } from '@/components/ui/sort-button'
 import { EXPENSE_TYPE_LABELS } from '../../medical-expenses/constants'
 import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from '../../appointments/constants'
 import { RowActions } from '@/components/row-actions'
@@ -67,24 +67,32 @@ const TherapyDetailPage = () => {
   if (isLoading) return null
   if (!therapy) return null
 
-  const onSortChange = (field: string) => {
-    const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'
-    setFilters(prev => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
+  const expenseSorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
+  const onExpenseSortingChange: OnChangeFn<SortingState> = (updater) => {
+    const next = typeof updater === 'function' ? updater(expenseSorting) : updater
+    const first = next[0]
+    if (first) {
+      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
+    }
   }
 
-  const onApptSortChange = (field: string) => {
-    const direction = apptFilters.apptSortField === field && apptFilters.apptSortDirection === 'asc' ? 'desc' : 'asc'
-    setApptFilters(prev => ({ ...prev, apptPage: 1, apptSortField: field, apptSortDirection: direction }))
+  const apptSorting: SortingState = [{ id: apptFilters.apptSortField, desc: apptFilters.apptSortDirection === 'desc' }]
+  const onApptSortingChange: OnChangeFn<SortingState> = (updater) => {
+    const next = typeof updater === 'function' ? updater(apptSorting) : updater
+    const first = next[0]
+    if (first) {
+      setApptFilters(prev => ({ ...prev, apptPage: 1, apptSortField: first.id, apptSortDirection: first.desc ? 'desc' : 'asc' }))
+    }
   }
 
   const apptColumns: ColumnDef<Appointment>[] = [
     {
       accessorKey: 'title',
-      header: () => <SortButton field="title" label="Title" sortField={apptFilters.apptSortField} sortDirection={apptFilters.apptSortDirection} onSortChange={onApptSortChange} />
+      header: 'Title'
     },
     {
       accessorKey: 'date',
-      header: () => <SortButton field="date" label="Date" sortField={apptFilters.apptSortField} sortDirection={apptFilters.apptSortDirection} onSortChange={onApptSortChange} />,
+      header: 'Date',
       cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
     },
     {
@@ -104,6 +112,7 @@ const TherapyDetailPage = () => {
     },
     {
       id: 'actions',
+      enableSorting: false,
       cell: ({ row }) => (
         <RowActions onDelete={() => setDeletingApptId(row.original.id)} />
       )
@@ -113,17 +122,17 @@ const TherapyDetailPage = () => {
   const columns: ColumnDef<MedicalExpense>[] = [
     {
       accessorKey: 'title',
-      header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />
+      header: 'Title'
     },
     {
       accessorKey: 'amount',
-      header: () => <SortButton field="amount" label="Amount" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      header: 'Amount',
       cell: ({ row }) =>
         new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(row.getValue('amount'))
     },
     {
       accessorKey: 'date',
-      header: () => <SortButton field="date" label="Date" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      header: 'Date',
       cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
     },
     {
@@ -138,6 +147,7 @@ const TherapyDetailPage = () => {
     },
     {
       id: 'actions',
+      enableSorting: false,
       cell: ({ row }) => (
         <RowActions
           onDelete={() => setDeletingId(row.original.id)}
@@ -229,6 +239,8 @@ const TherapyDetailPage = () => {
         pageSize={apptFilters.apptPageSize}
         onPageChange={page => setApptFilters(prev => ({ ...prev, apptPage: page }))}
         onPageSizeChange={pageSize => setApptFilters(prev => ({ ...prev, apptPage: 1, apptPageSize: pageSize }))}
+        sorting={apptSorting}
+        onSortingChange={onApptSortingChange}
         deleteConfig={{
           deletingId: deletingApptId,
           onCancel: () => setDeletingApptId(null),
@@ -251,6 +263,8 @@ const TherapyDetailPage = () => {
         pageSize={filters.pageSize}
         onPageChange={page => setFilters(prev => ({ ...prev, page }))}
         onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
+        sorting={expenseSorting}
+        onSortingChange={onExpenseSortingChange}
         deleteConfig={{
           deletingId,
           onCancel: () => setDeletingId(null),
@@ -264,19 +278,6 @@ const TherapyDetailPage = () => {
     </div>
   )
 }
-
-const DetailRow = ({
-  label,
-  children
-}: {
-  label: string
-  children: React.ReactNode
-}) => (
-  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0">
-    <span className="text-sm text-muted-foreground sm:w-48 shrink-0">{label}</span>
-    <span className="text-sm">{children}</span>
-  </div>
-)
 
 export default function Page() {
   return <Suspense><TherapyDetailPage /></Suspense>

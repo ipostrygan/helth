@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
@@ -10,7 +10,6 @@ import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
 import { useTherapies } from './hooks/use-therapies'
 import { useDeleteTherapy } from './hooks/use-delete-therapy'
-import { SortButton } from '@/components/ui/sort-button'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import { MoreHorizontal } from 'lucide-react'
@@ -49,23 +48,19 @@ const TherapiesPage = () => {
   }
   const { data, isLoading, isFetching, isError } = useTherapies(params)
 
-  const onSortChange = (field: string) => {
-    const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'
-    setFilters(prev => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
+  const sorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
+  const onSortingChange: OnChangeFn<SortingState> = (updater) => {
+    const next = typeof updater === 'function' ? updater(sorting) : updater
+    const first = next[0]
+    if (first) {
+      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
+    }
   }
 
   const columns: ColumnDef<Therapy>[] = [
     {
       accessorKey: 'title',
-      header: () => (
-        <SortButton
-          label="Title"
-          field="title"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Title',
       cell: ({ row }) => (
         <AppLink href={`/therapies/${row.original.id}`} className="font-medium">
           {row.getValue('title')}
@@ -74,28 +69,12 @@ const TherapiesPage = () => {
     },
     {
       accessorKey: 'startDate',
-      header: () => (
-        <SortButton
-          label="Start Date"
-          field="startDate"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Start Date',
       cell: ({ row }) => new Date(row.getValue('startDate')).toLocaleDateString()
     },
     {
       accessorKey: 'endDate',
-      header: () => (
-        <SortButton
-          label="End Date"
-          field="endDate"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'End Date',
       cell: ({ row }) => {
         const val = row.getValue<string | null>('endDate')
         return val ? new Date(val).toLocaleDateString() : '—'
@@ -103,15 +82,7 @@ const TherapiesPage = () => {
     },
     {
       accessorKey: 'therapistName',
-      header: () => (
-        <SortButton
-          label="Therapist"
-          field="therapistName"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Therapist',
       cell: ({ row }) => {
         const value = row.getValue<string | null>('therapistName') ?? '—'
         const url = row.original.therapistInfoLink
@@ -132,19 +103,12 @@ const TherapiesPage = () => {
     {
       accessorKey: 'location',
       header: 'Location',
+      enableSorting: false,
       cell: ({ row }) => row.getValue('location') ?? '—'
     },
     {
       accessorKey: 'isActive',
-      header: () => (
-        <SortButton
-          label="Status"
-          field="isActive"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Status',
       cell: ({ row }) => {
         const active = row.getValue<boolean>('isActive')
         return (
@@ -162,6 +126,7 @@ const TherapiesPage = () => {
     },
     {
       id: 'actions',
+      enableSorting: false,
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -209,6 +174,8 @@ const TherapiesPage = () => {
       pageSize={filters.pageSize}
       onPageChange={page => setFilters(prev => ({ ...prev, page }))}
       onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
+      sorting={sorting}
+      onSortingChange={onSortingChange}
       filters={{
         searchValue: filters.search,
         onSearchChange: search => setFilters(prev => ({ ...prev, page: 1, search })),

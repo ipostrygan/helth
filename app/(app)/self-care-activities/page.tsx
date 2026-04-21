@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
 import { useQueryStates } from 'nuqs'
 import {
@@ -14,7 +14,6 @@ import { useProfile } from '../users/hooks/use-profile'
 import { useSelfCareActivities } from './hooks/use-self-care-activities'
 import { useSelfCareActivity } from './hooks/use-self-care-activity'
 import { useDeleteSelfCareActivity } from './hooks/use-delete-self-care-activity'
-import { SortButton } from '@/components/ui/sort-button'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import { MoreHorizontal } from 'lucide-react'
@@ -47,8 +46,7 @@ function SelfCareActivitiesPage() {
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
-  const { mutate: deleteItem, isPending: isDeleting }
-    = useDeleteSelfCareActivity()
+  const { mutate: deleteItem, isPending: isDeleting } = useDeleteSelfCareActivity()
   const [addingItem, setAddingItem] = useState(false)
   const [editingItem, setEditingItem] = useState<SelfCareActivity | null>(null)
 
@@ -60,34 +58,21 @@ function SelfCareActivitiesPage() {
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined
   }
-  const { data, isLoading, isFetching, isError }
-    = useSelfCareActivities(params)
+  const { data, isLoading, isFetching, isError } = useSelfCareActivities(params)
 
-  const onSortChange = (field: string) => {
-    const direction
-      = filters.sortField === field && filters.sortDirection === 'asc'
-        ? 'desc'
-        : 'asc'
-    setFilters(prev => ({
-      ...prev,
-      page: 1,
-      sortField: field,
-      sortDirection: direction
-    }))
+  const sorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
+  const onSortingChange: OnChangeFn<SortingState> = (updater) => {
+    const next = typeof updater === 'function' ? updater(sorting) : updater
+    const first = next[0]
+    if (first) {
+      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
+    }
   }
 
   const columns: ColumnDef<SelfCareActivity>[] = [
     {
       accessorKey: 'title',
-      header: () => (
-        <SortButton
-          label="Title"
-          field="title"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Title',
       cell: ({ row }) => (
         <button
           className="text-primary font-medium hover:text-primary/80 transition-colors text-left"
@@ -99,37 +84,23 @@ function SelfCareActivitiesPage() {
     },
     {
       accessorKey: 'date',
-      header: () => (
-        <SortButton
-          label="Date"
-          field="date"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Date',
       cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
     },
     {
       accessorKey: 'medication',
-      header: () => (
-        <SortButton
-          label="Medication"
-          field="medication"
-          sortField={filters.sortField}
-          sortDirection={filters.sortDirection}
-          onSortChange={onSortChange}
-        />
-      ),
+      header: 'Medication',
       cell: ({ row }) => row.getValue('medication')
     },
     {
       accessorKey: 'dosage',
       header: 'Dosage',
+      enableSorting: false,
       cell: ({ row }) => row.getValue('dosage')
     },
     {
       id: 'actions',
+      enableSorting: false,
       cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -179,12 +150,12 @@ function SelfCareActivitiesPage() {
       isError={isError}
       pageSize={filters.pageSize}
       onPageChange={page => setFilters(prev => ({ ...prev, page }))}
-      onPageSizeChange={pageSize =>
-        setFilters(prev => ({ ...prev, page: 1, pageSize }))}
+      onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
+      sorting={sorting}
+      onSortingChange={onSortingChange}
       filters={{
         searchValue: filters.search,
-        onSearchChange: search =>
-          setFilters(prev => ({ ...prev, page: 1, search })),
+        onSearchChange: search => setFilters(prev => ({ ...prev, page: 1, search })),
         searchPlaceholder: 'Search self-care activities...',
         dateRange,
         onDateRangeChange: (range: DateRange | undefined) =>

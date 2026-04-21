@@ -8,6 +8,7 @@ import {
   SheetTitle
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
+import { DetailRow } from '@/components/ui/detail-row'
 
 type Props = {
   selfCareActivity: SelfCareActivity | null
@@ -46,16 +47,3 @@ export function SelfCareActivityDetailsSheet({ selfCareActivity, open, onOpenCha
     </Sheet>
   )
 }
-
-const DetailRow = ({
-  label,
-  children
-}: {
-  label: string
-  children: React.ReactNode
-}) => (
-  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0">
-    <span className="text-sm text-muted-foreground sm:w-36 shrink-0">{label}</span>
-    <span className="text-sm">{children}</span>
-  </div>
-)

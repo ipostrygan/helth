@@ -239,7 +239,7 @@ import { TableTemplate } from "@/components/table-template"
 import { ColumnDef } from "@tanstack/react-table"
 // Import child model types:
 // import type { {ChildModelName} } from "@/lib/generated/prisma/client"
-import { SortButton } from "@/components/ui/sort-button"
+import { DetailRow } from "@/components/ui/detail-row"
 // Import constants for enum columns:
 // import { ENUM_LABELS } from "../../{child-model-names}/constants"
 import { RowActions } from "@/components/row-actions"
@@ -331,24 +331,11 @@ const {ModelName}DetailPage = () => {
   )
 }
 
-const DetailRow = ({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) => (
-  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0">
-    <span className="text-sm text-muted-foreground sm:w-48 shrink-0">{label}</span>
-    <span className="text-sm">{children}</span>
-  </div>
-)
-
 export default {ModelName}DetailPage
 ```
 
 **Important structural rules for the page:**
-- Always define the `DetailRow` component at the bottom of the file (after the page component)
+- Import `DetailRow` from `@/components/ui/detail-row` — do NOT define it locally
 - The `<h1>` always shows the primary display field of the model (prefer `title`, then `name`, then `id`)
 - Detail rows are shown in this order: most important identifying/status fields first, then dates, then optional descriptive fields last
 - If there are multiple child tables with delete functionality, use separate `deletingId` state variables per table (e.g. `deletingExpenseId`, `deletingAppointmentId`) to avoid conflicts
@@ -377,6 +364,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Separator } from "@/components/ui/separator"
+import { DetailRow } from "@/components/ui/detail-row"
 // Import enum label constants if needed:
 // import { ENUM_LABELS } from "../constants"
 // Import hooks for FK-referenced models (to resolve display names):
@@ -410,27 +398,13 @@ export function {ModelName}DetailsSheet({ {modelName}, open, onOpenChange }: Pro
     </Sheet>
   )
 }
-
-const DetailRow = ({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) => (
-  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0">
-    <span className="text-sm text-muted-foreground sm:w-36 shrink-0">{label}</span>
-    <span className="text-sm">{children}</span>
-  </div>
-)
 ```
 
 **Important structural rules for the sheet:**
 - The sheet accepts the full item object (not just an ID) — the parent list page passes the selected row
-- Define `DetailRow` at the bottom of the file (after the exported component)
+- Import `DetailRow` from `@/components/ui/detail-row` — do NOT define it locally
 - For FK fields, call the related model's single-item hook at the top of the component (using the FK value), then use the result's display name in the row. All FK hooks run unconditionally — pass `""` when the value is null/undefined (the hook should have `enabled: !!id` to skip the request)
 - Detail rows follow the same field ordering and formatting rules as Step 3
-- Use `sm:w-36` (not `sm:w-48`) for the label column width in the sheet variant
 
 **After generating the sheet, also update the list page** (`app/(app)/{model-names}/page.tsx`) to integrate the sheet:
 1. Add `useState<{ModelName} | null>(null)` for `viewing{ModelName}` state

@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
-import { ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
 import { type DateRange } from 'react-day-picker'
 import { AlertCircle, Plus } from 'lucide-react'
 import { DataTable } from '@/components/ui/data-table'
@@ -53,6 +53,8 @@ interface TableTemplateProps<TData> {
   pageSize: number
   onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: number) => void
+  sorting?: SortingState
+  onSortingChange?: OnChangeFn<SortingState>
   onAddNew?: () => void
   addNewLabel?: string
   filters?: FiltersConfig
@@ -74,6 +76,8 @@ export function TableTemplate<TData>({
   pageSize,
   onPageChange,
   onPageSizeChange,
+  sorting,
+  onSortingChange,
   onAddNew,
   addNewLabel = 'Add new',
   filters,
@@ -150,6 +154,8 @@ export function TableTemplate<TData>({
                       onPageSizeChange={onPageSizeChange}
                       pageSize={pageSize}
                       hasActiveFilters={filters?.hasActiveFilters}
+                      sorting={sorting}
+                      onSortingChange={onSortingChange}
                     />
                   </div>
                 )}

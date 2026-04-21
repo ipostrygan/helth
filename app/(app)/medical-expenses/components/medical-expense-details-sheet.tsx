@@ -9,6 +9,7 @@ import {
   SheetTitle
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
+import { DetailRow } from '@/components/ui/detail-row'
 import { EXPENSE_TYPE_LABELS } from '../constants'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
 import { useAppointment } from '../../appointments/hooks/use-appointment'
@@ -73,16 +74,3 @@ export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Prop
     </Sheet>
   )
 }
-
-const DetailRow = ({
-  label,
-  children
-}: {
-  label: string
-  children: React.ReactNode
-}) => (
-  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0">
-    <span className="text-sm text-muted-foreground sm:w-36 shrink-0">{label}</span>
-    <span className="text-sm">{children}</span>
-  </div>
-)
