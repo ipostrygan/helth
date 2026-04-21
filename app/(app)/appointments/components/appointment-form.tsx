@@ -35,7 +35,7 @@ export type AppointmentFormValues = FormValues
 
 type AppointmentFormProps = {
   profileId: string
-  appointment?: Appointment & { cost?: number | null }
+  appointment?: Appointment
   onSubmit: (values: FormValues) => Promise<void>
 }
 
@@ -45,6 +45,7 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
 
   const { control, register, handleSubmit, formState: { errors, isSubmitting, isDirty, isValid } } = useForm<FormValues>({
     resolver: zodResolver(schema),
+    mode: 'all',
     defaultValues: appointment
       ? {
           title: appointment.title,
@@ -134,7 +135,7 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
             />
 
             <Field>
-              <Label htmlFor="cost">Cost</Label>
+              <Label htmlFor="cost" required>Cost (€)</Label>
               <Input
                 id="cost"
                 type="number"

@@ -83,19 +83,19 @@ const AppointmentDetailPage = () => {
           </DetailRow>
           <Separator />
           <DetailRow label="Doctor">
-            {appointment.doctorName ?? '—'}
+            {appointment.doctorName || '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Location">
-            {appointment.location ?? '—'}
+            {appointment.location || '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Notes">
-            {appointment.notes ?? '—'}
+            {appointment.notes || '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Description">
-            {appointment.description ?? '—'}
+            {appointment.description || '—'}
           </DetailRow>
         </div>
       </div>
@@ -103,7 +103,6 @@ const AppointmentDetailPage = () => {
     </div>
   )
 }
-
 
 export default function Page() {
   return <Suspense><AppointmentDetailPage /></Suspense>
