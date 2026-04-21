@@ -1,9 +1,8 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { AppLink } from '@/components/ui/app-link'
 import { ColumnDef } from '@tanstack/react-table'
-import type { MedicalExpenseWithRelations } from '@/app/actions/medical-expenses'
+import type { MedicalExpense } from '@/lib/generated/prisma'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
@@ -31,8 +30,8 @@ const MedicalExpensesPage = () => {
   const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(null)
   const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
   const [addingExpense, setAddingExpense] = useState(false)
-  const [editingExpense, setEditingExpense] = useState<MedicalExpenseWithRelations | null>(null)
-  const [viewingExpense, setViewingExpense] = useState<MedicalExpenseWithRelations | null>(null)
+  const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(null)
+  const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(null)
 
   const params = {
     profileId: activeProfileId ?? undefined,
@@ -48,7 +47,7 @@ const MedicalExpensesPage = () => {
     setFilters(prev => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
   }
 
-  const columns: ColumnDef<MedicalExpenseWithRelations>[] = [
+  const columns: ColumnDef<MedicalExpense>[] = [
     {
       accessorKey: 'title',
       header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
@@ -74,28 +73,8 @@ const MedicalExpensesPage = () => {
     },
     {
       accessorKey: 'type',
-      header: 'Type',
+      header: () => <SortButton field="type" label="Type" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
       cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue('type') as keyof typeof EXPENSE_TYPE_LABELS]
-    },
-    {
-      id: 'therapy',
-      header: 'Therapy',
-      cell: ({ row }) => {
-        const therapy = row.original.therapy
-        return therapy
-          ? <AppLink href={`/therapies/${therapy.id}`}>{therapy.title}</AppLink>
-          : '—'
-      }
-    },
-    {
-      id: 'appointment',
-      header: 'Appointment',
-      cell: ({ row }) => {
-        const appointment = row.original.appointment
-        return appointment
-          ? <AppLink href={`/appointments/${appointment.id}`}>{appointment.title}</AppLink>
-          : '—'
-      }
     },
     {
       id: 'actions',

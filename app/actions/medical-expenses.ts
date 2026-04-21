@@ -5,13 +5,8 @@ import { ExpenseType, MedicalExpense } from '@/lib/generated/prisma/client'
 
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
 
-export type MedicalExpenseWithRelations = MedicalExpense & {
-  therapy: { id: string, title: string } | null
-  appointment: { id: string, title: string } | null
-}
-
 export type MedicalExpensePaginatedResult = {
-  data: MedicalExpenseWithRelations[]
+  data: MedicalExpense[]
   total: number
   page: number
   pageSize: number
@@ -62,11 +57,7 @@ export const getMedicalExpenses = async ({
         where,
         skip,
         take: pageSize,
-        orderBy: { [sortField]: sortDirection },
-        include: {
-          therapy: { select: { id: true, title: true } },
-          appointment: { select: { id: true, title: true } }
-        }
+        orderBy: { [sortField]: sortDirection }
       }),
       prisma.medicalExpense.count({ where }),
       prisma.medicalExpense.aggregate({ where, _sum: { amount: true } })

@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { ExpenseType } from '@/lib/generated/prisma'
-import type { MedicalExpenseWithRelations } from '@/app/actions/medical-expenses'
+import type { MedicalExpense } from '@/lib/generated/prisma'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -17,6 +17,7 @@ import { EXPENSE_TYPE_LABELS } from './constants'
 import { useCreateMedicalExpense } from './hooks/use-create-medical-expense'
 import { useEditMedicalExpense } from './hooks/use-edit-medical-expense'
 import { TherapyCombobox } from './components/therapy-combobox'
+import { useTherapy } from '../therapies/hooks/use-therapy'
 
 const schema = z.object({
   title: z.string().min(1, 'Name is required'),
@@ -32,12 +33,13 @@ type FormValues = z.infer<typeof schema>
 type MedicalExpenseFormProps = {
   profileId: string
   onClose: () => void
-  expense?: MedicalExpenseWithRelations
+  expense?: MedicalExpense
 }
 
 const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormProps) => {
   const { mutateAsync: createExpense } = useCreateMedicalExpense()
   const { mutateAsync: editExpense } = useEditMedicalExpense()
+  const { data: selectedTherapy } = useTherapy(expense?.therapyId ?? '')
   const isEditMode = !!expense
 
   const {
@@ -132,7 +134,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
                 profileId={profileId}
                 value={field.value ?? null}
                 onChange={field.onChange}
-                selectedItem={expense?.therapy ?? null}
+                selectedItem={selectedTherapy ? { id: selectedTherapy.id, title: selectedTherapy.title } : null}
               />
             </Field>
           )}

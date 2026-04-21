@@ -1,5 +1,6 @@
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
-import type { MedicalExpensePaginatedResult, MedicalExpenseWithRelations } from '@/app/actions/medical-expenses'
+import type { MedicalExpensePaginatedResult } from '@/app/actions/medical-expenses'
+import type { MedicalExpense } from '@/lib/generated/prisma'
 import { buildSearchParams, fetchOne, deleteResource } from './utils'
 
 const BASE = '/api/medical-expenses'
@@ -18,7 +19,7 @@ export async function getMedicalExpenses(
 }
 
 export const getMedicalExpense = (id: string) =>
-  fetchOne<MedicalExpenseWithRelations>(`${BASE}/${id}`)
+  fetchOne<MedicalExpense>(`${BASE}/${id}`)
 
 export const deleteMedicalExpense = (id: string) =>
   deleteResource(`${BASE}/${id}`)
