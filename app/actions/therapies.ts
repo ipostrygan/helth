@@ -1,8 +1,6 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { Therapy } from '@/lib/generated/prisma/client'
-import type { PaginatedResult } from '@/types'
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
 
 export const getTherapies = async ({
@@ -15,7 +13,7 @@ export const getTherapies = async ({
   dateFrom,
   dateTo,
   isActive
-}: TherapiesQueryParams = {}): Promise<PaginatedResult<Therapy>> => {
+}: TherapiesQueryParams = {}) => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
@@ -65,7 +63,7 @@ export const getTherapies = async ({
   }
 }
 
-export const deleteTherapy = async (id: string): Promise<void> => {
+export const deleteTherapy = async (id: string) => {
   try {
     await prisma.therapy.delete({ where: { id } })
   }
@@ -87,7 +85,7 @@ export type CreateTherapyInput = {
   isActive: boolean
 }
 
-export const createTherapy = async (input: CreateTherapyInput): Promise<void> => {
+export const createTherapy = async (input: CreateTherapyInput) => {
   try {
     await prisma.therapy.create({ data: input })
   }
@@ -109,7 +107,7 @@ export type UpdateTherapyInput = {
   isActive?: boolean
 }
 
-export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput): Promise<void> => {
+export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput) => {
   try {
     await prisma.therapy.update({ where: { id }, data })
   }
@@ -119,7 +117,7 @@ export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput): Promis
   }
 }
 
-export const getTherapyById = async (id: string): Promise<Therapy | null> => {
+export const getTherapyById = async (id: string) => {
   try {
     return await prisma.therapy.findUnique({ where: { id } })
   }

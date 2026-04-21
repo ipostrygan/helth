@@ -4,7 +4,11 @@ import { Suspense, useState } from 'react'
 import { ColumnDef } from '@tanstack/react-table'
 import type { MedicalExpense } from '@/lib/generated/prisma'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
-import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
+import {
+  baseFilterParsers,
+  defaultDateFrom,
+  defaultDateTo
+} from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
 import { useMedicalExpenses } from './hooks/use-medical-expenses'
@@ -27,11 +31,18 @@ const MedicalExpensesPage = () => {
     types: parseAsArrayOf(parseAsString).withDefault([])
   })
 
-  const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(null)
-  const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
+  const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(
+    null
+  )
+  const { mutate: deleteExpense, isPending: isDeleting }
+    = useDeleteMedicalExpense()
   const [addingExpense, setAddingExpense] = useState(false)
-  const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(null)
-  const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(null)
+  const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(
+    null
+  )
+  const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(
+    null
+  )
 
   const params = {
     profileId: activeProfileId ?? undefined,
@@ -40,17 +51,36 @@ const MedicalExpensesPage = () => {
     dateTo: filters.dateTo ?? undefined,
     types: filters.types
   }
-  const { data, isLoading, isFetching, isError } = useMedicalExpenses(params, 'profileId')
+  const { data, isLoading, isFetching, isError } = useMedicalExpenses(
+    params,
+    'profileId'
+  )
 
   const onSortChange = (field: string) => {
-    const direction = filters.sortField === field && filters.sortDirection === 'asc' ? 'desc' : 'asc'
-    setFilters(prev => ({ ...prev, page: 1, sortField: field, sortDirection: direction }))
+    const direction
+      = filters.sortField === field && filters.sortDirection === 'asc'
+        ? 'desc'
+        : 'asc'
+    setFilters(prev => ({
+      ...prev,
+      page: 1,
+      sortField: field,
+      sortDirection: direction
+    }))
   }
 
   const columns: ColumnDef<MedicalExpense>[] = [
     {
       accessorKey: 'title',
-      header: () => <SortButton field="title" label="Title" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      header: () => (
+        <SortButton
+          field="title"
+          label="Title"
+          sortField={filters.sortField}
+          sortDirection={filters.sortDirection}
+          onSortChange={onSortChange}
+        />
+      ),
       cell: ({ row }) => (
         <button
           className="text-primary font-medium hover:text-primary/80 transition-colors text-left"
@@ -62,19 +92,49 @@ const MedicalExpensesPage = () => {
     },
     {
       accessorKey: 'amount',
-      header: () => <SortButton field="amount" label="Amount" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      header: () => (
+        <SortButton
+          field="amount"
+          label="Amount"
+          sortField={filters.sortField}
+          sortDirection={filters.sortDirection}
+          onSortChange={onSortChange}
+        />
+      ),
       cell: ({ row }) =>
-        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(row.getValue('amount'))
+        new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'EUR'
+        }).format(row.getValue('amount'))
     },
     {
       accessorKey: 'date',
-      header: () => <SortButton field="date" label="Date" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
+      header: () => (
+        <SortButton
+          field="date"
+          label="Date"
+          sortField={filters.sortField}
+          sortDirection={filters.sortDirection}
+          onSortChange={onSortChange}
+        />
+      ),
       cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
     },
     {
       accessorKey: 'type',
-      header: () => <SortButton field="type" label="Type" sortField={filters.sortField} sortDirection={filters.sortDirection} onSortChange={onSortChange} />,
-      cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue('type') as keyof typeof EXPENSE_TYPE_LABELS]
+      header: () => (
+        <SortButton
+          field="type"
+          label="Type"
+          sortField={filters.sortField}
+          sortDirection={filters.sortDirection}
+          onSortChange={onSortChange}
+        />
+      ),
+      cell: ({ row }) =>
+        EXPENSE_TYPE_LABELS[
+          row.getValue('type') as keyof typeof EXPENSE_TYPE_LABELS
+        ]
     },
     {
       id: 'actions',
@@ -89,7 +149,10 @@ const MedicalExpensesPage = () => {
 
   const dateRange
     = filters.dateFrom || filters.dateTo
-      ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
+      ? {
+          from: filters.dateFrom ? new Date(filters.dateFrom) : undefined,
+          to: filters.dateTo ? new Date(filters.dateTo) : undefined
+        }
       : undefined
 
   if (!profile) {
@@ -110,11 +173,13 @@ const MedicalExpensesPage = () => {
       isError={isError}
       pageSize={filters.pageSize}
       onPageChange={page => setFilters(prev => ({ ...prev, page }))}
-      onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
+      onPageSizeChange={pageSize =>
+        setFilters(prev => ({ ...prev, page: 1, pageSize }))}
       onAddNew={() => setAddingExpense(true)}
       filters={{
         searchValue: filters.search,
-        onSearchChange: search => setFilters(prev => ({ ...prev, page: 1, search })),
+        onSearchChange: search =>
+          setFilters(prev => ({ ...prev, page: 1, search })),
         searchPlaceholder: 'Search expenses...',
         dateRange,
         onDateRangeChange: (range: DateRange | undefined) =>
@@ -127,20 +192,40 @@ const MedicalExpensesPage = () => {
         filterGroups: [
           {
             label: 'Type',
-            options: Object.entries(EXPENSE_TYPE_LABELS).map(([value, label]) => ({ value, label })),
+            options: Object.entries(EXPENSE_TYPE_LABELS).map(
+              ([value, label]) => ({ value, label })
+            ),
             selected: filters.types,
-            onChange: types => setFilters(prev => ({ ...prev, page: 1, types }))
+            onChange: types =>
+              setFilters(prev => ({ ...prev, page: 1, types }))
           }
         ],
-        hasActiveFilters: !!(filters.search || filters.dateFrom !== defaultDateFrom || filters.dateTo !== defaultDateTo || filters.types.length > 0),
-        onClearFilters: () => setFilters(() => ({ page: 1, pageSize: filters.pageSize, sortField: 'date', sortDirection: 'desc', search: '', dateFrom: null, dateTo: null, types: [] }))
+        hasActiveFilters: !!(
+          filters.search
+          || filters.dateFrom !== defaultDateFrom
+          || filters.dateTo !== defaultDateTo
+          || filters.types.length > 0
+        ),
+        onClearFilters: () =>
+          setFilters(() => ({
+            page: 1,
+            pageSize: filters.pageSize,
+            sortField: 'date',
+            sortDirection: 'desc',
+            search: '',
+            dateFrom: null,
+            dateTo: null,
+            types: []
+          }))
       }}
       deleteConfig={{
         deletingId: deletingExpenseId,
         onCancel: () => setDeletingExpenseId(null),
         onConfirm: () => {
           if (deletingExpenseId === null) return
-          deleteExpense(deletingExpenseId, { onSuccess: () => setDeletingExpenseId(null) })
+          deleteExpense(deletingExpenseId, {
+            onSuccess: () => setDeletingExpenseId(null)
+          })
         },
         isPending: isDeleting
       }}
@@ -149,21 +234,30 @@ const MedicalExpensesPage = () => {
           <MedicalExpenseDetailsSheet
             expense={viewingExpense}
             open={viewingExpense !== null}
-            onOpenChange={(open) => { if (!open) setViewingExpense(null) }}
+            onOpenChange={(open) => {
+              if (!open) setViewingExpense(null)
+            }}
           />
 
           <Modal
             open={addingExpense}
-            onOpenChange={(open) => { if (!open) setAddingExpense(false) }}
+            onOpenChange={(open) => {
+              if (!open) setAddingExpense(false)
+            }}
             title="Add medical expense"
             description="Fill in the details below to record a new medical expense."
           >
-            <MedicalExpenseForm profileId={activeProfileId!} onClose={() => setAddingExpense(false)} />
+            <MedicalExpenseForm
+              profileId={activeProfileId!}
+              onClose={() => setAddingExpense(false)}
+            />
           </Modal>
 
           <Modal
             open={editingExpense !== null}
-            onOpenChange={(open) => { if (!open) setEditingExpense(null) }}
+            onOpenChange={(open) => {
+              if (!open) setEditingExpense(null)
+            }}
             title="Edit medical expense"
             description="Update the details of the selected medical expense."
           >
@@ -182,5 +276,9 @@ const MedicalExpensesPage = () => {
 }
 
 export default function Page() {
-  return <Suspense><MedicalExpensesPage /></Suspense>
+  return (
+    <Suspense>
+      <MedicalExpensesPage />
+    </Suspense>
+  )
 }

@@ -4,20 +4,17 @@ import prisma from '@/lib/prisma'
 import { ExpenseType, MedicalExpense } from '@/lib/generated/prisma/client'
 
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
+import { PaginatedResult } from '@/types'
 
-export type MedicalExpensePaginatedResult = {
-  data: MedicalExpense[]
-  total: number
-  page: number
-  pageSize: number
-  totalPages: number
+export type MedicalExpensePaginatedResult = PaginatedResult<MedicalExpense> & {
   totalSum: number
 }
 
 export const getMedicalExpenses = async ({
   profileId,
-  page = 1,
-  pageSize = 10,
+  page = DEFAULT_PAGE,
+  pageSize = DEFAULT_PAGE_SIZE,
   sortField = 'date',
   sortDirection = 'desc',
   search = '',
@@ -26,7 +23,7 @@ export const getMedicalExpenses = async ({
   types,
   therapyId,
   appointmentId
-}: MedicalExpensesQueryParams = {}): Promise<MedicalExpensePaginatedResult> => {
+}: MedicalExpensesQueryParams = {}) => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
@@ -94,7 +91,7 @@ export const getMedicalExpensesByType = async ({
   profileId,
   dateFrom,
   dateTo
-}: ExpensesByTypeQuery = {}): Promise<ExpensesByTypeItem[]> => {
+}: ExpensesByTypeQuery = {}) => {
   const defaultDateFrom = new Date()
   defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 1)
 
@@ -127,7 +124,7 @@ export const getMedicalExpensesByType = async ({
   }
 }
 
-export const getMedicalExpenseById = async (id: string): Promise<MedicalExpense | null> => {
+export const getMedicalExpenseById = async (id: string) => {
   try {
     return await prisma.medicalExpense.findUnique({ where: { id } })
   }
@@ -137,7 +134,7 @@ export const getMedicalExpenseById = async (id: string): Promise<MedicalExpense 
   }
 }
 
-export const deleteExpense = async (id: string): Promise<void> => {
+export const deleteExpense = async (id: string) => {
   try {
     await prisma.medicalExpense.delete({ where: { id } })
   }

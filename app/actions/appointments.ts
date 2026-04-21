@@ -1,8 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { Appointment, AppointmentStatus, AppointmentType, ExpenseType } from '@/lib/generated/prisma/client'
-import type { PaginatedResult } from '@/types'
+import { AppointmentStatus, AppointmentType, ExpenseType } from '@/lib/generated/prisma/client'
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 
 const APPOINTMENT_TYPE_TO_EXPENSE_TYPE: Record<AppointmentType, ExpenseType> = {
@@ -45,7 +44,7 @@ export const getAppointments = async ({
   dateTo,
   statuses,
   therapyId
-}: AppointmentsQueryParams = {}): Promise<PaginatedResult<Appointment>> => {
+}: AppointmentsQueryParams = {}) => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
@@ -95,7 +94,7 @@ export const getAppointments = async ({
   }
 }
 
-export const deleteAppointment = async (id: string): Promise<void> => {
+export const deleteAppointment = async (id: string) => {
   try {
     await prisma.appointment.delete({ where: { id } })
   }
@@ -145,7 +144,7 @@ export const updateAppointment = async ({ id, ...data }: UpdateAppointmentInput)
   }
 }
 
-export const getAppointmentById = async (id: string): Promise<Appointment | null> => {
+export const getAppointmentById = async (id: string) => {
   try {
     return await prisma.appointment.findUnique({ where: { id } })
   }

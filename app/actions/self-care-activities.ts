@@ -1,8 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { SelfCareActivity } from '@/lib/generated/prisma/client'
-import type { PaginatedResult, BaseQueryParams } from '@/types'
+import type { BaseQueryParams } from '@/types'
 
 type SelfCareActivityFields = {
   title: string
@@ -24,7 +23,7 @@ export const getSelfCareActivities = async ({
   search = '',
   dateFrom,
   dateTo
-}: BaseQueryParams = {}): Promise<PaginatedResult<SelfCareActivity>> => {
+}: BaseQueryParams = {}) => {
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
