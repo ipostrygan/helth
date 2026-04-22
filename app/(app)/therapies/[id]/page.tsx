@@ -3,7 +3,6 @@
 import { Suspense, useState } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { AppLink } from '@/components/ui/app-link'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
@@ -110,9 +109,9 @@ const TherapyDetailPage = () => {
       cell: ({ row }) => APPOINTMENT_STATUS_LABELS[row.getValue('status') as keyof typeof APPOINTMENT_STATUS_LABELS]
     },
     {
-      accessorKey: 'doctorName',
-      header: 'Doctor',
-      cell: ({ row }) => row.getValue('doctorName') ?? '—'
+      accessorKey: 'specialistName',
+      header: 'Specialist',
+      cell: ({ row }) => row.getValue('specialistName') ?? '—'
     },
     {
       id: 'actions',
@@ -196,33 +195,6 @@ const TherapyDetailPage = () => {
           <Separator />
           <DetailRow label="End Date">
             {therapy.endDate ? new Date(therapy.endDate).toLocaleDateString() : '—'}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Therapist">
-            {therapy.therapistName
-              ? (
-                  therapy.therapistInfoLink
-                    ? (
-                        <AppLink
-                          external
-                          href={therapy.therapistInfoLink}
-                          target={therapy.therapistInfoLink.startsWith('http') ? '_blank' : undefined}
-                          rel={therapy.therapistInfoLink.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        >
-                          {therapy.therapistName}
-                        </AppLink>
-                      )
-                    : (
-                        therapy.therapistName
-                      )
-                )
-              : (
-                  '—'
-                )}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Location">
-            {therapy.location ?? '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Description">

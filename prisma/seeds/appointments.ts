@@ -15,7 +15,7 @@ export async function seedAppointments(
       date: new Date(row.date),
       type: row.type as AppointmentType,
       status: row.status as AppointmentStatus,
-      doctorName: row.doctorName ?? null,
+      specialistName: row.specialistName ?? null,
       location: row.location ?? null,
       notes: row.notes ?? null,
       cost: 0,

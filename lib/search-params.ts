@@ -18,7 +18,7 @@ export const baseQueryParamsSchema = z.object({
 })
 
 export const appointmentsQueryParamsSchema = baseQueryParamsSchema.extend({
-  sortField: z.enum(['date', 'title', 'type', 'status', 'cost', 'doctorName', 'location']),
+  sortField: z.enum(['date', 'title', 'type', 'status', 'cost', 'specialistName', 'location']),
   statuses: z.array(z.string()).nullish(),
   therapyId: z.string().nullish()
 })
@@ -31,7 +31,7 @@ export const medicalExpensesQueryParamsSchema = baseQueryParamsSchema.extend({
 })
 
 export const therapiesQueryParamsSchema = baseQueryParamsSchema.extend({
-  sortField: z.enum(['startDate', 'endDate', 'title', 'isActive', 'therapistName']),
+  sortField: z.enum(['startDate', 'endDate', 'title', 'isActive']),
   isActive: z.array(z.string()).nullish()
 })
 

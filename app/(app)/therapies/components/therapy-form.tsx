@@ -23,9 +23,6 @@ const schema = z.object({
   description: z.string().optional(),
   startDate: z.date(),
   endDate: z.date().optional(),
-  therapistName: z.string().optional(),
-  therapistInfoLink: z.string().optional(),
-  location: z.string().optional(),
   isActive: z.boolean()
 })
 
@@ -57,9 +54,6 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
           description: therapy.description ?? undefined,
           startDate: new Date(therapy.startDate),
           endDate: therapy.endDate ? new Date(therapy.endDate) : undefined,
-          therapistName: therapy.therapistName ?? undefined,
-          therapistInfoLink: therapy.therapistInfoLink ?? undefined,
-          location: therapy.location ?? undefined,
           isActive: therapy.isActive
         }
       : { isActive: true }
@@ -153,21 +147,6 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
                 </Field>
               )}
             />
-
-            <Field>
-              <Label htmlFor="therapistName">Therapist Name</Label>
-              <Input id="therapistName" {...register('therapistName')} />
-            </Field>
-
-            <Field>
-              <Label htmlFor="therapistInfoLink">Therapist Info Link</Label>
-              <Input id="therapistInfoLink" {...register('therapistInfoLink')} />
-            </Field>
-
-            <Field>
-              <Label htmlFor="location">Location</Label>
-              <Input id="location" {...register('location')} />
-            </Field>
 
             <Controller
               name="isActive"

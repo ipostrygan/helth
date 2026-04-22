@@ -22,8 +22,7 @@ export const getTherapies = async ({
           OR: [
             { title: { contains: search, mode: 'insensitive' as const } },
             { description: { contains: search, mode: 'insensitive' as const } },
-            { therapistName: { contains: search, mode: 'insensitive' as const } },
-            { location: { contains: search, mode: 'insensitive' as const } }
+            { description: { contains: search, mode: 'insensitive' as const } }
           ]
         }
       : {}),
@@ -79,9 +78,6 @@ export type CreateTherapyInput = {
   description?: string
   startDate: Date
   endDate?: Date
-  therapistName?: string
-  therapistInfoLink?: string
-  location?: string
   isActive: boolean
 }
 
@@ -101,9 +97,6 @@ export type UpdateTherapyInput = {
   description?: string
   startDate?: Date
   endDate?: Date
-  therapistName?: string
-  therapistInfoLink?: string
-  location?: string
   isActive?: boolean
 }
 

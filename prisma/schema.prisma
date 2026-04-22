@@ -81,9 +81,6 @@ model Therapy {
   description       String?
   startDate         DateTime
   endDate           DateTime?
-  therapistName     String?
-  therapistInfoLink String?
-  location          String?
   isActive          Boolean          @default(true)
   relatedDocuments  String[]
   userId            String
@@ -100,7 +97,8 @@ model Appointment {
   type             AppointmentType
   status           AppointmentStatus @default(Scheduled)
   cost             Float
-  doctorName       String?
+  specialistName   String?
+  specialistLink   String?
   location         String?
   notes            String?
   relatedDocuments String[]

@@ -24,7 +24,8 @@ type AppointmentFields = {
   status: AppointmentStatus
   cost: number
   description?: string
-  doctorName?: string
+  specialistName?: string
+  specialistLink?: string
   location?: string
   notes?: string
   therapyId?: string | null
@@ -53,7 +54,7 @@ export const getAppointments = async ({
       ? {
           OR: [
             { title: { contains: search, mode: 'insensitive' as const } },
-            { doctorName: { contains: search, mode: 'insensitive' as const } },
+            { specialistName: { contains: search, mode: 'insensitive' as const } },
             { location: { contains: search, mode: 'insensitive' as const } }
           ]
         }

@@ -73,9 +73,9 @@ const AppointmentsPage = () => {
       cell: ({ row }) => APPOINTMENT_STATUS_LABELS[row.getValue('status') as keyof typeof APPOINTMENT_STATUS_LABELS]
     },
     {
-      accessorKey: 'doctorName',
-      header: 'Doctor',
-      cell: ({ row }) => row.getValue('doctorName') ?? '—'
+      accessorKey: 'specialistName',
+      header: 'Specialist',
+      cell: ({ row }) => row.getValue('specialistName') ?? '—'
     },
     {
       accessorKey: 'cost',

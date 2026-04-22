@@ -23,7 +23,8 @@ const schema = z.object({
   type: z.enum(AppointmentType),
   status: z.enum(AppointmentStatus),
   cost: z.number().nonnegative(),
-  doctorName: z.string().optional(),
+  specialistName: z.string().optional(),
+  specialistLink: z.string().optional(),
   location: z.string().optional(),
   notes: z.string().optional(),
   therapyId: z.string().nullable().optional()
@@ -54,7 +55,8 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
           type: appointment.type,
           status: appointment.status,
           cost: appointment.cost ?? 0,
-          doctorName: appointment.doctorName ?? undefined,
+          specialistName: appointment.specialistName ?? undefined,
+          specialistLink: appointment.specialistLink ?? undefined,
           location: appointment.location ?? undefined,
           notes: appointment.notes ?? undefined,
           therapyId: appointment.therapyId ?? null
@@ -148,8 +150,13 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
             </Field>
 
             <Field>
-              <Label htmlFor="doctorName">Doctor</Label>
-              <Input id="doctorName" {...register('doctorName')} />
+              <Label htmlFor="specialistName">Specialist</Label>
+              <Input id="specialistName" {...register('specialistName')} />
+            </Field>
+
+            <Field>
+              <Label htmlFor="specialistLink">Specialist Link</Label>
+              <Input id="specialistLink" {...register('specialistLink')} />
             </Field>
 
             <Field>

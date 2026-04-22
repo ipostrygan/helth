@@ -82,8 +82,21 @@ const AppointmentDetailPage = () => {
                 )}
           </DetailRow>
           <Separator />
-          <DetailRow label="Doctor">
-            {appointment.doctorName || '—'}
+          <DetailRow label="Specialist">
+            {appointment.specialistName
+              ? appointment.specialistLink
+                ? (
+                    <AppLink
+                      external
+                      href={appointment.specialistLink}
+                      target={appointment.specialistLink.startsWith('http') ? '_blank' : undefined}
+                      rel={appointment.specialistLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    >
+                      {appointment.specialistName}
+                    </AppLink>
+                  )
+                : appointment.specialistName
+              : '—'}
           </DetailRow>
           <Separator />
           <DetailRow label="Location">
