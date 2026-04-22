@@ -15,6 +15,7 @@ import {
   APPOINTMENT_TYPE_LABELS,
   APPOINTMENT_STATUS_LABELS
 } from '../constants'
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
@@ -39,17 +40,19 @@ const AppointmentDetailPage = () => {
         <h1 className="text-2xl font-semibold">{appointment.title}</h1>
       </div>
 
-      <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-        <div className="px-6 py-4 border-b flex items-center justify-between">
-          <h2 className="text-base font-semibold">Details</h2>
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/appointments/${id}/edit`}>
-              <Pencil className="size-4 mr-1" />
-              Edit
-            </Link>
-          </Button>
-        </div>
-        <div className="px-6 py-4 space-y-4">
+      <Card>
+        <CardHeader className="border-b gap-0">
+          <CardTitle className="text-base">Details</CardTitle>
+          <CardAction>
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/appointments/${id}/edit`}>
+                <Pencil className="size-4 mr-1" />
+                Edit
+              </Link>
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <DetailRow label="Type">
             {APPOINTMENT_TYPE_LABELS[appointment.type]}
           </DetailRow>
@@ -110,8 +113,8 @@ const AppointmentDetailPage = () => {
           <DetailRow label="Description">
             {appointment.description || '—'}
           </DetailRow>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
       <DocumentsCard documents={appointment.documents ?? []} uploadMutation={uploadMutation} removeMutation={removeMutation} />
     </div>
   )

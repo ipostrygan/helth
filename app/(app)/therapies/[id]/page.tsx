@@ -22,6 +22,7 @@ import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from '../../appoin
 import { RowActions } from '@/components/row-actions'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
@@ -167,17 +168,17 @@ const TherapyDetailPage = () => {
         <h1 className="text-2xl font-semibold">{therapy.title}</h1>
       </div>
 
-      <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
-        <div className="px-6 py-4 border-b flex items-center justify-between">
-          <h2 className="text-base font-semibold">Details</h2>
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/therapies/${id}/edit`}>
-              <Pencil className="size-4 mr-1" />
-              Edit
-            </Link>
-          </Button>
-        </div>
-        <div className="px-6 py-4 space-y-4">
+      <Card>
+        <CardHeader className="border-b gap-0 items-center">
+          <CardTitle className="text-base">Details</CardTitle>
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/therapies/${id}/edit`}>
+                <Pencil className="size-4 mr-1" />
+                Edit
+              </Link>
+            </Button>
+        </CardHeader>
+        <CardContent className="space-y-4">
           <DetailRow label="Status">
             <span
               className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
@@ -223,8 +224,8 @@ const TherapyDetailPage = () => {
                   </div>
                 )}
           </DetailRow>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       <DocumentsCard documents={therapy.documents ?? []} uploadMutation={uploadMutation} removeMutation={removeMutation} />
 
