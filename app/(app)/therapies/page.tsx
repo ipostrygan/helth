@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { AppLink } from '@/components/ui/app-link'
 import { TableTemplate } from '@/components/table-template'
+import { StatusBadge } from '@/components/ui/status-badge'
 
 const IS_ACTIVE_OPTIONS = [
   { value: 'true', label: 'Ongoing' },
@@ -85,17 +86,7 @@ const TherapiesPage = () => {
       header: 'Status',
       cell: ({ row }) => {
         const active = row.getValue<boolean>('isActive')
-        return (
-          <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-              active
-                ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400'
-            }`}
-          >
-            {active ? 'Ongoing' : 'Finished'}
-          </span>
-        )
+        return <StatusBadge status={active ? 'Ongoing' : 'Finished'} />
       }
     },
     {

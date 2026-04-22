@@ -22,6 +22,7 @@ import { medicalExpenseColumns } from '../../medical-expenses/columns'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { StatusBadge } from '@/components/ui/status-badge'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
@@ -116,15 +117,7 @@ const TherapyDetailPage = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <DetailRow label="Status">
-            <span
-              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                therapy.isActive
-                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                  : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400'
-              }`}
-            >
-              {therapy.isActive ? 'Ongoing' : 'Finished'}
-            </span>
+            <StatusBadge status={therapy.isActive ? 'Ongoing' : 'Finished'} />
           </DetailRow>
           <Separator />
           <DetailRow label="Start Date">

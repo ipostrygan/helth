@@ -3,6 +3,7 @@ import type { Appointment } from '@/lib/generated/prisma/client'
 import { AppLink } from '@/components/ui/app-link'
 import { RowActions } from '@/components/row-actions'
 import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from './constants'
+import { StatusBadge } from '@/components/ui/status-badge'
 
 interface AppointmentColumnsOptions {
   onDelete: (id: string) => void
@@ -36,19 +37,7 @@ export function appointmentColumns({ onDelete, onEdit, showCost }: AppointmentCo
       header: 'Status',
       cell: ({ row }) => {
         const status = row.getValue<keyof typeof APPOINTMENT_STATUS_LABELS>('status')
-        const label = APPOINTMENT_STATUS_LABELS[status]
-        const isScheduled = status === 'Scheduled'
-        return (
-          <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-              isScheduled
-                ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400'
-                : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400'
-            }`}
-          >
-            {label}
-          </span>
-        )
+        return <StatusBadge status={status} label={APPOINTMENT_STATUS_LABELS[status]} />
       }
     },
     {

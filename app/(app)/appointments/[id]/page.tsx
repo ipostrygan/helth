@@ -16,14 +16,10 @@ import {
   APPOINTMENT_STATUS_LABELS
 } from '../constants'
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { StatusBadge } from '@/components/ui/status-badge'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
-
-const STATUS_STYLES = {
-  Scheduled: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-  Completed: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-}
 
 const AppointmentDetailPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -58,11 +54,7 @@ const AppointmentDetailPage = () => {
           </DetailRow>
           <Separator />
           <DetailRow label="Status">
-            <span
-              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[appointment.status]}`}
-            >
-              {APPOINTMENT_STATUS_LABELS[appointment.status]}
-            </span>
+            <StatusBadge status={appointment.status} label={APPOINTMENT_STATUS_LABELS[appointment.status]} />
           </DetailRow>
           <Separator />
           <DetailRow label="Date">
