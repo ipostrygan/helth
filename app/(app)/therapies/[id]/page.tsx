@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
@@ -28,6 +28,7 @@ import { queryKeys } from '@/lib/query-keys'
 
 const TherapyDetailPage = () => {
   const { id } = useParams<{ id: string }>()
+  const router = useRouter()
   const { activeProfileId } = useActiveProfile()
   const { data: therapy, isLoading } = useTherapy(id)
   const { uploadMutation, removeMutation } = useDocuments(`/api/therapies/${id}/documents`, queryKeys.therapies.detail(id))
@@ -239,6 +240,8 @@ const TherapyDetailPage = () => {
         onPageSizeChange={pageSize => setApptFilters(prev => ({ ...prev, apptPage: 1, apptPageSize: pageSize }))}
         sorting={apptSorting}
         onSortingChange={onApptSortingChange}
+        onAddNew={() => router.push(`/appointments/create?therapyId=${id}`)}
+        addNewLabel="Add appointment"
         deleteConfig={{
           deletingId: deletingApptId,
           onCancel: () => setDeletingApptId(null),

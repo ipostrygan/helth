@@ -5,13 +5,14 @@ import { useTherapies } from '@/app/(app)/therapies/hooks/use-therapies'
 import { SearchCombobox } from '@/components/search-combobox'
 
 type TherapyComboboxProps = {
+  id?: string
   profileId: string
   value?: string | null
   onChange: (value: string | null) => void
   selectedItem?: { id: string, title: string } | null
 }
 
-export function TherapyCombobox({ profileId, value, onChange, selectedItem }: TherapyComboboxProps) {
+export function TherapyCombobox({ id, profileId, value, onChange, selectedItem }: TherapyComboboxProps) {
   const [search, setSearch] = useState('')
 
   const { data, isLoading } = useTherapies({ profileId, search, pageSize: 20 })
@@ -26,6 +27,7 @@ export function TherapyCombobox({ profileId, value, onChange, selectedItem }: Th
 
   return (
     <SearchCombobox
+      id={id}
       value={value}
       onChange={onChange}
       items={items}

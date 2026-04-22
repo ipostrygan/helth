@@ -11,9 +11,18 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Field, FieldError, FieldGroup } from '@/components/ui/field'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 import { DatePickerField } from '@/components/ui/date-picker-field'
-import { APPOINTMENT_TYPE_LABELS, APPOINTMENT_STATUS_LABELS } from '../constants'
+import {
+  APPOINTMENT_TYPE_LABELS,
+  APPOINTMENT_STATUS_LABELS
+} from '../constants'
 import { TherapyCombobox } from '@/app/(app)/medical-expenses/components/therapy-combobox'
 
 const schema = z.object({
@@ -37,14 +46,27 @@ export type AppointmentFormValues = FormValues
 type AppointmentFormProps = {
   profileId: string
   appointment?: Appointment
+  defaultTherapyId?: string | null
+  cancelHref?: string
   onSubmit: (values: FormValues) => Promise<void>
 }
 
-const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormProps) => {
+const AppointmentForm = ({
+  profileId,
+  appointment,
+  defaultTherapyId,
+  cancelHref = '/appointments',
+  onSubmit
+}: AppointmentFormProps) => {
   const router = useRouter()
   const isEditMode = !!appointment
 
-  const { control, register, handleSubmit, formState: { errors, isSubmitting, isDirty, isValid } } = useForm<FormValues>({
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isDirty, isValid }
+  } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: 'all',
     defaultValues: appointment
@@ -61,7 +83,11 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
           notes: appointment.notes ?? undefined,
           therapyId: appointment.therapyId ?? null
         }
-      : { status: AppointmentStatus.Scheduled, therapyId: null, cost: 0 }
+      : {
+          status: AppointmentStatus.Scheduled,
+          therapyId: defaultTherapyId ?? null,
+          cost: 0
+        }
   })
 
   return (
@@ -70,14 +96,24 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
         <form id="appointment-form" onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
             <Field>
-              <Label htmlFor="title" required>Title</Label>
-              <Input id="title" {...register('title')} aria-invalid={!!errors.title} />
+              <Label htmlFor="title" required>
+                Title
+              </Label>
+              <Input
+                id="title"
+                {...register('title')}
+                aria-invalid={!!errors.title}
+              />
               <FieldError errors={[errors.title]} />
             </Field>
 
             <Field>
               <Label htmlFor="description">Description</Label>
-              <Textarea id="description" rows={3} {...register('description')} />
+              <Textarea
+                id="description"
+                rows={3}
+                {...register('description')}
+              />
             </Field>
 
             <Controller
@@ -101,13 +137,20 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
                 <Field>
                   <Label required>Type</Label>
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger aria-invalid={!!fieldState.error} className="w-full">
+                    <SelectTrigger
+                      aria-invalid={!!fieldState.error}
+                      className="w-full"
+                    >
                       <SelectValue placeholder="Select a type" />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(APPOINTMENT_TYPE_LABELS).map(([value, label]) => (
-                        <SelectItem key={value} value={value}>{label}</SelectItem>
-                      ))}
+                      {Object.entries(APPOINTMENT_TYPE_LABELS).map(
+                        ([value, label]) => (
+                          <SelectItem key={value} value={value}>
+                            {label}
+                          </SelectItem>
+                        )
+                      )}
                     </SelectContent>
                   </Select>
                   <FieldError errors={[fieldState.error]} />
@@ -122,13 +165,20 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
                 <Field>
                   <Label>Status</Label>
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger aria-invalid={!!fieldState.error} className="w-full">
+                    <SelectTrigger
+                      aria-invalid={!!fieldState.error}
+                      className="w-full"
+                    >
                       <SelectValue placeholder="Select a status" />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(APPOINTMENT_STATUS_LABELS).map(([value, label]) => (
-                        <SelectItem key={value} value={value}>{label}</SelectItem>
-                      ))}
+                      {Object.entries(APPOINTMENT_STATUS_LABELS).map(
+                        ([value, label]) => (
+                          <SelectItem key={value} value={value}>
+                            {label}
+                          </SelectItem>
+                        )
+                      )}
                     </SelectContent>
                   </Select>
                   <FieldError errors={[fieldState.error]} />
@@ -137,7 +187,9 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
             />
 
             <Field>
-              <Label htmlFor="cost" required>Cost (€)</Label>
+              <Label htmlFor="cost" required>
+                Cost (€)
+              </Label>
               <Input
                 id="cost"
                 type="number"
@@ -174,11 +226,11 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
               control={control}
               render={({ field }) => (
                 <Field>
-                  <Label>
+                  <Label htmlFor="therapyId">
                     Therapy
-                    <span className="text-muted-foreground text-xs">(optional)</span>
                   </Label>
                   <TherapyCombobox
+                    id="therapyId"
                     profileId={profileId}
                     value={field.value ?? null}
                     onChange={field.onChange}
@@ -195,8 +247,12 @@ const AppointmentForm = ({ profileId, appointment, onSubmit }: AppointmentFormPr
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push(isEditMode ? `/appointments/${appointment.id}` : '/appointments')}
-            disabled={isSubmitting}
+            onClick={() =>
+              router.push(
+                isEditMode
+                  ? `/appointments/${appointment.id}`
+                  : cancelHref
+              )}
           >
             Cancel
           </Button>

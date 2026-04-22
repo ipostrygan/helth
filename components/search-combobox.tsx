@@ -24,6 +24,7 @@ export type SearchComboboxItem = {
 }
 
 type SearchComboboxProps = {
+  id?: string
   value?: string | null
   onChange: (value: string | null) => void
   items: SearchComboboxItem[]
@@ -46,6 +47,7 @@ function useDebounce<T>(value: T, delay: number): T {
 }
 
 export function SearchCombobox({
+  id,
   value,
   onChange,
   items,
@@ -72,6 +74,7 @@ export function SearchCombobox({
       <div className="flex gap-1">
         <PopoverTrigger asChild>
           <Button
+            id={id}
             type="button"
             variant="outline"
             role="combobox"
