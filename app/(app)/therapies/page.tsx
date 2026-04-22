@@ -81,12 +81,6 @@ const TherapiesPage = () => {
       }
     },
     {
-      accessorKey: 'location',
-      header: 'Location',
-      enableSorting: false,
-      cell: ({ row }) => row.getValue('location') ?? '—'
-    },
-    {
       accessorKey: 'isActive',
       header: 'Status',
       cell: ({ row }) => {

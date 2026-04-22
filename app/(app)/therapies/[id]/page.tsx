@@ -15,11 +15,10 @@ import { useMedicalExpenses } from '../../medical-expenses/hooks/use-medical-exp
 import { useDeleteMedicalExpense } from '../../medical-expenses/hooks/use-delete-medical-expense'
 import { useAppointments } from '../../appointments/hooks/use-appointments'
 import { useDeleteAppointment } from '../../appointments/hooks/use-delete-appointment'
-import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
-import type { MedicalExpense, Appointment } from '@/lib/generated/prisma/client'
-import { EXPENSE_TYPE_LABELS } from '../../medical-expenses/constants'
-import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from '../../appointments/constants'
-import { RowActions } from '@/components/row-actions'
+import { OnChangeFn, SortingState } from '@tanstack/react-table'
+import { AppLink } from '@/components/ui/app-link'
+import { appointmentColumns } from '../../appointments/columns'
+import { medicalExpenseColumns } from '../../medical-expenses/columns'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -90,76 +89,13 @@ const TherapyDetailPage = () => {
     }
   }
 
-  const apptColumns: ColumnDef<Appointment>[] = [
-    {
-      accessorKey: 'title',
-      header: 'Title'
-    },
-    {
-      accessorKey: 'date',
-      header: 'Date',
-      cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
-    },
-    {
-      accessorKey: 'type',
-      header: 'Type',
-      cell: ({ row }) => APPOINTMENT_TYPE_LABELS[row.getValue('type') as keyof typeof APPOINTMENT_TYPE_LABELS]
-    },
-    {
-      accessorKey: 'status',
-      header: 'Status',
-      cell: ({ row }) => APPOINTMENT_STATUS_LABELS[row.getValue('status') as keyof typeof APPOINTMENT_STATUS_LABELS]
-    },
-    {
-      accessorKey: 'specialistName',
-      header: 'Specialist',
-      cell: ({ row }) => row.getValue('specialistName') ?? '—'
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <RowActions onDelete={() => setDeletingApptId(row.original.id)} />
-      )
-    }
-  ]
+  const apptColumns = appointmentColumns({
+    onDelete: id => setDeletingApptId(id)
+  })
 
-  const columns: ColumnDef<MedicalExpense>[] = [
-    {
-      accessorKey: 'title',
-      header: 'Title'
-    },
-    {
-      accessorKey: 'amount',
-      header: 'Amount',
-      cell: ({ row }) =>
-        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(row.getValue('amount'))
-    },
-    {
-      accessorKey: 'date',
-      header: 'Date',
-      cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
-    },
-    {
-      accessorKey: 'type',
-      header: 'Type',
-      cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue('type') as keyof typeof EXPENSE_TYPE_LABELS]
-    },
-    {
-      accessorKey: 'description',
-      header: 'Description',
-      cell: ({ row }) => row.getValue('description') ?? '—'
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <RowActions
-          onDelete={() => setDeletingId(row.original.id)}
-        />
-      )
-    }
-  ]
+  const columns = medicalExpenseColumns({
+    onDelete: id => setDeletingId(id)
+  })
 
   return (
     <div className="sm:px-6 sm:pt-6 space-y-6 max-w-4xl mx-auto">
@@ -171,12 +107,12 @@ const TherapyDetailPage = () => {
       <Card>
         <CardHeader className="border-b gap-0 items-center">
           <CardTitle className="text-base">Details</CardTitle>
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/therapies/${id}/edit`}>
-                <Pencil className="size-4 mr-1" />
-                Edit
-              </Link>
-            </Button>
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/therapies/${id}/edit`}>
+              <Pencil className="size-4 mr-1" />
+              Edit
+            </Link>
+          </Button>
         </CardHeader>
         <CardContent className="space-y-4">
           <DetailRow label="Status">
@@ -212,9 +148,9 @@ const TherapyDetailPage = () => {
                       s.link
                         ? (
                             <div key={s.name}>
-                              <a href={s.link} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">
+                              <AppLink href={s.link} external className="font-medium">
                                 {s.name}
-                              </a>
+                              </AppLink>
                             </div>
                           )
                         : (

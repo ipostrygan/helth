@@ -2,8 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
-import type { Appointment } from '@/lib/generated/prisma/client'
+import { OnChangeFn, SortingState } from '@tanstack/react-table'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
@@ -12,10 +11,9 @@ import { useAppointments } from './hooks/use-appointments'
 import { useDeleteAppointment } from './hooks/use-delete-appointment'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
-import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from './constants'
-import { AppLink } from '@/components/ui/app-link'
+import { APPOINTMENT_STATUS_LABELS } from './constants'
+import { appointmentColumns } from './columns'
 import { TableTemplate } from '@/components/table-template'
-import { RowActions } from '@/components/row-actions'
 
 const AppointmentsPage = () => {
   const router = useRouter()
@@ -47,52 +45,11 @@ const AppointmentsPage = () => {
     }
   }
 
-  const columns: ColumnDef<Appointment>[] = [
-    {
-      accessorKey: 'title',
-      header: 'Title',
-      cell: ({ row }) => (
-        <AppLink href={`/appointments/${row.original.id}`} className="font-medium">
-          {row.getValue('title')}
-        </AppLink>
-      )
-    },
-    {
-      accessorKey: 'date',
-      header: 'Date',
-      cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
-    },
-    {
-      accessorKey: 'type',
-      header: 'Type',
-      cell: ({ row }) => APPOINTMENT_TYPE_LABELS[row.getValue('type') as keyof typeof APPOINTMENT_TYPE_LABELS]
-    },
-    {
-      accessorKey: 'status',
-      header: 'Status',
-      cell: ({ row }) => APPOINTMENT_STATUS_LABELS[row.getValue('status') as keyof typeof APPOINTMENT_STATUS_LABELS]
-    },
-    {
-      accessorKey: 'specialistName',
-      header: 'Specialist',
-      cell: ({ row }) => row.getValue('specialistName') ?? '—'
-    },
-    {
-      accessorKey: 'cost',
-      header: 'Cost (€)',
-      cell: ({ row }) => row.getValue('cost') ?? '—'
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <RowActions
-          onEdit={() => router.push(`/appointments/${row.original.id}/edit`)}
-          onDelete={() => setDeletingId(row.original.id)}
-        />
-      )
-    }
-  ]
+  const columns = appointmentColumns({
+    showCost: true,
+    onEdit: id => router.push(`/appointments/${id}/edit`),
+    onDelete: id => setDeletingId(id)
+  })
 
   const dateRange
     = filters.dateFrom || filters.dateTo

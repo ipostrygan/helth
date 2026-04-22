@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
+import { OnChangeFn, SortingState } from '@tanstack/react-table'
 import type { MedicalExpense } from '@/lib/generated/prisma'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import {
@@ -17,7 +17,7 @@ import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import { EXPENSE_TYPE_LABELS } from './constants'
 import { Modal } from '@/components/ui/modal'
-import { RowActions } from '@/components/row-actions'
+import { medicalExpenseColumns } from './columns'
 import { TableTemplate } from '@/components/table-template'
 import MedicalExpenseForm from './medical-expense-form'
 import { MedicalExpenseDetailsSheet } from './components/medical-expense-details-sheet'
@@ -54,46 +54,11 @@ const MedicalExpensesPage = () => {
     }
   }
 
-  const columns: ColumnDef<MedicalExpense>[] = [
-    {
-      accessorKey: 'title',
-      header: 'Title',
-      cell: ({ row }) => (
-        <button
-          className="text-primary font-medium hover:text-primary/80 transition-colors text-left"
-          onClick={() => setViewingExpense(row.original)}
-        >
-          {row.getValue('title')}
-        </button>
-      )
-    },
-    {
-      accessorKey: 'amount',
-      header: 'Amount',
-      cell: ({ row }) =>
-        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(row.getValue('amount'))
-    },
-    {
-      accessorKey: 'date',
-      header: 'Date',
-      cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
-    },
-    {
-      accessorKey: 'type',
-      header: 'Type',
-      cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue('type') as keyof typeof EXPENSE_TYPE_LABELS]
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <RowActions
-          onEdit={() => setEditingExpense(row.original)}
-          onDelete={() => setDeletingExpenseId(row.original.id)}
-        />
-      )
-    }
-  ]
+  const columns = medicalExpenseColumns({
+    onView: setViewingExpense,
+    onEdit: setEditingExpense,
+    onDelete: setDeletingExpenseId
+  })
 
   const dateRange
     = filters.dateFrom || filters.dateTo
