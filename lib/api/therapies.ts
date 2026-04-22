@@ -6,7 +6,8 @@ import { buildSearchParams, fetchOne, deleteResource, uploadDocuments, deleteDoc
 
 const BASE = '/api/therapies'
 
-export type TherapyWithDocuments = Therapy & { documents: DocumentItem[] }
+export type Specialist = { name: string; link: string | null }
+export type TherapyWithDocuments = Therapy & { documents: DocumentItem[]; specialists: Specialist[] }
 
 export async function getTherapies(
   params: TherapiesQueryParams

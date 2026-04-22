@@ -6,7 +6,9 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   const item = await getTherapyById(id)
   if (!item) return new NextResponse(null, { status: 404 })
 
-  const documents = item.relatedDocuments.map((key) => {
+  const { appointments, ...therapyData } = item
+
+  const documents = therapyData.relatedDocuments.map((key) => {
     const name = key.split('/').pop() ?? key
     const encodedKey = encodeURIComponent(key)
     const encodedName = encodeURIComponent(name)
@@ -18,7 +20,13 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     }
   })
 
-  return NextResponse.json({ ...item, documents })
+  const specialists = Array.from(
+    new Map(
+      appointments.map(a => [a.specialistName, { name: a.specialistName!, link: a.specialistLink ?? null }])
+    ).values()
+  )
+
+  return NextResponse.json({ ...therapyData, documents, specialists })
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

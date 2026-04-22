@@ -200,6 +200,28 @@ const TherapyDetailPage = () => {
           <DetailRow label="Description">
             {therapy.description ?? '—'}
           </DetailRow>
+          <Separator />
+          <DetailRow label="Specialists">
+            {therapy.specialists.length === 0
+              ? '—'
+              : (
+                  <div className="space-y-1">
+                    {therapy.specialists.map(s =>
+                      s.link
+                        ? (
+                            <div key={s.name}>
+                              <a href={s.link} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">
+                                {s.name}
+                              </a>
+                            </div>
+                          )
+                        : (
+                            <div key={s.name}>{s.name}</div>
+                          )
+                    )}
+                  </div>
+                )}
+          </DetailRow>
         </div>
       </div>
 

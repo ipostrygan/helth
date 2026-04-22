@@ -112,7 +112,15 @@ export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput) => {
 
 export const getTherapyById = async (id: string) => {
   try {
-    return await prisma.therapy.findUnique({ where: { id } })
+    return await prisma.therapy.findUnique({
+      where: { id },
+      include: {
+        appointments: {
+          where: { specialistName: { not: null } },
+          select: { specialistName: true, specialistLink: true }
+        }
+      }
+    })
   }
   catch (e) {
     console.error(e)
