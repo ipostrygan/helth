@@ -81,26 +81,6 @@ const TherapiesPage = () => {
       }
     },
     {
-      accessorKey: 'therapistName',
-      header: 'Therapist',
-      cell: ({ row }) => {
-        const value = row.getValue<string | null>('therapistName') ?? '—'
-        const url = row.original.therapistInfoLink
-        if (!url || value === '—') return value
-        return (
-          <AppLink
-            external
-            href={url}
-            target={url.startsWith('http') ? '_blank' : undefined}
-            rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="font-medium"
-          >
-            {value}
-          </AppLink>
-        )
-      }
-    },
-    {
       accessorKey: 'location',
       header: 'Location',
       enableSorting: false,
