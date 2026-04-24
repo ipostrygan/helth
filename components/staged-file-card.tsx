@@ -3,7 +3,7 @@
 import { FileIcon, ImageIcon, XIcon } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import type { UploadedFile } from '@/components/ui/file-upload'
+import type { UploadedFile } from '@/components/custom/file-upload'
 
 type StagedFileCardProps = {
   entry: UploadedFile

@@ -20,9 +20,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { AppLink } from '@/components/ui/app-link'
+import { AppLink } from '@/components/custom/app-link'
 import { TableTemplate } from '@/components/table-template'
-import { StatusBadge } from '@/components/ui/status-badge'
+import { StatusBadge } from '@/components/custom/status-badge'
 
 const IS_ACTIVE_OPTIONS = [
   { value: 'true', label: 'Ongoing' },

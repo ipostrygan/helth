@@ -3,20 +3,20 @@
 import { Suspense } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { AppLink } from '@/components/ui/app-link'
+import { AppLink } from '@/components/custom/app-link'
 import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import { Button } from '@/components/ui/button'
 import { useAppointment } from '../hooks/use-appointment'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
 import { Separator } from '@/components/ui/separator'
-import { DetailRow } from '@/components/ui/detail-row'
+import { DetailRow } from '@/components/custom/detail-row'
 import {
   APPOINTMENT_TYPE_LABELS,
   APPOINTMENT_STATUS_LABELS
 } from '../constants'
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { StatusBadge } from '@/components/ui/status-badge'
+import { StatusBadge } from '@/components/custom/status-badge'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'

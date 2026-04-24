@@ -1,9 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
 import type { Appointment } from '@/lib/generated/prisma/client'
-import { AppLink } from '@/components/ui/app-link'
+import { AppLink } from '@/components/custom/app-link'
 import { RowActions } from '@/components/row-actions'
 import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from './constants'
-import { StatusBadge } from '@/components/ui/status-badge'
+import { StatusBadge } from '@/components/custom/status-badge'
 
 interface AppointmentColumnsOptions {
   onDelete: (id: string) => void

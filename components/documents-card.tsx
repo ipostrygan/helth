@@ -16,7 +16,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { FileCard } from '@/components/file-card'
 import { StagedFileCard } from '@/components/staged-file-card'
-import { FileUpload, type UploadedFile } from '@/components/ui/file-upload'
+import { FileUpload, type UploadedFile } from '@/components/custom/file-upload'
 import { Button } from '@/components/ui/button'
 import type { DocumentItem } from '@/lib/api/appointments'
 

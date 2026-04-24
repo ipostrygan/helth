@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import { DatePickerField } from '@/components/ui/date-picker-field'
+import { DatePickerField } from '@/components/custom/date-picker-field'
 import {
   APPOINTMENT_TYPE_LABELS,
   APPOINTMENT_STATUS_LABELS

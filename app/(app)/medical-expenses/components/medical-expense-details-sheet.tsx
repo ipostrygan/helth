@@ -1,6 +1,6 @@
 'use client'
 
-import { AppLink } from '@/components/ui/app-link'
+import { AppLink } from '@/components/custom/app-link'
 import type { MedicalExpense } from '@/lib/generated/prisma/client'
 import {
   Sheet,
@@ -9,7 +9,7 @@ import {
   SheetTitle
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
-import { DetailRow } from '@/components/ui/detail-row'
+import { DetailRow } from '@/components/custom/detail-row'
 import { EXPENSE_TYPE_LABELS } from '../constants'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
 import { useAppointment } from '../../appointments/hooks/use-appointment'

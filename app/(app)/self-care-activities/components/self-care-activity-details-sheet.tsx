@@ -8,7 +8,7 @@ import {
   SheetTitle
 } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
-import { DetailRow } from '@/components/ui/detail-row'
+import { DetailRow } from '@/components/custom/detail-row'
 
 type Props = {
   selfCareActivity: SelfCareActivity | null

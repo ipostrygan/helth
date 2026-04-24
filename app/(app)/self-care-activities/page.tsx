@@ -25,7 +25,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { TableTemplate } from '@/components/table-template'
-import { Modal } from '@/components/ui/modal'
+import { Modal } from '@/components/custom/modal'
 import { SelfCareActivityDetailsSheet } from './components/self-care-activity-details-sheet'
 import SelfCareActivityForm from './self-care-activity-form'
 
