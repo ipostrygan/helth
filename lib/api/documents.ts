@@ -22,7 +22,7 @@ async function uploadFile(
   addDocument: (id: string, key: string) => Promise<unknown>
 ) {
   const key = `medical-docs/${id}/${file.name}`
-  await uploadS3Object(key, file, `attachment; filename="${file.name}"`)
+  await uploadS3Object(key, file, `attachment; filename*=UTF-8''${encodeURIComponent(file.name)}`)
   await addDocument(id, key)
 }
 

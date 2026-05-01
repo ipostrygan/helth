@@ -8,7 +8,7 @@ export const s3 = new S3Client({
   }
 })
 
-export async function uploadS3Object(key: string, file: File, contentDisposition = `inline; filename="${file.name}"`) {
+export async function uploadS3Object(key: string, file: File, contentDisposition = `inline; filename*=UTF-8''${encodeURIComponent(file.name)}`) {
   const buffer = Buffer.from(await file.arrayBuffer())
   await s3.send(new PutObjectCommand({
     Bucket: process.env.APP_S3_BUCKET!,
