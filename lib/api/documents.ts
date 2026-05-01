@@ -11,17 +11,19 @@ const ALLOWED_TYPES = [
 ]
 
 interface DocumentHandlerOptions {
-  getById: (id: string) => Promise<{ relatedDocuments: string[] } | null>
+  getById: (id: string) => Promise<{ title: string; relatedDocuments: string[] } | null>
   addDocument: (id: string, key: string) => Promise<unknown>
   removeDocument: (id: string, key: string) => Promise<unknown>
 }
 
 async function uploadFile(
   id: string,
+  title: string,
   file: File,
   addDocument: (id: string, key: string) => Promise<unknown>
 ) {
-  const key = `medical-docs/${id}/${file.name}`
+  const folder = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  const key = `medical-docs/${folder}-${id}/${file.name}`
   await uploadS3Object(key, file, `attachment; filename*=UTF-8''${encodeURIComponent(file.name)}`)
   await addDocument(id, key)
 }
@@ -54,7 +56,7 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
     }
 
     try {
-      await Promise.all(files.map(file => uploadFile(id, file, addDocument)))
+      await Promise.all(files.map(file => uploadFile(id, entity.title, file, addDocument)))
       return NextResponse.json(null, { status: 201 })
     }
     catch (err) {
