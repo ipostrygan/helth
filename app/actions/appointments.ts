@@ -132,10 +132,14 @@ export const createAppointment = async (input: CreateAppointmentInput) => {
 
 export const updateAppointment = async ({ id, ...data }: UpdateAppointmentInput) => {
   try {
+    const expenseUpdate = {
+      ...(data.cost && !isNaN(data.cost) ? { amount: data.cost } : {}),
+      ...('therapyId' in data ? { therapyId: data.therapyId ?? null } : {})
+    }
     await prisma.$transaction([
       prisma.appointment.update({ where: { id }, data }),
-      ...(data.cost && !isNaN(data.cost)
-        ? [prisma.medicalExpense.updateMany({ where: { appointmentId: id }, data: { amount: data.cost } })]
+      ...(Object.keys(expenseUpdate).length > 0
+        ? [prisma.medicalExpense.updateMany({ where: { appointmentId: id }, data: expenseUpdate })]
         : [])
     ])
   }

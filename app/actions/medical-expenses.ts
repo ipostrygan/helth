@@ -25,18 +25,20 @@ export const getMedicalExpenses = async ({
   appointmentId
 }: MedicalExpensesQueryParams = {}) => {
   const skip = (page - 1) * pageSize
+
+  const andConditions = [
+    ...(therapyId ? [{ OR: [{ therapyId }, { appointment: { therapyId } }] }] : []),
+    ...(search
+      ? [{ OR: [
+          { title: { contains: search, mode: 'insensitive' as const } },
+          { description: { contains: search, mode: 'insensitive' as const } }
+        ] }]
+      : [])
+  ]
+
   const where = {
     ...(profileId ? { userId: profileId } : {}),
-    ...(therapyId ? { therapyId } : {}),
     ...(appointmentId ? { appointmentId } : {}),
-    ...(search
-      ? {
-          OR: [
-            { title: { contains: search, mode: 'insensitive' as const } },
-            { description: { contains: search, mode: 'insensitive' as const } }
-          ]
-        }
-      : {}),
     ...(dateFrom || dateTo
       ? {
           date: {
@@ -45,7 +47,8 @@ export const getMedicalExpenses = async ({
           }
         }
       : {}),
-    ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {})
+    ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {}),
+    ...(andConditions.length > 0 ? { AND: andConditions } : {})
   }
 
   try {
