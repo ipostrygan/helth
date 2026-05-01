@@ -22,7 +22,7 @@ async function uploadFile(
   file: File,
   addDocument: (id: string, key: string) => Promise<unknown>
 ) {
-  const folder = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  const folder = title.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '')
   const key = `medical-docs/${folder}-${id}/${file.name}`
   await uploadS3Object(key, file, `attachment; filename*=UTF-8''${encodeURIComponent(file.name)}`)
   await addDocument(id, key)
