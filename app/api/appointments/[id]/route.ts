@@ -8,13 +8,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
   const documents = item.relatedDocuments.map((key) => {
     const name = key.split('/').pop() ?? key
-    const encodedKey = encodeURIComponent(key)
-    const encodedName = encodeURIComponent(name)
+    const baseUrl = `/api/download?key=${encodeURIComponent(key)}`
     return {
       key,
       name,
-      url: `/api/download/${encodedName}?key=${encodedKey}`,
-      downloadUrl: `/api/download/${encodedName}?key=${encodedKey}&download=true`
+      url: baseUrl,
+      downloadUrl: `${baseUrl}&download=true`
     }
   })
 
