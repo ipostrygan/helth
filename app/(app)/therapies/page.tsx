@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
+import { ColumnDef, SortingState } from '@tanstack/react-table'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
@@ -22,7 +22,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { AppLink } from '@/components/custom/app-link'
-import { TableTemplate } from '@/components/table-template'
+import { TableTemplate, type SortChange } from '@/components/table-template'
 import { StatusBadge } from '@/components/custom/status-badge'
 
 const IS_ACTIVE_OPTIONS = [
@@ -51,12 +51,8 @@ const TherapiesPage = () => {
   const { data, isLoading, isFetching, isError } = useTherapies(params)
 
   const sorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
-  const onSortingChange: OnChangeFn<SortingState> = (updater) => {
-    const next = typeof updater === 'function' ? updater(sorting) : updater
-    const first = next[0]
-    if (first) {
-      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
-    }
+  const onSortingChange = ({ sortField, sortDirection }: SortChange) => {
+    setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
   const columns: ColumnDef<Therapy>[] = [

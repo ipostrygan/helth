@@ -2,7 +2,6 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { OnChangeFn, SortingState } from '@tanstack/react-table'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
@@ -14,7 +13,7 @@ import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import { APPOINTMENT_STATUS_LABELS } from './constants'
 import { appointmentColumns } from './columns'
-import { TableTemplate } from '@/components/table-template'
+import { TableTemplate, type SortChange } from '@/components/table-template'
 
 const AppointmentsPage = () => {
   const router = useRouter()
@@ -38,12 +37,8 @@ const AppointmentsPage = () => {
   const { data, isLoading, isFetching, isError } = useAppointments(params)
 
   const sorting = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
-  const onSortingChange: OnChangeFn<SortingState> = (updater) => {
-    const next = typeof updater === 'function' ? updater(sorting) : updater
-    const first = next[0]
-    if (first) {
-      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
-    }
+  const onSortingChange = ({ sortField, sortDirection }: SortChange) => {
+    setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
   const columns = appointmentColumns({

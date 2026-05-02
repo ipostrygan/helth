@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { OnChangeFn, SortingState } from '@tanstack/react-table'
+import { SortingState } from '@tanstack/react-table'
 import type { MedicalExpense } from '@/lib/generated/prisma'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import {
@@ -19,7 +19,7 @@ import { format } from 'date-fns'
 import { EXPENSE_TYPE_LABELS } from './constants'
 import { Modal } from '@/components/custom/modal'
 import { medicalExpenseColumns } from './columns'
-import { TableTemplate } from '@/components/table-template'
+import { TableTemplate, type SortChange } from '@/components/table-template'
 import MedicalExpenseForm from './medical-expense-form'
 import { MedicalExpenseDetailsSheet } from './components/medical-expense-details-sheet'
 
@@ -47,12 +47,8 @@ const MedicalExpensesPage = () => {
   const { data, isLoading, isFetching, isError } = useMedicalExpenses(params, 'profileId')
 
   const sorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
-  const onSortingChange: OnChangeFn<SortingState> = (updater) => {
-    const next = typeof updater === 'function' ? updater(sorting) : updater
-    const first = next[0]
-    if (first) {
-      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
-    }
+  const onSortingChange = ({ sortField, sortDirection }: SortChange) => {
+    setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
   const columns = medicalExpenseColumns({

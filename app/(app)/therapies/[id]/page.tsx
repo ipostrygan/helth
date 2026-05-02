@@ -10,12 +10,12 @@ import { useActiveProfile } from '@/context/profile-context'
 import { useTherapy } from '../hooks/use-therapy'
 import { Separator } from '@/components/ui/separator'
 import { DetailRow } from '@/components/custom/detail-row'
-import { TableTemplate } from '@/components/table-template'
+import { TableTemplate, type SortChange } from '@/components/table-template'
 import { useMedicalExpenses } from '../../medical-expenses/hooks/use-medical-expenses'
 import { useDeleteMedicalExpense } from '../../medical-expenses/hooks/use-delete-medical-expense'
 import { useAppointments } from '../../appointments/hooks/use-appointments'
 import { useDeleteAppointment } from '../../appointments/hooks/use-delete-appointment'
-import { OnChangeFn, SortingState } from '@tanstack/react-table'
+import { SortingState } from '@tanstack/react-table'
 import { AppLink } from '@/components/custom/app-link'
 import { appointmentColumns } from '../../appointments/columns'
 import { medicalExpenseColumns } from '../../medical-expenses/columns'
@@ -82,21 +82,13 @@ const TherapyDetailPage = () => {
   }
 
   const expenseSorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
-  const onExpenseSortingChange: OnChangeFn<SortingState> = (updater) => {
-    const next = typeof updater === 'function' ? updater(expenseSorting) : updater
-    const first = next[0]
-    if (first) {
-      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
-    }
+  const onExpenseSortingChange = ({ sortField, sortDirection }: SortChange) => {
+    setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
   const apptSorting: SortingState = [{ id: apptFilters.apptSortField, desc: apptFilters.apptSortDirection === 'desc' }]
-  const onApptSortingChange: OnChangeFn<SortingState> = (updater) => {
-    const next = typeof updater === 'function' ? updater(apptSorting) : updater
-    const first = next[0]
-    if (first) {
-      setApptFilters(prev => ({ ...prev, apptPage: 1, apptSortField: first.id, apptSortDirection: first.desc ? 'desc' : 'asc' }))
-    }
+  const onApptSortingChange = ({ sortField, sortDirection }: SortChange) => {
+    setApptFilters(prev => ({ ...prev, apptPage: 1, apptSortField: sortField, apptSortDirection: sortDirection }))
   }
 
   const apptColumns = appointmentColumns({

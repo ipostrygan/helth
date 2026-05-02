@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
+import { ColumnDef, SortingState } from '@tanstack/react-table'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
 import { useQueryStates } from 'nuqs'
 import {
@@ -25,7 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { TableTemplate } from '@/components/table-template'
+import { TableTemplate, type SortChange } from '@/components/table-template'
 import { Modal } from '@/components/custom/modal'
 import { SelfCareActivityDetailsSheet } from './components/self-care-activity-details-sheet'
 import SelfCareActivityForm from './self-care-activity-form'
@@ -62,12 +62,8 @@ function SelfCareActivitiesPage() {
   const { data, isLoading, isFetching, isError } = useSelfCareActivities(params)
 
   const sorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
-  const onSortingChange: OnChangeFn<SortingState> = (updater) => {
-    const next = typeof updater === 'function' ? updater(sorting) : updater
-    const first = next[0]
-    if (first) {
-      setFilters(prev => ({ ...prev, page: 1, sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' }))
-    }
+  const onSortingChange = ({ sortField, sortDirection }: SortChange) => {
+    setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
   const columns: ColumnDef<SelfCareActivity>[] = [

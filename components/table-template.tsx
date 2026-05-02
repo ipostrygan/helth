@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
-import { ColumnDef, OnChangeFn, SortingState } from '@tanstack/react-table'
+import { ColumnDef, SortingState } from '@tanstack/react-table'
 import { type DateRange } from 'react-day-picker'
 import { AlertCircle, Plus } from 'lucide-react'
 import { DataTable } from '@/components/custom/data-table'
@@ -14,6 +14,11 @@ import { MultiSelectFilter } from '@/components/custom/multi-select-filter'
 import { DialogFooter } from '@/components/ui/dialog'
 import { Modal } from '@/components/custom/modal'
 import type { PaginatedResult } from '@/types'
+
+export interface SortChange {
+  sortField: string
+  sortDirection: 'asc' | 'desc'
+}
 
 export interface FilterGroupConfig {
   label: string
@@ -54,7 +59,7 @@ interface TableTemplateProps<TData> {
   onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: number) => void
   sorting?: SortingState
-  onSortingChange?: OnChangeFn<SortingState>
+  onSortingChange?: (sort: SortChange) => void
   onAddNew?: () => void
   addNewLabel?: string
   filters?: FiltersConfig

@@ -9,6 +9,7 @@ import {
   getCoreRowModel,
   useReactTable
 } from '@tanstack/react-table'
+import type { SortChange } from '@/components/table-template'
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -51,7 +52,7 @@ interface DataTableProps<TData, TValue> {
   pageSize: number
   hasActiveFilters?: boolean
   sorting?: SortingState
-  onSortingChange?: OnChangeFn<SortingState>
+  onSortingChange?: (sort: SortChange) => void
 }
 
 export function DataTable<TData, TValue>({
@@ -65,13 +66,22 @@ export function DataTable<TData, TValue>({
   onSortingChange
 }: DataTableProps<TData, TValue>) {
   'use no memo'
+  const handleSortingChange: OnChangeFn<SortingState> = (updater) => {
+    if (!onSortingChange) return
+    const next = typeof updater === 'function' ? updater(sorting ?? []) : updater
+    const first = next[0]
+    if (first) {
+      onSortingChange({ sortField: first.id, sortDirection: first.desc ? 'desc' : 'asc' })
+    }
+  }
   const table = useReactTable({
     data: data.data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualSorting: true,
+    enableSortingRemoval: false,
     state: { sorting },
-    onSortingChange
+    onSortingChange: handleSortingChange
   })
 
   const isEmpty = data.total === 0 && !hasActiveFilters
