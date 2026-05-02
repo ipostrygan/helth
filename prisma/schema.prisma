@@ -1,18 +1,12 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../lib/generated/prisma"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -22,28 +16,88 @@ model Auth {
   password String
 }
 
+model User {
+  id                 String             @id @default(dbgenerated("(gen_random_uuid())::text"))
+  firstName          String?
+  lastName           String?
+  birthDate          DateTime
+  weight             Float
+  height             Float?
+  familyRole         String?
+  shortName          String?
+  imageKey           String?
+  isPrimaryUser      Boolean            @default(false)
+  fullName           String?
+  profileType        ProfileType        @default(Human)
+  appointments       Appointment[]
+  medicalExpenses    MedicalExpense[]
+  selfCareActivities SelfCareActivity[]
+  therapies          Therapy[]
+}
+
+model MedicalExpense {
+  id            String       @id @default(uuid())
+  title         String
+  amount        Float
+  date          DateTime
+  description   String?
+  type          ExpenseType
+  userId        String
+  therapyId     String?
+  appointmentId String?
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+  therapy       Therapy?     @relation(fields: [therapyId], references: [id])
+  user          User         @relation(fields: [userId], references: [id])
+}
+
+model Therapy {
+  id               String           @id @default(uuid())
+  title            String
+  description      String?
+  startDate        DateTime
+  endDate          DateTime?
+  isActive         Boolean          @default(true)
+  userId           String
+  relatedDocuments String[]
+  appointments     Appointment[]
+  medicalExpenses  MedicalExpense[]
+  user             User             @relation(fields: [userId], references: [id])
+}
+
+model Appointment {
+  id               String            @id @default(uuid())
+  title            String
+  description      String?
+  date             DateTime
+  type             AppointmentType
+  status           AppointmentStatus @default(Scheduled)
+  location         String?
+  notes            String?
+  relatedDocuments String[]
+  userId           String
+  therapyId        String?
+  cost             Float
+  specialistLink   String?
+  specialistName   String?
+  therapy          Therapy?          @relation(fields: [therapyId], references: [id])
+  user             User              @relation(fields: [userId], references: [id])
+  medicalExpenses  MedicalExpense[]
+}
+
+model SelfCareActivity {
+  id          String   @id @default(uuid())
+  title       String
+  date        DateTime
+  description String?
+  medication  String
+  dosage      String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
 enum ProfileType {
   Human
   Animal
-}
-
-model User {
-  id              String           @id @default(dbgenerated("(gen_random_uuid())::text"))
-  profileType     ProfileType      @default(Human)
-  firstName       String?
-  lastName        String?
-  fullName        String?
-  birthDate       DateTime
-  weight          Float
-  height          Float?
-  shortName       String?
-  familyRole      String?
-  imageKey        String?
-  isPrimaryUser   Boolean          @default(false)
-  medicalExpenses   MedicalExpense[]
-  therapies         Therapy[]
-  appointments      Appointment[]
-  selfCareActivities  SelfCareActivity[]
 }
 
 enum ExpenseType {
@@ -67,67 +121,7 @@ enum AppointmentType {
   Other
 }
 
-model MedicalExpense {
-  id             String       @id @default(uuid())
-  title          String
-  amount         Float
-  date           DateTime
-  description    String?
-  type           ExpenseType
-  userId         String
-  user           User         @relation(fields: [userId], references: [id])
-  therapyId      String?
-  therapy        Therapy?     @relation(fields: [therapyId], references: [id])
-  appointmentId  String?
-  appointment    Appointment? @relation(fields: [appointmentId], references: [id])
-}
-
-model Therapy {
-  id                String           @id @default(uuid())
-  title             String
-  description       String?
-  startDate         DateTime
-  endDate           DateTime?
-  isActive          Boolean          @default(true)
-  relatedDocuments  String[]
-  userId            String
-  user              User             @relation(fields: [userId], references: [id])
-  medicalExpenses   MedicalExpense[]
-  appointments      Appointment[]
-}
-
-model Appointment {
-  id               String            @id @default(uuid())
-  title            String
-  description      String?
-  date             DateTime
-  type             AppointmentType
-  status           AppointmentStatus @default(Scheduled)
-  cost             Float
-  specialistName   String?
-  specialistLink   String?
-  location         String?
-  notes            String?
-  relatedDocuments String[]
-  userId           String
-  user             User              @relation(fields: [userId], references: [id])
-  therapyId        String?
-  therapy          Therapy?          @relation(fields: [therapyId], references: [id])
-  medicalExpenses  MedicalExpense[]
-}
-
 enum AppointmentStatus {
   Scheduled
   Completed
-}
-
-model SelfCareActivity {
-  id          String   @id @default(uuid())
-  title       String
-  date        DateTime
-  description String?
-  medication  String
-  dosage      String
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
 }
