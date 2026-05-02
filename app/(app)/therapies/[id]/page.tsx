@@ -26,6 +26,7 @@ import { StatusBadge } from '@/components/custom/status-badge'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
+import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
 
 const TherapyDetailPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -69,7 +70,15 @@ const TherapyDetailPage = () => {
   const { mutate: deleteAppointment, isPending: isDeletingAppt } = useDeleteAppointment()
 
   if (isLoading || !therapy) {
-    return null
+    return (
+      <DetailPageSkeleton
+        detailRows={5}
+        tableSections={[
+          { headerWidth: 'w-40', rows: 3, columns: 5 },
+          { headerWidth: 'w-36', rows: 3, columns: 4 },
+        ]}
+      />
+    )
   }
 
   const expenseSorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]

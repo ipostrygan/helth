@@ -20,6 +20,7 @@ import { StatusBadge } from '@/components/custom/status-badge'
 import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
+import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
 
 const AppointmentDetailPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -27,7 +28,9 @@ const AppointmentDetailPage = () => {
   const { data: therapy } = useTherapy(appointment?.therapyId ?? '')
   const { uploadMutation, removeMutation } = useDocuments(`/api/appointments/${id}/documents`, queryKeys.appointments.detail(id))
 
-  if (isLoading || !appointment) return null
+  if (isLoading || !appointment) {
+    return <DetailPageSkeleton detailRows={9} />
+  }
 
   return (
     <div className="sm:px-6 sm:pt-6 space-y-6 max-w-4xl mx-auto">
@@ -84,8 +87,8 @@ const AppointmentDetailPage = () => {
                     <AppLink
                       external
                       href={appointment.specialistLink}
-                      target={appointment.specialistLink.startsWith('http') ? '_blank' : undefined}
-                      rel={appointment.specialistLink.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {appointment.specialistName}
                     </AppLink>
