@@ -11,6 +11,7 @@ import {
 } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
+import { getProfileDisplayName } from '../users/types/profile.types'
 import { useSelfCareActivities } from './hooks/use-self-care-activities'
 import { useSelfCareActivity } from './hooks/use-self-care-activity'
 import { useDeleteSelfCareActivity } from './hooks/use-delete-self-care-activity'
@@ -141,7 +142,7 @@ function SelfCareActivitiesPage() {
     <TableTemplate
       onAddNew={() => setAddingItem(true)}
       addNewLabel="Add activity"
-      title={`${profile.firstName}'s self-care activities`}
+      title={`${getProfileDisplayName(profile)}'s self-care activities`}
       description="Self-care activities - taking medications, applying treatments, wellness routines"
       columns={columns}
       data={data}

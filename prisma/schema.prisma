@@ -22,10 +22,17 @@ model Auth {
   password String
 }
 
+enum ProfileType {
+  Human
+  Animal
+}
+
 model User {
   id              String           @id @default(dbgenerated("(gen_random_uuid())::text"))
-  firstName       String
-  lastName        String
+  profileType     ProfileType      @default(Human)
+  firstName       String?
+  lastName        String?
+  fullName        String?
   birthDate       DateTime
   weight          Float
   height          Float?

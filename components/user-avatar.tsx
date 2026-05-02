@@ -25,7 +25,12 @@ const UserAvatar = ({
   const [error, setError] = useState<string | null>(null)
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  const initials = `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
+  const displayName = profile.profileType === 'Human'
+    ? `${profile.firstName} ${profile.lastName}`
+    : profile.fullName
+  const initials = profile.profileType === 'Human'
+    ? `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
+    : (profile.shortName ?? profile.fullName)[0].toUpperCase()
   const imageUrl = `/api/users/${profile.id}/image`
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +65,7 @@ const UserAvatar = ({
       {imageUrl !== null && (
         <Image
           src={imageUrl}
-          alt={`${profile.firstName} ${profile.lastName}'s avatar`}
+          alt={`${displayName}'s avatar`}
           fill
           unoptimized
           loading="lazy"

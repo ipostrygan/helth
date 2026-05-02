@@ -8,6 +8,7 @@ import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
+import { getProfileDisplayName } from '../users/types/profile.types'
 import { useTherapies } from './hooks/use-therapies'
 import { useDeleteTherapy } from './hooks/use-delete-therapy'
 import { type DateRange } from 'react-day-picker'
@@ -129,7 +130,7 @@ const TherapiesPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/therapies/create')}
       addNewLabel="Add Therapy"
-      title={`${profile.firstName}'s Therapies`}
+      title={`${getProfileDisplayName(profile)}'s Therapies`}
       description="Ongoing and finished therapy sessions"
       columns={columns}
       data={data}

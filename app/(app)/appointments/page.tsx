@@ -7,6 +7,7 @@ import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
+import { getProfileDisplayName } from '../users/types/profile.types'
 import { useAppointments } from './hooks/use-appointments'
 import { useDeleteAppointment } from './hooks/use-delete-appointment'
 import { type DateRange } from 'react-day-picker'
@@ -36,7 +37,7 @@ const AppointmentsPage = () => {
   }
   const { data, isLoading, isFetching, isError } = useAppointments(params)
 
-  const sorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
+  const sorting = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
   const onSortingChange: OnChangeFn<SortingState> = (updater) => {
     const next = typeof updater === 'function' ? updater(sorting) : updater
     const first = next[0]
@@ -64,7 +65,7 @@ const AppointmentsPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/appointments/create')}
       addNewLabel="Add Appointment"
-      title={`${profile.firstName}'s appointments`}
+      title={`${getProfileDisplayName(profile)}'s appointments`}
       description="Past medical appointments"
       columns={columns}
       data={data}

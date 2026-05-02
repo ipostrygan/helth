@@ -9,9 +9,9 @@ const PersonalInformation = ({ profile }: { profile: UserProfile }) => {
           <UserAvatar profile={profile} editable />
         </div>
         <h2 className="text-2xl font-bold">
-          {profile.firstName}
-          {' '}
-          {profile.lastName}
+          {profile.profileType === 'Human'
+            ? `${profile.firstName} ${profile.lastName}`
+            : profile.fullName}
         </h2>
         <p className="text-lg text-gray-400">{profile.familyRole}</p>
       </div>
@@ -25,17 +25,15 @@ const PersonalInformation = ({ profile }: { profile: UserProfile }) => {
           <label htmlFor="birth-date" className="text-muted-foreground">Birth date</label>
           <span id="birth-date">{new Date(profile.birthDate).toLocaleDateString('en-US')}</span>
         </div>
-        <div className="flex justify-between">
-          <label htmlFor="height" className="text-muted-foreground">Height</label>
-          <span id="height">{profile.height ? `${profile.height} cm` : 'N/A'}</span>
-        </div>
+        {profile.profileType === 'Human' && (
+          <div className="flex justify-between">
+            <label htmlFor="height" className="text-muted-foreground">Height</label>
+            <span id="height">{profile.height ? `${profile.height} cm` : 'N/A'}</span>
+          </div>
+        )}
         <div className="flex justify-between">
           <label htmlFor="weight" className="text-muted-foreground">Weight</label>
-          <span id="weight">
-            {profile.weight}
-            {' '}
-            kg
-          </span>
+          <span id="weight">{profile.weight} kg</span>
         </div>
       </div>
     </>
