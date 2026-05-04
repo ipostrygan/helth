@@ -6,7 +6,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   const item = await getAppointmentById(id)
   if (!item) return new NextResponse(null, { status: 404 })
 
-  const documents = item.relatedDocuments.map((key) => {
+  const { relatedDocuments, ...rest } = item
+  const documents = relatedDocuments.map((key) => {
     const name = key.split('/').pop() ?? key
     const baseUrl = `/api/download?key=${encodeURIComponent(key)}`
     return {
@@ -17,7 +18,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     }
   })
 
-  return NextResponse.json({ ...item, documents })
+  return NextResponse.json({ ...rest, documents })
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
