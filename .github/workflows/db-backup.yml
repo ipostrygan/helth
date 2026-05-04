@@ -1,0 +1,38 @@
+name: Daily DB Backup to S3
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y postgresql-client
+
+      - name: Dump and upload to S3
+        env:
+          DATABASE_URL: ${{ secrets.DIRECT_URL }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.APP_AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.APP_AWS_SECRET_KEY }}
+          AWS_REGION: ${{ secrets.APP_AWS_REGION }}
+          S3_BUCKET: ${{ secrets.APP_S3_BUCKET }}
+        run: |
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H-%M-%SZ)
+          FILENAME="medical-tracker-${TIMESTAMP}.sql.gz"
+
+          pg_dump "$DATABASE_URL" \
+            --no-owner \
+            --no-acl \
+            --format=plain \
+            | gzip \
+            | aws s3 cp - "s3://${S3_BUCKET}/db-backups/${FILENAME}" \
+                --storage-class STANDARD_IA
+
+          echo "Backup uploaded: s3://${S3_BUCKET}/db-backups/${FILENAME}"
