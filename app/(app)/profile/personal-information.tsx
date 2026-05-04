@@ -31,9 +31,19 @@ const PersonalInformation = ({ profile }: { profile: UserProfile }) => {
             <span id="height">{profile.height ? `${profile.height} cm` : 'N/A'}</span>
           </div>
         )}
+        {profile.profileType === 'Animal' && (
+          <div className="flex justify-between">
+            <label htmlFor="breed" className="text-muted-foreground">Breed</label>
+            <span id="breed">{profile.breed ?? 'N/A'}</span>
+          </div>
+        )}
         <div className="flex justify-between">
           <label htmlFor="weight" className="text-muted-foreground">Weight</label>
-          <span id="weight">{profile.weight} kg</span>
+          <span id="weight">
+            {profile.weight}
+            {' '}
+            kg
+          </span>
         </div>
       </div>
     </>
