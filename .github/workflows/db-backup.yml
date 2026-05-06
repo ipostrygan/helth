@@ -24,8 +24,7 @@ jobs:
           AWS_REGION: ${{ secrets.APP_AWS_REGION }}
           S3_BUCKET: ${{ secrets.APP_S3_BUCKET }}
         run: |
-          TIMESTAMP=$(date -u +%Y-%m-%dT%H-%M-%SZ)
-          FILENAME="medical-tracker-${TIMESTAMP}.sql.gz"
+          FILENAME="medical-tracker-latest.sql.gz"
 
           pg_dump "$DATABASE_URL" \
             --no-owner \
