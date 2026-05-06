@@ -1,11 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Loader2 } from 'lucide-react'
 import type { UseMutationResult } from '@tanstack/react-query'
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -125,22 +123,14 @@ export const DocumentsCard = ({
             <AlertDialogCancel disabled={removeMutation.isPending}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction
+            <Button
               variant="destructive"
               onClick={confirmDelete}
               disabled={removeMutation.isPending}
+              isPending={removeMutation.isPending}
             >
-              {removeMutation.isPending
-                ? (
-                    <>
-                      <Loader2 className="size-4 animate-spin" />
-                      Deleting…
-                    </>
-                  )
-                : (
-                    'Delete'
-                  )}
-            </AlertDialogAction>
+              {removeMutation.isPending ? 'Deleting…' : 'Delete'}
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
