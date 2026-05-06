@@ -1,6 +1,7 @@
 import type { PaginatedResult } from '@/types'
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
 import type { Therapy } from '@/lib/generated/prisma/client'
+import type { TherapyWithUser } from '@/app/actions/therapies'
 import type { DocumentItem } from '@/lib/api/appointments'
 import { buildSearchParams, fetchOne, deleteResource, uploadDocuments, deleteDocument } from './utils'
 
@@ -11,7 +12,7 @@ export type TherapyWithDocuments = Therapy & { documents: DocumentItem[]; specia
 
 export async function getTherapies(
   params: TherapiesQueryParams
-): Promise<PaginatedResult<Therapy>> {
+): Promise<PaginatedResult<TherapyWithUser>> {
   const sp = buildSearchParams(params, { sortField: params.sortField ?? 'startDate' })
 
   if (params.isActive && params.isActive.length > 0) {

@@ -5,11 +5,39 @@ import { ExpenseType, MedicalExpense } from '@/lib/generated/prisma/client'
 
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
-import { PaginatedResult } from '@/types'
+import { PaginatedResult, ProfileSummary } from '@/types'
 
-export type MedicalExpensePaginatedResult = PaginatedResult<MedicalExpense> & {
+export type MedicalExpenseWithUser = MedicalExpense & { user: ProfileSummary }
+
+export type MedicalExpensePaginatedResult = PaginatedResult<MedicalExpenseWithUser> & {
   totalSum: number
 }
+
+export type ExpensesByTypeItem = {
+  type: ExpenseType
+  total: number
+  count: number
+}
+
+export type ExpensesByTypeQuery = {
+  profileId?: string
+  dateFrom?: string
+  dateTo?: string
+}
+
+type BaseExpenseInput = {
+  title: string
+  amount: number
+  date: Date
+  type: ExpenseType
+  description?: string
+  therapyId?: string | null
+  appointmentId?: string | null
+}
+
+export type CreateExpenseInput = BaseExpenseInput & { userId: string }
+
+export type UpdateExpenseInput = { id: string } & Partial<BaseExpenseInput>
 
 export const getMedicalExpenses = async ({
   profileId,
@@ -57,7 +85,8 @@ export const getMedicalExpenses = async ({
         where,
         skip,
         take: pageSize,
-        orderBy: { [sortField]: sortDirection }
+        orderBy: { [sortField]: sortDirection },
+        include: { user: { select: { firstName: true, shortName: true, profileType: true } } }
       }),
       prisma.medicalExpense.count({ where }),
       prisma.medicalExpense.aggregate({ where, _sum: { amount: true } })
@@ -76,18 +105,6 @@ export const getMedicalExpenses = async ({
     console.error(e)
     throw new Error(e instanceof Error ? e.message : 'Failed to fetch medical expenses')
   }
-}
-
-export type ExpensesByTypeItem = {
-  type: ExpenseType
-  total: number
-  count: number
-}
-
-export type ExpensesByTypeQuery = {
-  profileId?: string
-  dateFrom?: string
-  dateTo?: string
 }
 
 export const getMedicalExpensesByType = async ({
@@ -147,17 +164,6 @@ export const deleteExpense = async (id: string) => {
   }
 }
 
-export type CreateExpenseInput = {
-  userId: string
-  title: string
-  amount: number
-  date: Date
-  type: ExpenseType
-  description?: string
-  therapyId?: string | null
-  appointmentId?: string | null
-}
-
 export const createExpense = async (input: CreateExpenseInput) => {
   try {
     await prisma.medicalExpense.create({ data: input })
@@ -166,17 +172,6 @@ export const createExpense = async (input: CreateExpenseInput) => {
     console.error(e)
     throw new Error(e instanceof Error ? e.message : 'Failed to create expense')
   }
-}
-
-export type UpdateExpenseInput = {
-  id: string
-  title: string
-  amount: number
-  date: Date
-  type: ExpenseType
-  description?: string
-  therapyId?: string | null
-  appointmentId?: string | null
 }
 
 export const updateExpense = async ({ id, ...data }: UpdateExpenseInput) => {

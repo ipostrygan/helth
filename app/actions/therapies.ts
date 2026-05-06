@@ -2,6 +2,10 @@
 
 import prisma from '@/lib/prisma'
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
+import type { Therapy } from '@/lib/generated/prisma/client'
+import type { ProfileSummary } from '@/types'
+
+export type TherapyWithUser = Therapy & { user: ProfileSummary }
 
 export const getTherapies = async ({
   profileId,
@@ -43,7 +47,8 @@ export const getTherapies = async ({
         where,
         skip,
         take: pageSize,
-        orderBy: { [sortField]: sortDirection }
+        orderBy: { [sortField]: sortDirection },
+        include: { user: { select: { firstName: true, shortName: true, profileType: true } } }
       }),
       prisma.therapy.count({ where })
     ])

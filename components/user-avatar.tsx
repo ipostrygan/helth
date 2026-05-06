@@ -28,6 +28,7 @@ const UserAvatar = ({
   const displayName = profile.profileType === 'Human'
     ? `${profile.firstName} ${profile.lastName}`
     : profile.fullName
+
   const initials = profile.profileType === 'Human'
     ? `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
     : (profile.shortName ?? profile.fullName)[0].toUpperCase()

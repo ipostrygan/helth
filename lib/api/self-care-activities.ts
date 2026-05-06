@@ -1,5 +1,6 @@
 import type { PaginatedResult, BaseQueryParams } from '@/types'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
+import type { SelfCareActivityWithUser } from '@/app/actions/self-care-activities'
 import { buildSearchParams, fetchOne, deleteResource } from './utils'
 
 const BASE = '/api/self-care-activities'
@@ -8,7 +9,7 @@ export type SelfCareActivitiesParams = BaseQueryParams
 
 export async function getSelfCareActivities(
   params: SelfCareActivitiesParams
-): Promise<PaginatedResult<SelfCareActivity>> {
+): Promise<PaginatedResult<SelfCareActivityWithUser>> {
   const searchParams = buildSearchParams(params)
   const res = await fetch(`${BASE}?${searchParams}`)
   if (!res.ok) {

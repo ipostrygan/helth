@@ -1,15 +1,22 @@
 import { ColumnDef } from '@tanstack/react-table'
-import type { MedicalExpense } from '@/lib/generated/prisma'
+import type { MedicalExpenseWithUser } from '@/app/actions/medical-expenses'
 import { RowActions } from '@/components/row-actions'
 import { EXPENSE_TYPE_LABELS } from './constants'
+import type { ProfileSummary } from '@/types'
+
+function profileLabel(user: ProfileSummary): string {
+  return user.profileType === 'Human'
+    ? (user.firstName ?? '')
+    : (user.shortName ?? '')
+}
 
 interface MedicalExpenseColumnsOptions {
   onDelete: (id: string) => void
-  onEdit?: (expense: MedicalExpense) => void
-  onView?: (expense: MedicalExpense) => void
+  onEdit?: (expense: MedicalExpenseWithUser) => void
+  onView?: (expense: MedicalExpenseWithUser) => void
 }
 
-export function medicalExpenseColumns({ onDelete, onEdit, onView }: MedicalExpenseColumnsOptions): ColumnDef<MedicalExpense>[] {
+export function medicalExpenseColumns({ onDelete, onEdit, onView }: MedicalExpenseColumnsOptions): ColumnDef<MedicalExpenseWithUser>[] {
   return [
     {
       accessorKey: 'title',
@@ -41,6 +48,11 @@ export function medicalExpenseColumns({ onDelete, onEdit, onView }: MedicalExpen
       accessorKey: 'type',
       header: 'Type',
       cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue<keyof typeof EXPENSE_TYPE_LABELS>('type')]
+    },
+    {
+      id: 'profile',
+      header: 'Profile',
+      cell: ({ row }) => profileLabel(row.original.user)
     },
     {
       id: 'actions',

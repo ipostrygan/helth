@@ -1,7 +1,10 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import type { BaseQueryParams } from '@/types'
+import type { BaseQueryParams, ProfileSummary } from '@/types'
+import type { SelfCareActivity } from '@/lib/generated/prisma/client'
+
+export type SelfCareActivityWithUser = SelfCareActivity & { user: ProfileSummary }
 
 type SelfCareActivityFields = {
   title: string
@@ -52,7 +55,8 @@ export const getSelfCareActivities = async ({
         where,
         skip,
         take: pageSize,
-        orderBy: { [sortField]: sortDirection }
+        orderBy: { [sortField]: sortDirection },
+        include: { user: { select: { firstName: true, shortName: true, profileType: true } } }
       }),
       prisma.selfCareActivity.count({ where })
     ])

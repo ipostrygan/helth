@@ -26,3 +26,10 @@ export type BaseQueryParams = {
 export type PageProps = {
   params: Promise<{ id: string }>
 }
+
+// profile
+export type ProfileSummary = {
+  firstName: string | null
+  shortName: string | null
+  profileType: string
+}

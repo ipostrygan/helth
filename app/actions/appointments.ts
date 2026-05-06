@@ -1,8 +1,11 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { AppointmentStatus, AppointmentType, ExpenseType } from '@/lib/generated/prisma/client'
+import { Appointment, AppointmentStatus, AppointmentType, ExpenseType } from '@/lib/generated/prisma/client'
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
+import type { ProfileSummary } from '@/types'
+
+export type AppointmentWithUser = Appointment & { user: ProfileSummary }
 
 const APPOINTMENT_TYPE_TO_EXPENSE_TYPE: Record<AppointmentType, ExpenseType> = {
   [AppointmentType.GeneralPractitioner]: ExpenseType.DoctorVisit,
@@ -76,7 +79,8 @@ export const getAppointments = async ({
         where,
         skip,
         take: pageSize,
-        orderBy: { [sortField]: sortDirection }
+        orderBy: { [sortField]: sortDirection },
+        include: { user: { select: { firstName: true, shortName: true, profileType: true } } }
       }),
       prisma.appointment.count({ where })
     ])

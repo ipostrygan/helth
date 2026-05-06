@@ -1,9 +1,16 @@
 import { ColumnDef } from '@tanstack/react-table'
-import type { Appointment } from '@/lib/generated/prisma/client'
+import type { AppointmentWithUser } from '@/app/actions/appointments'
 import { AppLink } from '@/components/custom/app-link'
 import { RowActions } from '@/components/row-actions'
 import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from './constants'
 import { StatusBadge } from '@/components/custom/status-badge'
+import type { ProfileSummary } from '@/types'
+
+function profileLabel(user: ProfileSummary): string {
+  return user.profileType === 'Human'
+    ? (user.firstName ?? '')
+    : (user.shortName ?? '')
+}
 
 interface AppointmentColumnsOptions {
   onDelete: (id: string) => void
@@ -12,7 +19,7 @@ interface AppointmentColumnsOptions {
 }
 
 export function appointmentColumns({ onDelete, onEdit, showCost }: AppointmentColumnsOptions) {
-  const cols: ColumnDef<Appointment>[] = [
+  const cols: ColumnDef<AppointmentWithUser>[] = [
     {
       accessorKey: 'title',
       header: 'Title',
@@ -54,6 +61,12 @@ export function appointmentColumns({ onDelete, onEdit, showCost }: AppointmentCo
       cell: ({ row }) => row.getValue('cost') ?? '—'
     })
   }
+
+  cols.push({
+    id: 'profile',
+    header: 'Profile',
+    cell: ({ row }) => profileLabel(row.original.user)
+  })
 
   cols.push({
     id: 'actions',

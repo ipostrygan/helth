@@ -3,7 +3,7 @@
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ColumnDef, SortingState } from '@tanstack/react-table'
-import type { Therapy } from '@/lib/generated/prisma/client'
+import type { TherapyWithUser } from '@/app/actions/therapies'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
@@ -55,7 +55,7 @@ const TherapiesPage = () => {
     setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
-  const columns: ColumnDef<Therapy>[] = [
+  const columns: ColumnDef<TherapyWithUser>[] = [
     {
       accessorKey: 'title',
       header: 'Title',
@@ -84,6 +84,14 @@ const TherapiesPage = () => {
       cell: ({ row }) => {
         const active = row.getValue<boolean>('isActive')
         return <StatusBadge status={active ? 'Ongoing' : 'Finished'} />
+      }
+    },
+    {
+      id: 'profile',
+      header: 'Profile',
+      cell: ({ row }) => {
+        const user = row.original.user
+        return user.profileType === 'Human' ? (user.firstName ?? '') : (user.shortName ?? '')
       }
     },
     {

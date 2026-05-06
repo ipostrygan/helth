@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import { ColumnDef, SortingState } from '@tanstack/react-table'
-import type { SelfCareActivity } from '@/lib/generated/prisma/client'
+import type { SelfCareActivityWithUser } from '@/app/actions/self-care-activities'
 import { useQueryStates } from 'nuqs'
 import {
   baseFilterParsers,
@@ -49,7 +49,7 @@ function SelfCareActivitiesPage() {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteSelfCareActivity()
   const [addingItem, setAddingItem] = useState(false)
-  const [editingItem, setEditingItem] = useState<SelfCareActivity | null>(null)
+  const [editingItem, setEditingItem] = useState<SelfCareActivityWithUser | null>(null)
 
   const { data: openActivity } = useSelfCareActivity(openId ?? '')
 
@@ -66,7 +66,7 @@ function SelfCareActivitiesPage() {
     setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
-  const columns: ColumnDef<SelfCareActivity>[] = [
+  const columns: ColumnDef<SelfCareActivityWithUser>[] = [
     {
       accessorKey: 'title',
       header: 'Title',
@@ -94,6 +94,14 @@ function SelfCareActivitiesPage() {
       header: 'Dosage',
       enableSorting: false,
       cell: ({ row }) => row.getValue('dosage')
+    },
+    {
+      id: 'profile',
+      header: 'Profile',
+      cell: ({ row }) => {
+        const user = row.original.user
+        return user.profileType === 'Human' ? (user.firstName ?? '') : (user.shortName ?? '')
+      }
     },
     {
       id: 'actions',
