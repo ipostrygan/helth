@@ -20,7 +20,7 @@ const COLORS = [
 ]
 
 const MedicalExpensesStatistics = () => {
-  const { activeProfileId } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile } = useActiveProfile()
 
   const defaultDateFrom = new Date()
   defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 1)
@@ -30,8 +30,10 @@ const MedicalExpensesStatistics = () => {
     to: new Date()
   })
 
+  const profileId = isFamilyProfile ? undefined : (activeProfileId ?? undefined)
+
   const { data, isLoading } = useMedicalExpensesByType({
-    profileId: activeProfileId ?? undefined,
+    profileId,
     dateFrom: dateRange?.from ? format(dateRange.from, 'yyyy-MM-dd') : undefined,
     dateTo: dateRange?.to ? format(dateRange.to, 'yyyy-MM-dd') : undefined
   })

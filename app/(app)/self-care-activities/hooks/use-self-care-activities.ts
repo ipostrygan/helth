@@ -12,6 +12,6 @@ export const useSelfCareActivities = (params: SelfCareActivitiesQueryParams = {}
     queryKey: queryKeys.selfCareActivities.list(params),
     queryFn: () => getSelfCareActivities(params),
     placeholderData: keepPreviousData,
-    enabled: !!params.profileId
+    enabled: params.profileId !== null
   })
 }

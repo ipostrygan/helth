@@ -10,6 +10,6 @@ export const useAppointments = (params: AppointmentsQueryParams = {}) => {
     queryKey: queryKeys.appointments.list(params),
     queryFn: () => getAppointments(params),
     placeholderData: keepPreviousData,
-    enabled: !!params.profileId
+    enabled: params.profileId !== null
   })
 }

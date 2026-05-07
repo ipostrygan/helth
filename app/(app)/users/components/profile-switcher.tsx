@@ -6,9 +6,10 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator
+  DropdownMenuSeparator,
+  DropdownMenuItem
 } from '@/components/ui/dropdown-menu'
-import { ChevronDownIcon, LogOutIcon } from 'lucide-react'
+import { ChevronDownIcon, LogOutIcon, UsersIcon } from 'lucide-react'
 import ProfileListItem from './profile-list-item'
 import { useProfile } from '../hooks/use-profile'
 import { useProfiles } from '../hooks/use-profiles'
@@ -19,7 +20,7 @@ import { logout } from '@/app/actions/auth'
 import { useTransition } from 'react'
 
 const ProfileSwitcher = () => {
-  const { activeProfileId } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile, isProfileReady, selectFamilyProfile } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const { data: profiles = [] } = useProfiles()
   const [isPending, startTransition] = useTransition()
@@ -30,9 +31,11 @@ const ProfileSwitcher = () => {
     })
   }
 
-  if (!profile) {
+  if (!isProfileReady) {
     return null
   }
+
+  const otherProfiles = profiles.filter(p => p.id !== activeProfileId)
 
   return (
     <DropdownMenu>
@@ -42,22 +45,45 @@ const ProfileSwitcher = () => {
           size="sm"
           className="inline-flex items-center gap-2 py-2 h-auto"
         >
-          <SelectedProfile profile={profile} />
+          {isFamilyProfile
+            ? (
+                <span className="flex items-center gap-3">
+                  <div className="size-8 rounded-full bg-muted flex items-center justify-center">
+                    <UsersIcon className="size-4" />
+                  </div>
+                  <span>Family</span>
+                </span>
+              )
+            : (
+                profile && <SelectedProfile profile={profile} />
+              )}
           <ChevronDownIcon className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-50">
-        <div className="text-center p-2">
-          <Button asChild>
-            <Link href="/profile">View profile</Link>
-          </Button>
-        </div>
-        <DropdownMenuSeparator />
+        {!isFamilyProfile && (
+          <>
+            <div className="text-center p-2">
+              <Button asChild>
+                <Link href="/profile">View profile</Link>
+              </Button>
+            </div>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuLabel>Other profiles</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {profiles.filter(p => p.id !== activeProfileId).map(profile => (
-          <ProfileListItem profile={profile} key={profile.id} />
+        {otherProfiles.map(p => (
+          <ProfileListItem profile={p} key={p.id} />
         ))}
+        {!isFamilyProfile && (
+          <DropdownMenuItem onClick={selectFamilyProfile} className="flex gap-3">
+            <div className="size-8 rounded-full bg-muted flex items-center justify-center">
+              <UsersIcon className="size-4" />
+            </div>
+            <div>Family</div>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
         <div className="px-2 pb-2">
           <Button

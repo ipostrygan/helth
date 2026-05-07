@@ -12,6 +12,6 @@ export const useMedicalExpenses = (params: MedicalExpensesQueryParams = {}, scop
     queryKey: queryKeys.medicalExpenses.list(params),
     queryFn: () => getMedicalExpenses(params),
     placeholderData: keepPreviousData,
-    enabled: scope ? !!params[scope] : false
+    enabled: scope === 'profileId' ? params.profileId !== null : (scope ? !!params[scope] : false)
   })
 }

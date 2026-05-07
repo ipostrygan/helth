@@ -12,6 +12,6 @@ export const useTherapies = (params: TherapiesQueryParams = {}) => {
     queryKey: queryKeys.therapies.list(params),
     queryFn: () => getTherapies(params),
     placeholderData: keepPreviousData,
-    enabled: !!params.profileId
+    enabled: params.profileId !== null
   })
 }

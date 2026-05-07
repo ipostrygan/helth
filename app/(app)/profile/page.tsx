@@ -11,8 +11,12 @@ import ProfileSkeleton from './profile-skeleton'
 
 const Profile = () => {
   const [editModalOpen, setEditModalOpen] = useState(false)
-  const { activeProfileId } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile } = useActiveProfile()
   const { data: profile, isLoading } = useProfile(activeProfileId)
+
+  if (isFamilyProfile) {
+    return null
+  }
 
   if (isLoading) {
     return <ProfileSkeleton />

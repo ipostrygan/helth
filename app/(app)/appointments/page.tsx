@@ -17,7 +17,7 @@ import { TableTemplate, type SortChange } from '@/components/table-template'
 
 const AppointmentsPage = () => {
   const router = useRouter()
-  const { activeProfileId } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile, isProfileReady } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('date'),
@@ -27,8 +27,10 @@ const AppointmentsPage = () => {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteAppointment()
 
+  const profileId = isProfileReady ? (isFamilyProfile ? undefined : activeProfileId) : null
+
   const params = {
-    profileId: activeProfileId ?? undefined,
+    profileId,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined,
@@ -52,7 +54,7 @@ const AppointmentsPage = () => {
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
-  if (!profile) {
+  if (!isProfileReady) {
     return null
   }
 
@@ -60,7 +62,7 @@ const AppointmentsPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/appointments/create')}
       addNewLabel="Add Appointment"
-      title={`${getProfileDisplayName(profile)}'s appointments`}
+      title={isFamilyProfile ? "Family's appointments" : `${getProfileDisplayName(profile!)}'s appointments`}
       description="Past medical appointments"
       columns={columns}
       data={data}

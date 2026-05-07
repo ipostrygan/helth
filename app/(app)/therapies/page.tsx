@@ -32,7 +32,7 @@ const IS_ACTIVE_OPTIONS = [
 
 const TherapiesPage = () => {
   const router = useRouter()
-  const { activeProfileId } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile, isProfileReady } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('startDate'),
@@ -42,8 +42,10 @@ const TherapiesPage = () => {
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteTherapy()
 
+  const profileId = isProfileReady ? (isFamilyProfile ? undefined : activeProfileId) : null
+
   const params = {
-    profileId: activeProfileId ?? undefined,
+    profileId,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined
@@ -126,7 +128,7 @@ const TherapiesPage = () => {
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
-  if (!profile) {
+  if (!isProfileReady) {
     return null
   }
 
@@ -134,7 +136,7 @@ const TherapiesPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/therapies/create')}
       addNewLabel="Add Therapy"
-      title={`${getProfileDisplayName(profile)}'s Therapies`}
+      title={isFamilyProfile ? "Family's Therapies" : `${getProfileDisplayName(profile!)}'s Therapies`}
       description="Ongoing and finished therapy sessions"
       columns={columns}
       data={data}

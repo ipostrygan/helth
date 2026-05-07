@@ -6,47 +6,71 @@ import { getProfiles } from '@/lib/api/users'
 import { queryKeys } from '@/lib/query-keys'
 
 const LAST_PROFILE_KEY = 'lastProfileId'
+export const FAMILY_PROFILE_ID = '__family__'
 
 type ProfileContextType = {
   activeProfileId: string | null
+  isFamilyProfile: boolean
+  isProfileReady: boolean
   setActiveProfileId: (id: string) => void
+  selectFamilyProfile: () => void
 }
 
 const ProfileContext = createContext<ProfileContextType>({
   activeProfileId: null,
-  setActiveProfileId: () => {}
+  isFamilyProfile: false,
+  isProfileReady: false,
+  setActiveProfileId: () => {},
+  selectFamilyProfile: () => {}
 })
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [activeProfileId, setActiveProfileIdState] = useState<string | null>(null)
-
-  useEffect(() => {
+  const [storedProfileId, setStoredProfileId] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null
     const stored = localStorage.getItem(LAST_PROFILE_KEY)
-    if (stored) setActiveProfileIdState(stored)
-  }, [])
+    return stored && stored !== FAMILY_PROFILE_ID ? stored : null
+  })
+  const [isFamilyProfile, setIsFamilyProfile] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return localStorage.getItem(LAST_PROFILE_KEY) === FAMILY_PROFILE_ID
+  })
+
+  const isStoredReady = isFamilyProfile || !!storedProfileId
 
   const { data: profiles } = useQuery({
     queryKey: queryKeys.profile.all,
     queryFn: getProfiles,
-    enabled: !activeProfileId
+    enabled: !isStoredReady
   })
 
+  const defaultProfile = !isStoredReady && profiles
+    ? (profiles.find(p => p.isPrimaryUser) ?? profiles[0]) ?? null
+    : null
+  const defaultProfileId = defaultProfile?.id ?? null
+
+  const activeProfileId = storedProfileId ?? defaultProfileId
+  const isProfileReady = isFamilyProfile || !!activeProfileId
+
   useEffect(() => {
-    if (activeProfileId || !profiles) return
-    const primary = profiles.find(p => p.isPrimaryUser) ?? profiles[0]
-    if (primary) {
-      localStorage.setItem(LAST_PROFILE_KEY, primary.id)
-      setActiveProfileIdState(primary.id)
+    if (defaultProfileId) {
+      localStorage.setItem(LAST_PROFILE_KEY, defaultProfileId)
     }
-  }, [profiles, activeProfileId])
+  }, [defaultProfileId])
 
   const setActiveProfileId = (id: string) => {
     localStorage.setItem(LAST_PROFILE_KEY, id)
-    setActiveProfileIdState(id)
+    setStoredProfileId(id)
+    setIsFamilyProfile(false)
+  }
+
+  const selectFamilyProfile = () => {
+    localStorage.setItem(LAST_PROFILE_KEY, FAMILY_PROFILE_ID)
+    setStoredProfileId(null)
+    setIsFamilyProfile(true)
   }
 
   return (
-    <ProfileContext.Provider value={{ activeProfileId, setActiveProfileId }}>
+    <ProfileContext.Provider value={{ activeProfileId, isFamilyProfile, isProfileReady, setActiveProfileId, selectFamilyProfile }}>
       {children}
     </ProfileContext.Provider>
   )
