@@ -32,6 +32,7 @@ jobs:
           S3_BUCKET: ${{ secrets.APP_S3_BUCKET }}
         run: |
           set -eo pipefail
+          export PATH="/usr/lib/postgresql/17/bin:$PATH"
           FILENAME="medical-tracker-latest.sql.gz"
 
           pg_dump "$DATABASE_URL" \
