@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSelfCareActivities } from '../../actions/self-care-activities'
-import { baseSearchParams, selfCareActivitiesQueryParamsSchema } from '@/lib/search-params'
+import { baseSearchParams } from '@/lib/search-params'
+import { selfCareActivitiesQueryParamsSchema } from '@/app/(app)/self-care-activities/search-params'
 import { validateQueryParams } from '@/lib/api/utils'
 import { createSearchParamsCache } from 'nuqs/server'
 

@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma'
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import type { ProfileSummary } from '@/types'
+import { buildDateRangeFilter } from '@/lib/db'
 
 export type TherapyWithUser = Therapy & { user: ProfileSummary }
 
@@ -25,19 +26,11 @@ export const getTherapies = async ({
       ? {
           OR: [
             { title: { contains: search, mode: 'insensitive' as const } },
-            { description: { contains: search, mode: 'insensitive' as const } },
             { description: { contains: search, mode: 'insensitive' as const } }
           ]
         }
       : {}),
-    ...(dateFrom || dateTo
-      ? {
-          startDate: {
-            ...(dateFrom ? { gte: new Date(dateFrom) } : {}),
-            ...(dateTo ? { lte: new Date(dateTo) } : {})
-          }
-        }
-      : {}),
+    ...buildDateRangeFilter(dateFrom, dateTo, 'startDate'),
     ...(isActive && isActive.length === 1 ? { isActive: isActive[0] === 'true' } : {})
   }
 

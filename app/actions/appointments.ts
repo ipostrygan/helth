@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma'
 import { Appointment, AppointmentStatus, AppointmentType, ExpenseType } from '@/lib/generated/prisma/client'
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 import type { ProfileSummary } from '@/types'
+import { buildDateRangeFilter } from '@/lib/db'
 
 export type AppointmentWithUser = Appointment & { user: ProfileSummary }
 
@@ -62,14 +63,7 @@ export const getAppointments = async ({
           ]
         }
       : {}),
-    ...(dateFrom || dateTo
-      ? {
-          date: {
-            ...(dateFrom ? { gte: new Date(dateFrom) } : {}),
-            ...(dateTo ? { lte: new Date(dateTo) } : {})
-          }
-        }
-      : {}),
+    ...buildDateRangeFilter(dateFrom, dateTo),
     ...(statuses && statuses.length > 0 ? { status: { in: statuses as AppointmentStatus[] } } : {})
   }
 

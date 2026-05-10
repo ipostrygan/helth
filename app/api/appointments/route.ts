@@ -5,10 +5,8 @@ import {
   parseAsString
 } from 'nuqs/server'
 import { getAppointments } from '../../actions/appointments'
-import {
-  baseSearchParams,
-  appointmentsQueryParamsSchema
-} from '@/lib/search-params'
+import { baseSearchParams } from '@/lib/search-params'
+import { appointmentsQueryParamsSchema } from '@/app/(app)/appointments/search-params'
 import { validateQueryParams } from '@/lib/api/utils'
 
 const searchParamsCache = createSearchParamsCache({

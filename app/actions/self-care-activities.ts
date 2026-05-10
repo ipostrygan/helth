@@ -3,6 +3,7 @@
 import prisma from '@/lib/prisma'
 import type { BaseQueryParams, ProfileSummary } from '@/types'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
+import { buildDateRangeFilter } from '@/lib/db'
 
 export type SelfCareActivityWithUser = SelfCareActivity & { user: ProfileSummary }
 
@@ -39,14 +40,7 @@ export const getSelfCareActivities = async ({
           ]
         }
       : {}),
-    ...(dateFrom || dateTo
-      ? {
-          date: {
-            ...(dateFrom ? { gte: new Date(dateFrom) } : {}),
-            ...(dateTo ? { lte: new Date(dateTo) } : {})
-          }
-        }
-      : {})
+    ...buildDateRangeFilter(dateFrom, dateTo)
   }
 
   try {

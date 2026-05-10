@@ -6,6 +6,7 @@ import { ExpenseType, MedicalExpense } from '@/lib/generated/prisma/client'
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { PaginatedResult, ProfileSummary } from '@/types'
+import { buildDateRangeFilter } from '@/lib/db'
 
 export type MedicalExpenseWithUser = MedicalExpense & { user: ProfileSummary }
 
@@ -67,14 +68,7 @@ export const getMedicalExpenses = async ({
   const where = {
     ...(profileId ? { userId: profileId } : {}),
     ...(appointmentId ? { appointmentId } : {}),
-    ...(dateFrom || dateTo
-      ? {
-          date: {
-            ...(dateFrom ? { gte: new Date(dateFrom) } : {}),
-            ...(dateTo ? { lte: new Date(dateTo) } : {})
-          }
-        }
-      : {}),
+    ...buildDateRangeFilter(dateFrom, dateTo),
     ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {}),
     ...(andConditions.length > 0 ? { AND: andConditions } : {})
   }

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSearchParamsCache, parseAsArrayOf, parseAsString } from 'nuqs/server'
 import { getTherapies } from '../../actions/therapies'
-import { baseSearchParams, therapiesQueryParamsSchema } from '@/lib/search-params'
+import { baseSearchParams } from '@/lib/search-params'
+import { therapiesQueryParamsSchema } from '@/app/(app)/therapies/search-params'
 import { validateQueryParams } from '@/lib/api/utils'
 
 const searchParamsCache = createSearchParamsCache({

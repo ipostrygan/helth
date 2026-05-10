@@ -17,28 +17,6 @@ export const baseQueryParamsSchema = z.object({
   dateTo: dateParam.nullish()
 })
 
-export const appointmentsQueryParamsSchema = baseQueryParamsSchema.extend({
-  sortField: z.enum(['date', 'title', 'type', 'status', 'cost', 'specialistName', 'location']),
-  statuses: z.array(z.string()).nullish(),
-  therapyId: z.string().nullish()
-})
-
-export const medicalExpensesQueryParamsSchema = baseQueryParamsSchema.extend({
-  sortField: z.enum(['date', 'title', 'amount', 'type']),
-  types: z.array(z.string()).nullish(),
-  therapyId: z.string().nullish(),
-  appointmentId: z.string().nullish()
-})
-
-export const therapiesQueryParamsSchema = baseQueryParamsSchema.extend({
-  sortField: z.enum(['startDate', 'endDate', 'title', 'isActive']),
-  isActive: z.array(z.string()).nullish()
-})
-
-export const selfCareActivitiesQueryParamsSchema = baseQueryParamsSchema.extend({
-  sortField: z.enum(['date', 'title', 'medication', 'dosage'])
-})
-
 export const defaultDateFrom = format(subMonths(new Date(), 4), 'yyyy-MM-dd')
 export const defaultDateTo = format(new Date(), 'yyyy-MM-dd')
 

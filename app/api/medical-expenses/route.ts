@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSearchParamsCache, parseAsArrayOf, parseAsString } from 'nuqs/server'
 import { getMedicalExpenses } from '../../actions/medical-expenses'
-import { baseSearchParams, medicalExpensesQueryParamsSchema } from '@/lib/search-params'
+import { baseSearchParams } from '@/lib/search-params'
+import { medicalExpensesQueryParamsSchema } from '@/app/(app)/medical-expenses/search-params'
 import { validateQueryParams } from '@/lib/api/utils'
 
 const searchParamsCache = createSearchParamsCache({

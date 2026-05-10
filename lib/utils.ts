@@ -1,7 +1,5 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { User } from './generated/prisma'
-import { UserProfile } from '@/app/(app)/users/types/profile.types'
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024 // 10 MB
 
@@ -19,4 +17,3 @@ export function cn(...inputs: ClassValue[]) {
 
 export const formatCurrency = (value: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(value)
-
