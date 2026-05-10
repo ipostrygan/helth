@@ -8,6 +8,7 @@ import EditProfileForm from './edit-profile-form'
 import PersonalInformation from './personal-information'
 import { useActiveProfile } from '@/context/profile-context'
 import ProfileSkeleton from './profile-skeleton'
+import FamilyMembers from './family-members'
 
 const Profile = () => {
   const [editModalOpen, setEditModalOpen] = useState(false)
@@ -15,7 +16,11 @@ const Profile = () => {
   const { data: profile, isLoading } = useProfile(activeProfileId)
 
   if (isFamilyProfile) {
-    return null
+    return (
+      <div className="max-w-3xl m-auto">
+        <FamilyMembers />
+      </div>
+    )
   }
 
   if (isLoading) {
