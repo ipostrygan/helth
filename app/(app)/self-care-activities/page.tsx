@@ -140,7 +140,7 @@ function SelfCareActivitiesPage() {
         }
       : undefined
 
-  if (!profile) {
+  if (!isFamilyProfile && !profile) {
     return null
   }
 

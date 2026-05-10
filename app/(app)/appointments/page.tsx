@@ -54,7 +54,7 @@ const AppointmentsPage = () => {
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
-  if (!profile) {
+  if (!isFamilyProfile && !profile) {
     return null
   }
 
@@ -62,7 +62,7 @@ const AppointmentsPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/appointments/create')}
       addNewLabel="Add Appointment"
-      title={isFamilyProfile ? 'Family\'s appointments' : `${getProfileDisplayName(profile)}'s appointments`}
+      title={isFamilyProfile ? 'Family\'s appointments' : `${getProfileDisplayName(profile!)}'s appointments`}
       description="Past medical appointments"
       columns={columns}
       data={data}

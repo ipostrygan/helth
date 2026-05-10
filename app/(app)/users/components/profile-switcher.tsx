@@ -31,7 +31,7 @@ const ProfileSwitcher = () => {
     })
   }
 
-  if (!profile) {
+  if (!isFamilyProfile && !profile) {
     return null
   }
 

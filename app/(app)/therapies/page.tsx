@@ -128,7 +128,7 @@ const TherapiesPage = () => {
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
-  if (!profile) {
+  if (!isFamilyProfile && !profile) {
     return null
   }
 
@@ -136,7 +136,7 @@ const TherapiesPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/therapies/create')}
       addNewLabel="Add Therapy"
-      title={isFamilyProfile ? 'Family\'s Therapies' : `${getProfileDisplayName(profile)}'s Therapies`}
+      title={isFamilyProfile ? 'Family\'s Therapies' : `${getProfileDisplayName(profile!)}'s Therapies`}
       description="Ongoing and finished therapy sessions"
       columns={columns}
       data={data}

@@ -67,7 +67,7 @@ const MedicalExpensesPage = () => {
         }
       : undefined
 
-  if (!profile) {
+  if (!isFamilyProfile && !profile) {
     return null
   }
 
