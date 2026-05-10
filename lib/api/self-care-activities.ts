@@ -5,10 +5,8 @@ import { buildSearchParams, fetchOne, deleteResource } from './utils'
 
 const BASE = '/api/self-care-activities'
 
-export type SelfCareActivitiesParams = BaseQueryParams
-
 export async function getSelfCareActivities(
-  params: SelfCareActivitiesParams
+  params: BaseQueryParams
 ): Promise<PaginatedResult<SelfCareActivityWithUser>> {
   const searchParams = buildSearchParams(params)
   const res = await fetch(`${BASE}?${searchParams}`)

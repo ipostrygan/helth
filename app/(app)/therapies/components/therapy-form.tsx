@@ -26,13 +26,11 @@ const schema = z.object({
   isActive: z.boolean()
 })
 
-type FormValues = z.infer<typeof schema>
-
-export type TherapyFormValues = FormValues
+export type TherapyFormValues = z.infer<typeof schema>
 
 type TherapyFormProps = {
   therapy?: Therapy
-  onSubmit: (values: FormValues) => Promise<void>
+  onSubmit: (values: TherapyFormValues) => Promise<void>
 }
 
 const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
@@ -45,7 +43,7 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid }
-  } = useForm<FormValues>({
+  } = useForm<TherapyFormValues>({
     mode: 'all',
     resolver: zodResolver(schema),
     defaultValues: therapy

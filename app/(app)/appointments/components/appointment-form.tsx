@@ -39,16 +39,14 @@ const schema = z.object({
   therapyId: z.string().nullable().optional()
 })
 
-type FormValues = z.infer<typeof schema>
-
-export type AppointmentFormValues = FormValues
+export type AppointmentFormValues = z.infer<typeof schema>
 
 type AppointmentFormProps = {
   profileId: string
   appointment?: Appointment
   defaultTherapyId?: string | null
   cancelHref?: string
-  onSubmit: (values: FormValues) => Promise<void>
+  onSubmit: (values: AppointmentFormValues) => Promise<void>
 }
 
 const AppointmentForm = ({
@@ -66,7 +64,7 @@ const AppointmentForm = ({
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid }
-  } = useForm<FormValues>({
+  } = useForm<AppointmentFormValues>({
     resolver: zodResolver(schema),
     mode: 'all',
     defaultValues: appointment
