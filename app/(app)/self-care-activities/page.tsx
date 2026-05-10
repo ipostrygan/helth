@@ -40,7 +40,7 @@ export default function Page() {
 
 function SelfCareActivitiesPage() {
   const [openId, setOpenId] = useState<string | null>(null)
-  const { activeProfileId, isFamilyProfile, isProfileReady } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('date')
@@ -53,7 +53,7 @@ function SelfCareActivitiesPage() {
 
   const { data: openActivity } = useSelfCareActivity(openId ?? '')
 
-  const profileId = isProfileReady ? (isFamilyProfile ? undefined : activeProfileId) : null
+  const profileId = isFamilyProfile ? undefined : activeProfileId
 
   const params = {
     profileId,
@@ -140,7 +140,7 @@ function SelfCareActivitiesPage() {
         }
       : undefined
 
-  if (!isProfileReady) {
+  if (!profile) {
     return null
   }
 
@@ -148,7 +148,7 @@ function SelfCareActivitiesPage() {
     <TableTemplate
       onAddNew={() => setAddingItem(true)}
       addNewLabel="Add activity"
-      title={isFamilyProfile ? "Family's self-care activities" : `${getProfileDisplayName(profile!)}'s self-care activities`}
+      title={isFamilyProfile ? 'Family\'s self-care activities' : `${getProfileDisplayName(profile!)}'s self-care activities`}
       description="Self-care activities - taking medications, applying treatments, wellness routines"
       columns={columns}
       data={data}

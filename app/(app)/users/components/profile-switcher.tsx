@@ -20,7 +20,7 @@ import { logout } from '@/app/actions/auth'
 import { useTransition } from 'react'
 
 const ProfileSwitcher = () => {
-  const { activeProfileId, isFamilyProfile, isProfileReady, selectFamilyProfile } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile, selectFamilyProfile } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const { data: profiles = [] } = useProfiles()
   const [isPending, startTransition] = useTransition()
@@ -31,7 +31,7 @@ const ProfileSwitcher = () => {
     })
   }
 
-  if (!isProfileReady) {
+  if (!profile) {
     return null
   }
 

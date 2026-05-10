@@ -24,7 +24,7 @@ import MedicalExpenseForm from './medical-expense-form'
 import { MedicalExpenseDetailsSheet } from './components/medical-expense-details-sheet'
 
 const MedicalExpensesPage = () => {
-  const { activeProfileId, isFamilyProfile, isProfileReady } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile } = useActiveProfile()
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('date'),
@@ -37,7 +37,7 @@ const MedicalExpensesPage = () => {
   const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(null)
   const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(null)
 
-  const profileId = isProfileReady ? (isFamilyProfile ? undefined : activeProfileId) : null
+  const profileId = isFamilyProfile ? undefined : activeProfileId
 
   const params = {
     profileId,
@@ -67,7 +67,7 @@ const MedicalExpensesPage = () => {
         }
       : undefined
 
-  if (!isProfileReady) {
+  if (!profile) {
     return null
   }
 
@@ -76,7 +76,7 @@ const MedicalExpensesPage = () => {
 
   return (
     <TableTemplate
-      title={isFamilyProfile ? "Family's medical expenses" : `${getProfileDisplayName(profile!)}'s medical expenses`}
+      title={isFamilyProfile ? 'Family\'s medical expenses' : `${getProfileDisplayName(profile!)}'s medical expenses`}
       description={description}
       columns={columns}
       data={data}

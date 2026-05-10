@@ -11,7 +11,6 @@ export const FAMILY_PROFILE_ID = '__family__'
 type ProfileContextType = {
   activeProfileId: string | null
   isFamilyProfile: boolean
-  isProfileReady: boolean
   setActiveProfileId: (id: string) => void
   selectFamilyProfile: () => void
 }
@@ -19,7 +18,6 @@ type ProfileContextType = {
 const ProfileContext = createContext<ProfileContextType>({
   activeProfileId: null,
   isFamilyProfile: false,
-  isProfileReady: false,
   setActiveProfileId: () => {},
   selectFamilyProfile: () => {}
 })
@@ -49,7 +47,6 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   const defaultProfileId = defaultProfile?.id ?? null
 
   const activeProfileId = storedProfileId ?? defaultProfileId
-  const isProfileReady = isFamilyProfile || !!activeProfileId
 
   useEffect(() => {
     if (defaultProfileId) {
@@ -70,7 +67,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <ProfileContext.Provider value={{ activeProfileId, isFamilyProfile, isProfileReady, setActiveProfileId, selectFamilyProfile }}>
+    <ProfileContext.Provider value={{ activeProfileId, isFamilyProfile, setActiveProfileId, selectFamilyProfile }}>
       {children}
     </ProfileContext.Provider>
   )
