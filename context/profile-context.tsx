@@ -23,15 +23,17 @@ const ProfileContext = createContext<ProfileContextType>({
 })
 
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [storedProfileId, setStoredProfileId] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null
+  const [storedProfileId, setStoredProfileId] = useState<string | null>(null)
+  const [isFamilyProfile, setIsFamilyProfile] = useState(false)
+
+  useEffect(() => {
     const stored = localStorage.getItem(LAST_PROFILE_KEY)
-    return stored && stored !== FAMILY_PROFILE_ID ? stored : null
-  })
-  const [isFamilyProfile, setIsFamilyProfile] = useState(() => {
-    if (typeof window === 'undefined') return false
-    return localStorage.getItem(LAST_PROFILE_KEY) === FAMILY_PROFILE_ID
-  })
+    if (stored === FAMILY_PROFILE_ID) {
+      setIsFamilyProfile(true)
+    } else if (stored) {
+      setStoredProfileId(stored)
+    }
+  }, [])
 
   const isStoredReady = isFamilyProfile || !!storedProfileId
 
