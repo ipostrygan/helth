@@ -9,7 +9,7 @@ export const useDeleteSelfCareActivity = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (id: string) => deleteSelfCareActivity(id),
+    mutationFn: deleteSelfCareActivity,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.selfCareActivities.all })
       toast.success('Self-care activity was successfully deleted')

@@ -9,7 +9,7 @@ export const useDeleteAppointment = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (id: string) => deleteAppointment(id),
+    mutationFn: deleteAppointment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.appointments.all })
       toast.success('Appointment was successfully deleted')

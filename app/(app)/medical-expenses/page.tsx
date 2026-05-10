@@ -11,7 +11,7 @@ import {
 } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
-import { getProfileDisplayName } from '../users/types/profile.types'
+import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useMedicalExpenses } from './hooks/use-medical-expenses'
 import { useDeleteMedicalExpense } from './hooks/use-delete-medical-expense'
 import { type DateRange } from 'react-day-picker'

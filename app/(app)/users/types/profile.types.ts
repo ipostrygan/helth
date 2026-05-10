@@ -23,7 +23,3 @@ export type AnimalProfile = UserBase & {
 }
 
 export type UserProfile = HumanProfile | AnimalProfile
-
-export function getProfileDisplayName(profile: UserProfile): string {
-  return profile.profileType === 'Human' ? profile.firstName : profile.fullName
-}

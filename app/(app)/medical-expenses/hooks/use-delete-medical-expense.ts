@@ -9,7 +9,7 @@ export const useDeleteMedicalExpense = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (id: string) => deleteMedicalExpense(id),
+    mutationFn: deleteMedicalExpense,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.medicalExpenses.all })
       toast.success('Medical expense was successfully deleted')

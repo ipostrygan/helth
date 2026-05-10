@@ -11,7 +11,7 @@ import {
 } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
 import { useProfile } from '../users/hooks/use-profile'
-import { getProfileDisplayName } from '../users/types/profile.types'
+import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useSelfCareActivities } from './hooks/use-self-care-activities'
 import { useSelfCareActivity } from './hooks/use-self-care-activity'
 import { useDeleteSelfCareActivity } from './hooks/use-delete-self-care-activity'

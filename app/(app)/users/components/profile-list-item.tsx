@@ -1,6 +1,7 @@
 'use client'
 
-import { UserProfile, getProfileDisplayName } from '../types/profile.types'
+import { UserProfile } from '../types/profile.types'
+import { getProfileDisplayName } from '../utils/profile.utils'
 import UserAvatar from '@/components/user-avatar'
 import { useActiveProfile } from '@/context/profile-context'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
