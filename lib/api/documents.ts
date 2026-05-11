@@ -11,7 +11,7 @@ const ALLOWED_TYPES = [
 ]
 
 interface DocumentHandlerOptions {
-  getById: (id: string) => Promise<{ title: string; relatedDocuments: string[] } | null>
+  getById: (id: string) => Promise<{ title: string, relatedDocuments: string[] } | null>
   addDocument: (id: string, key: string) => Promise<unknown>
   removeDocument: (id: string, key: string) => Promise<unknown>
 }

@@ -9,7 +9,7 @@ export async function getMedicalExpenses(
   params: MedicalExpensesQueryParams
 ): Promise<MedicalExpensePaginatedResult> {
   const sp = buildSearchParams(params, {
-    types: params.types?.join(','),
+    types: params.types,
     therapyId: params.therapyId,
     appointmentId: params.appointmentId
   })

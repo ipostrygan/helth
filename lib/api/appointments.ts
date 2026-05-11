@@ -2,18 +2,31 @@ import type { PaginatedResult } from '@/types'
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 import type { Appointment } from '@/lib/generated/prisma/client'
 import type { AppointmentWithUser } from '@/app/actions/appointments'
-import { buildSearchParams, fetchOne, deleteResource, uploadDocuments, deleteDocument } from './utils'
+import {
+  buildSearchParams,
+  fetchOne,
+  deleteResource,
+  uploadDocuments,
+  deleteDocument
+} from './utils'
 
 const BASE = '/api/appointments'
 
-export type DocumentItem = { key: string, name: string, url: string, downloadUrl: string }
-export type AppointmentWithDocuments = Appointment & { documents: DocumentItem[] }
+export type DocumentItem = {
+  key: string
+  name: string
+  url: string
+  downloadUrl: string
+}
+export type AppointmentWithDocuments = Appointment & {
+  documents: DocumentItem[]
+}
 
 export async function getAppointments(
   params: AppointmentsQueryParams
 ): Promise<PaginatedResult<AppointmentWithUser>> {
   const searchParams = buildSearchParams(params, {
-    statuses: params.statuses?.join(','),
+    statuses: params.statuses,
     therapyId: params.therapyId
   })
   const res = await fetch(`${BASE}?${searchParams}`)

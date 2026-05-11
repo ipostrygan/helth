@@ -24,7 +24,7 @@ export function validateQueryParams<T extends z.ZodTypeAny>(
 
 export function buildSearchParams(
   base: BaseQueryParams,
-  extras?: Record<string, string | null | undefined>
+  extras?: Record<string, string | string[] | null | undefined>
 ): URLSearchParams {
   const {
     profileId,
@@ -50,7 +50,8 @@ export function buildSearchParams(
 
   if (extras) {
     for (const [k, v] of Object.entries(extras)) {
-      if (v !== null && v !== undefined) params.set(k, v)
+      if (v === null || v === undefined) continue
+      params.set(k, Array.isArray(v) ? v.join(',') : v)
     }
   }
 

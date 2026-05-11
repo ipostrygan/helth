@@ -6,7 +6,7 @@ import { ExpenseType, MedicalExpense } from '@/lib/generated/prisma/client'
 import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/types'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { PaginatedResult, ProfileSummary } from '@/types'
-import { buildDateRangeFilter } from '@/lib/db'
+import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
 
 export type MedicalExpenseWithUser = MedicalExpense & { user: ProfileSummary }
 
@@ -57,12 +57,7 @@ export const getMedicalExpenses = async ({
 
   const andConditions = [
     ...(therapyId ? [{ OR: [{ therapyId }, { appointment: { therapyId } }] }] : []),
-    ...(search
-      ? [{ OR: [
-          { title: { contains: search, mode: 'insensitive' as const } },
-          { description: { contains: search, mode: 'insensitive' as const } }
-        ] }]
-      : [])
+    ...(search ? [buildSearchFilter(search, ['title', 'description'])] : [])
   ]
 
   const where = {

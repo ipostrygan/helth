@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma'
 import type { BaseQueryParams, ProfileSummary } from '@/types'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
-import { buildDateRangeFilter } from '@/lib/db'
+import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
 
 export type SelfCareActivityWithUser = SelfCareActivity & { user: ProfileSummary }
 
@@ -31,15 +31,7 @@ export const getSelfCareActivities = async ({
   const skip = (page - 1) * pageSize
   const where = {
     ...(profileId ? { userId: profileId } : {}),
-    ...(search
-      ? {
-          OR: [
-            { title: { contains: search, mode: 'insensitive' as const } },
-            { medication: { contains: search, mode: 'insensitive' as const } },
-            { dosage: { contains: search, mode: 'insensitive' as const } }
-          ]
-        }
-      : {}),
+    ...buildSearchFilter(search, ['title', 'medication', 'dosage']),
     ...buildDateRangeFilter(dateFrom, dateTo)
   }
 
