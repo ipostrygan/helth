@@ -18,7 +18,7 @@ import {
   UserProfile
 } from '../users/types/profile.types'
 import { useEditProfile } from '../users/hooks/use-edit-profile'
-import { getDirtyValues } from '@/utils/form'
+import { getDirtyValues } from '@/lib/form'
 
 type EditProfileFormProps = {
   data: UserProfile

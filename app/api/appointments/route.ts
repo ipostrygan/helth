@@ -7,7 +7,7 @@ import {
 import { getAppointments } from '../../actions/appointments'
 import { baseSearchParams } from '@/lib/search-params'
 import { appointmentsQueryParamsSchema } from '@/app/(app)/appointments/search-params'
-import { validateQueryParams } from '@/lib/api/utils'
+import { validateQueryParams, actionErrorResponse } from '@/lib/api/utils'
 
 const searchParamsCache = createSearchParamsCache({
   ...baseSearchParams(),
@@ -23,6 +23,11 @@ export async function GET(req: NextRequest) {
   if (!validation.success) {
     return validation.response
   }
-  const result = await getAppointments(validation.data)
-  return NextResponse.json(result)
+  try {
+    const result = await getAppointments(validation.data)
+    return NextResponse.json(result)
+  }
+  catch (e) {
+    return actionErrorResponse(e)
+  }
 }

@@ -3,7 +3,7 @@ import { createSearchParamsCache, parseAsArrayOf, parseAsString } from 'nuqs/ser
 import { getTherapies } from '../../actions/therapies'
 import { baseSearchParams } from '@/lib/search-params'
 import { therapiesQueryParamsSchema } from '@/app/(app)/therapies/search-params'
-import { validateQueryParams } from '@/lib/api/utils'
+import { validateQueryParams, actionErrorResponse } from '@/lib/api/utils'
 
 const searchParamsCache = createSearchParamsCache({
   ...baseSearchParams('startDate'),
@@ -16,6 +16,11 @@ export async function GET(req: NextRequest) {
   if (!validation.success) {
     return validation.response
   }
-  const result = await getTherapies(validation.data)
-  return NextResponse.json(result)
+  try {
+    const result = await getTherapies(validation.data)
+    return NextResponse.json(result)
+  }
+  catch (e) {
+    return actionErrorResponse(e)
+  }
 }

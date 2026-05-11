@@ -4,8 +4,11 @@ import prisma from '@/lib/prisma'
 import type { BaseQueryParams, ProfileSummary } from '@/types'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
+import { handleActionError } from '@/lib/actions/handle-action-error'
 
-export type SelfCareActivityWithUser = SelfCareActivity & { user: ProfileSummary }
+export type SelfCareActivityWithUser = SelfCareActivity & {
+  user: ProfileSummary
+}
 
 type SelfCareActivityFields = {
   title: string
@@ -15,8 +18,12 @@ type SelfCareActivityFields = {
   dosage: string
 }
 
-export type CreateSelfCareActivityInput = SelfCareActivityFields & { userId: string }
-export type UpdateSelfCareActivityInput = Partial<SelfCareActivityFields> & { id: string }
+export type CreateSelfCareActivityInput = SelfCareActivityFields & {
+  userId: string
+}
+export type UpdateSelfCareActivityInput = Partial<SelfCareActivityFields> & {
+  id: string
+}
 
 export const getSelfCareActivities = async ({
   profileId,
@@ -42,7 +49,11 @@ export const getSelfCareActivities = async ({
         skip,
         take: pageSize,
         orderBy: { [sortField]: sortDirection },
-        include: { user: { select: { firstName: true, shortName: true, profileType: true } } }
+        include: {
+          user: {
+            select: { firstName: true, shortName: true, profileType: true }
+          }
+        }
       }),
       prisma.selfCareActivity.count({ where })
     ])
@@ -56,8 +67,7 @@ export const getSelfCareActivities = async ({
     }
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to fetch self-care activities')
+    handleActionError(e)
   }
 }
 
@@ -66,31 +76,38 @@ export const deleteSelfCareActivity = async (id: string) => {
     await prisma.selfCareActivity.delete({ where: { id } })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to delete self-care session')
+    handleActionError(e)
   }
 }
 
 export const getSelfCareActivityById = async (id: string) => {
-  return prisma.selfCareActivity.findUnique({ where: { id } })
+  try {
+    return await prisma.selfCareActivity.findUnique({ where: { id } })
+  }
+  catch (e) {
+    handleActionError(e)
+  }
 }
 
-export const createSelfCareActivity = async (input: CreateSelfCareActivityInput) => {
+export const createSelfCareActivity = async (
+  input: CreateSelfCareActivityInput
+) => {
   try {
     await prisma.selfCareActivity.create({ data: input })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to create self-care activity')
+    handleActionError(e)
   }
 }
 
-export const updateSelfCareActivity = async ({ id, ...data }: UpdateSelfCareActivityInput) => {
+export const updateSelfCareActivity = async ({
+  id,
+  ...data
+}: UpdateSelfCareActivityInput) => {
   try {
     await prisma.selfCareActivity.update({ where: { id }, data })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to update self-care activity')
+    handleActionError(e)
   }
 }

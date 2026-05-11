@@ -14,7 +14,7 @@ export async function getProfile(id: string): Promise<UserProfile | null> {
 export async function editProfile(
   id: string,
   data: EditProfileFormType
-): Promise<void> {
+) {
   const res = await fetch(`${BASE}/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data)
@@ -28,7 +28,7 @@ export async function editProfile(
 export async function uploadProfileImage(
   id: string,
   file: File
-): Promise<Response> {
+) {
   const formData = new FormData()
   formData.append('file', file)
   return fetch(`${BASE}/${id}/upload-image`, {

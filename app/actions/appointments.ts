@@ -5,6 +5,7 @@ import { Appointment, AppointmentStatus, AppointmentType, ExpenseType } from '@/
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 import type { ProfileSummary } from '@/types'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
+import { handleActionError } from '@/lib/actions/handle-action-error'
 
 export type AppointmentWithUser = Appointment & { user: ProfileSummary }
 
@@ -71,17 +72,10 @@ export const getAppointments = async ({
       prisma.appointment.count({ where })
     ])
 
-    return {
-      data,
-      total,
-      page,
-      pageSize,
-      totalPages: Math.ceil(total / pageSize)
-    }
+    return { data, total, page, pageSize, totalPages: Math.ceil(total / pageSize) }
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to fetch appointments')
+    handleActionError(e)
   }
 }
 
@@ -90,8 +84,7 @@ export const deleteAppointment = async (id: string) => {
     await prisma.appointment.delete({ where: { id } })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to delete appointment')
+    handleActionError(e)
   }
 }
 
@@ -115,8 +108,7 @@ export const createAppointment = async (input: CreateAppointmentInput) => {
     })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to create appointment')
+    handleActionError(e)
   }
 }
 
@@ -134,8 +126,7 @@ export const updateAppointment = async ({ id, ...data }: UpdateAppointmentInput)
     ])
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to update appointment')
+    handleActionError(e)
   }
 }
 
@@ -144,7 +135,6 @@ export const getAppointmentById = async (id: string) => {
     return await prisma.appointment.findUnique({ where: { id } })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to fetch appointment')
+    handleActionError(e)
   }
 }

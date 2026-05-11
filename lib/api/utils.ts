@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import type { BaseQueryParams } from '@/types'
+import { ActionError } from '@/lib/actions/action-error'
+
+export function actionErrorResponse(e: unknown): NextResponse {
+  const status = e instanceof ActionError ? e.status : 500
+  const message = e instanceof Error ? e.message : 'Something went wrong'
+  return NextResponse.json({ error: message }, { status })
+}
 
 export function validateQueryParams<T extends z.ZodTypeAny>(
   schema: T,

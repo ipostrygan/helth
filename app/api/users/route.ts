@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server'
 import { getAllProfiles } from '../../actions/profile'
+import { actionErrorResponse } from '@/lib/api/utils'
 
 export async function GET() {
-  const { error, data, status } = await getAllProfiles()
-  if (error) return NextResponse.json({ error }, { status })
-  return NextResponse.json(data)
+  try {
+    const data = await getAllProfiles()
+    return NextResponse.json(data)
+  }
+  catch (e) {
+    return actionErrorResponse(e)
+  }
 }

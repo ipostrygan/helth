@@ -7,6 +7,7 @@ import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/ty
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { PaginatedResult, ProfileSummary } from '@/types'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
+import { handleActionError } from '@/lib/actions/handle-action-error'
 
 export type MedicalExpenseWithUser = MedicalExpense & { user: ProfileSummary }
 
@@ -91,8 +92,7 @@ export const getMedicalExpenses = async ({
     }
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to fetch medical expenses')
+    handleActionError(e)
   }
 }
 
@@ -112,10 +112,7 @@ export const getMedicalExpensesByType = async ({
       by: ['type'],
       where: {
         ...(profileId ? { userId: profileId } : {}),
-        date: {
-          gte: resolvedDateFrom,
-          lte: resolvedDateTo
-        }
+        date: { gte: resolvedDateFrom, lte: resolvedDateTo }
       },
       _sum: { amount: true },
       _count: { id: true }
@@ -128,8 +125,7 @@ export const getMedicalExpensesByType = async ({
     }))
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to fetch medical expenses by type')
+    handleActionError(e)
   }
 }
 
@@ -138,8 +134,7 @@ export const getMedicalExpenseById = async (id: string) => {
     return await prisma.medicalExpense.findUnique({ where: { id } })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to fetch medical expense')
+    handleActionError(e)
   }
 }
 
@@ -148,8 +143,7 @@ export const deleteExpense = async (id: string) => {
     await prisma.medicalExpense.delete({ where: { id } })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to delete expense')
+    handleActionError(e)
   }
 }
 
@@ -158,8 +152,7 @@ export const createExpense = async (input: CreateExpenseInput) => {
     await prisma.medicalExpense.create({ data: input })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to create expense')
+    handleActionError(e)
   }
 }
 
@@ -168,7 +161,6 @@ export const updateExpense = async ({ id, ...data }: UpdateExpenseInput) => {
     await prisma.medicalExpense.update({ where: { id }, data })
   }
   catch (e) {
-    console.error(e)
-    throw new Error(e instanceof Error ? e.message : 'Failed to update expense')
+    handleActionError(e)
   }
 }

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSelfCareActivities } from '../../actions/self-care-activities'
 import { baseSearchParams } from '@/lib/search-params'
 import { selfCareActivitiesQueryParamsSchema } from '@/app/(app)/self-care-activities/search-params'
-import { validateQueryParams } from '@/lib/api/utils'
+import { validateQueryParams, actionErrorResponse } from '@/lib/api/utils'
 import { createSearchParamsCache } from 'nuqs/server'
 
 const searchParamsCache = createSearchParamsCache({
@@ -15,6 +15,11 @@ export async function GET(req: NextRequest) {
   if (!validation.success) {
     return validation.response
   }
-  const result = await getSelfCareActivities(validation.data)
-  return NextResponse.json(result)
+  try {
+    const result = await getSelfCareActivities(validation.data)
+    return NextResponse.json(result)
+  }
+  catch (e) {
+    return actionErrorResponse(e)
+  }
 }
