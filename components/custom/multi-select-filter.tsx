@@ -13,20 +13,20 @@ import {
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
 
-type Option = {
+type Option<T extends string = string> = {
   label: string
-  value: string
+  value: T
 }
 
-type MultiSelectFilterProps = {
+type MultiSelectFilterProps<T extends string = string> = {
   label: string
-  options: Option[]
-  selected: string[]
-  onChange: (values: string[]) => void
+  options: Option<T>[]
+  selected: T[]
+  onChange: (values: T[]) => void
 }
 
-export const MultiSelectFilter = ({ label, options, selected, onChange }: MultiSelectFilterProps) => {
-  const toggle = (value: string) => {
+export const MultiSelectFilter = <T extends string>({ label, options, selected, onChange }: MultiSelectFilterProps<T>) => {
+  const toggle = (value: T) => {
     if (selected.includes(value)) {
       onChange(selected.filter(v => v !== value))
     }

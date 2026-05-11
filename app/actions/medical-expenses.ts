@@ -65,7 +65,7 @@ export const getMedicalExpenses = async ({
     ...(profileId ? { userId: profileId } : {}),
     ...(appointmentId ? { appointmentId } : {}),
     ...buildDateRangeFilter(dateFrom, dateTo),
-    ...(types && types.length > 0 ? { type: { in: types as ExpenseType[] } } : {}),
+    ...(types && types.length > 0 ? { type: { in: types } } : {}),
     ...(andConditions.length > 0 ? { AND: andConditions } : {})
   }
 

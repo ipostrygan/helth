@@ -1,6 +1,7 @@
 import type { BaseQueryParams } from '@/types'
+import type { AppointmentStatus } from '@/lib/generated/prisma'
 
 export type AppointmentsQueryParams = BaseQueryParams & {
-  statuses?: string[] | null
+  statuses?: AppointmentStatus[] | null
   therapyId?: string | null
 }

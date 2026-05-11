@@ -57,7 +57,7 @@ export const getAppointments = async ({
     ...(therapyId ? { therapyId } : {}),
     ...buildSearchFilter(search, ['title', 'specialistName', 'location']),
     ...buildDateRangeFilter(dateFrom, dateTo),
-    ...(statuses && statuses.length > 0 ? { status: { in: statuses as AppointmentStatus[] } } : {})
+    ...(statuses && statuses.length > 0 ? { status: { in: statuses } } : {})
   }
 
   try {

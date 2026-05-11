@@ -16,6 +16,8 @@ import { useMedicalExpenses } from './hooks/use-medical-expenses'
 import { useDeleteMedicalExpense } from './hooks/use-delete-medical-expense'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
+import type { ExpenseType } from '@/lib/generated/prisma'
+import type { MedicalExpensesQueryParams } from './types'
 import { EXPENSE_TYPE_LABELS } from './constants'
 import { Modal } from '@/components/custom/modal'
 import { prepareMedicalExpenseColumns } from './columns'
@@ -39,12 +41,12 @@ const MedicalExpensesPage = () => {
 
   const profileId = isFamilyProfile ? undefined : activeProfileId
 
-  const params = {
+  const params: MedicalExpensesQueryParams = {
     profileId,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined,
-    types: filters.types
+    types: filters.types as ExpenseType[]
   }
   const { data, isLoading, isFetching, isError } = useMedicalExpenses(params, 'profileId')
 
