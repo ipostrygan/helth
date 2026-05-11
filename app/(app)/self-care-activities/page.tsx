@@ -215,7 +215,6 @@ function SelfCareActivitiesPage() {
             description="Fill in the details below."
           >
             <SelfCareActivityForm
-              profileId={activeProfileId!}
               onClose={() => setAddingItem(false)}
             />
           </Modal>
@@ -229,7 +228,6 @@ function SelfCareActivitiesPage() {
           >
             {editingItem && (
               <SelfCareActivityForm
-                profileId={activeProfileId!}
                 onClose={() => setEditingItem(null)}
                 selfCareActivity={editingItem}
               />

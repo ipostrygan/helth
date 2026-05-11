@@ -1,21 +1,22 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useActiveProfile } from '@/context/profile-context'
 import { useTherapies } from '@/app/(app)/therapies/hooks/use-therapies'
 import { SearchCombobox } from '@/components/search-combobox'
 
 type TherapyComboboxProps = {
   id?: string
-  profileId: string
   value?: string | null
   onChange: (value: string | null) => void
   selectedItem?: { id: string, title: string } | null
 }
 
-export function TherapyCombobox({ id, profileId, value, onChange, selectedItem }: TherapyComboboxProps) {
+export function TherapyCombobox({ id, value, onChange, selectedItem }: TherapyComboboxProps) {
+  const { activeProfileId } = useActiveProfile()
   const [search, setSearch] = useState('')
 
-  const { data, isLoading } = useTherapies({ profileId, search, pageSize: 20 })
+  const { data, isLoading } = useTherapies({ profileId: activeProfileId ?? undefined, search, pageSize: 20 })
 
   const items = useMemo(() => {
     const fetched = (data?.data ?? []).map(t => ({ id: t.id, label: t.title }))

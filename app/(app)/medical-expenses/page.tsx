@@ -155,7 +155,6 @@ const MedicalExpensesPage = () => {
             description="Fill in the details below to record a new medical expense."
           >
             <MedicalExpenseForm
-              profileId={activeProfileId!}
               onClose={() => setAddingExpense(false)}
             />
           </Modal>
@@ -170,7 +169,6 @@ const MedicalExpensesPage = () => {
           >
             {editingExpense && (
               <MedicalExpenseForm
-                profileId={activeProfileId!}
                 onClose={() => setEditingExpense(null)}
                 expense={editingExpense}
               />

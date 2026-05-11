@@ -42,7 +42,6 @@ const schema = z.object({
 export type AppointmentFormValues = z.infer<typeof schema>
 
 type AppointmentFormProps = {
-  profileId: string
   appointment?: Appointment
   defaultTherapyId?: string | null
   cancelHref?: string
@@ -50,7 +49,6 @@ type AppointmentFormProps = {
 }
 
 const AppointmentForm = ({
-  profileId,
   appointment,
   defaultTherapyId,
   cancelHref = '/appointments',
@@ -229,7 +227,6 @@ const AppointmentForm = ({
                   </Label>
                   <TherapyCombobox
                     id="therapyId"
-                    profileId={profileId}
                     value={field.value ?? null}
                     onChange={field.onChange}
                   />

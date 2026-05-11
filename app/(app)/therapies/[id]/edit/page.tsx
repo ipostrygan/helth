@@ -9,12 +9,12 @@ import { useEditTherapy } from '../../hooks/use-edit-therapy'
 const EditTherapyPage = () => {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { activeProfileId } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile } = useActiveProfile()
   const { data: therapy, isLoading } = useTherapy(id)
   const { mutateAsync: editTherapy } = useEditTherapy()
 
   if (isLoading) return null
-  if (!therapy || !activeProfileId) return null
+  if (!therapy || (!isFamilyProfile && !activeProfileId)) return null
 
   const onSubmit = async (values: TherapyFormValues) => {
     await editTherapy({ id: therapy.id, ...values })

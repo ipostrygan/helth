@@ -10,12 +10,12 @@ import { useEditAppointment } from '../../hooks/use-edit-appointment'
 const EditAppointmentPage = () => {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { activeProfileId } = useActiveProfile()
+  const { activeProfileId, isFamilyProfile } = useActiveProfile()
   const { data: appointment, isLoading } = useAppointment(id)
   const { mutateAsync: editAppointment } = useEditAppointment()
 
   if (isLoading) return null
-  if (!appointment || !activeProfileId) return null
+  if (!appointment || (!isFamilyProfile && !activeProfileId)) return null
 
   const onSubmit = async (values: AppointmentFormValues) => {
     await editAppointment({ id: appointment.id, ...values })
@@ -28,7 +28,7 @@ const EditAppointmentPage = () => {
         <Breadcrumbs items={[{ label: 'Appointments', href: '/appointments' }, { label: appointment.title, href: `/appointments/${id}` }, { label: 'Edit' }]} />
         <h1 className="text-2xl font-semibold">Edit Appointment</h1>
       </div>
-      <AppointmentForm profileId={activeProfileId} appointment={appointment} onSubmit={onSubmit} />
+      <AppointmentForm appointment={appointment} onSubmit={onSubmit} />
     </div>
   )
 }

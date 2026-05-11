@@ -28,7 +28,6 @@ const CreateAppointmentPage = () => {
         <h1 className="text-2xl font-semibold">Add Appointment</h1>
       </div>
       <AppointmentForm
-        profileId={activeProfileId}
         defaultTherapyId={therapyId}
         cancelHref={backHref}
         onSubmit={onSubmit}

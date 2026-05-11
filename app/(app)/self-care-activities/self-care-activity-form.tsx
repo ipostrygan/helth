@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Field, FieldError, FieldGroup } from '@/components/ui/field'
 import { DatePickerField } from '@/components/custom/date-picker-field'
 import { DialogFooter } from '@/components/ui/dialog'
+import { useActiveProfile } from '@/context/profile-context'
 import { useCreateSelfCareActivity } from './hooks/use-create-self-care-activity'
 import { useEditSelfCareActivity } from './hooks/use-edit-self-care-activity'
 
@@ -25,12 +26,12 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 type SelfCareActivityFormProps = {
-  profileId: string
   onClose: () => void
   selfCareActivity?: SelfCareActivity
 }
 
-const SelfCareActivityForm = ({ profileId, onClose, selfCareActivity }: SelfCareActivityFormProps) => {
+const SelfCareActivityForm = ({ onClose, selfCareActivity }: SelfCareActivityFormProps) => {
+  const { activeProfileId } = useActiveProfile()
   const isEditMode = !!selfCareActivity
   const { mutateAsync: createSelfCareActivity } = useCreateSelfCareActivity()
   const { mutateAsync: editSelfCareActivity } = useEditSelfCareActivity()
@@ -58,7 +59,7 @@ const SelfCareActivityForm = ({ profileId, onClose, selfCareActivity }: SelfCare
       await editSelfCareActivity({ id: selfCareActivity.id, ...values })
     }
     else {
-      await createSelfCareActivity({ ...values, userId: profileId })
+      await createSelfCareActivity({ ...values, userId: activeProfileId! })
     }
     onClose()
   }

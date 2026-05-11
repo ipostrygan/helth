@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DatePickerField } from '@/components/custom/date-picker-field'
 import { DialogFooter } from '@/components/ui/dialog'
 import { EXPENSE_TYPE_LABELS } from './constants'
+import { useActiveProfile } from '@/context/profile-context'
 import { useCreateMedicalExpense } from './hooks/use-create-medical-expense'
 import { useEditMedicalExpense } from './hooks/use-edit-medical-expense'
 import { TherapyCombobox } from './components/therapy-combobox'
@@ -31,12 +32,12 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 type MedicalExpenseFormProps = {
-  profileId: string
   onClose: () => void
   expense?: MedicalExpense
 }
 
-const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormProps) => {
+const MedicalExpenseForm = ({ onClose, expense }: MedicalExpenseFormProps) => {
+  const { activeProfileId } = useActiveProfile()
   const { mutateAsync: createExpense } = useCreateMedicalExpense()
   const { mutateAsync: editExpense } = useEditMedicalExpense()
   const { data: selectedTherapy } = useTherapy(expense?.therapyId ?? '')
@@ -66,7 +67,7 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
       await editExpense({ id: expense.id, ...values })
     }
     else {
-      await createExpense({ ...values, userId: profileId })
+      await createExpense({ ...values, userId: activeProfileId! })
     }
     onClose()
   }
@@ -131,7 +132,6 @@ const MedicalExpenseForm = ({ profileId, onClose, expense }: MedicalExpenseFormP
                 <span className="text-muted-foreground text-xs">(optional)</span>
               </Label>
               <TherapyCombobox
-                profileId={profileId}
                 value={field.value ?? null}
                 onChange={field.onChange}
                 selectedItem={selectedTherapy ? { id: selectedTherapy.id, title: selectedTherapy.title } : null}
