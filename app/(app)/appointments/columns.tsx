@@ -18,7 +18,7 @@ interface AppointmentColumnsOptions {
   showCost?: boolean
 }
 
-export function appointmentColumns({ onDelete, onEdit, showCost }: AppointmentColumnsOptions) {
+export function prepareAppointmentColumns({ onDelete, onEdit, showCost }: AppointmentColumnsOptions) {
   const cols: ColumnDef<AppointmentWithUser>[] = [
     {
       accessorKey: 'title',

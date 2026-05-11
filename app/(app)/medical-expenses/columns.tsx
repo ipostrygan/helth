@@ -16,7 +16,7 @@ interface MedicalExpenseColumnsOptions {
   onView?: (expense: MedicalExpenseWithUser) => void
 }
 
-export function medicalExpenseColumns({ onDelete, onEdit, onView }: MedicalExpenseColumnsOptions): ColumnDef<MedicalExpenseWithUser>[] {
+export function prepareMedicalExpenseColumns({ onDelete, onEdit, onView }: MedicalExpenseColumnsOptions): ColumnDef<MedicalExpenseWithUser>[] {
   return [
     {
       accessorKey: 'title',

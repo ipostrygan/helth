@@ -12,7 +12,7 @@ import { useDeleteAppointment } from './hooks/use-delete-appointment'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import { APPOINTMENT_STATUS_LABELS } from './constants'
-import { appointmentColumns } from './columns'
+import { prepareAppointmentColumns } from './columns'
 import { TableTemplate, type SortChange } from '@/components/table-template'
 
 const AppointmentsPage = () => {
@@ -43,7 +43,7 @@ const AppointmentsPage = () => {
     setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
-  const columns = appointmentColumns({
+  const columns = prepareAppointmentColumns({
     showCost: true,
     onEdit: id => router.push(`/appointments/${id}/edit`),
     onDelete: id => setDeletingId(id)

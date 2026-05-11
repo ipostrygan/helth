@@ -18,7 +18,7 @@ import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import { EXPENSE_TYPE_LABELS } from './constants'
 import { Modal } from '@/components/custom/modal'
-import { medicalExpenseColumns } from './columns'
+import { prepareMedicalExpenseColumns } from './columns'
 import { TableTemplate, type SortChange } from '@/components/table-template'
 import MedicalExpenseForm from './medical-expense-form'
 import { MedicalExpenseDetailsSheet } from './components/medical-expense-details-sheet'
@@ -53,7 +53,7 @@ const MedicalExpensesPage = () => {
     setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
-  const columns = medicalExpenseColumns({
+  const columns = prepareMedicalExpenseColumns({
     onView: setViewingExpense,
     onEdit: setEditingExpense,
     onDelete: setDeletingExpenseId

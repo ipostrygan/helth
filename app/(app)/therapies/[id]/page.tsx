@@ -17,8 +17,8 @@ import { useAppointments } from '../../appointments/hooks/use-appointments'
 import { useDeleteAppointment } from '../../appointments/hooks/use-delete-appointment'
 import { SortingState } from '@tanstack/react-table'
 import { AppLink } from '@/components/custom/app-link'
-import { appointmentColumns } from '../../appointments/columns'
-import { medicalExpenseColumns } from '../../medical-expenses/columns'
+import { prepareAppointmentColumns } from '../../appointments/columns'
+import { prepareMedicalExpenseColumns } from '../../medical-expenses/columns'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -91,11 +91,11 @@ const TherapyDetailPage = () => {
     setApptFilters(prev => ({ ...prev, apptPage: 1, apptSortField: sortField, apptSortDirection: sortDirection }))
   }
 
-  const apptColumns = appointmentColumns({
+  const apptColumns = prepareAppointmentColumns({
     onDelete: id => setDeletingApptId(id)
   })
 
-  const columns = medicalExpenseColumns({
+  const columns = prepareMedicalExpenseColumns({
     onDelete: id => setDeletingId(id)
   })
 

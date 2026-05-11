@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { ColumnDef, SortingState } from '@tanstack/react-table'
+import { type SortingState } from '@tanstack/react-table'
 import type { SelfCareActivityWithUser } from '@/app/actions/self-care-activities'
 import { useQueryStates } from 'nuqs'
 import {
@@ -17,18 +17,11 @@ import { useSelfCareActivity } from './hooks/use-self-care-activity'
 import { useDeleteSelfCareActivity } from './hooks/use-delete-self-care-activity'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
-import { MoreHorizontal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
 import { TableTemplate, type SortChange } from '@/components/table-template'
 import { Modal } from '@/components/custom/modal'
 import { SelfCareActivityDetailsSheet } from './components/self-care-activity-details-sheet'
 import SelfCareActivityForm from './self-care-activity-form'
+import { prepareSelfCareActivityColumns } from './columns'
 
 export default function Page() {
   return (
@@ -68,69 +61,11 @@ function SelfCareActivitiesPage() {
     setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
-  const columns: ColumnDef<SelfCareActivityWithUser>[] = [
-    {
-      accessorKey: 'title',
-      header: 'Title',
-      cell: ({ row }) => (
-        <button
-          className="text-primary font-medium hover:text-primary/80 transition-colors text-left"
-          onClick={() => setOpenId(row.original.id)}
-        >
-          {row.getValue('title')}
-        </button>
-      )
-    },
-    {
-      accessorKey: 'date',
-      header: 'Date',
-      cell: ({ row }) => new Date(row.getValue('date')).toLocaleDateString()
-    },
-    {
-      accessorKey: 'medication',
-      header: 'Medication',
-      cell: ({ row }) => row.getValue('medication')
-    },
-    {
-      accessorKey: 'dosage',
-      header: 'Dosage',
-      enableSorting: false,
-      cell: ({ row }) => row.getValue('dosage')
-    },
-    {
-      id: 'profile',
-      header: 'Profile',
-      cell: ({ row }) => {
-        const user = row.original.user
-        return user.profileType === 'Human' ? (user.firstName ?? '') : (user.shortName ?? '')
-      }
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm">
-              <MoreHorizontal />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => setEditingItem(row.original)}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              variant="destructive"
-              onSelect={() => setDeletingId(row.original.id)}
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    }
-  ]
+  const columns = prepareSelfCareActivityColumns({
+    onOpenDetail: setOpenId,
+    onEdit: setEditingItem,
+    onDelete: setDeletingId
+  })
 
   const dateRange
     = filters.dateFrom || filters.dateTo
