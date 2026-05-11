@@ -19,7 +19,6 @@ export async function GET(req: NextRequest) {
   const parsed = searchParamsCache.parse(
     Object.fromEntries(req.nextUrl.searchParams)
   )
-  console.log(parsed)
   const validation = validateQueryParams(appointmentsQueryParamsSchema, parsed)
   if (!validation.success) {
     return validation.response
