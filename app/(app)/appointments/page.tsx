@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { parseAsArrayOf, parseAsStringEnum, useQueryStates } from 'nuqs'
+import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import {
   baseFilterParsers,
   defaultDateFrom,
@@ -27,9 +27,7 @@ const AppointmentsPage = () => {
   const { data: profile } = useProfile(activeProfileId)
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('date'),
-    statuses: parseAsArrayOf(
-      parseAsStringEnum<AppointmentStatus>(Object.values(AppointmentStatus))
-    ).withDefault([])
+    statuses: parseAsArrayOf(parseAsString).withDefault([])
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
@@ -42,7 +40,7 @@ const AppointmentsPage = () => {
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined,
-    statuses: filters.statuses
+    statuses: filters.statuses as AppointmentStatus[]
   }
   const { data, isLoading, isFetching, isError } = useAppointments(params)
 
