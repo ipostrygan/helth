@@ -27,6 +27,14 @@ export type PageProps = {
   params: Promise<{ id: string }>
 }
 
+// documents
+export type DocumentItem = {
+  key: string
+  name: string
+  url: string
+  downloadUrl: string
+}
+
 // profile
 export type ProfileSummary = {
   firstName: string | null

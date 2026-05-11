@@ -1,4 +1,4 @@
-import type { PaginatedResult } from '@/types'
+import type { PaginatedResult, DocumentItem } from '@/types'
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 import type { Appointment } from '@/lib/generated/prisma/client'
 import type { AppointmentWithUser } from '@/app/actions/appointments'
@@ -12,12 +12,6 @@ import {
 
 const BASE = '/api/appointments'
 
-export type DocumentItem = {
-  key: string
-  name: string
-  url: string
-  downloadUrl: string
-}
 export type AppointmentWithDocuments = Appointment & {
   documents: DocumentItem[]
 }

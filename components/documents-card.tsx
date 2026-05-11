@@ -16,7 +16,7 @@ import { FileCard } from '@/components/file-card'
 import { StagedFileCard } from '@/components/staged-file-card'
 import { FileUpload, type UploadedFile } from '@/components/custom/file-upload'
 import { Button } from '@/components/ui/button'
-import type { DocumentItem } from '@/lib/api/appointments'
+import { DocumentItem } from '@/types'
 
 type DocumentsCardProps = {
   documents: DocumentItem[]

@@ -1,8 +1,7 @@
-import type { PaginatedResult } from '@/types'
+import type { PaginatedResult, DocumentItem } from '@/types'
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import type { TherapyWithUser } from '@/app/actions/therapies'
-import type { DocumentItem } from '@/lib/api/appointments'
 import {
   buildSearchParams,
   fetchOne,
