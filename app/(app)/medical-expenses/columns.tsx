@@ -14,10 +14,11 @@ interface MedicalExpenseColumnsOptions {
   onDelete: (id: string) => void
   onEdit?: (expense: MedicalExpenseWithUser) => void
   onView?: (expense: MedicalExpenseWithUser) => void
+  isFamilyProfile?: boolean
 }
 
-export function prepareMedicalExpenseColumns({ onDelete, onEdit, onView }: MedicalExpenseColumnsOptions): ColumnDef<MedicalExpenseWithUser>[] {
-  return [
+export function prepareMedicalExpenseColumns({ onDelete, onEdit, onView, isFamilyProfile }: MedicalExpenseColumnsOptions) {
+  const cols: ColumnDef<MedicalExpenseWithUser>[] = [
     {
       accessorKey: 'title',
       header: 'Title',
@@ -48,21 +49,27 @@ export function prepareMedicalExpenseColumns({ onDelete, onEdit, onView }: Medic
       accessorKey: 'type',
       header: 'Type',
       cell: ({ row }) => EXPENSE_TYPE_LABELS[row.getValue<keyof typeof EXPENSE_TYPE_LABELS>('type')]
-    },
-    {
+    }
+  ]
+
+  if (isFamilyProfile) {
+    cols.push({
       id: 'profile',
       header: 'Profile',
       cell: ({ row }) => profileLabel(row.original.user)
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <RowActions
-          onEdit={onEdit ? () => onEdit(row.original) : undefined}
-          onDelete={() => onDelete(row.original.id)}
-        />
-      )
-    }
-  ]
+    })
+  }
+
+  cols.push({
+    id: 'actions',
+    enableSorting: false,
+    cell: ({ row }) => (
+      <RowActions
+        onEdit={onEdit ? () => onEdit(row.original) : undefined}
+        onDelete={() => onDelete(row.original.id)}
+      />
+    )
+  })
+
+  return cols
 }

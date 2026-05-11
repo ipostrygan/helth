@@ -46,7 +46,8 @@ const AppointmentsPage = () => {
   const columns = prepareAppointmentColumns({
     showCost: true,
     onEdit: id => router.push(`/appointments/${id}/edit`),
-    onDelete: id => setDeletingId(id)
+    onDelete: id => setDeletingId(id),
+    isFamilyProfile
   })
 
   const dateRange

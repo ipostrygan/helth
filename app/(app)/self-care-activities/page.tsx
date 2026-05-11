@@ -64,7 +64,8 @@ function SelfCareActivitiesPage() {
   const columns = prepareSelfCareActivityColumns({
     onOpenDetail: setOpenId,
     onEdit: setEditingItem,
-    onDelete: setDeletingId
+    onDelete: setDeletingId,
+    isFamilyProfile
   })
 
   const dateRange

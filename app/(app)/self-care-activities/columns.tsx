@@ -13,14 +13,16 @@ interface SelfCareActivityColumnsOptions {
   onOpenDetail: (id: string) => void
   onEdit: (item: SelfCareActivityWithUser) => void
   onDelete: (id: string) => void
+  isFamilyProfile?: boolean
 }
 
 export function prepareSelfCareActivityColumns({
   onOpenDetail,
   onEdit,
-  onDelete
-}: SelfCareActivityColumnsOptions): ColumnDef<SelfCareActivityWithUser>[] {
-  return [
+  onDelete,
+  isFamilyProfile
+}: SelfCareActivityColumnsOptions) {
+  const cols: ColumnDef<SelfCareActivityWithUser>[] = [
     {
       accessorKey: 'title',
       header: 'Title',
@@ -48,21 +50,27 @@ export function prepareSelfCareActivityColumns({
       header: 'Dosage',
       enableSorting: false,
       cell: ({ row }) => row.original.dosage
-    },
-    {
+    }
+  ]
+
+  if (isFamilyProfile) {
+    cols.push({
       id: 'profile',
       header: 'Profile',
       cell: ({ row }) => profileLabel(row.original.user)
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <RowActions
-          onEdit={() => onEdit(row.original)}
-          onDelete={() => onDelete(row.original.id)}
-        />
-      )
-    }
-  ]
+    })
+  }
+
+  cols.push({
+    id: 'actions',
+    enableSorting: false,
+    cell: ({ row }) => (
+      <RowActions
+        onEdit={() => onEdit(row.original)}
+        onDelete={() => onDelete(row.original.id)}
+      />
+    )
+  })
+
+  return cols
 }

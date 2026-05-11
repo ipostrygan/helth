@@ -56,7 +56,8 @@ const MedicalExpensesPage = () => {
   const columns = prepareMedicalExpenseColumns({
     onView: setViewingExpense,
     onEdit: setEditingExpense,
-    onDelete: setDeletingExpenseId
+    onDelete: setDeletingExpenseId,
+    isFamilyProfile
   })
 
   const dateRange

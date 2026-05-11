@@ -16,9 +16,10 @@ interface AppointmentColumnsOptions {
   onDelete: (id: string) => void
   onEdit?: (id: string) => void
   showCost?: boolean
+  isFamilyProfile?: boolean
 }
 
-export function prepareAppointmentColumns({ onDelete, onEdit, showCost }: AppointmentColumnsOptions) {
+export function prepareAppointmentColumns({ onDelete, onEdit, showCost, isFamilyProfile }: AppointmentColumnsOptions) {
   const cols: ColumnDef<AppointmentWithUser>[] = [
     {
       accessorKey: 'title',
@@ -62,11 +63,13 @@ export function prepareAppointmentColumns({ onDelete, onEdit, showCost }: Appoin
     })
   }
 
-  cols.push({
-    id: 'profile',
-    header: 'Profile',
-    cell: ({ row }) => profileLabel(row.original.user)
-  })
+  if (isFamilyProfile) {
+    cols.push({
+      id: 'profile',
+      header: 'Profile',
+      cell: ({ row }) => profileLabel(row.original.user)
+    })
+  }
 
   cols.push({
     id: 'actions',
