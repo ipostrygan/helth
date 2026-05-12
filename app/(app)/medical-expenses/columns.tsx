@@ -1,6 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import type { MedicalExpenseWithUser } from '@/app/actions/medical-expenses'
 import { RowActions } from '@/components/row-actions'
+import { formatCurrency } from '@/lib/utils'
 import { EXPENSE_TYPE_LABELS } from './constants'
 import { profileLabel } from '../users/utils/profile.utils'
 
@@ -32,7 +33,7 @@ export function prepareMedicalExpenseColumns({ onDelete, onEdit, onView, isFamil
       accessorKey: 'amount',
       header: 'Amount',
       cell: ({ row }) =>
-        new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(row.getValue('amount'))
+        formatCurrency(row.getValue('amount'))
     },
     {
       accessorKey: 'date',

@@ -19,6 +19,7 @@ import { format } from 'date-fns'
 import type { ExpenseType } from '@/lib/generated/prisma'
 import type { MedicalExpensesQueryParams } from './types'
 import { EXPENSE_TYPE_LABELS } from './constants'
+import { formatCurrency } from '@/lib/utils'
 import { Modal } from '@/components/custom/modal'
 import { prepareMedicalExpenseColumns } from './columns'
 import { TableTemplate, type SortChange } from '@/components/table-template'
@@ -75,7 +76,7 @@ const MedicalExpensesPage = () => {
   }
 
   const totalSum = data?.totalSum ?? 0
-  const description = `Total sum of expenses for selected period: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(totalSum)}`
+  const description = `Total sum of expenses for selected period: ${formatCurrency(totalSum)}`
 
   return (
     <TableTemplate

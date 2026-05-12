@@ -27,6 +27,7 @@ import { DocumentsCard } from '@/components/documents-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
 import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
+import { formatCurrency } from '@/lib/utils'
 
 const TherapyDetailPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -187,7 +188,7 @@ const TherapyDetailPage = () => {
       <TableTemplate
         className="space-y-4"
         title="Medical Expenses"
-        description={`Total sum of expenses: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(expensesData?.totalSum ?? 0)}`}
+        description={`Total sum of expenses: ${formatCurrency(expensesData?.totalSum ?? 0)}`}
         columns={columns}
         data={expensesData}
         isLoading={isExpensesLoading}

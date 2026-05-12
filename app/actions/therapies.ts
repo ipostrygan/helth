@@ -6,13 +6,14 @@ import type { Therapy } from '@/lib/generated/prisma/client'
 import type { ProfileSummary } from '@/types'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
 import { handleActionError } from '@/lib/actions/handle-action-error'
+import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 
 export type TherapyWithUser = Therapy & { user: ProfileSummary }
 
 export const getTherapies = async ({
   profileId,
   page = 1,
-  pageSize = 10,
+  pageSize = DEFAULT_PAGE_SIZE,
   sortField = 'startDate',
   sortDirection = 'desc',
   search = '',

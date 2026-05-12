@@ -11,6 +11,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { DetailRow } from '@/components/custom/detail-row'
 import { EXPENSE_TYPE_LABELS } from '../constants'
+import { formatCurrency } from '@/lib/utils'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
 import { useAppointment } from '../../appointments/hooks/use-appointment'
 
@@ -35,7 +36,7 @@ export function MedicalExpenseDetailsSheet({ expense, open, onOpenChange }: Prop
 
         <div className="px-4 space-y-4">
           <DetailRow label="Amount">
-            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(expense.amount)}
+            {formatCurrency(expense.amount)}
           </DetailRow>
           <Separator />
           <DetailRow label="Date">

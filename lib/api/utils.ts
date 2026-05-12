@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { z } from 'zod'
 import type { BaseQueryParams } from '@/types'
 import { ActionError } from '@/lib/actions/action-error'
@@ -36,7 +37,7 @@ export function buildSearchParams(
   const {
     profileId,
     page = 1,
-    pageSize = 10,
+    pageSize = DEFAULT_PAGE_SIZE,
     sortField = 'date',
     sortDirection = 'desc',
     search = '',

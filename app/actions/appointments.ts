@@ -6,6 +6,7 @@ import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 import type { ProfileSummary } from '@/types'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
 import { handleActionError } from '@/lib/actions/handle-action-error'
+import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 
 export type AppointmentWithUser = Appointment & { user: ProfileSummary }
 
@@ -42,7 +43,7 @@ export type UpdateAppointmentInput = Partial<AppointmentFields> & { id: string }
 export const getAppointments = async ({
   profileId,
   page = 1,
-  pageSize = 10,
+  pageSize = DEFAULT_PAGE_SIZE,
   sortField = 'date',
   sortDirection = 'desc',
   search = '',

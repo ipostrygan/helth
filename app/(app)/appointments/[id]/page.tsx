@@ -18,6 +18,7 @@ import {
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { StatusBadge } from '@/components/custom/status-badge'
 import { DocumentsCard } from '@/components/documents-card'
+import { formatCurrency } from '@/lib/utils'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
 import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
@@ -65,7 +66,7 @@ const AppointmentDetailPage = () => {
           </DetailRow>
           <Separator />
           <DetailRow label="Cost">
-            {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' }).format(appointment.cost)}
+            {formatCurrency(appointment.cost)}
           </DetailRow>
           <Separator />
           <DetailRow label="Therapy">
