@@ -25,13 +25,15 @@ const UserAvatar = ({
   const [error, setError] = useState<string | null>(null)
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  const displayName = profile.profileType === 'Human'
-    ? `${profile.firstName} ${profile.lastName}`
-    : profile.fullName
+  const displayName
+    = profile.profileType === 'Human'
+      ? `${profile.firstName} ${profile.lastName}`
+      : profile.fullName
 
-  const initials = profile.profileType === 'Human'
-    ? `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
-    : (profile.shortName ?? profile.fullName)[0].toUpperCase()
+  const initials
+    = profile.profileType === 'Human'
+      ? `${profile.firstName[0]}${profile.lastName[0]}`.toUpperCase()
+      : (profile.shortName ?? profile.fullName)[0].toUpperCase()
   const imageUrl = `/api/users/${profile.id}/image`
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +64,9 @@ const UserAvatar = ({
   }
 
   const avatarEl = (
-    <Avatar className={cn('@container font-semibold', className ?? 'size-62.5')}>
+    <Avatar
+      className={cn('@container font-semibold', className ?? 'size-62.5')}
+    >
       <AvatarFallback className="text-[33cqw]">{initials}</AvatarFallback>
       {imageUrl !== null && (
         <Image
@@ -101,8 +105,12 @@ const UserAvatar = ({
           )}
         >
           {isPending
-            ? <Loader2 className="text-white size-8 animate-spin" />
-            : <Camera className="text-white size-8" />}
+            ? (
+                <Loader2 className="text-white size-8 animate-spin" />
+              )
+            : (
+                <Camera className="text-white size-8" />
+              )}
         </div>
         <Input
           ref={fileInputRef}
@@ -113,9 +121,7 @@ const UserAvatar = ({
         />
       </div>
 
-      {error && (
-        <p className="text-destructive text-sm text-center">{error}</p>
-      )}
+      {error && <p className="text-destructive text-sm text-center">{error}</p>}
     </div>
   )
 }
