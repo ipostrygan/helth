@@ -15,10 +15,13 @@ import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useSelfCareActivities } from './hooks/use-self-care-activities'
 import { useSelfCareActivity } from './hooks/use-self-care-activity'
 import { useDeleteSelfCareActivity } from './hooks/use-delete-self-care-activity'
+import { useCreateSelfCareActivity } from './hooks/use-create-self-care-activity'
+import { useEditSelfCareActivity } from './hooks/use-edit-self-care-activity'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import { TableTemplate, type SortChange } from '@/components/table-template'
 import { Modal } from '@/components/custom/modal'
+import { FamilyMemberSelect } from '@/components/custom/family-member-select'
 import { SelfCareActivityDetailsSheet } from './components/self-care-activity-details-sheet'
 import SelfCareActivityForm from './self-care-activity-form'
 import { prepareSelfCareActivityColumns } from './columns'
@@ -41,7 +44,10 @@ function SelfCareActivitiesPage() {
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteSelfCareActivity()
+  const { mutateAsync: createItem } = useCreateSelfCareActivity()
+  const { mutateAsync: editItem } = useEditSelfCareActivity()
   const [addingItem, setAddingItem] = useState(false)
+  const [addingItemUserId, setAddingItemUserId] = useState<string | null>(null)
   const [editingItem, setEditingItem] = useState<SelfCareActivityWithUser | null>(null)
 
   const { data: openActivity } = useSelfCareActivity(openId ?? '')
@@ -145,13 +151,28 @@ function SelfCareActivitiesPage() {
           <Modal
             open={addingItem}
             onOpenChange={(open) => {
-              if (!open) setAddingItem(false)
+              if (!open) {
+                setAddingItem(false)
+                setAddingItemUserId(null)
+              }
             }}
             title="Add self-care activity"
             description="Fill in the details below."
           >
+            {isFamilyProfile && (
+              <FamilyMemberSelect value={addingItemUserId} onChange={setAddingItemUserId} />
+            )}
             <SelfCareActivityForm
-              onClose={() => setAddingItem(false)}
+              onClose={() => {
+                setAddingItem(false)
+                setAddingItemUserId(null)
+              }}
+              onSubmit={async (values) => {
+                await createItem({ ...values, userId: (isFamilyProfile ? addingItemUserId : activeProfileId)! })
+                setAddingItem(false)
+                setAddingItemUserId(null)
+              }}
+              isSubmitDisabled={isFamilyProfile && !addingItemUserId}
             />
           </Modal>
           <Modal
@@ -165,6 +186,10 @@ function SelfCareActivitiesPage() {
             {editingItem && (
               <SelfCareActivityForm
                 onClose={() => setEditingItem(null)}
+                onSubmit={async (values) => {
+                  await editItem({ id: editingItem.id, ...values })
+                  setEditingItem(null)
+                }}
                 selfCareActivity={editingItem}
               />
             )}

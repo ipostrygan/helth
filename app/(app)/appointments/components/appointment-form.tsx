@@ -46,13 +46,15 @@ type AppointmentFormProps = {
   defaultTherapyId?: string | null
   cancelHref?: string
   onSubmit: (values: AppointmentFormValues) => Promise<void>
+  isSubmitDisabled?: boolean
 }
 
 const AppointmentForm = ({
   appointment,
   defaultTherapyId,
   cancelHref = '/appointments',
-  onSubmit
+  onSubmit,
+  isSubmitDisabled
 }: AppointmentFormProps) => {
   const router = useRouter()
   const isEditMode = !!appointment
@@ -255,7 +257,7 @@ const AppointmentForm = ({
             type="submit"
             form="appointment-form"
             isPending={isSubmitting}
-            disabled={!isDirty || !isValid}
+            disabled={!isDirty || !isValid || isSubmitDisabled}
           >
             {isEditMode ? 'Save' : 'Submit'}
           </Button>

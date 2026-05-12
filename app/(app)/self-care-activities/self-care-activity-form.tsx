@@ -11,9 +11,6 @@ import { Textarea } from '@/components/ui/textarea'
 import { Field, FieldError, FieldGroup } from '@/components/ui/field'
 import { DatePickerField } from '@/components/custom/date-picker-field'
 import { DialogFooter } from '@/components/ui/dialog'
-import { useActiveProfile } from '@/context/profile-context'
-import { useCreateSelfCareActivity } from './hooks/use-create-self-care-activity'
-import { useEditSelfCareActivity } from './hooks/use-edit-self-care-activity'
 
 const schema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -23,25 +20,22 @@ const schema = z.object({
   dosage: z.string().min(1, 'Dosage is required')
 })
 
-type FormValues = z.infer<typeof schema>
+export type SelfCareActivityFormValues = z.infer<typeof schema>
 
 type SelfCareActivityFormProps = {
   onClose: () => void
+  onSubmit: (values: SelfCareActivityFormValues) => Promise<void>
   selfCareActivity?: SelfCareActivity
+  isSubmitDisabled?: boolean
 }
 
-const SelfCareActivityForm = ({ onClose, selfCareActivity }: SelfCareActivityFormProps) => {
-  const { activeProfileId } = useActiveProfile()
-  const isEditMode = !!selfCareActivity
-  const { mutateAsync: createSelfCareActivity } = useCreateSelfCareActivity()
-  const { mutateAsync: editSelfCareActivity } = useEditSelfCareActivity()
-
+const SelfCareActivityForm = ({ onClose, onSubmit, selfCareActivity, isSubmitDisabled }: SelfCareActivityFormProps) => {
   const {
     control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid }
-  } = useForm<FormValues>({
+  } = useForm<SelfCareActivityFormValues>({
     resolver: zodResolver(schema),
     defaultValues: selfCareActivity
       ? {
@@ -53,16 +47,6 @@ const SelfCareActivityForm = ({ onClose, selfCareActivity }: SelfCareActivityFor
         }
       : undefined
   })
-
-  const onSubmit = async (values: FormValues) => {
-    if (isEditMode) {
-      await editSelfCareActivity({ id: selfCareActivity.id, ...values })
-    }
-    else {
-      await createSelfCareActivity({ ...values, userId: activeProfileId! })
-    }
-    onClose()
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -109,8 +93,8 @@ const SelfCareActivityForm = ({ onClose, selfCareActivity }: SelfCareActivityFor
         <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
-        <Button type="submit" isPending={isSubmitting} disabled={!isDirty || !isValid}>
-          {isEditMode ? 'Save' : 'Submit'}
+        <Button type="submit" isPending={isSubmitting} disabled={!isDirty || !isValid || isSubmitDisabled}>
+          {selfCareActivity ? 'Save' : 'Submit'}
         </Button>
       </DialogFooter>
     </form>

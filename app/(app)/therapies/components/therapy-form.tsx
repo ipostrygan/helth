@@ -26,9 +26,10 @@ export type TherapyFormValues = z.infer<typeof schema>
 type TherapyFormProps = {
   therapy?: Therapy
   onSubmit: (values: TherapyFormValues) => Promise<void>
+  isSubmitDisabled?: boolean
 }
 
-const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
+const TherapyForm = ({ therapy, onSubmit, isSubmitDisabled }: TherapyFormProps) => {
   const router = useRouter()
   const isEditMode = !!therapy
   const {
@@ -128,7 +129,7 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
           >
             Cancel
           </Button>
-          <Button type="submit" form="therapy-form" isPending={isSubmitting} disabled={!isDirty || !isValid}>
+          <Button type="submit" form="therapy-form" isPending={isSubmitting} disabled={!isDirty || !isValid || isSubmitDisabled}>
             {isEditMode ? 'Save' : 'Submit'}
           </Button>
         </div>

@@ -14,6 +14,8 @@ import { useProfile } from '../users/hooks/use-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useMedicalExpenses } from './hooks/use-medical-expenses'
 import { useDeleteMedicalExpense } from './hooks/use-delete-medical-expense'
+import { useCreateMedicalExpense } from './hooks/use-create-medical-expense'
+import { useEditMedicalExpense } from './hooks/use-edit-medical-expense'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
 import type { ExpenseType } from '@/lib/generated/prisma'
@@ -21,6 +23,7 @@ import type { MedicalExpensesQueryParams } from './types'
 import { EXPENSE_TYPE_LABELS } from './constants'
 import { formatCurrency } from '@/lib/utils'
 import { Modal } from '@/components/custom/modal'
+import { FamilyMemberSelect } from '@/components/custom/family-member-select'
 import { prepareMedicalExpenseColumns } from './columns'
 import { TableTemplate, type SortChange } from '@/components/table-template'
 import MedicalExpenseForm from './medical-expense-form'
@@ -36,7 +39,10 @@ const MedicalExpensesPage = () => {
 
   const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(null)
   const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
+  const { mutateAsync: createExpense } = useCreateMedicalExpense()
+  const { mutateAsync: editExpense } = useEditMedicalExpense()
   const [addingExpense, setAddingExpense] = useState(false)
+  const [addingExpenseUserId, setAddingExpenseUserId] = useState<string | null>(null)
   const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(null)
   const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(null)
 
@@ -153,13 +159,28 @@ const MedicalExpensesPage = () => {
           <Modal
             open={addingExpense}
             onOpenChange={(open) => {
-              if (!open) setAddingExpense(false)
+              if (!open) {
+                setAddingExpense(false)
+                setAddingExpenseUserId(null)
+              }
             }}
             title="Add medical expense"
             description="Fill in the details below to record a new medical expense."
           >
+            {isFamilyProfile && (
+              <FamilyMemberSelect value={addingExpenseUserId} onChange={setAddingExpenseUserId} />
+            )}
             <MedicalExpenseForm
-              onClose={() => setAddingExpense(false)}
+              onClose={() => {
+                setAddingExpense(false)
+                setAddingExpenseUserId(null)
+              }}
+              onSubmit={async (values) => {
+                await createExpense({ ...values, userId: (isFamilyProfile ? addingExpenseUserId : activeProfileId)! })
+                setAddingExpense(false)
+                setAddingExpenseUserId(null)
+              }}
+              isSubmitDisabled={isFamilyProfile && !addingExpenseUserId}
             />
           </Modal>
 
@@ -174,6 +195,10 @@ const MedicalExpensesPage = () => {
             {editingExpense && (
               <MedicalExpenseForm
                 onClose={() => setEditingExpense(null)}
+                onSubmit={async (values) => {
+                  await editExpense({ id: editingExpense.id, ...values })
+                  setEditingExpense(null)
+                }}
                 expense={editingExpense}
               />
             )}

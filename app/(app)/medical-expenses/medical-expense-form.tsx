@@ -14,9 +14,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DatePickerField } from '@/components/custom/date-picker-field'
 import { DialogFooter } from '@/components/ui/dialog'
 import { EXPENSE_TYPE_LABELS } from './constants'
-import { useActiveProfile } from '@/context/profile-context'
-import { useCreateMedicalExpense } from './hooks/use-create-medical-expense'
-import { useEditMedicalExpense } from './hooks/use-edit-medical-expense'
 import { TherapyCombobox } from './components/therapy-combobox'
 import { useTherapy } from '../therapies/hooks/use-therapy'
 
@@ -29,26 +26,24 @@ const schema = z.object({
   therapyId: z.string().nullable().optional()
 })
 
-type FormValues = z.infer<typeof schema>
+export type MedicalExpenseFormValues = z.infer<typeof schema>
 
 type MedicalExpenseFormProps = {
   onClose: () => void
+  onSubmit: (values: MedicalExpenseFormValues) => Promise<void>
   expense?: MedicalExpense
+  isSubmitDisabled?: boolean
 }
 
-const MedicalExpenseForm = ({ onClose, expense }: MedicalExpenseFormProps) => {
-  const { activeProfileId } = useActiveProfile()
-  const { mutateAsync: createExpense } = useCreateMedicalExpense()
-  const { mutateAsync: editExpense } = useEditMedicalExpense()
+const MedicalExpenseForm = ({ onClose, onSubmit, expense, isSubmitDisabled }: MedicalExpenseFormProps) => {
   const { data: selectedTherapy } = useTherapy(expense?.therapyId ?? '')
-  const isEditMode = !!expense
 
   const {
     control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid }
-  } = useForm<FormValues>({
+  } = useForm<MedicalExpenseFormValues>({
     resolver: zodResolver(schema),
     defaultValues: expense
       ? {
@@ -61,16 +56,6 @@ const MedicalExpenseForm = ({ onClose, expense }: MedicalExpenseFormProps) => {
         }
       : { therapyId: null }
   })
-
-  const onSubmit = async (values: FormValues) => {
-    if (isEditMode) {
-      await editExpense({ id: expense.id, ...values })
-    }
-    else {
-      await createExpense({ ...values, userId: activeProfileId! })
-    }
-    onClose()
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -150,8 +135,8 @@ const MedicalExpenseForm = ({ onClose, expense }: MedicalExpenseFormProps) => {
         <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
-        <Button type="submit" isPending={isSubmitting} disabled={!isDirty || !isValid}>
-          {isEditMode ? 'Save' : 'Submit'}
+        <Button type="submit" isPending={isSubmitting} disabled={!isDirty || !isValid || isSubmitDisabled}>
+          {expense ? 'Save' : 'Submit'}
         </Button>
       </DialogFooter>
     </form>
