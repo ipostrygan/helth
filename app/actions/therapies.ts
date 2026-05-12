@@ -10,6 +10,18 @@ import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 
 export type TherapyWithUser = Therapy & { user: ProfileSummary }
 
+type TherapyFields = {
+  title: string
+  description?: string
+  startDate: Date
+  endDate?: Date
+  isActive: boolean
+}
+
+export type CreateTherapyInput = { userId: string } & TherapyFields
+
+export type UpdateTherapyInput = { id: string } & Partial<TherapyFields>
+
 export const getTherapies = async ({
   profileId,
   page = 1,
@@ -69,15 +81,6 @@ export const deleteTherapy = async (id: string) => {
   }
 }
 
-export type CreateTherapyInput = {
-  userId: string
-  title: string
-  description?: string
-  startDate: Date
-  endDate?: Date
-  isActive: boolean
-}
-
 export const createTherapy = async (input: CreateTherapyInput) => {
   try {
     await prisma.therapy.create({ data: input })
@@ -85,15 +88,6 @@ export const createTherapy = async (input: CreateTherapyInput) => {
   catch (e) {
     handleActionError(e)
   }
-}
-
-export type UpdateTherapyInput = {
-  id: string
-  title?: string
-  description?: string
-  startDate?: Date
-  endDate?: Date
-  isActive?: boolean
 }
 
 export const updateTherapy = async ({ id, ...data }: UpdateTherapyInput) => {
