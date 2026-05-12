@@ -1,24 +1,12 @@
 'use client'
 
 import { Suspense } from 'react'
-import Link from 'next/link'
 import { useParams } from 'next/navigation'
-import { AppLink } from '@/components/custom/app-link'
-import { Pencil } from 'lucide-react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
-import { Button } from '@/components/ui/button'
 import { useAppointment } from '../hooks/use-appointment'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
-import { Separator } from '@/components/ui/separator'
-import { DetailRow } from '@/components/custom/detail-row'
-import {
-  APPOINTMENT_TYPE_LABELS,
-  APPOINTMENT_STATUS_LABELS
-} from '../constants'
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { StatusBadge } from '@/components/custom/status-badge'
 import { DocumentsCard } from '@/components/documents-card'
-import { formatCurrency } from '@/lib/utils'
+import { AppointmentDetailsCard } from './appointment-details-card'
 import { useDocuments } from '@/app/(app)/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
 import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
@@ -40,77 +28,7 @@ const AppointmentDetailPage = () => {
         <h1 className="text-2xl font-semibold">{appointment.title}</h1>
       </div>
 
-      <Card>
-        <CardHeader className="border-b gap-0">
-          <CardTitle className="text-base">Details</CardTitle>
-          <CardAction>
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/appointments/${id}/edit`}>
-                <Pencil className="size-4 mr-1" />
-                Edit
-              </Link>
-            </Button>
-          </CardAction>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <DetailRow label="Type">
-            {APPOINTMENT_TYPE_LABELS[appointment.type]}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Status">
-            <StatusBadge status={appointment.status} label={APPOINTMENT_STATUS_LABELS[appointment.status]} />
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Date">
-            {new Date(appointment.date).toLocaleDateString()}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Cost">
-            {formatCurrency(appointment.cost)}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Therapy">
-            {appointment.therapyId
-              ? (
-                  <AppLink href={`/therapies/${appointment.therapyId}`}>
-                    {therapy?.title ?? appointment.therapyId}
-                  </AppLink>
-                )
-              : (
-                  '—'
-                )}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Specialist">
-            {appointment.specialistName
-              ? appointment.specialistLink
-                ? (
-                    <AppLink
-                      external
-                      href={appointment.specialistLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {appointment.specialistName}
-                    </AppLink>
-                  )
-                : appointment.specialistName
-              : '—'}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Location">
-            {appointment.location || '—'}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Notes">
-            {appointment.notes || '—'}
-          </DetailRow>
-          <Separator />
-          <DetailRow label="Description">
-            {appointment.description || '—'}
-          </DetailRow>
-        </CardContent>
-      </Card>
+      <AppointmentDetailsCard appointment={appointment} therapy={therapy} id={id} />
       <DocumentsCard documents={appointment.documents ?? []} uploadMutation={uploadMutation} removeMutation={removeMutation} />
     </div>
   )
