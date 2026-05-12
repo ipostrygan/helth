@@ -2,8 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ColumnDef, SortingState } from '@tanstack/react-table'
-import type { TherapyWithUser } from '@/app/actions/therapies'
+import { SortingState } from '@tanstack/react-table'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
 import { useActiveProfile } from '@/context/profile-context'
@@ -13,17 +12,8 @@ import { useTherapies } from './hooks/use-therapies'
 import { useDeleteTherapy } from './hooks/use-delete-therapy'
 import { type DateRange } from 'react-day-picker'
 import { format } from 'date-fns'
-import { MoreHorizontal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { AppLink } from '@/components/custom/app-link'
 import { TableTemplate, type SortChange } from '@/components/table-template'
-import { StatusBadge } from '@/components/custom/status-badge'
+import { prepareTherapyColumns } from './columns'
 
 const IS_ACTIVE_OPTIONS = [
   { value: 'true', label: 'Ongoing' },
@@ -57,71 +47,11 @@ const TherapiesPage = () => {
     setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
-  const columns: ColumnDef<TherapyWithUser>[] = [
-    {
-      accessorKey: 'title',
-      header: 'Title',
-      cell: ({ row }) => (
-        <AppLink href={`/therapies/${row.original.id}`} className="font-medium">
-          {row.getValue('title')}
-        </AppLink>
-      )
-    },
-    {
-      accessorKey: 'startDate',
-      header: 'Start Date',
-      cell: ({ row }) => new Date(row.getValue('startDate')).toLocaleDateString()
-    },
-    {
-      accessorKey: 'endDate',
-      header: 'End Date',
-      cell: ({ row }) => {
-        const val = row.getValue<string | null>('endDate')
-        return val ? new Date(val).toLocaleDateString() : '—'
-      }
-    },
-    {
-      accessorKey: 'isActive',
-      header: 'Status',
-      cell: ({ row }) => {
-        const active = row.getValue<boolean>('isActive')
-        return <StatusBadge status={active ? 'Ongoing' : 'Finished'} />
-      }
-    },
-    {
-      id: 'profile',
-      header: 'Profile',
-      cell: ({ row }) => {
-        const user = row.original.user
-        return user.profileType === 'Human' ? (user.firstName ?? '') : (user.shortName ?? '')
-      }
-    },
-    {
-      id: 'actions',
-      enableSorting: false,
-      cell: ({ row }) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm">
-              <MoreHorizontal />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={() => router.push(`/therapies/${row.original.id}/edit`)}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              variant="destructive"
-              onSelect={() => setDeletingId(row.original.id)}
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    }
-  ]
+  const columns = prepareTherapyColumns({
+    onEdit: id => router.push(`/therapies/${id}/edit`),
+    onDelete: setDeletingId,
+    isFamilyProfile
+  })
 
   const dateRange
     = filters.dateFrom || filters.dateTo

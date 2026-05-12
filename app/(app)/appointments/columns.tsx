@@ -4,13 +4,7 @@ import { AppLink } from '@/components/custom/app-link'
 import { RowActions } from '@/components/row-actions'
 import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from './constants'
 import { StatusBadge } from '@/components/custom/status-badge'
-import type { ProfileSummary } from '@/types'
-
-function profileLabel(user: ProfileSummary): string {
-  return user.profileType === 'Human'
-    ? (user.firstName ?? '')
-    : (user.shortName ?? '')
-}
+import { profileLabel } from '../users/utils/profile.utils'
 
 interface AppointmentColumnsOptions {
   onDelete: (id: string) => void

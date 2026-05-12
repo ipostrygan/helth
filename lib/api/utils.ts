@@ -3,7 +3,7 @@ import { z } from 'zod'
 import type { BaseQueryParams } from '@/types'
 import { ActionError } from '@/lib/actions/action-error'
 
-export function actionErrorResponse(e: unknown): NextResponse {
+export function actionErrorResponse(e: unknown) {
   const status = e instanceof ActionError ? e.status : 500
   const message = e instanceof Error ? e.message : 'Something went wrong'
   return NextResponse.json({ error: message }, { status })
@@ -71,7 +71,7 @@ export async function fetchOne<T>(path: string): Promise<T> {
   return res.json()
 }
 
-export async function deleteResource(path: string): Promise<void> {
+export async function deleteResource(path: string) {
   const res = await fetch(path, { method: 'DELETE' })
   if (!res.ok) throw new Error(`Failed to delete: ${path}`)
 }
@@ -87,7 +87,7 @@ export async function uploadDocuments(basePath: string, files: File[]): Promise<
   return res.json()
 }
 
-export async function deleteDocument(basePath: string, key: string): Promise<void> {
+export async function deleteDocument(basePath: string, key: string) {
   const res = await fetch(`${basePath}/documents`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },

@@ -1,11 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import { Button } from '@/components/ui/button'
@@ -14,9 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Field, FieldError, FieldGroup } from '@/components/ui/field'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { cn } from '@/lib/utils'
+import { DatePickerField } from '@/components/custom/date-picker-field'
 
 const schema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -36,8 +31,6 @@ type TherapyFormProps = {
 const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
   const router = useRouter()
   const isEditMode = !!therapy
-  const [startCalendarOpen, setStartCalendarOpen] = useState(false)
-  const [endCalendarOpen, setEndCalendarOpen] = useState(false)
   const {
     control,
     register,
@@ -77,37 +70,13 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
               name="startDate"
               control={control}
               render={({ field }) => (
-                <Field>
-                  <Label required>Start Date</Label>
-                  <Popover open={startCalendarOpen} onOpenChange={setStartCalendarOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        aria-invalid={!!errors.startDate}
-                        className={cn(
-                          'w-full justify-start gap-2 font-normal',
-                          !field.value && 'text-muted-foreground',
-                          errors.startDate && 'border-destructive'
-                        )}
-                      >
-                        <CalendarIcon className="size-4 shrink-0" />
-                        {field.value ? format(field.value, 'MMM d, yyyy') : 'Pick a date'}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(date) => {
-                          field.onChange(date)
-                          setStartCalendarOpen(false)
-                        }}
-                        autoFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FieldError errors={[errors.startDate]} />
-                </Field>
+                <DatePickerField
+                  label="Start Date"
+                  required
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={errors.startDate}
+                />
               )}
             />
 
@@ -115,34 +84,12 @@ const TherapyForm = ({ therapy, onSubmit }: TherapyFormProps) => {
               name="endDate"
               control={control}
               render={({ field }) => (
-                <Field>
-                  <Label>End Date</Label>
-                  <Popover open={endCalendarOpen} onOpenChange={setEndCalendarOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          'w-full justify-start gap-2 font-normal',
-                          !field.value && 'text-muted-foreground'
-                        )}
-                      >
-                        <CalendarIcon className="size-4 shrink-0" />
-                        {field.value ? format(field.value, 'MMM d, yyyy') : 'Pick a date (optional)'}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={(date) => {
-                          field.onChange(date)
-                          setEndCalendarOpen(false)
-                        }}
-                        autoFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </Field>
+                <DatePickerField
+                  label="End Date"
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder="Pick a date (optional)"
+                />
               )}
             />
 

@@ -1,13 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import type { SelfCareActivityWithUser } from '@/app/actions/self-care-activities'
 import { RowActions } from '@/components/row-actions'
-import type { ProfileSummary } from '@/types'
-
-function profileLabel(user: ProfileSummary): string {
-  return user.profileType === 'Human'
-    ? (user.firstName ?? '')
-    : (user.shortName ?? '')
-}
+import { profileLabel } from '../users/utils/profile.utils'
 
 interface SelfCareActivityColumnsOptions {
   onOpenDetail: (id: string) => void

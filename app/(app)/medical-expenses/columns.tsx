@@ -2,13 +2,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import type { MedicalExpenseWithUser } from '@/app/actions/medical-expenses'
 import { RowActions } from '@/components/row-actions'
 import { EXPENSE_TYPE_LABELS } from './constants'
-import type { ProfileSummary } from '@/types'
-
-function profileLabel(user: ProfileSummary): string {
-  return user.profileType === 'Human'
-    ? (user.firstName ?? '')
-    : (user.shortName ?? '')
-}
+import { profileLabel } from '../users/utils/profile.utils'
 
 interface MedicalExpenseColumnsOptions {
   onDelete: (id: string) => void
