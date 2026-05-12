@@ -9,8 +9,7 @@ import {
   defaultDateFrom,
   defaultDateTo
 } from '@/lib/search-params'
-import { useActiveProfile } from '@/context/profile-context'
-import { useProfile } from '../users/hooks/use-profile'
+import { usePageProfile } from '../hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useSelfCareActivities } from './hooks/use-self-care-activities'
 import { useSelfCareActivity } from './hooks/use-self-care-activity'
@@ -36,8 +35,7 @@ export default function Page() {
 
 function SelfCareActivitiesPage() {
   const [openId, setOpenId] = useState<string | null>(null)
-  const { activeProfileId, isFamilyProfile } = useActiveProfile()
-  const { data: profile } = useProfile(activeProfileId)
+  const { activeProfileId, isFamilyProfile, profile, profileId, isReady } = usePageProfile()
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('date')
   })
@@ -51,8 +49,6 @@ function SelfCareActivitiesPage() {
   const [editingItem, setEditingItem] = useState<SelfCareActivityWithUser | null>(null)
 
   const { data: openActivity } = useSelfCareActivity(openId ?? '')
-
-  const profileId = isFamilyProfile ? undefined : activeProfileId
 
   const params = {
     profileId,
@@ -82,7 +78,7 @@ function SelfCareActivitiesPage() {
         }
       : undefined
 
-  if (!isFamilyProfile && !profile) {
+  if (!isReady) {
     return null
   }
 

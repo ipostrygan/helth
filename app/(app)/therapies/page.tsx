@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation'
 import { SortingState } from '@tanstack/react-table'
 import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
 import { baseFilterParsers, defaultDateFrom, defaultDateTo } from '@/lib/search-params'
-import { useActiveProfile } from '@/context/profile-context'
-import { useProfile } from '../users/hooks/use-profile'
+import { usePageProfile } from '../hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useTherapies } from './hooks/use-therapies'
 import { useDeleteTherapy } from './hooks/use-delete-therapy'
@@ -22,8 +21,7 @@ const IS_ACTIVE_OPTIONS = [
 
 const TherapiesPage = () => {
   const router = useRouter()
-  const { activeProfileId, isFamilyProfile } = useActiveProfile()
-  const { data: profile } = useProfile(activeProfileId)
+  const { isFamilyProfile, profile, profileId, isReady } = usePageProfile()
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('startDate'),
     isActive: parseAsArrayOf(parseAsString).withDefault([])
@@ -31,8 +29,6 @@ const TherapiesPage = () => {
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteTherapy()
-
-  const profileId = isFamilyProfile ? undefined : activeProfileId
 
   const params = {
     profileId,
@@ -58,7 +54,7 @@ const TherapiesPage = () => {
       ? { from: filters.dateFrom ? new Date(filters.dateFrom) : undefined, to: filters.dateTo ? new Date(filters.dateTo) : undefined }
       : undefined
 
-  if (!isFamilyProfile && !profile) {
+  if (!isReady) {
     return null
   }
 

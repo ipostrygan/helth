@@ -9,8 +9,7 @@ import {
   defaultDateFrom,
   defaultDateTo
 } from '@/lib/search-params'
-import { useActiveProfile } from '@/context/profile-context'
-import { useProfile } from '../users/hooks/use-profile'
+import { usePageProfile } from '../hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useMedicalExpenses } from './hooks/use-medical-expenses'
 import { useDeleteMedicalExpense } from './hooks/use-delete-medical-expense'
@@ -30,8 +29,7 @@ import MedicalExpenseForm from './medical-expense-form'
 import { MedicalExpenseDetailsSheet } from './components/medical-expense-details-sheet'
 
 const MedicalExpensesPage = () => {
-  const { activeProfileId, isFamilyProfile } = useActiveProfile()
-  const { data: profile } = useProfile(activeProfileId)
+  const { activeProfileId, isFamilyProfile, profile, profileId, isReady } = usePageProfile()
   const [filters, setFilters] = useQueryStates({
     ...baseFilterParsers('date'),
     types: parseAsArrayOf(parseAsString).withDefault([])
@@ -45,8 +43,6 @@ const MedicalExpensesPage = () => {
   const [addingExpenseUserId, setAddingExpenseUserId] = useState<string | null>(null)
   const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(null)
   const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(null)
-
-  const profileId = isFamilyProfile ? undefined : activeProfileId
 
   const params: MedicalExpensesQueryParams = {
     profileId,
@@ -77,7 +73,7 @@ const MedicalExpensesPage = () => {
         }
       : undefined
 
-  if (!isFamilyProfile && !profile) {
+  if (!isReady) {
     return null
   }
 
