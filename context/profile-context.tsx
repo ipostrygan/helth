@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useSyncExternalStore } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getProfiles } from '@/lib/api/users'
 import { queryKeys } from '@/lib/query-keys'
@@ -22,16 +22,29 @@ const ProfileContext = createContext<ProfileContextType>({
   selectFamilyProfile: () => {}
 })
 
+function subscribeToStorage(callback: () => void) {
+  window.addEventListener('storage', callback)
+  return () => window.removeEventListener('storage', callback)
+}
+
+function getStoredSnapshot() {
+  return localStorage.getItem(LAST_PROFILE_KEY)
+}
+
+function getStoredServerSnapshot() {
+  return null
+}
+
+function writeStorage(value: string) {
+  localStorage.setItem(LAST_PROFILE_KEY, value)
+  window.dispatchEvent(new StorageEvent('storage', { key: LAST_PROFILE_KEY, newValue: value }))
+}
+
 export function ProfileProvider({ children }: { children: React.ReactNode }) {
-  const [storedProfileId, setStoredProfileId] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null
-    const stored = localStorage.getItem(LAST_PROFILE_KEY)
-    return stored && stored !== FAMILY_PROFILE_ID ? stored : null
-  })
-  const [isFamilyProfile, setIsFamilyProfile] = useState(() => {
-    if (typeof window === 'undefined') return false
-    return localStorage.getItem(LAST_PROFILE_KEY) === FAMILY_PROFILE_ID
-  })
+  const storedValue = useSyncExternalStore(subscribeToStorage, getStoredSnapshot, getStoredServerSnapshot)
+
+  const storedProfileId = storedValue && storedValue !== FAMILY_PROFILE_ID ? storedValue : null
+  const isFamilyProfile = storedValue === FAMILY_PROFILE_ID
 
   const isStoredReady = isFamilyProfile || !!storedProfileId
 
@@ -50,24 +63,19 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (defaultProfileId) {
-      localStorage.setItem(LAST_PROFILE_KEY, defaultProfileId)
+      writeStorage(defaultProfileId)
     }
   }, [defaultProfileId])
 
-  const setActiveProfileId = (id: string) => {
-    localStorage.setItem(LAST_PROFILE_KEY, id)
-    setStoredProfileId(id)
-    setIsFamilyProfile(false)
-  }
-
-  const selectFamilyProfile = () => {
-    localStorage.setItem(LAST_PROFILE_KEY, FAMILY_PROFILE_ID)
-    setStoredProfileId(null)
-    setIsFamilyProfile(true)
-  }
-
   return (
-    <ProfileContext.Provider value={{ activeProfileId, isFamilyProfile, setActiveProfileId, selectFamilyProfile }}>
+    <ProfileContext.Provider
+      value={{
+        activeProfileId,
+        isFamilyProfile,
+        setActiveProfileId: writeStorage,
+        selectFamilyProfile: () => writeStorage(FAMILY_PROFILE_ID)
+      }}
+    >
       {children}
     </ProfileContext.Provider>
   )

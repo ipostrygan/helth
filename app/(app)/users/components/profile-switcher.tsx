@@ -61,16 +61,12 @@ const ProfileSwitcher = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-50">
-        {!isFamilyProfile && (
-          <>
-            <div className="text-center p-2">
-              <Button asChild>
-                <Link href="/profile">View profile</Link>
-              </Button>
-            </div>
-            <DropdownMenuSeparator />
-          </>
-        )}
+        <div className="text-center p-2">
+          <Button asChild>
+            <Link href="/profile">View profile</Link>
+          </Button>
+        </div>
+        <DropdownMenuSeparator />
         <DropdownMenuLabel>Other profiles</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {otherProfiles.map(p => (
