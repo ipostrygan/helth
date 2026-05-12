@@ -39,7 +39,7 @@ function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="mb-6 font-semibold text-xl p-2 flex flex-row items-center justify-between">
-        <Link href="/" className="group-data-[collapsible=icon]:hidden w-full">
+        <Link href="/" className="group-data-[collapsible=icon]:hidden w-full flex items-center">
           <Image src="/images/logo-rectangle.svg" alt="Helth" width={148} height={40} className="object-contain w-full" loading="eager" />
         </Link>
         <Link href="/" className="hidden group-data-[collapsible=icon]:flex items-center justify-center w-full">
