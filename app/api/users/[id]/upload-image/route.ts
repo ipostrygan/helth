@@ -3,6 +3,8 @@ import { deleteS3Object, uploadS3Object } from '@/lib/s3'
 import prisma from '@/lib/prisma'
 import { validateFileSize } from '@/lib/utils'
 
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -11,6 +13,10 @@ export async function PUT(
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      return new Response(JSON.stringify({ error: 'Unsupported file type. Only JPEG, PNG, and WebP are allowed.' }), { status: 400 })
+    }
 
     const sizeError = validateFileSize(file)
     if (sizeError) {

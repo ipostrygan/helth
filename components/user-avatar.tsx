@@ -40,8 +40,9 @@ const UserAvatar = ({
 
     setError(null)
 
-    if (!file.type.startsWith('image/')) {
-      setError('Please select an image file.')
+    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      setError('Please select a JPEG, PNG, or WebP image.')
       return
     }
     if (file.size > MAX_FILE_SIZE) {
@@ -106,7 +107,7 @@ const UserAvatar = ({
         <Input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp"
           className="hidden"
           onChange={handleFileChange}
         />

@@ -6,7 +6,6 @@ const ALLOWED_TYPES = [
   'application/pdf',
   'image/jpeg',
   'image/png',
-  'image/gif',
   'image/webp'
 ]
 
