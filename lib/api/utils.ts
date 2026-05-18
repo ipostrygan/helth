@@ -91,7 +91,6 @@ export async function uploadDocuments(basePath: string, files: File[]): Promise<
 export async function deleteDocument(basePath: string, key: string) {
   const res = await fetch(`${basePath}/documents`, {
     method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ key })
   })
   if (!res.ok) throw new Error('Failed to delete document')

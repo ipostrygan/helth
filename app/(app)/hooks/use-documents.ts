@@ -22,7 +22,6 @@ export const useDocuments = (apiPath: string, queryKey: readonly string[]) => {
     mutationFn: async (key: string) => {
       const res = await fetch(apiPath, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key })
       })
       if (!res.ok) throw new Error('Delete failed')
