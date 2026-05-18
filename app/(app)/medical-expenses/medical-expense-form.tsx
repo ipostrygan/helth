@@ -19,7 +19,7 @@ import { useTherapy } from '../therapies/hooks/use-therapy'
 
 const schema = z.object({
   title: z.string().min(1, 'Name is required'),
-  amount: z.number().positive('Amount must be greater than 0'),
+  amount: z.number({ error: 'Amount is required' }).positive('Amount must be greater than 0'),
   date: z.date(),
   type: z.enum(ExpenseType),
   description: z.string().optional(),
@@ -44,6 +44,7 @@ const MedicalExpenseForm = ({ onClose, onSubmit, expense, isSubmitDisabled }: Me
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid }
   } = useForm<MedicalExpenseFormValues>({
+    mode: 'all',
     resolver: zodResolver(schema),
     defaultValues: expense
       ? {

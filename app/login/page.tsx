@@ -25,6 +25,7 @@ const LoginPage = () => {
     handleSubmit,
     formState: { isDirty, isValid }
   } = useForm({
+    mode: 'all',
     defaultValues: {
       username: '',
       password: ''

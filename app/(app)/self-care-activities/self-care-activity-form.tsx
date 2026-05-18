@@ -36,6 +36,7 @@ const SelfCareActivityForm = ({ onClose, onSubmit, selfCareActivity, isSubmitDis
     handleSubmit,
     formState: { errors, isSubmitting, isDirty, isValid }
   } = useForm<SelfCareActivityFormValues>({
+    mode: 'all',
     resolver: zodResolver(schema),
     defaultValues: selfCareActivity
       ? {

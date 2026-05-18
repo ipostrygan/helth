@@ -30,7 +30,7 @@ const schema = z.object({
   date: z.date(),
   type: z.enum(AppointmentType),
   status: z.enum(AppointmentStatus),
-  cost: z.number().nonnegative(),
+  cost: z.number({ error: 'Cost is required' }).nonnegative(),
   specialistName: z.string().optional(),
   specialistLink: z.string().optional(),
   location: z.string().optional(),
@@ -72,7 +72,7 @@ const AppointmentForm = ({
           date: new Date(appointment.date),
           type: appointment.type,
           status: appointment.status,
-          cost: appointment.cost ?? 0,
+          cost: appointment.cost ?? undefined,
           specialistName: appointment.specialistName ?? undefined,
           specialistLink: appointment.specialistLink ?? undefined,
           location: appointment.location ?? undefined,
@@ -81,8 +81,7 @@ const AppointmentForm = ({
         }
       : {
           status: AppointmentStatus.Scheduled,
-          therapyId: defaultTherapyId ?? null,
-          cost: 0
+          therapyId: defaultTherapyId ?? null
         }
   })
 

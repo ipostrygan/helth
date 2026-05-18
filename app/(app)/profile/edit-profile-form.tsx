@@ -61,7 +61,10 @@ function ProfileForm<T extends FieldValues>({
     control,
     handleSubmit,
     formState: { isDirty, dirtyFields }
-  } = useForm<T>({ defaultValues })
+  } = useForm<T>({
+    mode: 'all',
+    defaultValues
+  })
 
   const onSubmit = async (values: T) => {
     await mutateAsync(
