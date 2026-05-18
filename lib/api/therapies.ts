@@ -1,11 +1,4 @@
 import type { PaginatedResult, DocumentItem } from '@/types'
-
-export type AppointmentDocumentsResult = {
-  documents: DocumentItem[]
-  total: number
-  page: number
-  pageSize: number
-}
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import type { TherapyWithUser } from '@/app/actions/therapies'
@@ -17,13 +10,19 @@ import {
   deleteDocument
 } from './utils'
 
-const BASE = '/api/therapies'
-
+export type AppointmentDocumentsResult = {
+  documents: DocumentItem[]
+  total: number
+  page: number
+  pageSize: number
+}
 export type Specialist = { name: string, link: string | null }
 export type TherapyWithDocuments = Therapy & {
   documents: DocumentItem[]
   specialists: Specialist[]
 }
+
+const BASE = '/api/therapies'
 
 export async function getTherapies(
   params: TherapiesQueryParams
