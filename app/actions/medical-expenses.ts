@@ -7,7 +7,7 @@ import type { MedicalExpensesQueryParams } from '@/app/(app)/medical-expenses/ty
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { PaginatedResult, ProfileSummary } from '@/types'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
-import { handleActionError } from '@/lib/actions/handle-action-error'
+import { handleActionError } from '@/lib/actions/action-error'
 
 export type MedicalExpenseWithUser = MedicalExpense & { user: ProfileSummary }
 

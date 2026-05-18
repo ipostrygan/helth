@@ -5,7 +5,7 @@ import { Appointment, AppointmentStatus, AppointmentType, ExpenseType } from '@/
 import type { AppointmentsQueryParams } from '@/app/(app)/appointments/types'
 import type { ProfileSummary } from '@/types'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
-import { handleActionError } from '@/lib/actions/handle-action-error'
+import { handleActionError } from '@/lib/actions/action-error'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 
 export type AppointmentWithUser = Appointment & { user: ProfileSummary }

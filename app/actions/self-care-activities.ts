@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma'
 import type { BaseQueryParams, ProfileSummary } from '@/types'
 import type { SelfCareActivity } from '@/lib/generated/prisma/client'
 import { buildDateRangeFilter, buildSearchFilter } from '@/lib/db'
-import { handleActionError } from '@/lib/actions/handle-action-error'
+import { handleActionError } from '@/lib/actions/action-error'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 
 export type SelfCareActivityWithUser = SelfCareActivity & {

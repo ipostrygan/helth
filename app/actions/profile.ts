@@ -2,7 +2,7 @@
 
 import { EditProfileFormType } from '../(app)/profile/edit-profile-form'
 import prisma from '@/lib/prisma'
-import { handleActionError, ActionError } from '@/lib/actions/handle-action-error'
+import { handleActionError, ActionError } from '@/lib/actions/action-error'
 
 export const editProfile = async (id: string, data: EditProfileFormType) => {
   try {
