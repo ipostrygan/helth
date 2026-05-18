@@ -162,7 +162,7 @@ export const get{ModelName}ById = async (id: string): Promise<{ModelName} | null
 **Path:** `app/api/{model-names}/[id]/route.ts` (add GET handler to existing file or create)
 
 ```typescript
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_req: NextRequest, { params }: ParamsWithId) {
   const { id } = await params;
   const item = await get{ModelName}ById(id);
   if (!item) return new NextResponse(null, { status: 404 });
