@@ -115,3 +115,31 @@ export const getTherapyById = async (id: string) => {
     handleActionError(e)
   }
 }
+
+export const getTherapyAppointmentDocuments = async (
+  therapyId: string,
+  page: number,
+  pageSize: number
+) => {
+  try {
+    const [therapy, appointments] = await Promise.all([
+      prisma.therapy.findUnique({ where: { id: therapyId }, select: { relatedDocuments: true } }),
+      prisma.appointment.findMany({ where: { therapyId }, select: { id: true, relatedDocuments: true } })
+    ])
+
+    const therapyKeys = (therapy?.relatedDocuments ?? []).map(key => ({ key, appointmentId: undefined as string | undefined }))
+    const apptKeys = appointments.flatMap(a =>
+      a.relatedDocuments.map(key => ({ key, appointmentId: a.id as string | undefined }))
+    )
+
+    const allKeys = [...therapyKeys, ...apptKeys]
+    const total = allKeys.length
+    const skip = (page - 1) * pageSize
+    const keys = allKeys.slice(skip, skip + pageSize)
+
+    return { keys, total }
+  }
+  catch (e) {
+    handleActionError(e)
+  }
+}

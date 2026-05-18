@@ -33,6 +33,7 @@ export type DocumentItem = {
   name: string
   url: string
   downloadUrl: string
+  appointmentId?: string
 }
 
 // profile

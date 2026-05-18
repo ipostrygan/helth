@@ -13,7 +13,8 @@ export const queryKeys = {
   therapies: {
     all: ['therapies'] as const,
     list: (params: TherapiesQueryParams) => ['therapies', params] as const,
-    detail: (id: string) => ['therapies', id] as const
+    detail: (id: string) => ['therapies', id] as const,
+    appointmentDocuments: (id: string) => ['therapies', id, 'appointment-documents'] as const
   },
   medicalExpenses: {
     all: ['medical-expenses'] as const,

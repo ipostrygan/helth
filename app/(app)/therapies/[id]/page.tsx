@@ -15,10 +15,8 @@ import { prepareAppointmentColumns } from '../../appointments/columns'
 import { prepareMedicalExpenseColumns } from '../../medical-expenses/columns'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
-import { DocumentsCard } from '@/components/documents-card'
 import { TherapyDetailsCard } from './therapy-details-card'
-import { useDocuments } from '@/app/(app)/hooks/use-documents'
-import { queryKeys } from '@/lib/query-keys'
+import { TherapyDocumentsCard } from './appointment-documents-card'
 import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
 import { formatCurrency } from '@/lib/utils'
 
@@ -27,8 +25,6 @@ const TherapyDetailPage = () => {
   const router = useRouter()
   const { activeProfileId } = useActiveProfile()
   const { data: therapy, isLoading } = useTherapy(id)
-  const { uploadMutation, removeMutation } = useDocuments(`/api/therapies/${id}/documents`, queryKeys.therapies.detail(id))
-
   const [filters, setFilters] = useQueryStates({
     page: parseAsInteger.withDefault(1),
     pageSize: parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
@@ -102,7 +98,7 @@ const TherapyDetailPage = () => {
 
       <TherapyDetailsCard therapy={therapy} id={id} />
 
-      <DocumentsCard documents={therapy.documents ?? []} uploadMutation={uploadMutation} removeMutation={removeMutation} />
+      <TherapyDocumentsCard therapyId={id} />
 
       <TableTemplate
         className="space-y-4"

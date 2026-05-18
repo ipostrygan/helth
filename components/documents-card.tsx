@@ -20,14 +20,22 @@ import { DocumentItem } from '@/types'
 
 type DocumentsCardProps = {
   documents: DocumentItem[]
-  uploadMutation: UseMutationResult<void, Error, File[]>
+  uploadMutation?: UseMutationResult<void, Error, File[]>
   removeMutation: UseMutationResult<void, Error, string>
+  title?: string
+  hasMore?: boolean
+  onLoadMore?: () => void
+  isLoadingMore?: boolean
 }
 
 export const DocumentsCard = ({
   documents,
   uploadMutation,
-  removeMutation
+  removeMutation,
+  title = 'Documents',
+  hasMore,
+  onLoadMore,
+  isLoadingMore
 }: DocumentsCardProps) => {
   const [stagedFiles, setStagedFiles] = useState<UploadedFile[]>([])
   const [pendingDeleteKey, setPendingDeleteKey] = useState<string | null>(null)
@@ -35,13 +43,13 @@ export const DocumentsCard = ({
   const pendingDoc = documents.find(d => d.key === pendingDeleteKey)
 
   const handleUpload = async () => {
-    if (!stagedFiles.length) return
+    if (!stagedFiles.length || !uploadMutation) return
     await uploadMutation.mutateAsync(stagedFiles.map(f => f.file))
     setStagedFiles([])
   }
 
   const confirmDelete = async () => {
-    if (!pendingDeleteKey) return
+    if (!pendingDeleteKey || !removeMutation) return
     await removeMutation.mutateAsync(pendingDeleteKey)
     setPendingDeleteKey(null)
   }
@@ -50,7 +58,7 @@ export const DocumentsCard = ({
     <>
       <Card>
         <CardHeader className="border-b gap-0">
-          <CardTitle className="text-base">Documents</CardTitle>
+          <CardTitle className="text-base">{title}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {(documents.length > 0 || stagedFiles.length > 0) && (
@@ -85,8 +93,8 @@ export const DocumentsCard = ({
                   <Button
                     type="button"
                     onClick={handleUpload}
-                    disabled={uploadMutation.isPending}
-                    isPending={uploadMutation.isPending}
+                    disabled={uploadMutation?.isPending}
+                    isPending={uploadMutation?.isPending}
                     className="w-full"
                   >
                     {`Upload ${stagedFiles.length} file${stagedFiles.length > 1 ? 's' : ''}`}
@@ -95,9 +103,22 @@ export const DocumentsCard = ({
               )}
             </div>
           )}
-          <div className="flex-1">
-            <FileUpload value={stagedFiles} onChange={setStagedFiles} />
-          </div>
+          {uploadMutation && (
+            <div className="flex-1">
+              <FileUpload value={stagedFiles} onChange={setStagedFiles} />
+            </div>
+          )}
+          {hasMore && (
+            <Button
+              variant="outline"
+              onClick={onLoadMore}
+              disabled={isLoadingMore}
+              isPending={isLoadingMore}
+              className="w-full"
+            >
+              Load more
+            </Button>
+          )}
         </CardContent>
       </Card>
 
@@ -120,16 +141,16 @@ export const DocumentsCard = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={removeMutation.isPending}>
+            <AlertDialogCancel disabled={removeMutation?.isPending}>
               Cancel
             </AlertDialogCancel>
             <Button
               variant="destructive"
               onClick={confirmDelete}
-              disabled={removeMutation.isPending}
-              isPending={removeMutation.isPending}
+              disabled={removeMutation?.isPending}
+              isPending={removeMutation?.isPending}
             >
-              {removeMutation.isPending ? 'Deleting…' : 'Delete'}
+              {removeMutation?.isPending ? 'Deleting…' : 'Delete'}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

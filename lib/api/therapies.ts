@@ -1,4 +1,11 @@
 import type { PaginatedResult, DocumentItem } from '@/types'
+
+export type AppointmentDocumentsResult = {
+  documents: DocumentItem[]
+  total: number
+  page: number
+  pageSize: number
+}
 import type { TherapiesQueryParams } from '@/app/(app)/therapies/types'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import type { TherapyWithUser } from '@/app/actions/therapies'
@@ -41,3 +48,13 @@ export const uploadTherapyDocuments = (id: string, files: File[]) =>
 
 export const deleteTherapyDocument = (id: string, key: string) =>
   deleteDocument(`${BASE}/${id}`, key)
+
+export async function getTherapyAppointmentDocuments(
+  id: string,
+  page: number,
+  pageSize: number = 10
+): Promise<AppointmentDocumentsResult> {
+  const res = await fetch(`${BASE}/${id}/appointment-documents?page=${page}&pageSize=${pageSize}`)
+  if (!res.ok) throw new Error(`Failed to fetch appointment documents: ${res.status}`)
+  return res.json()
+}
