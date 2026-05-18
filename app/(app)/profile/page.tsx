@@ -1,6 +1,6 @@
 'use client'
 
-import Modal from '@/components/modal'
+import { Modal } from '@/components/custom/modal'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { useProfile } from '../users/hooks/use-profile'
@@ -34,13 +34,14 @@ const Profile = () => {
   return (
     <div className="max-w-3xl m-auto">
       <div className="flex justify-end">
+        <Button variant="outline" onClick={() => setEditModalOpen(true)}>Edit profile</Button>
         <Modal
           open={editModalOpen}
-          trigger={<Button variant="outline" onClick={() => setEditModalOpen(true)}>Edit profile</Button>}
-          content={<EditProfileForm onClose={() => setEditModalOpen(false)} data={profile} />}
+          onOpenChange={setEditModalOpen}
           title="Edit personal information"
-          setOpen={setEditModalOpen}
-        />
+        >
+          <EditProfileForm onClose={() => setEditModalOpen(false)} data={profile} />
+        </Modal>
       </div>
       <PersonalInformation profile={profile} />
     </div>
