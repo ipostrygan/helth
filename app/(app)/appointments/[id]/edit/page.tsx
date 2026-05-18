@@ -28,7 +28,11 @@ const EditAppointmentPage = () => {
         <Breadcrumbs items={[{ label: 'Appointments', href: '/appointments' }, { label: appointment.title, href: `/appointments/${id}` }, { label: 'Edit' }]} />
         <h1 className="text-2xl font-semibold">Edit Appointment</h1>
       </div>
-      <AppointmentForm appointment={appointment} onSubmit={onSubmit} />
+      <AppointmentForm
+        appointment={appointment}
+        onClose={() => router.push(`/appointments/${appointment.id}`)}
+        onSubmit={onSubmit}
+      />
     </div>
   )
 }

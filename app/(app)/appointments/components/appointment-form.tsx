@@ -3,7 +3,6 @@
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useRouter } from 'next/navigation'
 import { AppointmentType, AppointmentStatus } from '@/lib/generated/prisma'
 import type { Appointment } from '@/lib/generated/prisma/client'
 import { Button } from '@/components/ui/button'
@@ -44,7 +43,7 @@ export type AppointmentFormValues = z.infer<typeof schema>
 type AppointmentFormProps = {
   appointment?: Appointment
   defaultTherapyId?: string | null
-  cancelHref?: string
+  onClose: () => void
   onSubmit: (values: AppointmentFormValues) => Promise<void>
   isSubmitDisabled?: boolean
 }
@@ -52,11 +51,10 @@ type AppointmentFormProps = {
 const AppointmentForm = ({
   appointment,
   defaultTherapyId,
-  cancelHref = '/appointments',
+  onClose,
   onSubmit,
   isSubmitDisabled
 }: AppointmentFormProps) => {
-  const router = useRouter()
   const isEditMode = !!appointment
 
   const {
@@ -244,12 +242,8 @@ const AppointmentForm = ({
           <Button
             type="button"
             variant="outline"
-            onClick={() =>
-              router.push(
-                isEditMode
-                  ? `/appointments/${appointment.id}`
-                  : cancelHref
-              )}
+            onClick={onClose}
+            disabled={isSubmitting}
           >
             Cancel
           </Button>

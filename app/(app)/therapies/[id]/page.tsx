@@ -19,18 +19,14 @@ import { TherapyDetailsCard } from './therapy-details-card'
 import { TherapyDocumentsCard } from './appointment-documents-card'
 import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
 import { formatCurrency } from '@/lib/utils'
+import { useTableFilters } from '@/hooks/use-table-filters'
 
 const TherapyDetailPage = () => {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
   const { activeProfileId } = useActiveProfile()
   const { data: therapy, isLoading } = useTherapy(id)
-  const [filters, setFilters] = useQueryStates({
-    page: parseAsInteger.withDefault(1),
-    pageSize: parseAsInteger.withDefault(DEFAULT_PAGE_SIZE),
-    sortField: parseAsString.withDefault('date'),
-    sortDirection: parseAsString.withDefault('desc')
-  })
+  const { filters, sorting, onSortingChange, onPageChange, onPageSizeChange } = useTableFilters()
 
   const [apptFilters, setApptFilters] = useQueryStates({
     apptPage: parseAsInteger.withDefault(1),
@@ -41,7 +37,10 @@ const TherapyDetailPage = () => {
 
   const { data: expensesData, isLoading: isExpensesLoading, isError: isExpensesError } = useMedicalExpenses({
     therapyId: id,
-    ...filters
+    page: filters.page,
+    pageSize: filters.pageSize,
+    sortField: filters.sortField,
+    sortDirection: filters.sortDirection,
   }, 'therapyId')
 
   const { data: appointmentsData, isLoading: isAppointmentsLoading, isError: isAppointmentsError } = useAppointments({
@@ -69,11 +68,6 @@ const TherapyDetailPage = () => {
         ]}
       />
     )
-  }
-
-  const expenseSorting: SortingState = [{ id: filters.sortField, desc: filters.sortDirection === 'desc' }]
-  const onExpenseSortingChange = ({ sortField, sortDirection }: SortChange) => {
-    setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
   }
 
   const apptSorting: SortingState = [{ id: apptFilters.apptSortField, desc: apptFilters.apptSortDirection === 'desc' }]
@@ -134,10 +128,10 @@ const TherapyDetailPage = () => {
         isLoading={isExpensesLoading}
         isError={isExpensesError}
         pageSize={filters.pageSize}
-        onPageChange={page => setFilters(prev => ({ ...prev, page }))}
-        onPageSizeChange={pageSize => setFilters(prev => ({ ...prev, page: 1, pageSize }))}
-        sorting={expenseSorting}
-        onSortingChange={onExpenseSortingChange}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+        sorting={sorting}
+        onSortingChange={onSortingChange}
         deleteConfig={{
           deletingId,
           onCancel: () => setDeletingId(null),

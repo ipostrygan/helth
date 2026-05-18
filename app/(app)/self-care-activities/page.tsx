@@ -27,19 +27,29 @@ export default function Page() {
 
 function SelfCareActivitiesPage() {
   const [openId, setOpenId] = useState<string | null>(null)
-  const { activeProfileId, isFamilyProfile, profile, profileId, isReady } = usePageProfile()
+  const { activeProfileId, isFamilyProfile, profile, profileId, isReady }
+    = usePageProfile()
 
-  const { filters, filtersConfig, sorting, onSortingChange, onPageChange, onPageSizeChange } = useTableFilters({
+  const {
+    filters,
+    filtersConfig,
+    sorting,
+    onSortingChange,
+    onPageChange,
+    onPageSizeChange
+  } = useTableFilters({
     searchPlaceholder: 'Search self-care activities...'
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
-  const { mutate: deleteItem, isPending: isDeleting } = useDeleteSelfCareActivity()
+  const { mutate: deleteItem, isPending: isDeleting }
+    = useDeleteSelfCareActivity()
   const { mutateAsync: createItem } = useCreateSelfCareActivity()
   const { mutateAsync: editItem } = useEditSelfCareActivity()
   const [addingItem, setAddingItem] = useState(false)
   const [addingItemUserId, setAddingItemUserId] = useState<string | null>(null)
-  const [editingItem, setEditingItem] = useState<SelfCareActivityWithUser | null>(null)
+  const [editingItem, setEditingItem]
+    = useState<SelfCareActivityWithUser | null>(null)
 
   const { data: openActivity } = useSelfCareActivity(openId ?? '')
 
@@ -49,7 +59,13 @@ function SelfCareActivitiesPage() {
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined
   }
-  const { data, isLoading, isFetching, isError } = useSelfCareActivities(params)
+  const { data, isLoading, isFetching, isError }
+    = useSelfCareActivities(params)
+
+  const clearAddingItem = () => {
+    setAddingItem(false)
+    setAddingItemUserId(null)
+  }
 
   const columns = prepareSelfCareActivityColumns({
     onOpenDetail: setOpenId,
@@ -66,7 +82,11 @@ function SelfCareActivitiesPage() {
     <TableTemplate
       onAddNew={() => setAddingItem(true)}
       addNewLabel="Add activity"
-      title={isFamilyProfile ? 'Family\'s self-care activities' : `${getProfileDisplayName(profile!)}'s self-care activities`}
+      title={
+        isFamilyProfile
+          ? 'Family\'s self-care activities'
+          : `${getProfileDisplayName(profile!)}'s self-care activities`
+      }
       description="Self-care activities - taking medications, applying treatments, wellness routines"
       columns={columns}
       data={data}
@@ -100,26 +120,27 @@ function SelfCareActivitiesPage() {
           <Modal
             open={addingItem}
             onOpenChange={(open) => {
-              if (!open) {
-                setAddingItem(false)
-                setAddingItemUserId(null)
-              }
+              if (!open) clearAddingItem()
             }}
             title="Add self-care activity"
             description="Fill in the details below."
           >
             {isFamilyProfile && (
-              <FamilyMemberSelect value={addingItemUserId} onChange={setAddingItemUserId} />
+              <FamilyMemberSelect
+                value={addingItemUserId}
+                onChange={setAddingItemUserId}
+              />
             )}
             <SelfCareActivityForm
-              onClose={() => {
-                setAddingItem(false)
-                setAddingItemUserId(null)
-              }}
+              onClose={clearAddingItem}
               onSubmit={async (values) => {
-                await createItem({ ...values, userId: (isFamilyProfile ? addingItemUserId : activeProfileId)! })
-                setAddingItem(false)
-                setAddingItemUserId(null)
+                await createItem({
+                  ...values,
+                  userId: (isFamilyProfile
+                    ? addingItemUserId
+                    : activeProfileId)!
+                })
+                clearAddingItem()
               }}
               isSubmitDisabled={isFamilyProfile && !addingItemUserId}
             />

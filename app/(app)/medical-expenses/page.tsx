@@ -48,6 +48,11 @@ const MedicalExpensesPage = () => {
   }
   const { data, isLoading, isFetching, isError } = useMedicalExpenses(params, 'profileId')
 
+  const clearAddingExpense = () => {
+    setAddingExpense(false)
+    setAddingExpenseUserId(null)
+  }
+
   const columns = prepareMedicalExpenseColumns({
     onView: setViewingExpense,
     onEdit: setEditingExpense,
@@ -100,10 +105,7 @@ const MedicalExpensesPage = () => {
           <Modal
             open={addingExpense}
             onOpenChange={(open) => {
-              if (!open) {
-                setAddingExpense(false)
-                setAddingExpenseUserId(null)
-              }
+              if (!open) clearAddingExpense()
             }}
             title="Add medical expense"
             description="Fill in the details below to record a new medical expense."
@@ -112,14 +114,10 @@ const MedicalExpensesPage = () => {
               <FamilyMemberSelect value={addingExpenseUserId} onChange={setAddingExpenseUserId} />
             )}
             <MedicalExpenseForm
-              onClose={() => {
-                setAddingExpense(false)
-                setAddingExpenseUserId(null)
-              }}
+              onClose={clearAddingExpense}
               onSubmit={async (values) => {
                 await createExpense({ ...values, userId: (isFamilyProfile ? addingExpenseUserId : activeProfileId)! })
-                setAddingExpense(false)
-                setAddingExpenseUserId(null)
+                clearAddingExpense()
               }}
               isSubmitDisabled={isFamilyProfile && !addingExpenseUserId}
             />

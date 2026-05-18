@@ -36,7 +36,7 @@ const CreateAppointmentPage = () => {
       </div>
       <AppointmentForm
         defaultTherapyId={therapyId}
-        cancelHref={backHref}
+        onClose={() => router.push(backHref)}
         onSubmit={onSubmit}
         isSubmitDisabled={isFamilyProfile && !selectedUserId}
       />

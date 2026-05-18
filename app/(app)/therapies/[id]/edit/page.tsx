@@ -27,7 +27,11 @@ const EditTherapyPage = () => {
         <Breadcrumbs items={[{ label: 'Therapies', href: '/therapies' }, { label: therapy.title, href: `/therapies/${id}` }, { label: 'Edit' }]} />
         <h1 className="text-2xl font-semibold">Edit Therapy</h1>
       </div>
-      <TherapyForm therapy={therapy} onSubmit={onSubmit} />
+      <TherapyForm
+        therapy={therapy}
+        onClose={() => router.push(`/therapies/${therapy.id}`)}
+        onSubmit={onSubmit}
+      />
     </div>
   )
 }

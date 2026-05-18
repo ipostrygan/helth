@@ -3,7 +3,6 @@
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useRouter } from 'next/navigation'
 import type { Therapy } from '@/lib/generated/prisma/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,12 +24,12 @@ export type TherapyFormValues = z.infer<typeof schema>
 
 type TherapyFormProps = {
   therapy?: Therapy
+  onClose: () => void
   onSubmit: (values: TherapyFormValues) => Promise<void>
   isSubmitDisabled?: boolean
 }
 
-const TherapyForm = ({ therapy, onSubmit, isSubmitDisabled }: TherapyFormProps) => {
-  const router = useRouter()
+const TherapyForm = ({ therapy, onClose, onSubmit, isSubmitDisabled }: TherapyFormProps) => {
   const isEditMode = !!therapy
   const {
     control,
@@ -124,7 +123,7 @@ const TherapyForm = ({ therapy, onSubmit, isSubmitDisabled }: TherapyFormProps) 
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push(isEditMode ? `/therapies/${therapy.id}` : '/therapies')}
+            onClick={onClose}
             disabled={isSubmitting}
           >
             Cancel

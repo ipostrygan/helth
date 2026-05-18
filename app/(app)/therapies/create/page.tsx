@@ -31,6 +31,7 @@ const CreateTherapyPage = () => {
         )}
       </div>
       <TherapyForm
+        onClose={() => router.push('/therapies')}
         onSubmit={onSubmit}
         isSubmitDisabled={isFamilyProfile && !selectedUserId}
       />
