@@ -23,7 +23,7 @@ export type BaseQueryParams = {
 }
 
 // app
-export type PageProps = {
+export type ParamsWithId = {
   params: Promise<{ id: string }>
 }
 

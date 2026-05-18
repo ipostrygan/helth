@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { uploadS3Object, deleteS3Object } from '@/lib/s3'
 import { validateFileSize } from '@/lib/utils'
+import { ParamsWithId } from '@/types'
 
 const ALLOWED_TYPES = [
   'application/pdf',
@@ -29,7 +30,7 @@ async function uploadFile(
 }
 
 export function createDocumentHandlers({ getById, addDocument, removeDocument }: DocumentHandlerOptions) {
-  async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  async function POST(req: NextRequest, { params }: ParamsWithId) {
     const { id } = await params
 
     const entity = await getById(id)
@@ -65,7 +66,7 @@ export function createDocumentHandlers({ getById, addDocument, removeDocument }:
     }
   }
 
-  async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  async function DELETE(req: NextRequest, { params }: ParamsWithId) {
     const { id } = await params
 
     const entity = await getById(id)

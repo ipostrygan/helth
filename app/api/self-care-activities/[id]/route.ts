@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { deleteSelfCareActivity, getSelfCareActivityById } from '../../../actions/self-care-activities'
 import { actionErrorResponse } from '@/lib/api/utils'
+import { ParamsWithId } from '@/types'
 
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_req: NextRequest, { params }: ParamsWithId) {
   const { id } = await params
   try {
     const item = await getSelfCareActivityById(id)
@@ -14,7 +15,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   }
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(_req: NextRequest, { params }: ParamsWithId) {
   const { id } = await params
   try {
     await deleteSelfCareActivity(id)

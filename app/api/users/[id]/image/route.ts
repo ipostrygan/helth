@@ -1,9 +1,10 @@
 import { getS3Object } from '@/lib/s3'
 import prisma from '@/lib/prisma'
+import { ParamsWithId } from '@/types'
 
 export async function GET(
   _req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: ParamsWithId
 ) {
   const { id } = await params
 

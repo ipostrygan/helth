@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import { editProfile, getProfile } from '../../../actions/profile'
 import { actionErrorResponse } from '@/lib/api/utils'
+import { ParamsWithId } from '@/types'
 
-export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_: Request, { params }: ParamsWithId) {
   const { id } = await params
   try {
     const data = await getProfile(id)
@@ -13,7 +14,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
   }
 }
 
-export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(req: Request, { params }: ParamsWithId) {
   const { id } = await params
   const data = await req.json()
   try {

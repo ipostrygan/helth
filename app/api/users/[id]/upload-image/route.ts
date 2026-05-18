@@ -2,12 +2,13 @@ import { editProfile } from '@/app/actions/profile'
 import { deleteS3Object, uploadS3Object } from '@/lib/s3'
 import prisma from '@/lib/prisma'
 import { validateFileSize } from '@/lib/utils'
+import { ParamsWithId } from '@/types'
 
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 
 export async function PUT(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: ParamsWithId
 ) {
   const { id } = await params
   try {

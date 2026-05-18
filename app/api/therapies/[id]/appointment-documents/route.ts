@@ -4,13 +4,14 @@ import { getTherapyAppointmentDocuments } from '../../../../actions/therapies'
 import { removeDocument } from '@/lib/document-actions'
 import { actionErrorResponse } from '@/lib/api/utils'
 import prisma from '@/lib/prisma'
+import { ParamsWithId } from '@/types'
 
 const querySchema = z.object({
   page: z.coerce.number().int().positive().default(1),
   pageSize: z.coerce.number().int().positive().max(100).default(10)
 })
 
-export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, { params }: ParamsWithId) {
   const { id } = await params
   try {
     const parsed = querySchema.safeParse(Object.fromEntries(req.nextUrl.searchParams))
@@ -44,7 +45,7 @@ const deleteSchema = z.object({
   appointmentId: z.string().optional()
 })
 
-export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, { params }: ParamsWithId) {
   const { id } = await params
   try {
     const body = await req.json()

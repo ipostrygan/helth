@@ -550,11 +550,7 @@ import { useActiveProfile } from "@/context/profile-context"
 import { use{ModelName} } from "../hooks/use-{model-name}"  // single-item query hook (create if missing — see below)
 import {ModelName}Form from "../../components/{model-name}-form"
 
-type EditPageProps = {
-  params: Promise<{ id: string }>
-}
-
-const Edit{ModelName}Page = ({ params }: EditPageProps) => {
+const Edit{ModelName}Page = ({ params }: ParamsWithId) => {
   const { id } = use(params)
   const { activeProfileId } = useActiveProfile()
   const { data: {modelName}, isLoading } = use{ModelName}(id)
@@ -609,7 +605,7 @@ And add a GET handler to `app/api/{model-names}/[id]/route.ts` (alongside DELETE
 ```typescript
 import { get{ModelName}ById } from "../../../actions/{model-names}";
 
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(_req: NextRequest, { params }: : ParamsWithId) {
   const { id } = await params;
   const item = await get{ModelName}ById(id);
   if (!item) return new NextResponse(null, { status: 404 });

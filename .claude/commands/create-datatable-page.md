@@ -350,7 +350,7 @@ export async function GET(req: NextRequest) {
 import { NextRequest, NextResponse } from "next/server";
 import { delete{ModelName} } from "../../../actions/{model-names}";
 
-export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(_req: NextRequest, { params }: : ParamsWithId) {
   const { id } = await params;
   await delete{ModelName}(id);
   return new NextResponse(null, { status: 204 });
