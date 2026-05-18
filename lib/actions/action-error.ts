@@ -1,13 +1,6 @@
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library'
-
-export class ActionError extends Error {
-  readonly status: number
-  constructor(message: string, status: number) {
-    super(message)
-    this.name = 'ActionError'
-    this.status = status
-  }
-}
+import { ActionError } from '@/lib/errors'
+export { ActionError } from '@/lib/errors'
 
 export function handleActionError(e: unknown): never {
   if (e instanceof PrismaClientKnownRequestError) {

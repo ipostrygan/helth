@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 import { z } from 'zod'
 import type { BaseQueryParams } from '@/types'
-import { ActionError } from '@/lib/actions/action-error'
+import { ActionError } from '@/lib/errors'
 
 export function actionErrorResponse(e: unknown) {
   const status = e instanceof ActionError ? e.status : 500
