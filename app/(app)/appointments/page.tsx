@@ -2,30 +2,26 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs'
-import {
-  baseFilterParsers,
-  defaultDateFrom,
-  defaultDateTo
-} from '@/lib/search-params'
 import { usePageProfile } from '../hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useAppointments } from './hooks/use-appointments'
 import { useDeleteAppointment } from './hooks/use-delete-appointment'
-import { type DateRange } from 'react-day-picker'
-import { format } from 'date-fns'
 import { AppointmentStatus } from '@/lib/generated/prisma'
 import type { AppointmentsQueryParams } from './types'
 import { APPOINTMENT_STATUS_LABELS } from './constants'
 import { prepareAppointmentColumns } from './columns'
-import { TableTemplate, type SortChange } from '@/components/table-template'
+import { TableTemplate } from '@/components/table-template'
+import { useTableFilters } from '@/hooks/use-table-filters'
+
+const STATUS_OPTIONS = Object.entries(APPOINTMENT_STATUS_LABELS).map(([value, label]) => ({ value, label }))
 
 const AppointmentsPage = () => {
   const router = useRouter()
   const { isFamilyProfile, profile, profileId, isReady } = usePageProfile()
-  const [filters, setFilters] = useQueryStates({
-    ...baseFilterParsers('date'),
-    statuses: parseAsArrayOf(parseAsString).withDefault([])
+
+  const { filters, extraFilters, filtersConfig, sorting, onSortingChange, onPageChange, onPageSizeChange } = useTableFilters({
+    searchPlaceholder: 'Search appointments...',
+    filterGroups: [{ key: 'statuses', label: 'Status', options: STATUS_OPTIONS }]
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
@@ -36,16 +32,9 @@ const AppointmentsPage = () => {
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined,
-    statuses: filters.statuses as AppointmentStatus[]
+    statuses: (extraFilters['statuses'] ?? []) as AppointmentStatus[]
   }
   const { data, isLoading, isFetching, isError } = useAppointments(params)
-
-  const sorting = [
-    { id: filters.sortField, desc: filters.sortDirection === 'desc' }
-  ]
-  const onSortingChange = ({ sortField, sortDirection }: SortChange) => {
-    setFilters(prev => ({ ...prev, page: 1, sortField, sortDirection }))
-  }
 
   const columns = prepareAppointmentColumns({
     showCost: true,
@@ -53,14 +42,6 @@ const AppointmentsPage = () => {
     onDelete: id => setDeletingId(id),
     isFamilyProfile
   })
-
-  const dateRange
-    = filters.dateFrom || filters.dateTo
-      ? {
-          from: filters.dateFrom ? new Date(filters.dateFrom) : undefined,
-          to: filters.dateTo ? new Date(filters.dateTo) : undefined
-        }
-      : undefined
 
   if (!isReady) {
     return null
@@ -70,11 +51,7 @@ const AppointmentsPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/appointments/create')}
       addNewLabel="Add Appointment"
-      title={
-        isFamilyProfile
-          ? 'Family\'s appointments'
-          : `${getProfileDisplayName(profile!)}'s appointments`
-      }
+      title={isFamilyProfile ? 'Family\'s appointments' : `${getProfileDisplayName(profile!)}'s appointments`}
       description="Past medical appointments"
       columns={columns}
       data={data}
@@ -82,57 +59,11 @@ const AppointmentsPage = () => {
       isFetching={isFetching}
       isError={isError}
       pageSize={filters.pageSize}
-      onPageChange={page => setFilters(prev => ({ ...prev, page }))}
-      onPageSizeChange={pageSize =>
-        setFilters(prev => ({ ...prev, page: 1, pageSize }))}
+      onPageChange={onPageChange}
+      onPageSizeChange={onPageSizeChange}
       sorting={sorting}
       onSortingChange={onSortingChange}
-      filters={{
-        searchValue: filters.search,
-        onSearchChange: search =>
-          setFilters(prev => ({ ...prev, page: 1, search })),
-        searchPlaceholder: 'Search appointments...',
-        dateRange,
-        onDateRangeChange: (range: DateRange | undefined) =>
-          setFilters(prev => ({
-            ...prev,
-            page: 1,
-            dateFrom: range?.from ? format(range.from, 'yyyy-MM-dd') : null,
-            dateTo: range?.to ? format(range.to, 'yyyy-MM-dd') : null
-          })),
-        filterGroups: [
-          {
-            label: 'Status',
-            options: Object.entries(APPOINTMENT_STATUS_LABELS).map(
-              ([value, label]) => ({ value, label })
-            ),
-            selected: filters.statuses,
-            onChange: statuses =>
-              setFilters(prev => ({
-                ...prev,
-                page: 1,
-                statuses: statuses as AppointmentStatus[]
-              }))
-          }
-        ],
-        hasActiveFilters: !!(
-          filters.search
-          || filters.dateFrom !== defaultDateFrom
-          || filters.dateTo !== defaultDateTo
-          || filters.statuses.length > 0
-        ),
-        onClearFilters: () =>
-          setFilters(() => ({
-            page: 1,
-            pageSize: filters.pageSize,
-            sortField: 'date',
-            sortDirection: 'desc',
-            search: '',
-            dateFrom: null,
-            dateTo: null,
-            statuses: []
-          }))
-      }}
+      filters={filtersConfig}
       deleteConfig={{
         deletingId,
         onCancel: () => setDeletingId(null),
