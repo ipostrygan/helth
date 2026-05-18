@@ -13,15 +13,27 @@ import { prepareAppointmentColumns } from './columns'
 import { TableTemplate } from '@/components/table-template'
 import { useTableFilters } from '@/hooks/use-table-filters'
 
-const STATUS_OPTIONS = Object.entries(APPOINTMENT_STATUS_LABELS).map(([value, label]) => ({ value, label }))
+const STATUS_OPTIONS = Object.entries(APPOINTMENT_STATUS_LABELS).map(
+  ([value, label]) => ({ value, label })
+)
 
 const AppointmentsPage = () => {
   const router = useRouter()
   const { isFamilyProfile, profile, profileId, isReady } = usePageProfile()
 
-  const { filters, extraFilters, filtersConfig, sorting, onSortingChange, onPageChange, onPageSizeChange } = useTableFilters({
+  const {
+    filters,
+    extraFilters,
+    filtersConfig,
+    sorting,
+    onSortingChange,
+    onPageChange,
+    onPageSizeChange
+  } = useTableFilters({
     searchPlaceholder: 'Search appointments...',
-    filterGroups: [{ key: 'statuses', label: 'Status', options: STATUS_OPTIONS }]
+    filterGroups: [
+      { key: 'statuses', label: 'Status', options: STATUS_OPTIONS }
+    ]
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
@@ -51,7 +63,11 @@ const AppointmentsPage = () => {
     <TableTemplate
       onAddNew={() => router.push('/appointments/create')}
       addNewLabel="Add Appointment"
-      title={isFamilyProfile ? 'Family\'s appointments' : `${getProfileDisplayName(profile!)}'s appointments`}
+      title={
+        isFamilyProfile
+          ? 'Family\'s appointments'
+          : `${getProfileDisplayName(profile!)}'s appointments`
+      }
       description="Past medical appointments"
       columns={columns}
       data={data}

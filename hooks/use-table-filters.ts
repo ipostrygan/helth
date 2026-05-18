@@ -38,7 +38,7 @@ export function useTableFilters({
 
   const { sorting, onSortingChange } = useSorting(filters, setFilters)
 
-  const dateRange: DateRange | undefined
+  const dateRange
     = filters.dateFrom || filters.dateTo
       ? {
           from: filters.dateFrom ? new Date(filters.dateFrom) : undefined,

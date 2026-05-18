@@ -77,7 +77,7 @@ const LoginPage = () => {
           <Field orientation="horizontal" className="justify-end">
             <Button
               type="submit"
-              disabled={!isDirty || !isValid || isPending}
+              disabled={!isDirty || !isValid}
               isPending={isPending}
             >
               Login
