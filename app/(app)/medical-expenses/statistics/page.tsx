@@ -49,17 +49,17 @@ const MedicalExpensesStatistics = () => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-lg font-semibold text-gray-800">Expenses by type</h2>
+        <h2 className="text-lg font-semibold text-foreground">Expenses by type</h2>
         <DateRangePicker value={dateRange} onChange={setDateRange} />
       </div>
 
       {isLoading
         ? (
-            <div className="flex h-64 items-center justify-center text-gray-400 text-sm">Loading...</div>
+            <div className="flex h-64 items-center justify-center text-muted-foreground text-sm">Loading...</div>
           )
         : chartData.length === 0
           ? (
-              <div className="flex h-64 items-center justify-center text-gray-400 text-sm">
+              <div className="flex h-64 items-center justify-center text-muted-foreground text-sm">
                 No expenses found for the selected period.
               </div>
             )
@@ -89,13 +89,13 @@ const MedicalExpensesStatistics = () => {
                         className="h-3 w-3 rounded-full shrink-0"
                         style={{ backgroundColor: item.fill }}
                       />
-                      <span className="text-sm text-gray-700 flex-1">{item.name}</span>
-                      <span className="text-sm font-medium text-gray-800">{formatCurrency(item.total)}</span>
+                      <span className="text-sm text-muted-foreground flex-1">{item.name}</span>
+                      <span className="text-sm font-medium text-foreground">{formatCurrency(item.total)}</span>
                     </div>
                   ))}
                   <div className="mt-2 border-t pt-2 flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Total</span>
-                    <span className="text-sm font-semibold text-gray-800">{formatCurrency(total)}</span>
+                    <span className="text-sm text-muted-foreground">Total</span>
+                    <span className="text-sm font-semibold text-foreground">{formatCurrency(total)}</span>
                   </div>
                 </div>
               </div>
