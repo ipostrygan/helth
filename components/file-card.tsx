@@ -37,7 +37,7 @@ export const FileCard = ({ file, onDelete }: FileCardProps) => {
   const isMobile = useIsMobile()
 
   function handleCardClick() {
-    if (!isMobile && !isImage(file.name)) {
+    if (!isMobile) {
       window.open(file.url, '_blank', 'noopener,noreferrer')
     }
     else {
