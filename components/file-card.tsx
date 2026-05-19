@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
@@ -33,12 +34,22 @@ function isImage(name: string) {
 
 export const FileCard = ({ file, onDelete }: FileCardProps) => {
   const [open, setOpen] = useState(false)
+  const isMobile = useIsMobile()
+
+  function handleCardClick() {
+    if (!isMobile && !isImage(file.name)) {
+      window.open(file.url, '_blank', 'noopener,noreferrer')
+    }
+    else {
+      setOpen(true)
+    }
+  }
 
   return (
     <>
       <Card
         className="flex flex-row items-center gap-3 px-4 py-3 text-sm hover:bg-accent transition-colors group cursor-pointer"
-        onClick={() => setOpen(true)}
+        onClick={handleCardClick}
       >
         <FileText className="size-4 text-muted-foreground" />
         <span className="flex-1 truncate">{file.name}</span>
