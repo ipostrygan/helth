@@ -6,12 +6,11 @@ export const APPOINTMENT_STATUS_LABELS: Record<AppointmentStatus, string> = {
 }
 
 export const APPOINTMENT_TYPE_LABELS: Record<AppointmentType, string> = {
-  GeneralPractitioner: 'General practitioner',
-  Specialist: 'Specialist',
+  Primary: 'Primary examination',
+  Secondary: 'Secondary examination',
   Dental: 'Dental',
   MentalHealth: 'Mental health',
   Lab: 'Lab',
-  Imaging: 'Imaging',
   Emergency: 'Emergency',
   FollowUp: 'Follow-up',
   Vaccination: 'Vaccination',

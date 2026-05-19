@@ -11,15 +11,14 @@ import { DEFAULT_PAGE_SIZE } from '@/lib/constants'
 export type AppointmentWithUser = Appointment & { user: ProfileSummary }
 
 const APPOINTMENT_TYPE_TO_EXPENSE_TYPE: Record<AppointmentType, ExpenseType> = {
-  [AppointmentType.GeneralPractitioner]: ExpenseType.DoctorVisit,
-  [AppointmentType.Specialist]: ExpenseType.DoctorVisit,
+  [AppointmentType.Primary]: ExpenseType.DoctorVisit,
+  [AppointmentType.Secondary]: ExpenseType.DoctorVisit,
   [AppointmentType.Dental]: ExpenseType.Dental,
   [AppointmentType.MentalHealth]: ExpenseType.MentalHealth,
   [AppointmentType.Lab]: ExpenseType.Procedure,
-  [AppointmentType.Imaging]: ExpenseType.Procedure,
   [AppointmentType.Emergency]: ExpenseType.DoctorVisit,
   [AppointmentType.FollowUp]: ExpenseType.DoctorVisit,
-  [AppointmentType.Vaccination]: ExpenseType.DoctorVisit,
+  [AppointmentType.Vaccination]: ExpenseType.Procedure,
   [AppointmentType.Other]: ExpenseType.DoctorVisit
 }
 

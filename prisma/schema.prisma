@@ -110,12 +110,11 @@ enum ExpenseType {
 }
 
 enum AppointmentType {
-  GeneralPractitioner
-  Specialist
+  Primary
+  Secondary
   Dental
   MentalHealth
   Lab
-  Imaging
   Emergency
   FollowUp
   Vaccination
