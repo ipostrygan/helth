@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogFooter
 } from '@/components/ui/dialog'
-import Image from 'next/image'
 import { FileText, Download, Trash2 } from 'lucide-react'
 
 export type DocumentFile = {
@@ -83,11 +82,11 @@ export const FileCard = ({ file, onDelete }: FileCardProps) => {
             {isImage(file.name)
               ? (
                   <div className="relative w-full h-full">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
                       src={file.url}
                       alt={file.name}
-                      fill
-                      className="object-contain"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 )
