@@ -17,7 +17,7 @@ export const baseQueryParamsSchema = z.object({
   dateTo: dateParam.nullish()
 })
 
-export const defaultDateFrom = format(subMonths(new Date(), 4), 'yyyy-MM-dd')
+export const defaultDateFrom = format(subMonths(new Date(), 6), 'yyyy-MM-dd')
 export const defaultDateTo = format(new Date(), 'yyyy-MM-dd')
 
 export const baseFilterParsers = (defaultSortField = 'date') => ({

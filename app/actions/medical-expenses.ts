@@ -102,7 +102,7 @@ export const getMedicalExpensesByType = async ({
   dateTo
 }: ExpensesByTypeQuery = {}) => {
   const defaultDateFrom = new Date()
-  defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 1)
+  defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 6)
 
   const resolvedDateFrom = dateFrom ? new Date(dateFrom) : defaultDateFrom
   const resolvedDateTo = dateTo ? new Date(dateTo) : new Date()

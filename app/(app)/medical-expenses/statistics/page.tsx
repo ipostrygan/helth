@@ -23,7 +23,7 @@ const MedicalExpensesStatistics = () => {
   const { activeProfileId, isFamilyProfile } = useActiveProfile()
 
   const defaultDateFrom = new Date()
-  defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 1)
+  defaultDateFrom.setMonth(defaultDateFrom.getMonth() - 6)
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: defaultDateFrom,
