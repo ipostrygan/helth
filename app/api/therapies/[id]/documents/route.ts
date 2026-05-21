@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma'
 import { createDocumentHandlers } from '@/lib/api/documents'
-import { addDocument, removeDocument } from '@/lib/document-actions'
+import { addDocument, removeDocument } from '@/app/actions/document-actions'
 import { getTherapyById } from '@/app/actions/therapies'
 
 export const { POST, DELETE } = createDocumentHandlers({

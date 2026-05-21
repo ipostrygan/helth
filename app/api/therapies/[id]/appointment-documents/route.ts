@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getTherapyAppointmentDocuments } from '../../../../actions/therapies'
-import { removeDocument } from '@/lib/document-actions'
+import { removeDocument } from '@/app/actions/document-actions'
 import { actionErrorResponse } from '@/lib/api/utils'
 import prisma from '@/lib/prisma'
 import { ParamsWithId } from '@/types'
