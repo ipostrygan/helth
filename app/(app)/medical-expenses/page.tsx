@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import type { MedicalExpense } from '@/lib/generated/prisma'
-import { usePageProfile } from '../hooks/use-page-profile'
+import { usePageProfile } from '@/hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useMedicalExpenses } from './hooks/use-medical-expenses'
 import { useDeleteMedicalExpense } from './hooks/use-delete-medical-expense'

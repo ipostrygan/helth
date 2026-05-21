@@ -2,7 +2,6 @@
 
 import { Suspense, useState } from 'react'
 import type { SelfCareActivityWithUser } from '@/app/actions/self-care-activities'
-import { usePageProfile } from '../hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useSelfCareActivities } from './hooks/use-self-care-activities'
 import { useSelfCareActivity } from './hooks/use-self-care-activity'
@@ -16,6 +15,7 @@ import { FamilyMemberSelect } from '@/components/custom/family-member-select'
 import { SelfCareActivityDetailsSheet } from './components/self-care-activity-details-sheet'
 import SelfCareActivityForm from './self-care-activity-form'
 import { prepareSelfCareActivityColumns } from './columns'
+import { usePageProfile } from '@/hooks/use-page-profile'
 
 export default function Page() {
   return (

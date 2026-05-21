@@ -7,7 +7,7 @@ import { useAppointment } from '../hooks/use-appointment'
 import { useTherapy } from '../../therapies/hooks/use-therapy'
 import { DocumentsCard } from '@/components/documents-card'
 import { AppointmentDetailsCard } from './appointment-details-card'
-import { useDocuments } from '@/app/(app)/hooks/use-documents'
+import { useDocuments } from '@/hooks/use-documents'
 import { queryKeys } from '@/lib/query-keys'
 import { DetailPageSkeleton } from '@/components/custom/detail-page-skeleton'
 

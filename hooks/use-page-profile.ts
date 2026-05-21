@@ -1,7 +1,7 @@
 'use client'
 
+import { useProfile } from '@/app/(app)/users/hooks/use-profile'
 import { useActiveProfile } from '@/context/profile-context'
-import { useProfile } from '../users/hooks/use-profile'
 
 export function usePageProfile() {
   const { activeProfileId, isFamilyProfile } = useActiveProfile()

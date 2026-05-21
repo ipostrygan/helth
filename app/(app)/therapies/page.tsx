@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { usePageProfile } from '../hooks/use-page-profile'
+import { usePageProfile } from '@/hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useTherapies } from './hooks/use-therapies'
 import { useDeleteTherapy } from './hooks/use-delete-therapy'
