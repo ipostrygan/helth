@@ -16,7 +16,12 @@ export type AppointmentDocumentsResult = {
   page: number
   pageSize: number
 }
-export type Specialist = { name: string, link: string | null }
+
+type Specialist = {
+  name: string
+  link: string | null
+}
+
 export type TherapyWithDocuments = Therapy & {
   documents: DocumentItem[]
   specialists: Specialist[]
@@ -53,7 +58,10 @@ export async function getTherapyAppointmentDocuments(
   page: number,
   pageSize: number = 10
 ): Promise<AppointmentDocumentsResult> {
-  const res = await fetch(`${BASE}/${id}/appointment-documents?page=${page}&pageSize=${pageSize}`)
-  if (!res.ok) throw new Error(`Failed to fetch appointment documents: ${res.status}`)
+  const res = await fetch(
+    `${BASE}/${id}/appointment-documents?page=${page}&pageSize=${pageSize}`
+  )
+  if (!res.ok)
+    throw new Error(`Failed to fetch appointment documents: ${res.status}`)
   return res.json()
 }
