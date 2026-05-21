@@ -20,24 +20,44 @@ import { useTableFilters } from '@/hooks/use-table-filters'
 import MedicalExpenseForm from './medical-expense-form'
 import { MedicalExpenseDetailsSheet } from './components/medical-expense-details-sheet'
 
-const TYPE_OPTIONS = Object.entries(EXPENSE_TYPE_LABELS).map(([value, label]) => ({ value, label }))
+const TYPE_OPTIONS = Object.entries(EXPENSE_TYPE_LABELS).map(
+  ([value, label]) => ({ value, label })
+)
 
 const MedicalExpensesPage = () => {
-  const { activeProfileId, isFamilyProfile, profile, profileId, isReady } = usePageProfile()
+  const { activeProfileId, isFamilyProfile, profile, profileId, isReady }
+    = usePageProfile()
 
-  const { filters, extraFilters, filtersConfig, sorting, onSortingChange, onPageChange, onPageSizeChange } = useTableFilters({
+  const {
+    filters,
+    extraFilters,
+    filtersConfig,
+    sorting,
+    onSortingChange,
+    onPageChange,
+    onPageSizeChange
+  } = useTableFilters({
     searchPlaceholder: 'Search expenses...',
     filterGroups: [{ key: 'types', label: 'Type', options: TYPE_OPTIONS }]
   })
 
-  const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(null)
-  const { mutate: deleteExpense, isPending: isDeleting } = useDeleteMedicalExpense()
+  const [deletingExpenseId, setDeletingExpenseId] = useState<string | null>(
+    null
+  )
+  const { mutate: deleteExpense, isPending: isDeleting }
+    = useDeleteMedicalExpense()
   const { mutateAsync: createExpense } = useCreateMedicalExpense()
   const { mutateAsync: editExpense } = useEditMedicalExpense()
   const [addingExpense, setAddingExpense] = useState(false)
-  const [addingExpenseUserId, setAddingExpenseUserId] = useState<string | null>(null)
-  const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(null)
-  const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(null)
+  const [addingExpenseUserId, setAddingExpenseUserId] = useState<string | null>(
+    null
+  )
+  const [editingExpense, setEditingExpense] = useState<MedicalExpense | null>(
+    null
+  )
+  const [viewingExpense, setViewingExpense] = useState<MedicalExpense | null>(
+    null
+  )
 
   const params: MedicalExpensesQueryParams = {
     profileId,
@@ -46,7 +66,10 @@ const MedicalExpensesPage = () => {
     dateTo: filters.dateTo ?? undefined,
     types: (extraFilters['types'] ?? []) as ExpenseType[]
   }
-  const { data, isLoading, isFetching, isError } = useMedicalExpenses(params, 'profileId')
+  const { data, isLoading, isFetching, isError } = useMedicalExpenses(
+    params,
+    'profileId'
+  )
 
   const clearAddingExpense = () => {
     setAddingExpense(false)
@@ -69,7 +92,11 @@ const MedicalExpensesPage = () => {
 
   return (
     <TableTemplate
-      title={isFamilyProfile ? 'Family\'s medical expenses' : `${getProfileDisplayName(profile!)}'s medical expenses`}
+      title={
+        isFamilyProfile
+          ? 'Family\'s medical expenses'
+          : `${getProfileDisplayName(profile!)}'s medical expenses`
+      }
       description={description}
       columns={columns}
       data={data}
@@ -88,7 +115,9 @@ const MedicalExpensesPage = () => {
         onCancel: () => setDeletingExpenseId(null),
         onConfirm: () => {
           if (deletingExpenseId === null) return
-          deleteExpense(deletingExpenseId, { onSuccess: () => setDeletingExpenseId(null) })
+          deleteExpense(deletingExpenseId, {
+            onSuccess: () => setDeletingExpenseId(null)
+          })
         },
         isPending: isDeleting
       }}
@@ -111,12 +140,20 @@ const MedicalExpensesPage = () => {
             description="Fill in the details below to record a new medical expense."
           >
             {isFamilyProfile && (
-              <FamilyMemberSelect value={addingExpenseUserId} onChange={setAddingExpenseUserId} />
+              <FamilyMemberSelect
+                value={addingExpenseUserId}
+                onChange={setAddingExpenseUserId}
+              />
             )}
             <MedicalExpenseForm
               onClose={clearAddingExpense}
               onSubmit={async (values) => {
-                await createExpense({ ...values, userId: (isFamilyProfile ? addingExpenseUserId : activeProfileId)! })
+                await createExpense({
+                  ...values,
+                  userId: (isFamilyProfile
+                    ? addingExpenseUserId
+                    : activeProfileId)!
+                })
                 clearAddingExpense()
               }}
               isSubmitDisabled={isFamilyProfile && !addingExpenseUserId}

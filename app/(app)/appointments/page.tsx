@@ -6,14 +6,17 @@ import { usePageProfile } from '../hooks/use-page-profile'
 import { getProfileDisplayName } from '../users/utils/profile.utils'
 import { useAppointments } from './hooks/use-appointments'
 import { useDeleteAppointment } from './hooks/use-delete-appointment'
-import { AppointmentStatus } from '@/lib/generated/prisma'
-import type { AppointmentsQueryParams } from './types'
-import { APPOINTMENT_STATUS_LABELS } from './constants'
+import { AppointmentStatus, AppointmentType } from '@/lib/generated/prisma'
+import { APPOINTMENT_STATUS_LABELS, APPOINTMENT_TYPE_LABELS } from './constants'
 import { prepareAppointmentColumns } from './columns'
 import { TableTemplate } from '@/components/table-template'
 import { useTableFilters } from '@/hooks/use-table-filters'
 
 const STATUS_OPTIONS = Object.entries(APPOINTMENT_STATUS_LABELS).map(
+  ([value, label]) => ({ value, label })
+)
+
+const TYPE_OPTIONS = Object.entries(APPOINTMENT_TYPE_LABELS).map(
   ([value, label]) => ({ value, label })
 )
 
@@ -32,19 +35,21 @@ const AppointmentsPage = () => {
   } = useTableFilters({
     searchPlaceholder: 'Search appointments...',
     filterGroups: [
-      { key: 'statuses', label: 'Status', options: STATUS_OPTIONS }
+      { key: 'statuses', label: 'Status', options: STATUS_OPTIONS },
+      { key: 'types', label: 'Type', options: TYPE_OPTIONS }
     ]
   })
 
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const { mutate: deleteItem, isPending: isDeleting } = useDeleteAppointment()
 
-  const params: AppointmentsQueryParams = {
+  const params = {
     profileId,
     ...filters,
     dateFrom: filters.dateFrom ?? undefined,
     dateTo: filters.dateTo ?? undefined,
-    statuses: (extraFilters['statuses'] ?? []) as AppointmentStatus[]
+    statuses: (extraFilters['statuses'] ?? []) as AppointmentStatus[],
+    types: (extraFilters['types'] ?? []) as AppointmentType[]
   }
   const { data, isLoading, isFetching, isError } = useAppointments(params)
 

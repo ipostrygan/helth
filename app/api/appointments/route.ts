@@ -12,6 +12,7 @@ import { validateQueryParams, actionErrorResponse } from '@/lib/api/utils'
 const searchParamsCache = createSearchParamsCache({
   ...baseSearchParams(),
   statuses: parseAsArrayOf(parseAsString),
+  types: parseAsArrayOf(parseAsString),
   therapyId: parseAsString
 })
 

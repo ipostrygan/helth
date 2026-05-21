@@ -49,6 +49,7 @@ export const getAppointments = async ({
   dateFrom,
   dateTo,
   statuses,
+  types,
   therapyId
 }: AppointmentsQueryParams = {}) => {
   const skip = (page - 1) * pageSize
@@ -57,7 +58,8 @@ export const getAppointments = async ({
     ...(therapyId ? { therapyId } : {}),
     ...buildSearchFilter(search, ['title', 'specialistName', 'location']),
     ...buildDateRangeFilter(dateFrom, dateTo),
-    ...(statuses && statuses.length > 0 ? { status: { in: statuses } } : {})
+    ...(statuses && statuses.length > 0 ? { status: { in: statuses } } : {}),
+    ...(types && types.length > 0 ? { type: { in: types } } : {})
   }
 
   try {

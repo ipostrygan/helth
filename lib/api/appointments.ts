@@ -21,6 +21,7 @@ export async function getAppointments(
 ): Promise<PaginatedResult<AppointmentWithUser>> {
   const searchParams = buildSearchParams(params, {
     statuses: params.statuses,
+    types: params.types,
     therapyId: params.therapyId
   })
   const res = await fetch(`${BASE}?${searchParams}`)
